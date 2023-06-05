@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="container">
       <h1>Welcome to Analog ML Connect!</h1>
-        feat[A2M:200]
+
       <div className="row">
         <form
           onSubmit={(e) => {
