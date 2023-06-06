@@ -4,9 +4,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "develop" ]
+    branches: [ "develop", "release"]
   pull_request:
-    branches: [ "develop" ]
+    branches: [ "develop", "release"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -23,7 +23,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: install gtk
+      - name: install OS dependencies (ubuntu only)
         run: |
           sudo apt update
           sudo apt install libwebkit2gtk-4.0-dev \
@@ -35,12 +35,40 @@ jobs:
           libayatana-appindicator3-dev \
           librsvg2-dev
 
+      # Setup Rust
+      - name: Rust setup
+        uses: dtolnay/rust-toolchain@stable
+      
+      # Setup Rust Cache so consecutive builds are faster   
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: './src-tauri -> target'
+      
+      # Sync node version and setup node cache
+      - name: Sync node version and setup cache
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+        
+      # Install node dependencies
+      - name: Install frontend dependencies
+        run: npm install
+      
       # Runs a single command using the runners shell
-      - name: run tests
+      - name: Run Rust backend tests
         run: cd src-tauri && cargo test && cd ..
 
-      # Runs a set of commands using the runners shell
-      # - name: Run a multi-line script
-      #   run: |
-      #     echo Add other actions to build,
-      #     echo test, and deploy your project.
+      # Run tauri-action build
+      - name: Build the app using Tauri Action
+        uses: tauri-apps/tauri-action@v0
+      
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: app-v__VERSION__
+          releaseName: 'AML-Connect v__VERSION__' # tauri-action replaces \_\_VERSION\_\_ with the app version.
+          releaseBody: 'See the assets to download and install this version.'
+          releaseDraft: true
+          prerelease: true
