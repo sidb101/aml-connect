@@ -1,0 +1,1175 @@
+{
+  "id" : 1,
+  "name" : "Name",
+  "description" : "Description",
+  "lastModifiedDate" : "2023-06-08T18:28:07Z",
+  "lastModifiedAgent" : "structurizr-javascript",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlIHsKCiAgICBtb2RlbCB7CiAgICAgICAgY3VzdG9tZXIgPSBwZXJzb24gIkNoaXAgUHJvZ3JhbW1lciIgIkFzcGluaXR5J3MgY3VzdG9tZXIiCiAgICAgICAgZW5naW5lZXIgPSBwZXJzb24gIkFzcGluaXR5IEVuZ2luZWVyIiAidXN1YWxseSBOaWNrIgogICAgICAgIGRldmVsb3BlciA9IHBlcnNvbiAiU3lzdGVtIERldmVsb3BlciIgIlRlYW0gQ2hpcE1vbmtzIgogICAgICAgIGFzdHJsID0gc29mdHdhcmVTeXN0ZW0gIkFzcGluaXR5IERldmVsb3BtZW50IFBsYXRmb3JtIiB7CiAgICAgICAgICAgIAogICAgICAgICAgICBncm91cCBDbGllbnRzIHsKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgdWlMYXllciA9IGNvbnRhaW5lciAiVUkgTGF5ZXIiewoKICAgICAgICAgICAgICAgICAgICBncm91cCBSZWFjdENvbXBvbmVudHMgewogICAgICAgICAgICAgICAgICAgICAgICBjb21wb25lbnQxID0gY29tcG9uZW50ICJTYW1wbGUgUmVhY3QgQ29tcG9uZW50IiAgICAKICAgICAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgICAgIGdyb3VwIFNsaWNlcyB7CiAgICAgICAgICAgICAgICAgICAgICAgIHNsaWNlMSA9IGNvbXBvbmVudCAiU2FtcGxlIFNsaWNlIgogICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICB9ICAgICAgICAgCgogICAgICAgICAgICAgICAgICAgIHJlZHV4U3RvcmUgPSBjb21wb25lbnQgIlJlZHV4IHN0b3JlIgoKICAgICAgICAgICAgICAgICAgICBhcGlJbnRlcmZhY2UgPSBjb21wb25lbnQgIkFQSSBJbnRlcmZhY2UiCiAgICAgICAgICAgICAgICAgICAgYXBpVHJhbnNmb3JtZXIgPSBjb21wb25lbnQgIkFQSSBUcmFuc2Zvcm1lciIgIkNvbnZlcnRzIHN0YXRlIHRvIERUTyBvYmplY3QiCiAgICAgICAgICAgICAgICAgICAgdGF1cmlBcGlDbGllbnQgPSBjb21wb25lbnQgIlRhdXJpIEFQSSBDbGllbnQiCiAgICAgICAgICAgICAgICAgICAgcmVzdEFQSUNsaWVudCA9IGNvbXBvbmVudCAiUkVTVCBBUEkgQ2xpZW50IgoKCiAgICAgICAgICAgICAgICAgICAgY29tcG9uZW50MSAtPiByZWR1eHN0b3JlICJ1c2VzIgogICAgICAgICAgICAgICAgICAgIGNvbXBvbmVudDEgLT4gc2xpY2UxICJ1c2VzIgogICAgICAgICAgICAgICAgICAgIGNvbXBvbmVudDEgLT4gYXBpSW50ZXJmYWNlICJ1c2VzIgogICAgICAgICAgICAgICAgICAgIGNvbXBvbmVudDEgLT4gYXBpVHJhbnNmb3JtZXIgInVzZXMiCiAgICAgICAgICAgICAgICAgICAgdGF1cmlBcGlDbGllbnQgLT4gYXBpSW50ZXJmYWNlICJpbXBsZW1lbnRzIgogICAgICAgICAgICAgICAgICAgIHJlc3RBUElDbGllbnQgLT4gYXBpSW50ZXJmYWNlICJpbXBsZW1lbnRzIgoKICAgICAgICAgICAgICAgICAgICByZWR1eFN0b3JlIC0+IHNsaWNlMSAiaGFzIiAgICAgICAgICAgICAgICAgCgogICAgICAgICAgICAgICAgICAgIGN1c3RvbWVyIC0+IGNvbXBvbmVudDEgIkRlc2lnbiBjdXN0b21pemVkIG5ldHdvcmtzIgogICAgICAgICAgICAgICAgICAgIGNvbXBvbmVudDEgLT4gZW5naW5lZXIgIlJlY2VpdmVzIGN1c3RvbWl6ZWQgbmV0d29yayIKICAgICAgICAgICAgICAgICAgICBkZXZlbG9wZXIgLT4gY29tcG9uZW50MSAiTWFpbnRhaW5zIiAKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBjbGlhcHAgPSBjb250YWluZXIgIkNvbW1hbmQgTGluZSBBcHBsaWNhdGlvbiIgewogICAgICAgICAgICAgICAgICAgIGN1c3RvbWVyIC0+IHRoaXMgIkRlc2lnbiBjdXN0b21pemVkIG5ldHdvcmtzIgogICAgICAgICAgICAgICAgICAgIHRoaXMgLT4gZW5naW5lZXIgIlJlY2VpdmVzIGN1c3RvbWl6ZWQgbmV0d29yayIKICAgICAgICAgICAgICAgICAgICBkZXZlbG9wZXIgLT4gdGhpcyAiTWFpbnRhaW5zIiAKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGFwcHNlcnZlciA9IGNvbnRhaW5lciAiQXBwbGljYXRpb24gTGF5ZXIiIHsKICAgICAgICAgICAgICAgIGRhdGFzZXR1cCA9IGNvbXBvbmVudCAiRGF0YU1hbmFnZXIiCiAgICAgICAgICAgICAgICBwcm9qZWN0bWFuYWdlciA9IGNvbXBvbmVudCAiUHJvamVjdE1hbmFnZXIiCiAgICAgICAgICAgICAgICBmaWxlbWFuYWdlciA9IGNvbXBvbmVudCAiRmlsZU1hbmFnZXIiCiAgICAgICAgICAgICAgICByZXN1bHRnZW5lcmF0b3IgPSBjb21wb25lbnQgIlJlc3VsdEdlbmVyYXRvciIKICAgICAgICAgICAgICAgIGZpbHRlcm1hbmFnZXIgPSBjb21wb25lbnQgIkZpbHRlck1hbmFnZXIiICJUQkQgLSBEb2VzIHRoZSBzaW11bGF0b3IgcmV0dXJuIGEgbGlzdCBvZiBmaWx0ZXJzIGFuZCB0aGVpciBwcm9wZXJ0aWVzPyIKICAgICAgICAgICAgICAgIGZlYXR1cmVuZ2luZWVyID0gY29tcG9uZW50ICJGZWF0dXJlRW5naW5lZXIiICJUQkQgLSBBcmUgd2UgbWFuYWdpbmcgbmV1cmFsIG5ldHdvcmsgZmVhdHVyZXMgc2VwZXJhdGVseT8gRG8gdGhleSBuZWVkIHRvIGJlIHN0b3JlZD8iCiAgICAgICAgICAgICAgICBtYWluVUkgPSBjb21wb25lbnQgIk1haW4gVUkiCiAgICAgICAgICAgICAgICBtYWluQ0xJID0gY29tcG9uZW50ICJNYWluIENMSSIKICAgICAgICAgICAgICAgIGFtbENvbm5lY3RDb3JlID0gY29tcG9uZW50ICJBTUwgQ29ubmVjdCBDb3JlIgogICAgICAgICAgICAgICAgY2hpcHNpbXVsYXRvciA9IGNvbXBvbmVudCAiQ2hpcFNpbXVsYXRvciIKICAgICAgICAgICAgICAgIGRibWFuYWdlciA9IGNvbXBvbmVudCAiREJNYW5hZ2VyIgogICAgICAgICAgICAgICAgYXVkaW9tYW5hZ2VyID0gY29tcG9uZW50ICJBdWRpb01hbmFnZXIiCiAgICAgICAgICAgICAgICBtbGludGVycHJldG9ybW9kID0gY29tcG9uZW50ICJNTEludGVycHJldG9yIgogICAgICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgPSBjb21wb25lbnQgIk5ldHdvcmtNYW5hZ2VyIgoKICAgICAgICAgICAgICAgIGFtbENvbm5lY3RDb3JlIC0+IG5ldHdvcmttYW5hZ2VyCiAgICAgICAgICAgICAgICBhbWxDb25uZWN0Q29yZSAtPiBkYXRhc2V0dXAKICAgICAgICAgICAgICAgIGFtbENvbm5lY3RDb3JlIC0+IHByb2plY3RtYW5hZ2VyCiAgICAgICAgICAgICAgICBhbWxDb25uZWN0Q29yZSAtPiBhdWRpb21hbmFnZXIKICAgICAgICAgICAgICAgIHByb2plY3RtYW5hZ2VyIC0+IGZpbGVtYW5hZ2VyCiAgICAgICAgICAgICAgICBkYXRhc2V0dXAgLT4gZmlsZW1hbmFnZXIKICAgICAgICAgICAgICAgIG5ldHdvcmttYW5hZ2VyIC0+IHJlc3VsdGdlbmVyYXRvcgogICAgICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgLT4gZmlsdGVybWFuYWdlcgogICAgICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgLT4gY2hpcHNpbXVsYXRvcgogICAgICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgLT4gZGJtYW5hZ2VyCiAgICAgICAgICAgICAgICBuZXR3b3JrbWFuYWdlciAtPiBmZWF0dXJlbmdpbmVlcgogICAgICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgLT4gbWxpbnRlcnByZXRvcm1vZAogICAgICAgICAgICB9CgogICAgICAgICAgICBzaW11bGF0b3IgPSBjb250YWluZXIgIlNpbXVsYXRvciIgewoKICAgICAgICAgICAgfQoKICAgICAgICAgICAgYXBwX2RiID0gY29udGFpbmVyICJBcHBsaWNhdGlvbiBEYXRhYmFzZSIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlJlc3BvbnNpYmxlIGZvciBzdG9yaW5nIGFwcGxpY2F0aW9uIGRhdGEgdGhhdCBkb2VzIG5vdCBwZXJ0YWluIGRpcmVjdGx5IHRvIHRoZSBuZXR3b3JrLiBEZXRhaWxzIFRCRCIKICAgICAgICAgICAgICAgIHRhZ3MgIkRCIgogICAgICAgICAgICB9CgogICAgICAgICAgICBjYWNoZSA9IGNvbnRhaW5lciAiQ2FjaGUiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJmb2N1c2VkIG9uIGNhY2hpbmcgbmV0d29yayBmaWxlcyBmb3IgZmFzdCByZXRyaWV2YWwuIERldGFpbHMgVEJELiIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZmlsZXN5c3RlbSA9IGNvbnRhaW5lciAiTG9jYWwgRmlsZSBTeXN0ZW0iIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJSZXNwb25zaWJsZSBmb3Igc3RvcmluZyBhdWRpbyBmaWxlcyBhbmQgdGVzdCBkYXRhIgogICAgICAgICAgICAgICAgdGFncyAiREIiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIG1sX2ludGVyZXByZXRvciA9IGNvbnRhaW5lciAiTWFjaGluZSBMZWFybmluZyBJbnRlcnByZXRvciIgewogICAgICAgICAgICAgICAgY29tcG9uZW50ICJUcmFpbmluZyBNYW5hZ2VyIgogICAgICAgICAgICAgICAgY29tcG9uZW50ICJEYXRhIFZpc3VhbGl6ZXIiCiAgICAgICAgICAgIH0KICAgICAgICAgICAgY2hpcHNpbXVsYXRvciAtPiBzaW11bGF0b3IgImNhbGxzIiAiVEJEIgogICAgICAgICAgICBtbGludGVycHJldG9ybW9kIC0+IG1sX2ludGVyZXByZXRvciAiY2FsbHMiICJJUEMqIgoKICAgICAgICAgICAgc2ltdWxhdG9yIC0+IGNoaXBzaW11bGF0b3IgInJlc3VsdHMiIAogICAgICAgICAgICBtbF9pbnRlcmVwcmV0b3IgLT4gbWxpbnRlcnByZXRvcm1vZCAidHJhaW5pbmcgbG9ncyIKCiAgICAgICAgICAgIAogICAgICAgICAgICBmaWxlc3lzdGVtIC0+IGZpbGVtYW5hZ2VyICJyZXRyaWV2ZSBmaWxlcyIgIlVwbG9hZCBmcm9tIGxvY2FsIFBDIgogICAgICAgICAgICAgICAgCiAgICAgICAgICAgIGNsaWFwcCAtPiBtYWluQ0xJICJjYWxscyB2aWEgYmFzaCIKICAgICAgICAgICAgdGF1cmlBcGlDbGllbnQgLT4gbWFpblVJICJtYWtlcyBjYWxscyB0byIgIltJUEMtSlNPTl0iCgoKICAgICAgICAgICAgbWFpblVJIC0+IGFtbENvbm5lY3RDb3JlIAogICAgICAgICAgICBtYWluQ0xJIC0+IGFtbENvbm5lY3RDb3JlCgogICAgICAgICAgICBkYm1hbmFnZXIgLT4gYXBwX2RiICJzYXZlcyBhbmQgcmV0cmVpdmVzIGRhdGEiICJUQkQiCiAgICAgICAgICAgIAogICAgICAgICAgICBkYm1hbmFnZXIgLT4gY2FjaGUgInJldHJpZXZlcyBjYWNoZWQgbmV0d29yayBjb25maWciICJUQkQiCiAgICAgICAgICAgIGNhY2hlIC0+IGFwcF9kYiAicmV0cmlldmVzIGRhdGEiICJUQkQiCgogICAgICAgIH0KCiAgICAgICAgQU1MMTAwID0gZWxlbWVudCAiQU1MMTAwIiAiQXNwaW5pdHkncyBhbmFsb2cgbWFjaGluZSBsZWFybmluZyBjaGlwIgogICAgICAgIGVuZ2luZWVyIC0+IEFNTDEwMCAiRGVwbG95IG5ldHdvcmsiCiAgICB9CgogICAgdmlld3MgewogICAgICAgIHN5c3RlbUxhbmRzY2FwZSBsYW5kc2NhcGUgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgIH0KCiAgICAgICAgc3lzdGVtQ29udGV4dCBhc3RybCB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvbGF5b3V0IAogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIGFzdHJsIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgfQoKICAgICAgICBjb21wb25lbnQgYXBwc2VydmVyIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9sYXlvdXQgbHIKICAgICAgICB9CgogICAgICAgIGNvbXBvbmVudCB1aUxheWVyIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgfQoKICAgICAgICB0aGVtZSBkZWZhdWx0CiAgICB9Cn0K"
+  },
+  "configuration" : { },
+  "model" : {
+    "people" : [ {
+      "id" : "3",
+      "tags" : "Element,Person",
+      "properties" : {
+        "structurizr.dsl.identifier" : "developer"
+      },
+      "name" : "System Developer",
+      "description" : "Team ChipMonks",
+      "relationships" : [ {
+        "id" : "28",
+        "sourceId" : "3",
+        "destinationId" : "4",
+        "description" : "Maintains",
+        "linkedRelationshipId" : "26"
+      }, {
+        "id" : "26",
+        "tags" : "Relationship",
+        "sourceId" : "3",
+        "destinationId" : "6",
+        "description" : "Maintains"
+      }, {
+        "id" : "27",
+        "sourceId" : "3",
+        "destinationId" : "5",
+        "description" : "Maintains",
+        "linkedRelationshipId" : "26"
+      }, {
+        "id" : "32",
+        "tags" : "Relationship",
+        "sourceId" : "3",
+        "destinationId" : "29",
+        "description" : "Maintains"
+      } ],
+      "location" : "Unspecified"
+    }, {
+      "id" : "1",
+      "tags" : "Element,Person",
+      "properties" : {
+        "structurizr.dsl.identifier" : "customer"
+      },
+      "name" : "Chip Programmer",
+      "description" : "Aspinity's customer",
+      "relationships" : [ {
+        "id" : "21",
+        "sourceId" : "1",
+        "destinationId" : "5",
+        "description" : "Design customized networks",
+        "linkedRelationshipId" : "20"
+      }, {
+        "id" : "30",
+        "tags" : "Relationship",
+        "sourceId" : "1",
+        "destinationId" : "29",
+        "description" : "Design customized networks"
+      }, {
+        "id" : "20",
+        "tags" : "Relationship",
+        "sourceId" : "1",
+        "destinationId" : "6",
+        "description" : "Design customized networks"
+      }, {
+        "id" : "22",
+        "sourceId" : "1",
+        "destinationId" : "4",
+        "description" : "Design customized networks",
+        "linkedRelationshipId" : "20"
+      } ],
+      "location" : "Unspecified"
+    }, {
+      "id" : "2",
+      "tags" : "Element,Person",
+      "properties" : {
+        "structurizr.dsl.identifier" : "engineer"
+      },
+      "name" : "Aspinity Engineer",
+      "description" : "usually Nick",
+      "relationships" : [ {
+        "id" : "91",
+        "tags" : "Relationship",
+        "sourceId" : "2",
+        "destinationId" : "90",
+        "description" : "Deploy network"
+      } ],
+      "location" : "Unspecified"
+    } ],
+    "softwareSystems" : [ {
+      "id" : "4",
+      "tags" : "Element,Software System",
+      "properties" : {
+        "structurizr.dsl.identifier" : "astrl"
+      },
+      "name" : "Aspinity Development Platform",
+      "relationships" : [ {
+        "id" : "25",
+        "sourceId" : "4",
+        "destinationId" : "2",
+        "description" : "Receives customized network",
+        "linkedRelationshipId" : "23"
+      } ],
+      "location" : "Unspecified",
+      "containers" : [ {
+        "id" : "29",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "cliapp"
+        },
+        "name" : "Command Line Application",
+        "relationships" : [ {
+          "id" : "77",
+          "tags" : "Relationship",
+          "sourceId" : "29",
+          "destinationId" : "41",
+          "description" : "calls via bash"
+        }, {
+          "id" : "78",
+          "sourceId" : "29",
+          "destinationId" : "33",
+          "description" : "calls via bash",
+          "linkedRelationshipId" : "77"
+        }, {
+          "id" : "31",
+          "tags" : "Relationship",
+          "sourceId" : "29",
+          "destinationId" : "2",
+          "description" : "Receives customized network"
+        } ],
+        "group" : "Clients",
+        "documentation" : { }
+      }, {
+        "id" : "63",
+        "tags" : "Element,Container,DB",
+        "properties" : {
+          "structurizr.dsl.identifier" : "filesystem"
+        },
+        "name" : "Local File System",
+        "description" : "Responsible for storing audio files and test data",
+        "relationships" : [ {
+          "id" : "75",
+          "tags" : "Relationship",
+          "sourceId" : "63",
+          "destinationId" : "36",
+          "description" : "retrieve files",
+          "technology" : "Upload from local PC"
+        }, {
+          "id" : "76",
+          "sourceId" : "63",
+          "destinationId" : "33",
+          "description" : "retrieve files",
+          "technology" : "Upload from local PC",
+          "linkedRelationshipId" : "75"
+        } ],
+        "documentation" : { }
+      }, {
+        "id" : "64",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ml_interepretor"
+        },
+        "name" : "Machine Learning Interpretor",
+        "relationships" : [ {
+          "id" : "74",
+          "sourceId" : "64",
+          "destinationId" : "33",
+          "description" : "training logs",
+          "linkedRelationshipId" : "73"
+        }, {
+          "id" : "73",
+          "tags" : "Relationship",
+          "sourceId" : "64",
+          "destinationId" : "46",
+          "description" : "training logs"
+        } ],
+        "components" : [ {
+          "id" : "65",
+          "tags" : "Element,Component",
+          "name" : "Training Manager",
+          "documentation" : { }
+        }, {
+          "id" : "66",
+          "tags" : "Element,Component",
+          "name" : "Data Visualizer",
+          "documentation" : { }
+        } ],
+        "documentation" : { }
+      }, {
+        "id" : "5",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "uilayer"
+        },
+        "name" : "UI Layer",
+        "relationships" : [ {
+          "id" : "82",
+          "sourceId" : "5",
+          "destinationId" : "33",
+          "description" : "makes calls to",
+          "technology" : "[IPC-JSON]",
+          "linkedRelationshipId" : "79"
+        }, {
+          "id" : "81",
+          "sourceId" : "5",
+          "destinationId" : "40",
+          "description" : "makes calls to",
+          "technology" : "[IPC-JSON]",
+          "linkedRelationshipId" : "79"
+        }, {
+          "id" : "24",
+          "sourceId" : "5",
+          "destinationId" : "2",
+          "description" : "Receives customized network",
+          "linkedRelationshipId" : "23"
+        } ],
+        "group" : "Clients",
+        "components" : [ {
+          "id" : "10",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "apitransformer"
+          },
+          "name" : "API Transformer",
+          "description" : "Converts state to DTO object",
+          "documentation" : { }
+        }, {
+          "id" : "6",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "component1"
+          },
+          "name" : "Sample React Component",
+          "relationships" : [ {
+            "id" : "15",
+            "tags" : "Relationship",
+            "sourceId" : "6",
+            "destinationId" : "9",
+            "description" : "uses"
+          }, {
+            "id" : "16",
+            "tags" : "Relationship",
+            "sourceId" : "6",
+            "destinationId" : "10",
+            "description" : "uses"
+          }, {
+            "id" : "14",
+            "tags" : "Relationship",
+            "sourceId" : "6",
+            "destinationId" : "7",
+            "description" : "uses"
+          }, {
+            "id" : "13",
+            "tags" : "Relationship",
+            "sourceId" : "6",
+            "destinationId" : "8",
+            "description" : "uses"
+          }, {
+            "id" : "23",
+            "tags" : "Relationship",
+            "sourceId" : "6",
+            "destinationId" : "2",
+            "description" : "Receives customized network"
+          } ],
+          "group" : "ReactComponents",
+          "documentation" : { }
+        }, {
+          "id" : "11",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "tauriapiclient"
+          },
+          "name" : "Tauri API Client",
+          "relationships" : [ {
+            "id" : "79",
+            "tags" : "Relationship",
+            "sourceId" : "11",
+            "destinationId" : "40",
+            "description" : "makes calls to",
+            "technology" : "[IPC-JSON]"
+          }, {
+            "id" : "80",
+            "sourceId" : "11",
+            "destinationId" : "33",
+            "description" : "makes calls to",
+            "technology" : "[IPC-JSON]",
+            "linkedRelationshipId" : "79"
+          }, {
+            "id" : "17",
+            "tags" : "Relationship",
+            "sourceId" : "11",
+            "destinationId" : "9",
+            "description" : "implements"
+          } ],
+          "documentation" : { }
+        }, {
+          "id" : "12",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "restapiclient"
+          },
+          "name" : "REST API Client",
+          "relationships" : [ {
+            "id" : "18",
+            "tags" : "Relationship",
+            "sourceId" : "12",
+            "destinationId" : "9",
+            "description" : "implements"
+          } ],
+          "documentation" : { }
+        }, {
+          "id" : "9",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "apiinterface"
+          },
+          "name" : "API Interface",
+          "documentation" : { }
+        }, {
+          "id" : "7",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "slice1"
+          },
+          "name" : "Sample Slice",
+          "group" : "Slices",
+          "documentation" : { }
+        }, {
+          "id" : "8",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "reduxstore"
+          },
+          "name" : "Redux store",
+          "relationships" : [ {
+            "id" : "19",
+            "tags" : "Relationship",
+            "sourceId" : "8",
+            "destinationId" : "7",
+            "description" : "has"
+          } ],
+          "documentation" : { }
+        } ],
+        "documentation" : { }
+      }, {
+        "id" : "33",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "appserver"
+        },
+        "name" : "Application Layer",
+        "relationships" : [ {
+          "id" : "88",
+          "sourceId" : "33",
+          "destinationId" : "62",
+          "description" : "retrieves cached network config",
+          "technology" : "TBD",
+          "linkedRelationshipId" : "87"
+        }, {
+          "id" : "70",
+          "sourceId" : "33",
+          "destinationId" : "64",
+          "description" : "calls",
+          "technology" : "IPC*",
+          "linkedRelationshipId" : "69"
+        }, {
+          "id" : "68",
+          "sourceId" : "33",
+          "destinationId" : "60",
+          "description" : "calls",
+          "technology" : "TBD",
+          "linkedRelationshipId" : "67"
+        }, {
+          "id" : "86",
+          "sourceId" : "33",
+          "destinationId" : "61",
+          "description" : "saves and retreives data",
+          "technology" : "TBD",
+          "linkedRelationshipId" : "85"
+        } ],
+        "components" : [ {
+          "id" : "44",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "dbmanager"
+          },
+          "name" : "DBManager",
+          "relationships" : [ {
+            "id" : "85",
+            "tags" : "Relationship",
+            "sourceId" : "44",
+            "destinationId" : "61",
+            "description" : "saves and retreives data",
+            "technology" : "TBD"
+          }, {
+            "id" : "87",
+            "tags" : "Relationship",
+            "sourceId" : "44",
+            "destinationId" : "62",
+            "description" : "retrieves cached network config",
+            "technology" : "TBD"
+          } ],
+          "documentation" : { }
+        }, {
+          "id" : "36",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "filemanager"
+          },
+          "name" : "FileManager",
+          "documentation" : { }
+        }, {
+          "id" : "37",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "resultgenerator"
+          },
+          "name" : "ResultGenerator",
+          "documentation" : { }
+        }, {
+          "id" : "35",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "projectmanager"
+          },
+          "name" : "ProjectManager",
+          "relationships" : [ {
+            "id" : "52",
+            "tags" : "Relationship",
+            "sourceId" : "35",
+            "destinationId" : "36"
+          } ],
+          "documentation" : { }
+        }, {
+          "id" : "39",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "featurengineer"
+          },
+          "name" : "FeatureEngineer",
+          "description" : "TBD - Are we managing neural network features seperately? Do they need to be stored?",
+          "documentation" : { }
+        }, {
+          "id" : "34",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "datasetup"
+          },
+          "name" : "DataManager",
+          "relationships" : [ {
+            "id" : "53",
+            "tags" : "Relationship",
+            "sourceId" : "34",
+            "destinationId" : "36"
+          } ],
+          "documentation" : { }
+        }, {
+          "id" : "38",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "filtermanager"
+          },
+          "name" : "FilterManager",
+          "description" : "TBD - Does the simulator return a list of filters and their properties?",
+          "documentation" : { }
+        }, {
+          "id" : "45",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "audiomanager"
+          },
+          "name" : "AudioManager",
+          "documentation" : { }
+        }, {
+          "id" : "41",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "maincli"
+          },
+          "name" : "Main CLI",
+          "relationships" : [ {
+            "id" : "84",
+            "tags" : "Relationship",
+            "sourceId" : "41",
+            "destinationId" : "42"
+          } ],
+          "documentation" : { }
+        }, {
+          "id" : "46",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "mlinterpretormod"
+          },
+          "name" : "MLInterpretor",
+          "relationships" : [ {
+            "id" : "69",
+            "tags" : "Relationship",
+            "sourceId" : "46",
+            "destinationId" : "64",
+            "description" : "calls",
+            "technology" : "IPC*"
+          } ],
+          "documentation" : { }
+        }, {
+          "id" : "43",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "chipsimulator"
+          },
+          "name" : "ChipSimulator",
+          "relationships" : [ {
+            "id" : "67",
+            "tags" : "Relationship",
+            "sourceId" : "43",
+            "destinationId" : "60",
+            "description" : "calls",
+            "technology" : "TBD"
+          } ],
+          "documentation" : { }
+        }, {
+          "id" : "42",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "amlconnectcore"
+          },
+          "name" : "AML Connect Core",
+          "relationships" : [ {
+            "id" : "49",
+            "tags" : "Relationship",
+            "sourceId" : "42",
+            "destinationId" : "34"
+          }, {
+            "id" : "48",
+            "tags" : "Relationship",
+            "sourceId" : "42",
+            "destinationId" : "47"
+          }, {
+            "id" : "50",
+            "tags" : "Relationship",
+            "sourceId" : "42",
+            "destinationId" : "35"
+          }, {
+            "id" : "51",
+            "tags" : "Relationship",
+            "sourceId" : "42",
+            "destinationId" : "45"
+          } ],
+          "documentation" : { }
+        }, {
+          "id" : "47",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "networkmanager"
+          },
+          "name" : "NetworkManager",
+          "relationships" : [ {
+            "id" : "55",
+            "tags" : "Relationship",
+            "sourceId" : "47",
+            "destinationId" : "38"
+          }, {
+            "id" : "57",
+            "tags" : "Relationship",
+            "sourceId" : "47",
+            "destinationId" : "44"
+          }, {
+            "id" : "59",
+            "tags" : "Relationship",
+            "sourceId" : "47",
+            "destinationId" : "46"
+          }, {
+            "id" : "54",
+            "tags" : "Relationship",
+            "sourceId" : "47",
+            "destinationId" : "37"
+          }, {
+            "id" : "58",
+            "tags" : "Relationship",
+            "sourceId" : "47",
+            "destinationId" : "39"
+          }, {
+            "id" : "56",
+            "tags" : "Relationship",
+            "sourceId" : "47",
+            "destinationId" : "43"
+          } ],
+          "documentation" : { }
+        }, {
+          "id" : "40",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "mainui"
+          },
+          "name" : "Main UI",
+          "relationships" : [ {
+            "id" : "83",
+            "tags" : "Relationship",
+            "sourceId" : "40",
+            "destinationId" : "42"
+          } ],
+          "documentation" : { }
+        } ],
+        "documentation" : { }
+      }, {
+        "id" : "61",
+        "tags" : "Element,Container,DB",
+        "properties" : {
+          "structurizr.dsl.identifier" : "app_db"
+        },
+        "name" : "Application Database",
+        "description" : "Responsible for storing application data that does not pertain directly to the network. Details TBD",
+        "documentation" : { }
+      }, {
+        "id" : "60",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "simulator"
+        },
+        "name" : "Simulator",
+        "relationships" : [ {
+          "id" : "71",
+          "tags" : "Relationship",
+          "sourceId" : "60",
+          "destinationId" : "43",
+          "description" : "results"
+        }, {
+          "id" : "72",
+          "sourceId" : "60",
+          "destinationId" : "33",
+          "description" : "results",
+          "linkedRelationshipId" : "71"
+        } ],
+        "documentation" : { }
+      }, {
+        "id" : "62",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "cache"
+        },
+        "name" : "Cache",
+        "description" : "focused on caching network files for fast retrieval. Details TBD.",
+        "relationships" : [ {
+          "id" : "89",
+          "tags" : "Relationship",
+          "sourceId" : "62",
+          "destinationId" : "61",
+          "description" : "retrieves data",
+          "technology" : "TBD"
+        } ],
+        "documentation" : { }
+      } ],
+      "documentation" : { }
+    } ],
+    "customElements" : [ {
+      "id" : "90",
+      "tags" : "Element",
+      "properties" : {
+        "structurizr.dsl.identifier" : "aml100"
+      },
+      "name" : "AML100",
+      "metadata" : "Aspinity's analog machine learning chip"
+    } ]
+  },
+  "documentation" : { },
+  "views" : {
+    "systemLandscapeViews" : [ {
+      "key" : "landscape",
+      "order" : 1,
+      "dimensions" : {
+        "width" : 3000,
+        "height" : 1500
+      },
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "enterpriseBoundaryVisible" : true,
+      "elements" : [ {
+        "id" : "1",
+        "x" : 199,
+        "y" : 199
+      }, {
+        "id" : "2",
+        "x" : 1649,
+        "y" : 549
+      }, {
+        "id" : "3",
+        "x" : 199,
+        "y" : 899
+      }, {
+        "id" : "4",
+        "x" : 899,
+        "y" : 599
+      }, {
+        "id" : "90",
+        "x" : 2349,
+        "y" : 599
+      } ],
+      "relationships" : [ {
+        "id" : "28"
+      }, {
+        "id" : "91"
+      }, {
+        "id" : "25"
+      }, {
+        "id" : "22"
+      } ]
+    } ],
+    "systemContextViews" : [ {
+      "key" : "SystemContext-001",
+      "order" : 2,
+      "softwareSystemId" : "4",
+      "dimensions" : {
+        "width" : 1500,
+        "height" : 2100
+      },
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "enterpriseBoundaryVisible" : true,
+      "elements" : [ {
+        "id" : "1",
+        "x" : 199,
+        "y" : 199
+      }, {
+        "id" : "2",
+        "x" : 549,
+        "y" : 1499
+      }, {
+        "id" : "3",
+        "x" : 899,
+        "y" : 199
+      }, {
+        "id" : "4",
+        "x" : 524,
+        "y" : 899
+      } ],
+      "relationships" : [ {
+        "id" : "28"
+      }, {
+        "id" : "25"
+      }, {
+        "id" : "22"
+      } ]
+    } ],
+    "containerViews" : [ {
+      "key" : "Container-001",
+      "order" : 3,
+      "softwareSystemId" : "4",
+      "dimensions" : {
+        "width" : 3565,
+        "height" : 2706
+      },
+      "externalSoftwareSystemBoundariesVisible" : true,
+      "elements" : [ {
+        "id" : "33",
+        "x" : 1809,
+        "y" : 946
+      }, {
+        "id" : "1",
+        "x" : 199,
+        "y" : 431
+      }, {
+        "id" : "2",
+        "x" : 2139,
+        "y" : 2106
+      }, {
+        "id" : "3",
+        "x" : 279,
+        "y" : 1671
+      }, {
+        "id" : "5",
+        "x" : 1048,
+        "y" : 1420
+      }, {
+        "id" : "29",
+        "x" : 1069,
+        "y" : 821
+      }, {
+        "id" : "60",
+        "x" : 2879,
+        "y" : 1316
+      }, {
+        "id" : "61",
+        "x" : 2539,
+        "y" : 266
+      }, {
+        "id" : "62",
+        "x" : 1734,
+        "y" : 261
+      }, {
+        "id" : "63",
+        "x" : 1048,
+        "y" : 220
+      }, {
+        "id" : "64",
+        "x" : 2894,
+        "y" : 911
+      } ],
+      "relationships" : [ {
+        "id" : "70",
+        "vertices" : [ {
+          "x" : 2664,
+          "y" : 1121
+        } ]
+      }, {
+        "id" : "82"
+      }, {
+        "id" : "72",
+        "vertices" : [ {
+          "x" : 2619,
+          "y" : 1321
+        } ]
+      }, {
+        "id" : "86",
+        "vertices" : [ {
+          "x" : 2310,
+          "y" : 760
+        }, {
+          "x" : 2400,
+          "y" : 695
+        } ]
+      }, {
+        "id" : "74",
+        "vertices" : [ {
+          "x" : 2719,
+          "y" : 1051
+        } ]
+      }, {
+        "id" : "76",
+        "vertices" : [ {
+          "x" : 1623,
+          "y" : 710
+        } ]
+      }, {
+        "id" : "32",
+        "vertices" : [ {
+          "x" : 785,
+          "y" : 1510
+        } ]
+      }, {
+        "id" : "21",
+        "vertices" : [ {
+          "x" : 760,
+          "y" : 1035
+        } ]
+      }, {
+        "id" : "31",
+        "vertices" : [ {
+          "x" : 1602,
+          "y" : 1270
+        } ]
+      }, {
+        "id" : "30"
+      }, {
+        "id" : "27"
+      }, {
+        "id" : "24"
+      }, {
+        "id" : "78"
+      }, {
+        "id" : "88"
+      }, {
+        "id" : "68",
+        "vertices" : [ {
+          "x" : 2479,
+          "y" : 1356
+        } ]
+      }, {
+        "id" : "89"
+      } ]
+    } ],
+    "componentViews" : [ {
+      "key" : "Component-001",
+      "order" : 4,
+      "dimensions" : {
+        "width" : 5350,
+        "height" : 4920
+      },
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "containerId" : "33",
+      "externalContainerBoundariesVisible" : true,
+      "elements" : [ {
+        "id" : "44",
+        "x" : 3199,
+        "y" : 2019
+      }, {
+        "id" : "34",
+        "x" : 2449,
+        "y" : 3819
+      }, {
+        "id" : "45",
+        "x" : 2449,
+        "y" : 2619
+      }, {
+        "id" : "35",
+        "x" : 2449,
+        "y" : 3219
+      }, {
+        "id" : "46",
+        "x" : 3199,
+        "y" : 1419
+      }, {
+        "id" : "47",
+        "x" : 2449,
+        "y" : 2019
+      }, {
+        "id" : "36",
+        "x" : 3199,
+        "y" : 3819
+      }, {
+        "id" : "37",
+        "x" : 3199,
+        "y" : 219
+      }, {
+        "id" : "38",
+        "x" : 3199,
+        "y" : 3219
+      }, {
+        "id" : "39",
+        "x" : 3199,
+        "y" : 2619
+      }, {
+        "id" : "29",
+        "x" : 199,
+        "y" : 2619
+      }, {
+        "id" : "5",
+        "x" : 199,
+        "y" : 3219
+      }, {
+        "id" : "60",
+        "x" : 3949,
+        "y" : 819
+      }, {
+        "id" : "61",
+        "x" : 4699,
+        "y" : 2327
+      }, {
+        "id" : "62",
+        "x" : 3949,
+        "y" : 2627
+      }, {
+        "id" : "40",
+        "x" : 949,
+        "y" : 3219
+      }, {
+        "id" : "41",
+        "x" : 949,
+        "y" : 2619
+      }, {
+        "id" : "63",
+        "x" : 2449,
+        "y" : 4419
+      }, {
+        "id" : "42",
+        "x" : 1699,
+        "y" : 2919
+      }, {
+        "id" : "64",
+        "x" : 3949,
+        "y" : 1419
+      }, {
+        "id" : "43",
+        "x" : 3199,
+        "y" : 819
+      } ],
+      "relationships" : [ {
+        "id" : "50"
+      }, {
+        "id" : "71",
+        "vertices" : [ {
+          "x" : 3799,
+          "y" : 819
+        } ]
+      }, {
+        "id" : "51"
+      }, {
+        "id" : "52"
+      }, {
+        "id" : "73",
+        "vertices" : [ {
+          "x" : 3799,
+          "y" : 1419
+        } ]
+      }, {
+        "id" : "53"
+      }, {
+        "id" : "75"
+      }, {
+        "id" : "54",
+        "vertices" : [ {
+          "x" : 3199,
+          "y" : 669
+        } ]
+      }, {
+        "id" : "67",
+        "vertices" : [ {
+          "x" : 3799,
+          "y" : 1119
+        } ]
+      }, {
+        "id" : "69",
+        "vertices" : [ {
+          "x" : 3799,
+          "y" : 1719
+        } ]
+      }, {
+        "id" : "89"
+      }, {
+        "id" : "48"
+      }, {
+        "id" : "49"
+      }, {
+        "id" : "83"
+      }, {
+        "id" : "81"
+      }, {
+        "id" : "87"
+      }, {
+        "id" : "84"
+      }, {
+        "id" : "85"
+      }, {
+        "id" : "55",
+        "vertices" : [ {
+          "x" : 2899,
+          "y" : 2469
+        }, {
+          "x" : 3199,
+          "y" : 3069
+        } ]
+      }, {
+        "id" : "77"
+      }, {
+        "id" : "56",
+        "vertices" : [ {
+          "x" : 3199,
+          "y" : 1269
+        } ]
+      }, {
+        "id" : "57"
+      }, {
+        "id" : "58"
+      }, {
+        "id" : "59"
+      } ]
+    }, {
+      "key" : "Component-002",
+      "order" : 5,
+      "dimensions" : {
+        "width" : 2485,
+        "height" : 2820
+      },
+      "containerId" : "5",
+      "externalContainerBoundariesVisible" : true,
+      "elements" : [ {
+        "id" : "11",
+        "x" : 689,
+        "y" : 1680
+      }, {
+        "id" : "33",
+        "x" : 760,
+        "y" : 2290
+      }, {
+        "id" : "1",
+        "x" : 214,
+        "y" : 200
+      }, {
+        "id" : "12",
+        "x" : 220,
+        "y" : 1680
+      }, {
+        "id" : "2",
+        "x" : 904,
+        "y" : 210
+      }, {
+        "id" : "3",
+        "x" : 1644,
+        "y" : 210
+      }, {
+        "id" : "6",
+        "x" : 924,
+        "y" : 930
+      }, {
+        "id" : "7",
+        "x" : 1790,
+        "y" : 1685
+      }, {
+        "id" : "8",
+        "x" : 1770,
+        "y" : 960
+      }, {
+        "id" : "9",
+        "x" : 215,
+        "y" : 965
+      }, {
+        "id" : "10",
+        "x" : 1249,
+        "y" : 1680
+      } ],
+      "relationships" : [ {
+        "id" : "18"
+      }, {
+        "id" : "17"
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "80"
+      }, {
+        "id" : "26"
+      }, {
+        "id" : "15",
+        "vertices" : [ {
+          "x" : 815,
+          "y" : 1145
+        }, {
+          "x" : 775,
+          "y" : 1155
+        } ]
+      }, {
+        "id" : "14",
+        "vertices" : [ {
+          "x" : 1545,
+          "y" : 1460
+        }, {
+          "x" : 1689,
+          "y" : 1575
+        }, {
+          "x" : 1699,
+          "y" : 1580
+        } ]
+      }, {
+        "id" : "13"
+      }, {
+        "id" : "23"
+      }, {
+        "id" : "20"
+      }, {
+        "id" : "19"
+      } ]
+    } ],
+    "configuration" : {
+      "branding" : { },
+      "styles" : { },
+      "themes" : [ "https://static.structurizr.com/themes/default/theme.json" ],
+      "terminology" : { },
+      "metadataSymbols" : "SquareBrackets",
+      "lastSavedView" : "SystemContext-001"
+    }
+  }
+}
