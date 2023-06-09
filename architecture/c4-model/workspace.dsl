@@ -9,7 +9,6 @@ workspace {
             group Clients {
                 
                 uiLayer = container "UI Layer"{
-                    description = "TODO: how are we maintatining history of actions?"
                     group ReactComponents {
                         component1 = component "Sample React Component"    
                     }
@@ -64,6 +63,8 @@ workspace {
                 audiomanager = component "AudioManager"
                 mlinterpretormod = component "MLInterpretor"
                 networkmanager = component "NetworkManager"
+                simulatorInterface = component "Simulator Interface"
+                
 
                 amlConnectCore -> networkmanager
                 amlConnectCore -> datasetup
@@ -73,10 +74,11 @@ workspace {
                 datasetup -> filemanager
                 networkmanager -> resultgenerator
                 networkmanager -> filtermanager
-                networkmanager -> chipsimulator
+                networkmanager -> simulatorInterface
                 networkmanager -> dbmanager
                 networkmanager -> featurengineer
                 networkmanager -> mlinterpretormod
+                chipsimulator -> simulatorInterface "implements"
             }
 
             simulator = container "Simulator" {
@@ -152,6 +154,33 @@ workspace {
             include *
         }
 
+        dynamic appserver {
+            title "[Extensibility] Rust Simulator Swap"
+
+            networkmanager -> simulatorInterface "passes user-defined network & audio data"
+            networkmanager -> simulatorInterface "calls simulate_network()"
+            simulatorInterface -> chipsimulator "calls chipSimulator implementation"
+            chipsimulator -> simulator "translates data to simulator input data"
+            simulator -> chipsimulator "sends back audio result"
+
+            autoLayout lr
+        }
+
+        dynamic appserver {
+            title "[Performance] Add Network Element"
+
+            uiLayer -> mainUI "add network element"
+            mainUI -> amlConnectCore
+            amlConnectCore -> networkmanager
+            networkmanager -> dbmanager
+            networkmanager -> featurengineer
+            dbmanager -> cache
+            dbmanager -> app_db
+            cache -> app_db
+            
+            autoLayout lr
+        }
+        
         theme default
     }
 }

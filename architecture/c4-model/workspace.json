@@ -2,10 +2,10 @@
   "id" : 1,
   "name" : "Name",
   "description" : "Description",
-  "lastModifiedDate" : "2023-06-08T18:28:07Z",
+  "lastModifiedDate" : "2023-06-09T18:37:04Z",
   "lastModifiedAgent" : "structurizr-javascript",
   "properties" : {
-    "structurizr.dsl" : "d29ya3NwYWNlIHsKCiAgICBtb2RlbCB7CiAgICAgICAgY3VzdG9tZXIgPSBwZXJzb24gIkNoaXAgUHJvZ3JhbW1lciIgIkFzcGluaXR5J3MgY3VzdG9tZXIiCiAgICAgICAgZW5naW5lZXIgPSBwZXJzb24gIkFzcGluaXR5IEVuZ2luZWVyIiAidXN1YWxseSBOaWNrIgogICAgICAgIGRldmVsb3BlciA9IHBlcnNvbiAiU3lzdGVtIERldmVsb3BlciIgIlRlYW0gQ2hpcE1vbmtzIgogICAgICAgIGFzdHJsID0gc29mdHdhcmVTeXN0ZW0gIkFzcGluaXR5IERldmVsb3BtZW50IFBsYXRmb3JtIiB7CiAgICAgICAgICAgIAogICAgICAgICAgICBncm91cCBDbGllbnRzIHsKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgdWlMYXllciA9IGNvbnRhaW5lciAiVUkgTGF5ZXIiewoKICAgICAgICAgICAgICAgICAgICBncm91cCBSZWFjdENvbXBvbmVudHMgewogICAgICAgICAgICAgICAgICAgICAgICBjb21wb25lbnQxID0gY29tcG9uZW50ICJTYW1wbGUgUmVhY3QgQ29tcG9uZW50IiAgICAKICAgICAgICAgICAgICAgICAgICB9CgogICAgICAgICAgICAgICAgICAgIGdyb3VwIFNsaWNlcyB7CiAgICAgICAgICAgICAgICAgICAgICAgIHNsaWNlMSA9IGNvbXBvbmVudCAiU2FtcGxlIFNsaWNlIgogICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICB9ICAgICAgICAgCgogICAgICAgICAgICAgICAgICAgIHJlZHV4U3RvcmUgPSBjb21wb25lbnQgIlJlZHV4IHN0b3JlIgoKICAgICAgICAgICAgICAgICAgICBhcGlJbnRlcmZhY2UgPSBjb21wb25lbnQgIkFQSSBJbnRlcmZhY2UiCiAgICAgICAgICAgICAgICAgICAgYXBpVHJhbnNmb3JtZXIgPSBjb21wb25lbnQgIkFQSSBUcmFuc2Zvcm1lciIgIkNvbnZlcnRzIHN0YXRlIHRvIERUTyBvYmplY3QiCiAgICAgICAgICAgICAgICAgICAgdGF1cmlBcGlDbGllbnQgPSBjb21wb25lbnQgIlRhdXJpIEFQSSBDbGllbnQiCiAgICAgICAgICAgICAgICAgICAgcmVzdEFQSUNsaWVudCA9IGNvbXBvbmVudCAiUkVTVCBBUEkgQ2xpZW50IgoKCiAgICAgICAgICAgICAgICAgICAgY29tcG9uZW50MSAtPiByZWR1eHN0b3JlICJ1c2VzIgogICAgICAgICAgICAgICAgICAgIGNvbXBvbmVudDEgLT4gc2xpY2UxICJ1c2VzIgogICAgICAgICAgICAgICAgICAgIGNvbXBvbmVudDEgLT4gYXBpSW50ZXJmYWNlICJ1c2VzIgogICAgICAgICAgICAgICAgICAgIGNvbXBvbmVudDEgLT4gYXBpVHJhbnNmb3JtZXIgInVzZXMiCiAgICAgICAgICAgICAgICAgICAgdGF1cmlBcGlDbGllbnQgLT4gYXBpSW50ZXJmYWNlICJpbXBsZW1lbnRzIgogICAgICAgICAgICAgICAgICAgIHJlc3RBUElDbGllbnQgLT4gYXBpSW50ZXJmYWNlICJpbXBsZW1lbnRzIgoKICAgICAgICAgICAgICAgICAgICByZWR1eFN0b3JlIC0+IHNsaWNlMSAiaGFzIiAgICAgICAgICAgICAgICAgCgogICAgICAgICAgICAgICAgICAgIGN1c3RvbWVyIC0+IGNvbXBvbmVudDEgIkRlc2lnbiBjdXN0b21pemVkIG5ldHdvcmtzIgogICAgICAgICAgICAgICAgICAgIGNvbXBvbmVudDEgLT4gZW5naW5lZXIgIlJlY2VpdmVzIGN1c3RvbWl6ZWQgbmV0d29yayIKICAgICAgICAgICAgICAgICAgICBkZXZlbG9wZXIgLT4gY29tcG9uZW50MSAiTWFpbnRhaW5zIiAKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICBjbGlhcHAgPSBjb250YWluZXIgIkNvbW1hbmQgTGluZSBBcHBsaWNhdGlvbiIgewogICAgICAgICAgICAgICAgICAgIGN1c3RvbWVyIC0+IHRoaXMgIkRlc2lnbiBjdXN0b21pemVkIG5ldHdvcmtzIgogICAgICAgICAgICAgICAgICAgIHRoaXMgLT4gZW5naW5lZXIgIlJlY2VpdmVzIGN1c3RvbWl6ZWQgbmV0d29yayIKICAgICAgICAgICAgICAgICAgICBkZXZlbG9wZXIgLT4gdGhpcyAiTWFpbnRhaW5zIiAKICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGFwcHNlcnZlciA9IGNvbnRhaW5lciAiQXBwbGljYXRpb24gTGF5ZXIiIHsKICAgICAgICAgICAgICAgIGRhdGFzZXR1cCA9IGNvbXBvbmVudCAiRGF0YU1hbmFnZXIiCiAgICAgICAgICAgICAgICBwcm9qZWN0bWFuYWdlciA9IGNvbXBvbmVudCAiUHJvamVjdE1hbmFnZXIiCiAgICAgICAgICAgICAgICBmaWxlbWFuYWdlciA9IGNvbXBvbmVudCAiRmlsZU1hbmFnZXIiCiAgICAgICAgICAgICAgICByZXN1bHRnZW5lcmF0b3IgPSBjb21wb25lbnQgIlJlc3VsdEdlbmVyYXRvciIKICAgICAgICAgICAgICAgIGZpbHRlcm1hbmFnZXIgPSBjb21wb25lbnQgIkZpbHRlck1hbmFnZXIiICJUQkQgLSBEb2VzIHRoZSBzaW11bGF0b3IgcmV0dXJuIGEgbGlzdCBvZiBmaWx0ZXJzIGFuZCB0aGVpciBwcm9wZXJ0aWVzPyIKICAgICAgICAgICAgICAgIGZlYXR1cmVuZ2luZWVyID0gY29tcG9uZW50ICJGZWF0dXJlRW5naW5lZXIiICJUQkQgLSBBcmUgd2UgbWFuYWdpbmcgbmV1cmFsIG5ldHdvcmsgZmVhdHVyZXMgc2VwZXJhdGVseT8gRG8gdGhleSBuZWVkIHRvIGJlIHN0b3JlZD8iCiAgICAgICAgICAgICAgICBtYWluVUkgPSBjb21wb25lbnQgIk1haW4gVUkiCiAgICAgICAgICAgICAgICBtYWluQ0xJID0gY29tcG9uZW50ICJNYWluIENMSSIKICAgICAgICAgICAgICAgIGFtbENvbm5lY3RDb3JlID0gY29tcG9uZW50ICJBTUwgQ29ubmVjdCBDb3JlIgogICAgICAgICAgICAgICAgY2hpcHNpbXVsYXRvciA9IGNvbXBvbmVudCAiQ2hpcFNpbXVsYXRvciIKICAgICAgICAgICAgICAgIGRibWFuYWdlciA9IGNvbXBvbmVudCAiREJNYW5hZ2VyIgogICAgICAgICAgICAgICAgYXVkaW9tYW5hZ2VyID0gY29tcG9uZW50ICJBdWRpb01hbmFnZXIiCiAgICAgICAgICAgICAgICBtbGludGVycHJldG9ybW9kID0gY29tcG9uZW50ICJNTEludGVycHJldG9yIgogICAgICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgPSBjb21wb25lbnQgIk5ldHdvcmtNYW5hZ2VyIgoKICAgICAgICAgICAgICAgIGFtbENvbm5lY3RDb3JlIC0+IG5ldHdvcmttYW5hZ2VyCiAgICAgICAgICAgICAgICBhbWxDb25uZWN0Q29yZSAtPiBkYXRhc2V0dXAKICAgICAgICAgICAgICAgIGFtbENvbm5lY3RDb3JlIC0+IHByb2plY3RtYW5hZ2VyCiAgICAgICAgICAgICAgICBhbWxDb25uZWN0Q29yZSAtPiBhdWRpb21hbmFnZXIKICAgICAgICAgICAgICAgIHByb2plY3RtYW5hZ2VyIC0+IGZpbGVtYW5hZ2VyCiAgICAgICAgICAgICAgICBkYXRhc2V0dXAgLT4gZmlsZW1hbmFnZXIKICAgICAgICAgICAgICAgIG5ldHdvcmttYW5hZ2VyIC0+IHJlc3VsdGdlbmVyYXRvcgogICAgICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgLT4gZmlsdGVybWFuYWdlcgogICAgICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgLT4gY2hpcHNpbXVsYXRvcgogICAgICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgLT4gZGJtYW5hZ2VyCiAgICAgICAgICAgICAgICBuZXR3b3JrbWFuYWdlciAtPiBmZWF0dXJlbmdpbmVlcgogICAgICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgLT4gbWxpbnRlcnByZXRvcm1vZAogICAgICAgICAgICB9CgogICAgICAgICAgICBzaW11bGF0b3IgPSBjb250YWluZXIgIlNpbXVsYXRvciIgewoKICAgICAgICAgICAgfQoKICAgICAgICAgICAgYXBwX2RiID0gY29udGFpbmVyICJBcHBsaWNhdGlvbiBEYXRhYmFzZSIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlJlc3BvbnNpYmxlIGZvciBzdG9yaW5nIGFwcGxpY2F0aW9uIGRhdGEgdGhhdCBkb2VzIG5vdCBwZXJ0YWluIGRpcmVjdGx5IHRvIHRoZSBuZXR3b3JrLiBEZXRhaWxzIFRCRCIKICAgICAgICAgICAgICAgIHRhZ3MgIkRCIgogICAgICAgICAgICB9CgogICAgICAgICAgICBjYWNoZSA9IGNvbnRhaW5lciAiQ2FjaGUiIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJmb2N1c2VkIG9uIGNhY2hpbmcgbmV0d29yayBmaWxlcyBmb3IgZmFzdCByZXRyaWV2YWwuIERldGFpbHMgVEJELiIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZmlsZXN5c3RlbSA9IGNvbnRhaW5lciAiTG9jYWwgRmlsZSBTeXN0ZW0iIHsKICAgICAgICAgICAgICAgIGRlc2NyaXB0aW9uICJSZXNwb25zaWJsZSBmb3Igc3RvcmluZyBhdWRpbyBmaWxlcyBhbmQgdGVzdCBkYXRhIgogICAgICAgICAgICAgICAgdGFncyAiREIiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIG1sX2ludGVyZXByZXRvciA9IGNvbnRhaW5lciAiTWFjaGluZSBMZWFybmluZyBJbnRlcnByZXRvciIgewogICAgICAgICAgICAgICAgY29tcG9uZW50ICJUcmFpbmluZyBNYW5hZ2VyIgogICAgICAgICAgICAgICAgY29tcG9uZW50ICJEYXRhIFZpc3VhbGl6ZXIiCiAgICAgICAgICAgIH0KICAgICAgICAgICAgY2hpcHNpbXVsYXRvciAtPiBzaW11bGF0b3IgImNhbGxzIiAiVEJEIgogICAgICAgICAgICBtbGludGVycHJldG9ybW9kIC0+IG1sX2ludGVyZXByZXRvciAiY2FsbHMiICJJUEMqIgoKICAgICAgICAgICAgc2ltdWxhdG9yIC0+IGNoaXBzaW11bGF0b3IgInJlc3VsdHMiIAogICAgICAgICAgICBtbF9pbnRlcmVwcmV0b3IgLT4gbWxpbnRlcnByZXRvcm1vZCAidHJhaW5pbmcgbG9ncyIKCiAgICAgICAgICAgIAogICAgICAgICAgICBmaWxlc3lzdGVtIC0+IGZpbGVtYW5hZ2VyICJyZXRyaWV2ZSBmaWxlcyIgIlVwbG9hZCBmcm9tIGxvY2FsIFBDIgogICAgICAgICAgICAgICAgCiAgICAgICAgICAgIGNsaWFwcCAtPiBtYWluQ0xJICJjYWxscyB2aWEgYmFzaCIKICAgICAgICAgICAgdGF1cmlBcGlDbGllbnQgLT4gbWFpblVJICJtYWtlcyBjYWxscyB0byIgIltJUEMtSlNPTl0iCgoKICAgICAgICAgICAgbWFpblVJIC0+IGFtbENvbm5lY3RDb3JlIAogICAgICAgICAgICBtYWluQ0xJIC0+IGFtbENvbm5lY3RDb3JlCgogICAgICAgICAgICBkYm1hbmFnZXIgLT4gYXBwX2RiICJzYXZlcyBhbmQgcmV0cmVpdmVzIGRhdGEiICJUQkQiCiAgICAgICAgICAgIAogICAgICAgICAgICBkYm1hbmFnZXIgLT4gY2FjaGUgInJldHJpZXZlcyBjYWNoZWQgbmV0d29yayBjb25maWciICJUQkQiCiAgICAgICAgICAgIGNhY2hlIC0+IGFwcF9kYiAicmV0cmlldmVzIGRhdGEiICJUQkQiCgogICAgICAgIH0KCiAgICAgICAgQU1MMTAwID0gZWxlbWVudCAiQU1MMTAwIiAiQXNwaW5pdHkncyBhbmFsb2cgbWFjaGluZSBsZWFybmluZyBjaGlwIgogICAgICAgIGVuZ2luZWVyIC0+IEFNTDEwMCAiRGVwbG95IG5ldHdvcmsiCiAgICB9CgogICAgdmlld3MgewogICAgICAgIHN5c3RlbUxhbmRzY2FwZSBsYW5kc2NhcGUgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgIH0KCiAgICAgICAgc3lzdGVtQ29udGV4dCBhc3RybCB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvbGF5b3V0IAogICAgICAgIH0KCiAgICAgICAgY29udGFpbmVyIGFzdHJsIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgfQoKICAgICAgICBjb21wb25lbnQgYXBwc2VydmVyIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9sYXlvdXQgbHIKICAgICAgICB9CgogICAgICAgIGNvbXBvbmVudCB1aUxheWVyIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgfQoKICAgICAgICB0aGVtZSBkZWZhdWx0CiAgICB9Cn0K"
+    "structurizr.dsl" : "d29ya3NwYWNlIHsKCiAgICBtb2RlbCB7CiAgICAgICAgY3VzdG9tZXIgPSBwZXJzb24gIkNoaXAgUHJvZ3JhbW1lciIgIkFzcGluaXR5J3MgY3VzdG9tZXIiCiAgICAgICAgZW5naW5lZXIgPSBwZXJzb24gIkFzcGluaXR5IEVuZ2luZWVyIiAidXN1YWxseSBOaWNrIgogICAgICAgIGRldmVsb3BlciA9IHBlcnNvbiAiU3lzdGVtIERldmVsb3BlciIgIlRlYW0gQ2hpcE1vbmtzIgogICAgICAgIGFzdHJsID0gc29mdHdhcmVTeXN0ZW0gIkFzcGluaXR5IERldmVsb3BtZW50IFBsYXRmb3JtIiB7CiAgICAgICAgICAgIAogICAgICAgICAgICBncm91cCBDbGllbnRzIHsKICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgdWlMYXllciA9IGNvbnRhaW5lciAiVUkgTGF5ZXIiewogICAgICAgICAgICAgICAgICAgIGdyb3VwIFJlYWN0Q29tcG9uZW50cyB7CiAgICAgICAgICAgICAgICAgICAgICAgIGNvbXBvbmVudDEgPSBjb21wb25lbnQgIlNhbXBsZSBSZWFjdCBDb21wb25lbnQiICAgIAogICAgICAgICAgICAgICAgICAgIH0KCiAgICAgICAgICAgICAgICAgICAgZ3JvdXAgU2xpY2VzIHsKICAgICAgICAgICAgICAgICAgICAgICAgc2xpY2UxID0gY29tcG9uZW50ICJTYW1wbGUgU2xpY2UiCiAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgIH0gICAgICAgICAKCiAgICAgICAgICAgICAgICAgICAgcmVkdXhTdG9yZSA9IGNvbXBvbmVudCAiUmVkdXggc3RvcmUiCgogICAgICAgICAgICAgICAgICAgIGFwaUludGVyZmFjZSA9IGNvbXBvbmVudCAiQVBJIEludGVyZmFjZSIKICAgICAgICAgICAgICAgICAgICBhcGlUcmFuc2Zvcm1lciA9IGNvbXBvbmVudCAiQVBJIFRyYW5zZm9ybWVyIiAiQ29udmVydHMgc3RhdGUgdG8gRFRPIG9iamVjdCIKICAgICAgICAgICAgICAgICAgICB0YXVyaUFwaUNsaWVudCA9IGNvbXBvbmVudCAiVGF1cmkgQVBJIENsaWVudCIKICAgICAgICAgICAgICAgICAgICByZXN0QVBJQ2xpZW50ID0gY29tcG9uZW50ICJSRVNUIEFQSSBDbGllbnQiCgoKICAgICAgICAgICAgICAgICAgICBjb21wb25lbnQxIC0+IHJlZHV4c3RvcmUgInVzZXMiCiAgICAgICAgICAgICAgICAgICAgY29tcG9uZW50MSAtPiBzbGljZTEgInVzZXMiCiAgICAgICAgICAgICAgICAgICAgY29tcG9uZW50MSAtPiBhcGlJbnRlcmZhY2UgInVzZXMiCiAgICAgICAgICAgICAgICAgICAgY29tcG9uZW50MSAtPiBhcGlUcmFuc2Zvcm1lciAidXNlcyIKICAgICAgICAgICAgICAgICAgICB0YXVyaUFwaUNsaWVudCAtPiBhcGlJbnRlcmZhY2UgImltcGxlbWVudHMiCiAgICAgICAgICAgICAgICAgICAgcmVzdEFQSUNsaWVudCAtPiBhcGlJbnRlcmZhY2UgImltcGxlbWVudHMiCgogICAgICAgICAgICAgICAgICAgIHJlZHV4U3RvcmUgLT4gc2xpY2UxICJoYXMiICAgICAgICAgICAgICAgICAKCiAgICAgICAgICAgICAgICAgICAgY3VzdG9tZXIgLT4gY29tcG9uZW50MSAiRGVzaWduIGN1c3RvbWl6ZWQgbmV0d29ya3MiCiAgICAgICAgICAgICAgICAgICAgY29tcG9uZW50MSAtPiBlbmdpbmVlciAiUmVjZWl2ZXMgY3VzdG9taXplZCBuZXR3b3JrIgogICAgICAgICAgICAgICAgICAgIGRldmVsb3BlciAtPiBjb21wb25lbnQxICJNYWludGFpbnMiIAogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgICAgIGNsaWFwcCA9IGNvbnRhaW5lciAiQ29tbWFuZCBMaW5lIEFwcGxpY2F0aW9uIiB7CiAgICAgICAgICAgICAgICAgICAgY3VzdG9tZXIgLT4gdGhpcyAiRGVzaWduIGN1c3RvbWl6ZWQgbmV0d29ya3MiCiAgICAgICAgICAgICAgICAgICAgdGhpcyAtPiBlbmdpbmVlciAiUmVjZWl2ZXMgY3VzdG9taXplZCBuZXR3b3JrIgogICAgICAgICAgICAgICAgICAgIGRldmVsb3BlciAtPiB0aGlzICJNYWludGFpbnMiIAogICAgICAgICAgICAgICAgfQoKICAgICAgICAgICAgfQoKICAgICAgICAgICAgYXBwc2VydmVyID0gY29udGFpbmVyICJBcHBsaWNhdGlvbiBMYXllciIgewogICAgICAgICAgICAgICAgZGF0YXNldHVwID0gY29tcG9uZW50ICJEYXRhTWFuYWdlciIKICAgICAgICAgICAgICAgIHByb2plY3RtYW5hZ2VyID0gY29tcG9uZW50ICJQcm9qZWN0TWFuYWdlciIKICAgICAgICAgICAgICAgIGZpbGVtYW5hZ2VyID0gY29tcG9uZW50ICJGaWxlTWFuYWdlciIKICAgICAgICAgICAgICAgIHJlc3VsdGdlbmVyYXRvciA9IGNvbXBvbmVudCAiUmVzdWx0R2VuZXJhdG9yIgogICAgICAgICAgICAgICAgZmlsdGVybWFuYWdlciA9IGNvbXBvbmVudCAiRmlsdGVyTWFuYWdlciIgIlRCRCAtIERvZXMgdGhlIHNpbXVsYXRvciByZXR1cm4gYSBsaXN0IG9mIGZpbHRlcnMgYW5kIHRoZWlyIHByb3BlcnRpZXM/IgogICAgICAgICAgICAgICAgZmVhdHVyZW5naW5lZXIgPSBjb21wb25lbnQgIkZlYXR1cmVFbmdpbmVlciIgIlRCRCAtIEFyZSB3ZSBtYW5hZ2luZyBuZXVyYWwgbmV0d29yayBmZWF0dXJlcyBzZXBlcmF0ZWx5PyBEbyB0aGV5IG5lZWQgdG8gYmUgc3RvcmVkPyIKICAgICAgICAgICAgICAgIG1haW5VSSA9IGNvbXBvbmVudCAiTWFpbiBVSSIKICAgICAgICAgICAgICAgIG1haW5DTEkgPSBjb21wb25lbnQgIk1haW4gQ0xJIgogICAgICAgICAgICAgICAgYW1sQ29ubmVjdENvcmUgPSBjb21wb25lbnQgIkFNTCBDb25uZWN0IENvcmUiCiAgICAgICAgICAgICAgICBjaGlwc2ltdWxhdG9yID0gY29tcG9uZW50ICJDaGlwU2ltdWxhdG9yIgogICAgICAgICAgICAgICAgZGJtYW5hZ2VyID0gY29tcG9uZW50ICJEQk1hbmFnZXIiCiAgICAgICAgICAgICAgICBhdWRpb21hbmFnZXIgPSBjb21wb25lbnQgIkF1ZGlvTWFuYWdlciIKICAgICAgICAgICAgICAgIG1saW50ZXJwcmV0b3Jtb2QgPSBjb21wb25lbnQgIk1MSW50ZXJwcmV0b3IiCiAgICAgICAgICAgICAgICBuZXR3b3JrbWFuYWdlciA9IGNvbXBvbmVudCAiTmV0d29ya01hbmFnZXIiCiAgICAgICAgICAgICAgICBzaW11bGF0b3JJbnRlcmZhY2UgPSBjb21wb25lbnQgIlNpbXVsYXRvciBJbnRlcmZhY2UiCiAgICAgICAgICAgICAgICAKCiAgICAgICAgICAgICAgICBhbWxDb25uZWN0Q29yZSAtPiBuZXR3b3JrbWFuYWdlcgogICAgICAgICAgICAgICAgYW1sQ29ubmVjdENvcmUgLT4gZGF0YXNldHVwCiAgICAgICAgICAgICAgICBhbWxDb25uZWN0Q29yZSAtPiBwcm9qZWN0bWFuYWdlcgogICAgICAgICAgICAgICAgYW1sQ29ubmVjdENvcmUgLT4gYXVkaW9tYW5hZ2VyCiAgICAgICAgICAgICAgICBwcm9qZWN0bWFuYWdlciAtPiBmaWxlbWFuYWdlcgogICAgICAgICAgICAgICAgZGF0YXNldHVwIC0+IGZpbGVtYW5hZ2VyCiAgICAgICAgICAgICAgICBuZXR3b3JrbWFuYWdlciAtPiByZXN1bHRnZW5lcmF0b3IKICAgICAgICAgICAgICAgIG5ldHdvcmttYW5hZ2VyIC0+IGZpbHRlcm1hbmFnZXIKICAgICAgICAgICAgICAgIG5ldHdvcmttYW5hZ2VyIC0+IHNpbXVsYXRvckludGVyZmFjZQogICAgICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgLT4gZGJtYW5hZ2VyCiAgICAgICAgICAgICAgICBuZXR3b3JrbWFuYWdlciAtPiBmZWF0dXJlbmdpbmVlcgogICAgICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgLT4gbWxpbnRlcnByZXRvcm1vZAogICAgICAgICAgICAgICAgY2hpcHNpbXVsYXRvciAtPiBzaW11bGF0b3JJbnRlcmZhY2UgImltcGxlbWVudHMiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIHNpbXVsYXRvciA9IGNvbnRhaW5lciAiU2ltdWxhdG9yIiB7CgogICAgICAgICAgICB9CgogICAgICAgICAgICBhcHBfZGIgPSBjb250YWluZXIgIkFwcGxpY2F0aW9uIERhdGFiYXNlIiB7CiAgICAgICAgICAgICAgICBkZXNjcmlwdGlvbiAiUmVzcG9uc2libGUgZm9yIHN0b3JpbmcgYXBwbGljYXRpb24gZGF0YSB0aGF0IGRvZXMgbm90IHBlcnRhaW4gZGlyZWN0bHkgdG8gdGhlIG5ldHdvcmsuIERldGFpbHMgVEJEIgogICAgICAgICAgICAgICAgdGFncyAiREIiCiAgICAgICAgICAgIH0KCiAgICAgICAgICAgIGNhY2hlID0gY29udGFpbmVyICJDYWNoZSIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gImZvY3VzZWQgb24gY2FjaGluZyBuZXR3b3JrIGZpbGVzIGZvciBmYXN0IHJldHJpZXZhbC4gRGV0YWlscyBUQkQuIgogICAgICAgICAgICB9CgogICAgICAgICAgICBmaWxlc3lzdGVtID0gY29udGFpbmVyICJMb2NhbCBGaWxlIFN5c3RlbSIgewogICAgICAgICAgICAgICAgZGVzY3JpcHRpb24gIlJlc3BvbnNpYmxlIGZvciBzdG9yaW5nIGF1ZGlvIGZpbGVzIGFuZCB0ZXN0IGRhdGEiCiAgICAgICAgICAgICAgICB0YWdzICJEQiIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgbWxfaW50ZXJlcHJldG9yID0gY29udGFpbmVyICJNYWNoaW5lIExlYXJuaW5nIEludGVycHJldG9yIiB7CiAgICAgICAgICAgICAgICBjb21wb25lbnQgIlRyYWluaW5nIE1hbmFnZXIiCiAgICAgICAgICAgICAgICBjb21wb25lbnQgIkRhdGEgVmlzdWFsaXplciIKICAgICAgICAgICAgfQogICAgICAgICAgICBjaGlwc2ltdWxhdG9yIC0+IHNpbXVsYXRvciAiY2FsbHMiICJUQkQiCiAgICAgICAgICAgIG1saW50ZXJwcmV0b3Jtb2QgLT4gbWxfaW50ZXJlcHJldG9yICJjYWxscyIgIklQQyoiCgogICAgICAgICAgICBzaW11bGF0b3IgLT4gY2hpcHNpbXVsYXRvciAicmVzdWx0cyIgCiAgICAgICAgICAgIG1sX2ludGVyZXByZXRvciAtPiBtbGludGVycHJldG9ybW9kICJ0cmFpbmluZyBsb2dzIgoKICAgICAgICAgICAgCiAgICAgICAgICAgIGZpbGVzeXN0ZW0gLT4gZmlsZW1hbmFnZXIgInJldHJpZXZlIGZpbGVzIiAiVXBsb2FkIGZyb20gbG9jYWwgUEMiCiAgICAgICAgICAgICAgICAKICAgICAgICAgICAgY2xpYXBwIC0+IG1haW5DTEkgImNhbGxzIHZpYSBiYXNoIgogICAgICAgICAgICB0YXVyaUFwaUNsaWVudCAtPiBtYWluVUkgIm1ha2VzIGNhbGxzIHRvIiAiW0lQQy1KU09OXSIKCgogICAgICAgICAgICBtYWluVUkgLT4gYW1sQ29ubmVjdENvcmUgCiAgICAgICAgICAgIG1haW5DTEkgLT4gYW1sQ29ubmVjdENvcmUKCiAgICAgICAgICAgIGRibWFuYWdlciAtPiBhcHBfZGIgInNhdmVzIGFuZCByZXRyZWl2ZXMgZGF0YSIgIlRCRCIKICAgICAgICAgICAgCiAgICAgICAgICAgIGRibWFuYWdlciAtPiBjYWNoZSAicmV0cmlldmVzIGNhY2hlZCBuZXR3b3JrIGNvbmZpZyIgIlRCRCIKICAgICAgICAgICAgY2FjaGUgLT4gYXBwX2RiICJyZXRyaWV2ZXMgZGF0YSIgIlRCRCIKCiAgICAgICAgfQoKICAgICAgICBBTUwxMDAgPSBlbGVtZW50ICJBTUwxMDAiICJBc3Bpbml0eSdzIGFuYWxvZyBtYWNoaW5lIGxlYXJuaW5nIGNoaXAiCiAgICAgICAgZW5naW5lZXIgLT4gQU1MMTAwICJEZXBsb3kgbmV0d29yayIKICAgIH0KCiAgICB2aWV3cyB7CiAgICAgICAgc3lzdGVtTGFuZHNjYXBlIGxhbmRzY2FwZSB7CiAgICAgICAgICAgIGluY2x1ZGUgKgogICAgICAgICAgICBhdXRvbGF5b3V0IGxyCiAgICAgICAgfQoKICAgICAgICBzeXN0ZW1Db250ZXh0IGFzdHJsIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9sYXlvdXQgCiAgICAgICAgfQoKICAgICAgICBjb250YWluZXIgYXN0cmwgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICB9CgogICAgICAgIGNvbXBvbmVudCBhcHBzZXJ2ZXIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICAgICAgYXV0b2xheW91dCBscgogICAgICAgIH0KCiAgICAgICAgY29tcG9uZW50IHVpTGF5ZXIgewogICAgICAgICAgICBpbmNsdWRlICoKICAgICAgICB9CgogICAgICAgIGR5bmFtaWMgYXBwc2VydmVyIHsKICAgICAgICAgICAgdGl0bGUgIltFeHRlbnNpYmlsaXR5XSBSdXN0IFNpbXVsYXRvciBTd2FwIgoKICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgLT4gc2ltdWxhdG9ySW50ZXJmYWNlICJwYXNzZXMgdXNlci1kZWZpbmVkIG5ldHdvcmsgJiBhdWRpbyBkYXRhIgogICAgICAgICAgICBuZXR3b3JrbWFuYWdlciAtPiBzaW11bGF0b3JJbnRlcmZhY2UgImNhbGxzIHNpbXVsYXRlX25ldHdvcmsoKSIKICAgICAgICAgICAgc2ltdWxhdG9ySW50ZXJmYWNlIC0+IGNoaXBzaW11bGF0b3IgImNhbGxzIGNoaXBTaW11bGF0b3IgaW1wbGVtZW50YXRpb24iCiAgICAgICAgICAgIGNoaXBzaW11bGF0b3IgLT4gc2ltdWxhdG9yICJ0cmFuc2xhdGVzIGRhdGEgdG8gc2ltdWxhdG9yIGlucHV0IGRhdGEiCiAgICAgICAgICAgIHNpbXVsYXRvciAtPiBjaGlwc2ltdWxhdG9yICJzZW5kcyBiYWNrIGF1ZGlvIHJlc3VsdCIKCiAgICAgICAgICAgIGF1dG9MYXlvdXQgbHIKICAgICAgICB9CgogICAgICAgIGR5bmFtaWMgYXBwc2VydmVyIHsKICAgICAgICAgICAgdGl0bGUgIltQZXJmb3JtYW5jZV0gQWRkIE5ldHdvcmsgRWxlbWVudCIKCiAgICAgICAgICAgIHVpTGF5ZXIgLT4gbWFpblVJICJhZGQgbmV0d29yayBlbGVtZW50IgogICAgICAgICAgICBtYWluVUkgLT4gYW1sQ29ubmVjdENvcmUKICAgICAgICAgICAgYW1sQ29ubmVjdENvcmUgLT4gbmV0d29ya21hbmFnZXIKICAgICAgICAgICAgbmV0d29ya21hbmFnZXIgLT4gZGJtYW5hZ2VyCiAgICAgICAgICAgIG5ldHdvcmttYW5hZ2VyIC0+IGZlYXR1cmVuZ2luZWVyCiAgICAgICAgICAgIGRibWFuYWdlciAtPiBjYWNoZQogICAgICAgICAgICBkYm1hbmFnZXIgLT4gYXBwX2RiCiAgICAgICAgICAgIGNhY2hlIC0+IGFwcF9kYgogICAgICAgICAgICAKICAgICAgICAgICAgYXV0b0xheW91dCBscgogICAgICAgIH0KICAgICAgICAKICAgICAgICB0aGVtZSBkZWZhdWx0CiAgICB9Cn0K"
   },
   "configuration" : { },
   "model" : {
@@ -18,17 +18,17 @@
       "name" : "System Developer",
       "description" : "Team ChipMonks",
       "relationships" : [ {
-        "id" : "28",
-        "sourceId" : "3",
-        "destinationId" : "4",
-        "description" : "Maintains",
-        "linkedRelationshipId" : "26"
-      }, {
         "id" : "26",
         "tags" : "Relationship",
         "sourceId" : "3",
         "destinationId" : "6",
         "description" : "Maintains"
+      }, {
+        "id" : "28",
+        "sourceId" : "3",
+        "destinationId" : "4",
+        "description" : "Maintains",
+        "linkedRelationshipId" : "26"
       }, {
         "id" : "27",
         "sourceId" : "3",
@@ -41,6 +41,22 @@
         "sourceId" : "3",
         "destinationId" : "29",
         "description" : "Maintains"
+      } ],
+      "location" : "Unspecified"
+    }, {
+      "id" : "2",
+      "tags" : "Element,Person",
+      "properties" : {
+        "structurizr.dsl.identifier" : "engineer"
+      },
+      "name" : "Aspinity Engineer",
+      "description" : "usually Nick",
+      "relationships" : [ {
+        "id" : "93",
+        "tags" : "Relationship",
+        "sourceId" : "2",
+        "destinationId" : "92",
+        "description" : "Deploy network"
       } ],
       "location" : "Unspecified"
     }, {
@@ -58,6 +74,12 @@
         "description" : "Design customized networks",
         "linkedRelationshipId" : "20"
       }, {
+        "id" : "22",
+        "sourceId" : "1",
+        "destinationId" : "4",
+        "description" : "Design customized networks",
+        "linkedRelationshipId" : "20"
+      }, {
         "id" : "30",
         "tags" : "Relationship",
         "sourceId" : "1",
@@ -69,28 +91,6 @@
         "sourceId" : "1",
         "destinationId" : "6",
         "description" : "Design customized networks"
-      }, {
-        "id" : "22",
-        "sourceId" : "1",
-        "destinationId" : "4",
-        "description" : "Design customized networks",
-        "linkedRelationshipId" : "20"
-      } ],
-      "location" : "Unspecified"
-    }, {
-      "id" : "2",
-      "tags" : "Element,Person",
-      "properties" : {
-        "structurizr.dsl.identifier" : "engineer"
-      },
-      "name" : "Aspinity Engineer",
-      "description" : "usually Nick",
-      "relationships" : [ {
-        "id" : "91",
-        "tags" : "Relationship",
-        "sourceId" : "2",
-        "destinationId" : "90",
-        "description" : "Deploy network"
       } ],
       "location" : "Unspecified"
     } ],
@@ -110,35 +110,7 @@
       } ],
       "location" : "Unspecified",
       "containers" : [ {
-        "id" : "29",
-        "tags" : "Element,Container",
-        "properties" : {
-          "structurizr.dsl.identifier" : "cliapp"
-        },
-        "name" : "Command Line Application",
-        "relationships" : [ {
-          "id" : "77",
-          "tags" : "Relationship",
-          "sourceId" : "29",
-          "destinationId" : "41",
-          "description" : "calls via bash"
-        }, {
-          "id" : "78",
-          "sourceId" : "29",
-          "destinationId" : "33",
-          "description" : "calls via bash",
-          "linkedRelationshipId" : "77"
-        }, {
-          "id" : "31",
-          "tags" : "Relationship",
-          "sourceId" : "29",
-          "destinationId" : "2",
-          "description" : "Receives customized network"
-        } ],
-        "group" : "Clients",
-        "documentation" : { }
-      }, {
-        "id" : "63",
+        "id" : "65",
         "tags" : "Element,Container,DB",
         "properties" : {
           "structurizr.dsl.identifier" : "filesystem"
@@ -146,50 +118,71 @@
         "name" : "Local File System",
         "description" : "Responsible for storing audio files and test data",
         "relationships" : [ {
-          "id" : "75",
+          "id" : "77",
           "tags" : "Relationship",
-          "sourceId" : "63",
+          "sourceId" : "65",
           "destinationId" : "36",
           "description" : "retrieve files",
           "technology" : "Upload from local PC"
         }, {
-          "id" : "76",
-          "sourceId" : "63",
+          "id" : "78",
+          "sourceId" : "65",
           "destinationId" : "33",
           "description" : "retrieve files",
           "technology" : "Upload from local PC",
-          "linkedRelationshipId" : "75"
+          "linkedRelationshipId" : "77"
         } ],
         "documentation" : { }
       }, {
-        "id" : "64",
+        "id" : "62",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "simulator"
+        },
+        "name" : "Simulator",
+        "relationships" : [ {
+          "id" : "73",
+          "tags" : "Relationship",
+          "sourceId" : "62",
+          "destinationId" : "43",
+          "description" : "results"
+        }, {
+          "id" : "74",
+          "sourceId" : "62",
+          "destinationId" : "33",
+          "description" : "results",
+          "linkedRelationshipId" : "73"
+        } ],
+        "documentation" : { }
+      }, {
+        "id" : "66",
         "tags" : "Element,Container",
         "properties" : {
           "structurizr.dsl.identifier" : "ml_interepretor"
         },
         "name" : "Machine Learning Interpretor",
         "relationships" : [ {
-          "id" : "74",
-          "sourceId" : "64",
+          "id" : "76",
+          "sourceId" : "66",
           "destinationId" : "33",
           "description" : "training logs",
-          "linkedRelationshipId" : "73"
+          "linkedRelationshipId" : "75"
         }, {
-          "id" : "73",
+          "id" : "75",
           "tags" : "Relationship",
-          "sourceId" : "64",
+          "sourceId" : "66",
           "destinationId" : "46",
           "description" : "training logs"
         } ],
         "components" : [ {
-          "id" : "65",
-          "tags" : "Element,Component",
-          "name" : "Training Manager",
-          "documentation" : { }
-        }, {
-          "id" : "66",
+          "id" : "68",
           "tags" : "Element,Component",
           "name" : "Data Visualizer",
+          "documentation" : { }
+        }, {
+          "id" : "67",
+          "tags" : "Element,Component",
+          "name" : "Training Manager",
           "documentation" : { }
         } ],
         "documentation" : { }
@@ -201,35 +194,34 @@
         },
         "name" : "UI Layer",
         "relationships" : [ {
-          "id" : "82",
-          "sourceId" : "5",
-          "destinationId" : "33",
-          "description" : "makes calls to",
-          "technology" : "[IPC-JSON]",
-          "linkedRelationshipId" : "79"
-        }, {
-          "id" : "81",
+          "id" : "83",
           "sourceId" : "5",
           "destinationId" : "40",
           "description" : "makes calls to",
           "technology" : "[IPC-JSON]",
-          "linkedRelationshipId" : "79"
+          "linkedRelationshipId" : "81"
         }, {
           "id" : "24",
           "sourceId" : "5",
           "destinationId" : "2",
           "description" : "Receives customized network",
           "linkedRelationshipId" : "23"
+        }, {
+          "id" : "84",
+          "sourceId" : "5",
+          "destinationId" : "33",
+          "description" : "makes calls to",
+          "technology" : "[IPC-JSON]",
+          "linkedRelationshipId" : "81"
         } ],
         "group" : "Clients",
         "components" : [ {
-          "id" : "10",
+          "id" : "9",
           "tags" : "Element,Component",
           "properties" : {
-            "structurizr.dsl.identifier" : "apitransformer"
+            "structurizr.dsl.identifier" : "apiinterface"
           },
-          "name" : "API Transformer",
-          "description" : "Converts state to DTO object",
+          "name" : "API Interface",
           "documentation" : { }
         }, {
           "id" : "6",
@@ -239,16 +231,10 @@
           },
           "name" : "Sample React Component",
           "relationships" : [ {
-            "id" : "15",
+            "id" : "13",
             "tags" : "Relationship",
             "sourceId" : "6",
-            "destinationId" : "9",
-            "description" : "uses"
-          }, {
-            "id" : "16",
-            "tags" : "Relationship",
-            "sourceId" : "6",
-            "destinationId" : "10",
+            "destinationId" : "8",
             "description" : "uses"
           }, {
             "id" : "14",
@@ -257,10 +243,10 @@
             "destinationId" : "7",
             "description" : "uses"
           }, {
-            "id" : "13",
+            "id" : "16",
             "tags" : "Relationship",
             "sourceId" : "6",
-            "destinationId" : "8",
+            "destinationId" : "10",
             "description" : "uses"
           }, {
             "id" : "23",
@@ -268,8 +254,23 @@
             "sourceId" : "6",
             "destinationId" : "2",
             "description" : "Receives customized network"
+          }, {
+            "id" : "15",
+            "tags" : "Relationship",
+            "sourceId" : "6",
+            "destinationId" : "9",
+            "description" : "uses"
           } ],
           "group" : "ReactComponents",
+          "documentation" : { }
+        }, {
+          "id" : "10",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "apitransformer"
+          },
+          "name" : "API Transformer",
+          "description" : "Converts state to DTO object",
           "documentation" : { }
         }, {
           "id" : "11",
@@ -279,58 +280,26 @@
           },
           "name" : "Tauri API Client",
           "relationships" : [ {
-            "id" : "79",
-            "tags" : "Relationship",
-            "sourceId" : "11",
-            "destinationId" : "40",
-            "description" : "makes calls to",
-            "technology" : "[IPC-JSON]"
-          }, {
-            "id" : "80",
+            "id" : "82",
             "sourceId" : "11",
             "destinationId" : "33",
             "description" : "makes calls to",
             "technology" : "[IPC-JSON]",
-            "linkedRelationshipId" : "79"
+            "linkedRelationshipId" : "81"
           }, {
             "id" : "17",
             "tags" : "Relationship",
             "sourceId" : "11",
             "destinationId" : "9",
             "description" : "implements"
-          } ],
-          "documentation" : { }
-        }, {
-          "id" : "12",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "restapiclient"
-          },
-          "name" : "REST API Client",
-          "relationships" : [ {
-            "id" : "18",
+          }, {
+            "id" : "81",
             "tags" : "Relationship",
-            "sourceId" : "12",
-            "destinationId" : "9",
-            "description" : "implements"
+            "sourceId" : "11",
+            "destinationId" : "40",
+            "description" : "makes calls to",
+            "technology" : "[IPC-JSON]"
           } ],
-          "documentation" : { }
-        }, {
-          "id" : "9",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "apiinterface"
-          },
-          "name" : "API Interface",
-          "documentation" : { }
-        }, {
-          "id" : "7",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "slice1"
-          },
-          "name" : "Sample Slice",
-          "group" : "Slices",
           "documentation" : { }
         }, {
           "id" : "8",
@@ -347,6 +316,47 @@
             "description" : "has"
           } ],
           "documentation" : { }
+        }, {
+          "id" : "7",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "slice1"
+          },
+          "name" : "Sample Slice",
+          "group" : "Slices",
+          "documentation" : { }
+        }, {
+          "id" : "12",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "restapiclient"
+          },
+          "name" : "REST API Client",
+          "relationships" : [ {
+            "id" : "18",
+            "tags" : "Relationship",
+            "sourceId" : "12",
+            "destinationId" : "9",
+            "description" : "implements"
+          } ],
+          "documentation" : { }
+        } ],
+        "documentation" : { }
+      }, {
+        "id" : "64",
+        "tags" : "Element,Container",
+        "properties" : {
+          "structurizr.dsl.identifier" : "cache"
+        },
+        "name" : "Cache",
+        "description" : "focused on caching network files for fast retrieval. Details TBD.",
+        "relationships" : [ {
+          "id" : "91",
+          "tags" : "Relationship",
+          "sourceId" : "64",
+          "destinationId" : "63",
+          "description" : "retrieves data",
+          "technology" : "TBD"
         } ],
         "documentation" : { }
       }, {
@@ -359,53 +369,122 @@
         "relationships" : [ {
           "id" : "88",
           "sourceId" : "33",
-          "destinationId" : "62",
-          "description" : "retrieves cached network config",
+          "destinationId" : "63",
+          "description" : "saves and retreives data",
           "technology" : "TBD",
           "linkedRelationshipId" : "87"
         }, {
-          "id" : "70",
+          "id" : "72",
           "sourceId" : "33",
-          "destinationId" : "64",
+          "destinationId" : "66",
           "description" : "calls",
           "technology" : "IPC*",
-          "linkedRelationshipId" : "69"
+          "linkedRelationshipId" : "71"
         }, {
-          "id" : "68",
+          "id" : "90",
           "sourceId" : "33",
-          "destinationId" : "60",
+          "destinationId" : "64",
+          "description" : "retrieves cached network config",
+          "technology" : "TBD",
+          "linkedRelationshipId" : "89"
+        }, {
+          "id" : "70",
+          "sourceId" : "33",
+          "destinationId" : "62",
           "description" : "calls",
           "technology" : "TBD",
-          "linkedRelationshipId" : "67"
-        }, {
-          "id" : "86",
-          "sourceId" : "33",
-          "destinationId" : "61",
-          "description" : "saves and retreives data",
-          "technology" : "TBD",
-          "linkedRelationshipId" : "85"
+          "linkedRelationshipId" : "69"
         } ],
         "components" : [ {
-          "id" : "44",
+          "id" : "38",
           "tags" : "Element,Component",
           "properties" : {
-            "structurizr.dsl.identifier" : "dbmanager"
+            "structurizr.dsl.identifier" : "filtermanager"
           },
-          "name" : "DBManager",
+          "name" : "FilterManager",
+          "description" : "TBD - Does the simulator return a list of filters and their properties?",
+          "documentation" : { }
+        }, {
+          "id" : "42",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "amlconnectcore"
+          },
+          "name" : "AML Connect Core",
           "relationships" : [ {
-            "id" : "85",
+            "id" : "50",
             "tags" : "Relationship",
-            "sourceId" : "44",
-            "destinationId" : "61",
-            "description" : "saves and retreives data",
-            "technology" : "TBD"
+            "sourceId" : "42",
+            "destinationId" : "34"
           }, {
-            "id" : "87",
+            "id" : "49",
             "tags" : "Relationship",
-            "sourceId" : "44",
+            "sourceId" : "42",
+            "destinationId" : "47"
+          }, {
+            "id" : "52",
+            "tags" : "Relationship",
+            "sourceId" : "42",
+            "destinationId" : "45"
+          }, {
+            "id" : "51",
+            "tags" : "Relationship",
+            "sourceId" : "42",
+            "destinationId" : "35"
+          } ],
+          "documentation" : { }
+        }, {
+          "id" : "45",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "audiomanager"
+          },
+          "name" : "AudioManager",
+          "documentation" : { }
+        }, {
+          "id" : "48",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "simulatorinterface"
+          },
+          "name" : "Simulator Interface",
+          "documentation" : { }
+        }, {
+          "id" : "43",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "chipsimulator"
+          },
+          "name" : "ChipSimulator",
+          "relationships" : [ {
+            "id" : "61",
+            "tags" : "Relationship",
+            "sourceId" : "43",
+            "destinationId" : "48",
+            "description" : "implements"
+          }, {
+            "id" : "69",
+            "tags" : "Relationship",
+            "sourceId" : "43",
             "destinationId" : "62",
-            "description" : "retrieves cached network config",
+            "description" : "calls",
             "technology" : "TBD"
+          } ],
+          "documentation" : { }
+        }, {
+          "id" : "46",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "mlinterpretormod"
+          },
+          "name" : "MLInterpretor",
+          "relationships" : [ {
+            "id" : "71",
+            "tags" : "Relationship",
+            "sourceId" : "46",
+            "destinationId" : "66",
+            "description" : "calls",
+            "technology" : "IPC*"
           } ],
           "documentation" : { }
         }, {
@@ -417,25 +496,31 @@
           "name" : "FileManager",
           "documentation" : { }
         }, {
-          "id" : "37",
+          "id" : "34",
           "tags" : "Element,Component",
           "properties" : {
-            "structurizr.dsl.identifier" : "resultgenerator"
+            "structurizr.dsl.identifier" : "datasetup"
           },
-          "name" : "ResultGenerator",
+          "name" : "DataManager",
+          "relationships" : [ {
+            "id" : "54",
+            "tags" : "Relationship",
+            "sourceId" : "34",
+            "destinationId" : "36"
+          } ],
           "documentation" : { }
         }, {
-          "id" : "35",
+          "id" : "40",
           "tags" : "Element,Component",
           "properties" : {
-            "structurizr.dsl.identifier" : "projectmanager"
+            "structurizr.dsl.identifier" : "mainui"
           },
-          "name" : "ProjectManager",
+          "name" : "Main UI",
           "relationships" : [ {
-            "id" : "52",
+            "id" : "85",
             "tags" : "Relationship",
-            "sourceId" : "35",
-            "destinationId" : "36"
+            "sourceId" : "40",
+            "destinationId" : "42"
           } ],
           "documentation" : { }
         }, {
@@ -448,37 +533,6 @@
           "description" : "TBD - Are we managing neural network features seperately? Do they need to be stored?",
           "documentation" : { }
         }, {
-          "id" : "34",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "datasetup"
-          },
-          "name" : "DataManager",
-          "relationships" : [ {
-            "id" : "53",
-            "tags" : "Relationship",
-            "sourceId" : "34",
-            "destinationId" : "36"
-          } ],
-          "documentation" : { }
-        }, {
-          "id" : "38",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "filtermanager"
-          },
-          "name" : "FilterManager",
-          "description" : "TBD - Does the simulator return a list of filters and their properties?",
-          "documentation" : { }
-        }, {
-          "id" : "45",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "audiomanager"
-          },
-          "name" : "AudioManager",
-          "documentation" : { }
-        }, {
           "id" : "41",
           "tags" : "Element,Component",
           "properties" : {
@@ -486,71 +540,33 @@
           },
           "name" : "Main CLI",
           "relationships" : [ {
-            "id" : "84",
+            "id" : "86",
             "tags" : "Relationship",
             "sourceId" : "41",
             "destinationId" : "42"
           } ],
           "documentation" : { }
         }, {
-          "id" : "46",
+          "id" : "44",
           "tags" : "Element,Component",
           "properties" : {
-            "structurizr.dsl.identifier" : "mlinterpretormod"
+            "structurizr.dsl.identifier" : "dbmanager"
           },
-          "name" : "MLInterpretor",
+          "name" : "DBManager",
           "relationships" : [ {
-            "id" : "69",
+            "id" : "87",
             "tags" : "Relationship",
-            "sourceId" : "46",
-            "destinationId" : "64",
-            "description" : "calls",
-            "technology" : "IPC*"
-          } ],
-          "documentation" : { }
-        }, {
-          "id" : "43",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "chipsimulator"
-          },
-          "name" : "ChipSimulator",
-          "relationships" : [ {
-            "id" : "67",
-            "tags" : "Relationship",
-            "sourceId" : "43",
-            "destinationId" : "60",
-            "description" : "calls",
+            "sourceId" : "44",
+            "destinationId" : "63",
+            "description" : "saves and retreives data",
             "technology" : "TBD"
-          } ],
-          "documentation" : { }
-        }, {
-          "id" : "42",
-          "tags" : "Element,Component",
-          "properties" : {
-            "structurizr.dsl.identifier" : "amlconnectcore"
-          },
-          "name" : "AML Connect Core",
-          "relationships" : [ {
-            "id" : "49",
-            "tags" : "Relationship",
-            "sourceId" : "42",
-            "destinationId" : "34"
           }, {
-            "id" : "48",
+            "id" : "89",
             "tags" : "Relationship",
-            "sourceId" : "42",
-            "destinationId" : "47"
-          }, {
-            "id" : "50",
-            "tags" : "Relationship",
-            "sourceId" : "42",
-            "destinationId" : "35"
-          }, {
-            "id" : "51",
-            "tags" : "Relationship",
-            "sourceId" : "42",
-            "destinationId" : "45"
+            "sourceId" : "44",
+            "destinationId" : "64",
+            "description" : "retrieves cached network config",
+            "technology" : "TBD"
           } ],
           "documentation" : { }
         }, {
@@ -561,55 +577,63 @@
           },
           "name" : "NetworkManager",
           "relationships" : [ {
-            "id" : "55",
+            "id" : "56",
             "tags" : "Relationship",
             "sourceId" : "47",
             "destinationId" : "38"
           }, {
-            "id" : "57",
+            "id" : "58",
             "tags" : "Relationship",
             "sourceId" : "47",
             "destinationId" : "44"
           }, {
-            "id" : "59",
-            "tags" : "Relationship",
-            "sourceId" : "47",
-            "destinationId" : "46"
-          }, {
-            "id" : "54",
+            "id" : "55",
             "tags" : "Relationship",
             "sourceId" : "47",
             "destinationId" : "37"
           }, {
-            "id" : "58",
+            "id" : "57",
+            "tags" : "Relationship",
+            "sourceId" : "47",
+            "destinationId" : "48"
+          }, {
+            "id" : "60",
+            "tags" : "Relationship",
+            "sourceId" : "47",
+            "destinationId" : "46"
+          }, {
+            "id" : "59",
             "tags" : "Relationship",
             "sourceId" : "47",
             "destinationId" : "39"
-          }, {
-            "id" : "56",
-            "tags" : "Relationship",
-            "sourceId" : "47",
-            "destinationId" : "43"
           } ],
           "documentation" : { }
         }, {
-          "id" : "40",
+          "id" : "35",
           "tags" : "Element,Component",
           "properties" : {
-            "structurizr.dsl.identifier" : "mainui"
+            "structurizr.dsl.identifier" : "projectmanager"
           },
-          "name" : "Main UI",
+          "name" : "ProjectManager",
           "relationships" : [ {
-            "id" : "83",
+            "id" : "53",
             "tags" : "Relationship",
-            "sourceId" : "40",
-            "destinationId" : "42"
+            "sourceId" : "35",
+            "destinationId" : "36"
           } ],
+          "documentation" : { }
+        }, {
+          "id" : "37",
+          "tags" : "Element,Component",
+          "properties" : {
+            "structurizr.dsl.identifier" : "resultgenerator"
+          },
+          "name" : "ResultGenerator",
           "documentation" : { }
         } ],
         "documentation" : { }
       }, {
-        "id" : "61",
+        "id" : "63",
         "tags" : "Element,Container,DB",
         "properties" : {
           "structurizr.dsl.identifier" : "app_db"
@@ -618,48 +642,38 @@
         "description" : "Responsible for storing application data that does not pertain directly to the network. Details TBD",
         "documentation" : { }
       }, {
-        "id" : "60",
+        "id" : "29",
         "tags" : "Element,Container",
         "properties" : {
-          "structurizr.dsl.identifier" : "simulator"
+          "structurizr.dsl.identifier" : "cliapp"
         },
-        "name" : "Simulator",
+        "name" : "Command Line Application",
         "relationships" : [ {
-          "id" : "71",
+          "id" : "31",
           "tags" : "Relationship",
-          "sourceId" : "60",
-          "destinationId" : "43",
-          "description" : "results"
+          "sourceId" : "29",
+          "destinationId" : "2",
+          "description" : "Receives customized network"
         }, {
-          "id" : "72",
-          "sourceId" : "60",
-          "destinationId" : "33",
-          "description" : "results",
-          "linkedRelationshipId" : "71"
-        } ],
-        "documentation" : { }
-      }, {
-        "id" : "62",
-        "tags" : "Element,Container",
-        "properties" : {
-          "structurizr.dsl.identifier" : "cache"
-        },
-        "name" : "Cache",
-        "description" : "focused on caching network files for fast retrieval. Details TBD.",
-        "relationships" : [ {
-          "id" : "89",
+          "id" : "79",
           "tags" : "Relationship",
-          "sourceId" : "62",
-          "destinationId" : "61",
-          "description" : "retrieves data",
-          "technology" : "TBD"
+          "sourceId" : "29",
+          "destinationId" : "41",
+          "description" : "calls via bash"
+        }, {
+          "id" : "80",
+          "sourceId" : "29",
+          "destinationId" : "33",
+          "description" : "calls via bash",
+          "linkedRelationshipId" : "79"
         } ],
+        "group" : "Clients",
         "documentation" : { }
       } ],
       "documentation" : { }
     } ],
     "customElements" : [ {
-      "id" : "90",
+      "id" : "92",
       "tags" : "Element",
       "properties" : {
         "structurizr.dsl.identifier" : "aml100"
@@ -673,9 +687,10 @@
     "systemLandscapeViews" : [ {
       "key" : "landscape",
       "order" : 1,
+      "paperSize" : "A4_Landscape",
       "dimensions" : {
-        "width" : 3000,
-        "height" : 1500
+        "width" : 3016,
+        "height" : 1516
       },
       "automaticLayout" : {
         "implementation" : "Graphviz",
@@ -688,29 +703,29 @@
       "enterpriseBoundaryVisible" : true,
       "elements" : [ {
         "id" : "1",
-        "x" : 199,
-        "y" : 199
+        "x" : 208,
+        "y" : 208
       }, {
         "id" : "2",
-        "x" : 1649,
-        "y" : 549
+        "x" : 1658,
+        "y" : 558
       }, {
         "id" : "3",
-        "x" : 199,
-        "y" : 899
+        "x" : 208,
+        "y" : 908
       }, {
         "id" : "4",
-        "x" : 899,
-        "y" : 599
+        "x" : 908,
+        "y" : 608
       }, {
-        "id" : "90",
-        "x" : 2349,
-        "y" : 599
+        "id" : "92",
+        "x" : 2358,
+        "y" : 608
       } ],
       "relationships" : [ {
-        "id" : "28"
+        "id" : "93"
       }, {
-        "id" : "91"
+        "id" : "28"
       }, {
         "id" : "25"
       }, {
@@ -721,9 +736,10 @@
       "key" : "SystemContext-001",
       "order" : 2,
       "softwareSystemId" : "4",
+      "paperSize" : "A5_Portrait",
       "dimensions" : {
-        "width" : 1500,
-        "height" : 2100
+        "width" : 1516,
+        "height" : 2116
       },
       "automaticLayout" : {
         "implementation" : "Graphviz",
@@ -736,20 +752,20 @@
       "enterpriseBoundaryVisible" : true,
       "elements" : [ {
         "id" : "1",
-        "x" : 199,
-        "y" : 199
+        "x" : 208,
+        "y" : 208
       }, {
         "id" : "2",
-        "x" : 549,
-        "y" : 1499
+        "x" : 558,
+        "y" : 1508
       }, {
         "id" : "3",
-        "x" : 899,
-        "y" : 199
+        "x" : 908,
+        "y" : 208
       }, {
         "id" : "4",
-        "x" : 524,
-        "y" : 899
+        "x" : 533,
+        "y" : 908
       } ],
       "relationships" : [ {
         "id" : "28"
@@ -773,6 +789,10 @@
         "x" : 1809,
         "y" : 946
       }, {
+        "id" : "66",
+        "x" : 2894,
+        "y" : 911
+      }, {
         "id" : "1",
         "x" : 199,
         "y" : 431
@@ -782,8 +802,8 @@
         "y" : 2106
       }, {
         "id" : "3",
-        "x" : 279,
-        "y" : 1671
+        "x" : 625,
+        "y" : 2055
       }, {
         "id" : "5",
         "x" : 1048,
@@ -793,72 +813,63 @@
         "x" : 1069,
         "y" : 821
       }, {
-        "id" : "60",
-        "x" : 2879,
-        "y" : 1316
+        "id" : "62",
+        "x" : 660,
+        "y" : 270
       }, {
-        "id" : "61",
+        "id" : "63",
         "x" : 2539,
         "y" : 266
       }, {
-        "id" : "62",
+        "id" : "64",
         "x" : 1734,
         "y" : 261
       }, {
-        "id" : "63",
-        "x" : 1048,
-        "y" : 220
-      }, {
-        "id" : "64",
-        "x" : 2894,
-        "y" : 911
+        "id" : "65",
+        "x" : 1205,
+        "y" : 180
       } ],
       "relationships" : [ {
         "id" : "70",
+        "vertices" : [ {
+          "x" : 1199,
+          "y" : 490
+        } ]
+      }, {
+        "id" : "72",
         "vertices" : [ {
           "x" : 2664,
           "y" : 1121
         } ]
       }, {
-        "id" : "82"
+        "id" : "80"
       }, {
-        "id" : "72",
-        "vertices" : [ {
-          "x" : 2619,
-          "y" : 1321
-        } ]
-      }, {
-        "id" : "86",
-        "vertices" : [ {
-          "x" : 2310,
-          "y" : 760
-        }, {
-          "x" : 2400,
-          "y" : 695
-        } ]
+        "id" : "91"
       }, {
         "id" : "74",
         "vertices" : [ {
-          "x" : 2719,
-          "y" : 1051
+          "x" : 1059,
+          "y" : 755
         } ]
+      }, {
+        "id" : "84"
       }, {
         "id" : "76",
         "vertices" : [ {
-          "x" : 1623,
-          "y" : 710
-        } ]
-      }, {
-        "id" : "32",
-        "vertices" : [ {
-          "x" : 785,
-          "y" : 1510
+          "x" : 2719,
+          "y" : 1051
         } ]
       }, {
         "id" : "21",
         "vertices" : [ {
           "x" : 760,
           "y" : 1035
+        } ]
+      }, {
+        "id" : "32",
+        "vertices" : [ {
+          "x" : 785,
+          "y" : 1510
         } ]
       }, {
         "id" : "31",
@@ -869,29 +880,129 @@
       }, {
         "id" : "30"
       }, {
+        "id" : "90"
+      }, {
         "id" : "27"
       }, {
         "id" : "24"
       }, {
-        "id" : "78"
-      }, {
-        "id" : "88"
-      }, {
-        "id" : "68",
+        "id" : "78",
         "vertices" : [ {
-          "x" : 2479,
-          "y" : 1356
+          "x" : 1623,
+          "y" : 710
         } ]
       }, {
-        "id" : "89"
+        "id" : "88",
+        "vertices" : [ {
+          "x" : 2310,
+          "y" : 760
+        }, {
+          "x" : 2400,
+          "y" : 695
+        } ]
       } ]
     } ],
     "componentViews" : [ {
+      "key" : "Component-002",
+      "order" : 5,
+      "paperSize" : "A4_Landscape",
+      "dimensions" : {
+        "width" : 3508,
+        "height" : 2480
+      },
+      "containerId" : "5",
+      "externalContainerBoundariesVisible" : true,
+      "elements" : [ {
+        "id" : "11",
+        "x" : 1205,
+        "y" : 1524
+      }, {
+        "id" : "33",
+        "x" : 1276,
+        "y" : 2134
+      }, {
+        "id" : "12",
+        "x" : 736,
+        "y" : 1524
+      }, {
+        "id" : "1",
+        "x" : 730,
+        "y" : 44
+      }, {
+        "id" : "2",
+        "x" : 1420,
+        "y" : 54
+      }, {
+        "id" : "3",
+        "x" : 2160,
+        "y" : 54
+      }, {
+        "id" : "6",
+        "x" : 1466,
+        "y" : 784
+      }, {
+        "id" : "7",
+        "x" : 2306,
+        "y" : 1529
+      }, {
+        "id" : "8",
+        "x" : 2286,
+        "y" : 804
+      }, {
+        "id" : "9",
+        "x" : 731,
+        "y" : 809
+      }, {
+        "id" : "10",
+        "x" : 1765,
+        "y" : 1524
+      } ],
+      "relationships" : [ {
+        "id" : "18"
+      }, {
+        "id" : "82"
+      }, {
+        "id" : "17"
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "15",
+        "vertices" : [ {
+          "x" : 1331,
+          "y" : 989
+        }, {
+          "x" : 1291,
+          "y" : 999
+        } ]
+      }, {
+        "id" : "26"
+      }, {
+        "id" : "14",
+        "vertices" : [ {
+          "x" : 2061,
+          "y" : 1304
+        }, {
+          "x" : 2205,
+          "y" : 1419
+        }, {
+          "x" : 2215,
+          "y" : 1424
+        } ]
+      }, {
+        "id" : "13"
+      }, {
+        "id" : "23"
+      }, {
+        "id" : "20"
+      }, {
+        "id" : "19"
+      } ]
+    }, {
       "key" : "Component-001",
       "order" : 4,
       "dimensions" : {
         "width" : 5350,
-        "height" : 4920
+        "height" : 5500
       },
       "automaticLayout" : {
         "implementation" : "Graphviz",
@@ -904,263 +1015,338 @@
       "containerId" : "33",
       "externalContainerBoundariesVisible" : true,
       "elements" : [ {
+        "id" : "66",
+        "x" : 3950,
+        "y" : 1996
+      }, {
         "id" : "44",
-        "x" : 3199,
-        "y" : 2019
+        "x" : 3200,
+        "y" : 2600
       }, {
         "id" : "34",
-        "x" : 2449,
-        "y" : 3819
+        "x" : 2450,
+        "y" : 1400
       }, {
         "id" : "45",
-        "x" : 2449,
-        "y" : 2619
+        "x" : 2450,
+        "y" : 2000
       }, {
         "id" : "35",
-        "x" : 2449,
-        "y" : 3219
+        "x" : 2450,
+        "y" : 800
       }, {
         "id" : "46",
-        "x" : 3199,
-        "y" : 1419
+        "x" : 3200,
+        "y" : 2000
       }, {
         "id" : "47",
-        "x" : 2449,
-        "y" : 2019
+        "x" : 2450,
+        "y" : 2600
       }, {
         "id" : "36",
-        "x" : 3199,
-        "y" : 3819
+        "x" : 3200,
+        "y" : 800
       }, {
         "id" : "37",
-        "x" : 3199,
-        "y" : 219
+        "x" : 3200,
+        "y" : 1400
+      }, {
+        "id" : "48",
+        "x" : 3200,
+        "y" : 4400
       }, {
         "id" : "38",
-        "x" : 3199,
-        "y" : 3219
+        "x" : 3200,
+        "y" : 3800
       }, {
         "id" : "39",
-        "x" : 3199,
-        "y" : 2619
+        "x" : 3200,
+        "y" : 3200
       }, {
         "id" : "29",
-        "x" : 199,
-        "y" : 2619
+        "x" : 200,
+        "y" : 1400
       }, {
         "id" : "5",
-        "x" : 199,
-        "y" : 3219
-      }, {
-        "id" : "60",
-        "x" : 3949,
-        "y" : 819
-      }, {
-        "id" : "61",
-        "x" : 4699,
-        "y" : 2327
+        "x" : 200,
+        "y" : 2000
       }, {
         "id" : "62",
-        "x" : 3949,
-        "y" : 2627
+        "x" : 3200,
+        "y" : 5000
       }, {
         "id" : "40",
-        "x" : 949,
-        "y" : 3219
+        "x" : 950,
+        "y" : 2000
       }, {
         "id" : "41",
-        "x" : 949,
-        "y" : 2619
+        "x" : 950,
+        "y" : 1400
       }, {
         "id" : "63",
-        "x" : 2449,
-        "y" : 4419
+        "x" : 4700,
+        "y" : 2904
       }, {
         "id" : "42",
-        "x" : 1699,
-        "y" : 2919
+        "x" : 1700,
+        "y" : 1700
       }, {
         "id" : "64",
-        "x" : 3949,
-        "y" : 1419
+        "x" : 3950,
+        "y" : 3204
       }, {
         "id" : "43",
-        "x" : 3199,
-        "y" : 819
+        "x" : 2450,
+        "y" : 4400
+      }, {
+        "id" : "65",
+        "x" : 2450,
+        "y" : 200
       } ],
       "relationships" : [ {
-        "id" : "50"
+        "id" : "91"
       }, {
         "id" : "71",
         "vertices" : [ {
-          "x" : 3799,
-          "y" : 819
+          "x" : 3800,
+          "y" : 2297
         } ]
+      }, {
+        "id" : "50"
       }, {
         "id" : "51"
       }, {
-        "id" : "52"
-      }, {
         "id" : "73",
         "vertices" : [ {
-          "x" : 3799,
-          "y" : 1419
+          "x" : 3143,
+          "y" : 4732
         } ]
+      }, {
+        "id" : "52"
       }, {
         "id" : "53"
       }, {
-        "id" : "75"
-      }, {
-        "id" : "54",
-        "vertices" : [ {
-          "x" : 3199,
-          "y" : 669
-        } ]
-      }, {
-        "id" : "67",
+        "id" : "75",
         "vertices" : [ {
           "x" : 3799,
-          "y" : 1119
+          "y" : 1998
         } ]
+      }, {
+        "id" : "54"
       }, {
         "id" : "69",
         "vertices" : [ {
-          "x" : 3799,
-          "y" : 1719
+          "x" : 2956,
+          "y" : 4967
         } ]
       }, {
         "id" : "89"
-      }, {
-        "id" : "48"
       }, {
         "id" : "49"
       }, {
         "id" : "83"
       }, {
-        "id" : "81"
+        "id" : "61"
+      }, {
+        "id" : "60"
+      }, {
+        "id" : "86"
       }, {
         "id" : "87"
-      }, {
-        "id" : "84"
       }, {
         "id" : "85"
       }, {
         "id" : "55",
         "vertices" : [ {
-          "x" : 2899,
-          "y" : 2469
+          "x" : 2900,
+          "y" : 2450
         }, {
-          "x" : 3199,
-          "y" : 3069
+          "x" : 3200,
+          "y" : 1850
+        } ]
+      }, {
+        "id" : "56",
+        "vertices" : [ {
+          "x" : 3200,
+          "y" : 3650
         } ]
       }, {
         "id" : "77"
       }, {
-        "id" : "56",
+        "id" : "57",
         "vertices" : [ {
-          "x" : 3199,
-          "y" : 1269
+          "x" : 3200,
+          "y" : 4250
         } ]
       }, {
-        "id" : "57"
+        "id" : "79"
       }, {
         "id" : "58"
       }, {
         "id" : "59"
       } ]
-    }, {
-      "key" : "Component-002",
-      "order" : 5,
+    } ],
+    "dynamicViews" : [ {
+      "key" : "Dynamic-002",
+      "order" : 7,
+      "title" : "[Performance] Add Network Element",
       "dimensions" : {
-        "width" : 2485,
-        "height" : 2820
+        "width" : 5350,
+        "height" : 1411
       },
-      "containerId" : "5",
-      "externalContainerBoundariesVisible" : true,
-      "elements" : [ {
-        "id" : "11",
-        "x" : 689,
-        "y" : 1680
-      }, {
-        "id" : "33",
-        "x" : 760,
-        "y" : 2290
-      }, {
-        "id" : "1",
-        "x" : 214,
-        "y" : 200
-      }, {
-        "id" : "12",
-        "x" : 220,
-        "y" : 1680
-      }, {
-        "id" : "2",
-        "x" : 904,
-        "y" : 210
-      }, {
-        "id" : "3",
-        "x" : 1644,
-        "y" : 210
-      }, {
-        "id" : "6",
-        "x" : 924,
-        "y" : 930
-      }, {
-        "id" : "7",
-        "x" : 1790,
-        "y" : 1685
-      }, {
-        "id" : "8",
-        "x" : 1770,
-        "y" : 960
-      }, {
-        "id" : "9",
-        "x" : 215,
-        "y" : 965
-      }, {
-        "id" : "10",
-        "x" : 1249,
-        "y" : 1680
-      } ],
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "elementId" : "33",
+      "externalBoundariesVisible" : true,
       "relationships" : [ {
-        "id" : "18"
+        "id" : "83",
+        "description" : "add network element",
+        "order" : "1",
+        "response" : false
       }, {
-        "id" : "17"
+        "id" : "85",
+        "order" : "2",
+        "response" : false
       }, {
-        "id" : "16"
+        "id" : "49",
+        "order" : "3",
+        "response" : false
       }, {
-        "id" : "80"
+        "id" : "58",
+        "order" : "4",
+        "response" : false
       }, {
-        "id" : "26"
+        "id" : "59",
+        "order" : "5",
+        "response" : false
       }, {
-        "id" : "15",
+        "id" : "89",
+        "order" : "6",
+        "response" : false
+      }, {
+        "id" : "87",
+        "order" : "7",
+        "response" : false
+      }, {
+        "id" : "91",
+        "order" : "8",
+        "response" : false
+      } ],
+      "elements" : [ {
+        "id" : "44",
+        "x" : 3199,
+        "y" : 219
+      }, {
+        "id" : "47",
+        "x" : 2449,
+        "y" : 519
+      }, {
+        "id" : "5",
+        "x" : 199,
+        "y" : 519
+      }, {
+        "id" : "39",
+        "x" : 3199,
+        "y" : 819
+      }, {
+        "id" : "40",
+        "x" : 949,
+        "y" : 519
+      }, {
+        "id" : "63",
+        "x" : 4699,
+        "y" : 223
+      }, {
+        "id" : "42",
+        "x" : 1699,
+        "y" : 519
+      }, {
+        "id" : "64",
+        "x" : 3949,
+        "y" : 523
+      } ]
+    }, {
+      "key" : "Dynamic-001",
+      "order" : 6,
+      "title" : "[Extensibility] Rust Simulator Swap",
+      "dimensions" : {
+        "width" : 3120,
+        "height" : 820
+      },
+      "automaticLayout" : {
+        "implementation" : "Graphviz",
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "nodeSeparation" : 300,
+        "edgeSeparation" : 0,
+        "vertices" : false
+      },
+      "elementId" : "33",
+      "externalBoundariesVisible" : true,
+      "relationships" : [ {
+        "id" : "57",
+        "description" : "passes user-defined network & audio data",
+        "order" : "1",
+        "response" : false,
         "vertices" : [ {
-          "x" : 815,
-          "y" : 1145
-        }, {
-          "x" : 775,
-          "y" : 1155
+          "x" : 819,
+          "y" : 528
         } ]
       }, {
-        "id" : "14",
+        "id" : "57",
+        "description" : "calls simulate_network()",
+        "order" : "2",
+        "response" : false,
         "vertices" : [ {
-          "x" : 1545,
-          "y" : 1460
-        }, {
-          "x" : 1689,
-          "y" : 1575
-        }, {
-          "x" : 1699,
-          "y" : 1580
+          "x" : 819,
+          "y" : 228
         } ]
       }, {
-        "id" : "13"
+        "id" : "61",
+        "description" : "calls chipSimulator implementation",
+        "order" : "3",
+        "response" : true
       }, {
-        "id" : "23"
+        "id" : "69",
+        "description" : "translates data to simulator input data",
+        "order" : "4",
+        "response" : false,
+        "vertices" : [ {
+          "x" : 2319,
+          "y" : 528
+        } ]
       }, {
-        "id" : "20"
+        "id" : "73",
+        "description" : "sends back audio result",
+        "order" : "5",
+        "response" : false,
+        "vertices" : [ {
+          "x" : 2319,
+          "y" : 228
+        } ]
+      } ],
+      "elements" : [ {
+        "id" : "47",
+        "x" : 219,
+        "y" : 228
       }, {
-        "id" : "19"
+        "id" : "48",
+        "x" : 969,
+        "y" : 228
+      }, {
+        "id" : "62",
+        "x" : 2469,
+        "y" : 228
+      }, {
+        "id" : "43",
+        "x" : 1719,
+        "y" : 228
       } ]
     } ],
     "configuration" : {
@@ -1169,7 +1355,7 @@
       "themes" : [ "https://static.structurizr.com/themes/default/theme.json" ],
       "terminology" : { },
       "metadataSymbols" : "SquareBrackets",
-      "lastSavedView" : "SystemContext-001"
+      "lastSavedView" : "Dynamic-001"
     }
   }
 }
