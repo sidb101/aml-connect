@@ -1,14 +1,12 @@
-import {useState} from "react";
-import {invoke} from "@tauri-apps/api/tauri";
-import "./App.css";
-import {Greeting} from "./components/landing/Greeting";
+import "./App.scss";
+import {StoryContent} from "./components/storybook/StoryContent";
+import {StoryNav} from "./components/storybook/StoryNav";
 
 function App() {
-
-    console.log("Rendering..");
     return (
-        <div className="container">
-            <Greeting title={"Welcome to Analog ML Connect"}/>
+        <div className={"container"}>
+            <StoryNav/>
+            <StoryContent/>
         </div>
     );
 }

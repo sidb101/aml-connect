@@ -7,7 +7,7 @@ import {when} from "jest-when";
 //Mock the backend module
 jest.mock("@tauri-apps/api/tauri");
 
-describe('greeting component DOM Tests', function () {
+describe('greeting components DOM Tests', function () {
 
     //mock the invoke method of backend module
     const mockInvoke = invoke as jest.MockedFunction<typeof  invoke>;
