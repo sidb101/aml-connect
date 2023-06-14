@@ -22,7 +22,7 @@ export const StoryContent = () => {
                 {/*<div className={"xsmall-text light-grey-text"}> This is xsmall light-grey text.</div>*/}
                 <br/>
                 <button className={"btn btn-outline"} >
-                    Open  &nbsp;&nbsp;
+                    Open Project &nbsp;&nbsp;
                     <FontAwesomeIcon icon={faArrowRight}/>
                 </button>
             </div>
