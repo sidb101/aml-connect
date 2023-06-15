@@ -7,26 +7,26 @@ import {when} from "jest-when";
 //Mock the backend module
 jest.mock("@tauri-apps/api/tauri");
 
-describe('greeting component DOM Tests', function () {
+describe("greeting components DOM Tests", function () {
 
     //mock the invoke method of backend module
     const mockInvoke = invoke as jest.MockedFunction<typeof  invoke>;
 
 
-    test('should display the default title when no title passed in props', () => {
+    test("should display the default title when no title passed in props", () => {
         render(<Greeting/>);
 
         expect(screen.getByRole("heading")).toHaveTextContent("Here goes greeting title");
     });
 
-    test('should display the title when title sent', () => {
+    test("should display the title when title sent", () => {
         const title = "My test Heading";
         render(<Greeting title={title}/>);
 
         expect(screen.getByRole("heading")).toHaveTextContent(title);
     });
 
-    test('should return the greeting when text entered in text bar', async() => {
+    test("should return the greeting when text entered in text bar", async() => {
 
         //ARRANGE
         const name = "User1"

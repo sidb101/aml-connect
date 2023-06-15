@@ -1,0 +1,73 @@
+/******************************
+
+SCSS Global Theme Variables
+
+******************************/
+
+
+/* -- Colors -- */
+$color-dark-green: #18646B;// dark primary (for hovers)
+$color-green: #1C757D; //primary color
+$color-light-green: #257F93;
+$color-xlight-green: #00ADB5;
+
+$color-white: #ffffff;  //mostly for panels
+$color-grey-1: #F0F5F9; //mostly for background
+$color-grey-2: #D1D1D1; //mostly for nav-bar text
+$color-grey-3: #97999C; //mostly for boundaries
+$color-grey-4: #828282; //for light text
+$color-grey-5: #5F6267; //mostly for text
+
+$color-dark-blue: #222831; //mostly for nav-bar (secondary color)
+$color-bright-blue: #0072bd; //mostly for waveforms
+$color-light-blue: #D8EEF2; //for network components
+
+
+/* -- Font Families -- */
+@font-face {
+  font-family: "Helvetica Neue Light";
+  src: url("./assets/fonts/helveticaneue/HelveticaNeue Light.ttf");
+}
+@font-face {
+  font-family: "Helvetica Neue Medium";
+  src: url("./assets/fonts/helveticaneue/HelveticaNeue Medium.ttf");
+}
+@font-face {
+  font-family: "Helvetica Neue Bold";
+  src: url("./assets/fonts/helveticaneue/HelveticaNeue Bold.ttf");
+}
+
+@font-face {
+  font-family: "Pirulen";
+  src: url("./assets/fonts/pirulen_rg.otf");
+}
+
+$font-brand: "Pirulen", "Arial", "serif";
+$font-primary-light : "Helvetica Neue Light", "Helvetica", "sans-serif";
+$font-primary : "Helvetica Neue Medium", "Helvetica", "sans-serif";
+$font-primary-bold : "Helvetica Neue Bold", "Helvetica", "sans-serif";
+
+/* -- Font Sizes -- */
+$text-xsmall: 12px;
+$text-small: 14px;
+$text-regular: 16px;
+$text-large: 18px;
+$text-xlarge: 24px;
+$text-xxlarge: 26px;
+$text-brand: 34px;
+
+/* -- General spacings -- */
+$panel-padding: 20px;
+$content-padding: 40px;
+$nav-padding: 20px;
+$general-padding: 10px;
+
+
+
+
+
+
+
+
+
+
