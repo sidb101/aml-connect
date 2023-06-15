@@ -1,6 +1,11 @@
-/*************** SCSS Global Theme Variables ******************/
+/******************************
 
-/**** Colors ****/
+SCSS Global Theme Variables
+
+******************************/
+
+
+/* -- Colors -- */
 $color-dark-green: #18646B;// dark primary (for hovers)
 $color-green: #1C757D; //primary color
 $color-light-green: #257F93;
@@ -18,7 +23,7 @@ $color-bright-blue: #0072bd; //mostly for waveforms
 $color-light-blue: #D8EEF2; //for network components
 
 
-/***** Font Families ****/
+/* -- Font Families -- */
 @font-face {
   font-family: "Helvetica Neue Light";
   src: url("./assets/fonts/helveticaneue/HelveticaNeue Light.ttf");
@@ -42,7 +47,7 @@ $font-primary-light : "Helvetica Neue Light", "Helvetica", "sans-serif";
 $font-primary : "Helvetica Neue Medium", "Helvetica", "sans-serif";
 $font-primary-bold : "Helvetica Neue Bold", "Helvetica", "sans-serif";
 
-/***** Font Sizes *****/
+/* -- Font Sizes -- */
 $text-xsmall: 12px;
 $text-small: 14px;
 $text-regular: 16px;
@@ -51,7 +56,7 @@ $text-xlarge: 24px;
 $text-xxlarge: 26px;
 $text-brand: 34px;
 
-/****General spacings ****/
+/* -- General spacings -- */
 $panel-padding: 20px;
 $content-padding: 40px;
 $nav-padding: 20px;
