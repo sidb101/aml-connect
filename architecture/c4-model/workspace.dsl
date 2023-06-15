@@ -166,17 +166,14 @@ workspace {
             autoLayout lr
         }
 
-        dynamic appserver {
+        dynamic uiLayer {
             title "[Performance] Add Network Element"
 
-            uiLayer -> mainUI "add network element"
-            mainUI -> amlConnectCore
-            amlConnectCore -> networkmanager
-            networkmanager -> dbmanager
-            networkmanager -> featurengineer
-            dbmanager -> cache
-            dbmanager -> app_db
-            cache -> app_db
+            customer -> component1 "user request to add network element"
+            component1 -> reduxStore "asks for metadata regarding network element"
+            reduxStore -> component1 "data is received"
+            component1 -> slice1 "user defined network is updated with the additional network element"
+            component1 -> customer "new network element is displayed on canvas"
             
             autoLayout lr
         }
