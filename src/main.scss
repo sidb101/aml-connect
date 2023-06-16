@@ -12,25 +12,16 @@ Common Classes
 .white-panel{
   background-color: global.$color-white;
   color: global.$color-dark-blue;
-  padding: global.$panel-padding;
 }
 
 .xlight-panel{
   background-color: global.$color-grey-1;
   color: global.$color-dark-blue;
-  padding: global.$panel-padding;
 }
 
 .dark-panel{
   background-color: global.$color-dark-blue;
   color: global.$color-white;
-  padding: global.$panel-padding;
-}
-
-.content-panel {
-  background-color: global.$color-grey-1;
-  color: global.$color-dark-blue;
-  padding: global.$content-padding;
 }
 
 /* -- Various kinds of texts -- */

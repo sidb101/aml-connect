@@ -12,17 +12,17 @@ export interface ISidebar {
 
 export const Sidebar = ({logo, sideSections, ...props} : ISidebar) => {
     return (
-        <>
+        <div className={"dark-panel nav-container Sidebar_container"}>
             <h1>{logo}</h1>
-            {sideSections?.map(({label, isOpen}: ISideSection) => 
+            {sideSections?.map(({heading, isOpen}: ISideSection) =>
                     <>
                         <SideSection
-                            label = {label}
+                            heading= {heading}
                             isOpen = {isOpen}
                         />
                     </>
                 )
             }
-        </>
+        </div>
     );
 };
