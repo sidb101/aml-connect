@@ -5,20 +5,14 @@ body{
   padding: 0;
   min-width: 100vw;
   min-height: 100vh;
-  ;
+  background: global.$color-grey-1;
 }
-//.container {
-//  display: flex;
-//  padding: 0;
-//  font-family: global.$font-primary;
-//  color: global.$color-dark-blue;
-//  height: 100vh;
-//}
+#root{
+  height: 100%;
+}
 
 .App_container {
   background-color: cyan;
-  //display: flex;
-  //flex-direction: row;
   min-height: 100%;
   min-width:100%;
   margin: 0;
@@ -27,13 +21,8 @@ body{
   color: global.$color-dark-blue;
 }
 
-.nav-container {
-  padding: global.$nav-padding;
-}
-
 .content-container {
   padding: global.$content-padding;
   min-height: 100%;
-  min-width: 100%;
   margin-left: global.$sidebar-width + global.$content-padding;
 }

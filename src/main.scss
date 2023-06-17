@@ -19,6 +19,10 @@ Common Classes
   color: global.$color-dark-blue;
 }
 
+.dark-grey-panel{
+  background-color: global.$color-grey-6;
+  color: global.$color-white;
+}
 .dark-panel{
   background-color: global.$color-dark-blue;
   color: global.$color-white;
@@ -101,6 +105,7 @@ Common Classes
   font-family: global.$font-primary-light;
   padding: global.$general-padding global.$general-padding * 2;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .btn-solid{
@@ -129,5 +134,34 @@ Common Classes
 
   &:active{
     background-color: global.$color-dark-green;
+  }
+
+  .btn-light-solid{
+    background-color: global.$color-light-green;
+    border:none;
+    color: global.$color-white;
+
+    &:hover{
+      background-color: global.$color-dark-light-green;
+    }
+
+    &:active{
+      background-color: global.$color-light-green;
+    }
+  }
+
+  .btn-light-outline {
+    background: none;
+    border: global.$color-light-green solid 1px;
+    color: global.$color-light-green;
+
+    &:hover {
+      background-color: global.$color-light-green;
+      color: global.$color-white;
+    }
+
+    &:active {
+      background-color: global.$color-dark-light-green;
+    }
   }
 }

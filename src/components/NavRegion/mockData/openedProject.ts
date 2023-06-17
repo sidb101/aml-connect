@@ -1,10 +1,11 @@
-import { ISideSection } from "./Sidebar";
+import {INavSection} from "../NavSection/NavSection";
 
-const openProjectsSections : ISideSection[] = [
+
+const openProjectsSections : INavSection[] = [
     {
-        label: "Glass Break Detection",
+        heading: "Glass Break Detection",
         isOpen: true,
-        sideLinks : [
+        navLinks : [
             {
                 label: "Overview"
             },
@@ -24,9 +25,9 @@ const openProjectsSections : ISideSection[] = [
         selectedIndex: 0
     },
     {
-        label: "Alexa Wakeword Detection",
+        heading: "Alexa Wakeword Detection",
         isOpen: false,
-        sideLinks : [
+        navLinks : [
             {
                 label: "Overview"
             },
