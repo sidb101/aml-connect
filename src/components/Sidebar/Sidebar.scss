@@ -1,0 +1,12 @@
+@use "../../global";
+.Sidebar_container {
+  height: 100vh;
+  width: global.$sidebar-width;
+  position: fixed;
+  padding: global.$nav-padding;
+  overflow: auto;
+
+  .Sidebar_logo {
+    padding-bottom: 40px;
+  }
+}

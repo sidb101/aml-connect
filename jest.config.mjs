@@ -15,4 +15,8 @@ export default {
 
   // The test environment that will be used for testing
   testEnvironment: "jsdom",
+
+  moduleNameMapper: {
+    "^.+\\.(css|less|scss)$": "babel-jest"
+  }
 };
