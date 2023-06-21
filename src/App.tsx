@@ -3,6 +3,9 @@ import {Sidebar} from "./components/Sidebar/Sidebar";
 import React from "react";
 import {NavRegion} from "./components/NavRegion/NavRegion";
 import openProjectsSections from "./components/NavRegion/mockData/openedProject";
+import {ProjectsRegion} from "./components/ProjectsRegion/ProjectsRegion";
+import {allProjects} from "./components/ProjectsRegion/allProjects";
+import {newProjectSection} from "./components/NavRegion/mockData/newProject";
 
 function App() {
 
