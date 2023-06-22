@@ -1,13 +1,15 @@
 @use "../../../global";
+
 .NavSection_container {
   margin-top: 20px;
 
-  &:first-of-type{
+  &:first-of-type {
     margin-top: initial;
   }
 
   $general-padding: 15px;
-  .NavSection_content{
+
+  .NavSection_content {
     width: global.$sidebar-width + global.$nav-padding;
     font-family: global.$font-primary;
     border-radius: 4px 0 0 4px;
@@ -15,12 +17,12 @@
     overflow: hidden;
     text-overflow: ellipsis;
 
-    .NavSection_heading{
+    .NavSection_heading {
       background-color: global.$color-dark-green;
       padding: $general-padding;
     }
 
-    .NavSection_navLinks{
+    .NavSection_navLinks {
       padding-left: $general-padding;
     }
   }

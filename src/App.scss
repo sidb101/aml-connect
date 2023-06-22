@@ -1,20 +1,21 @@
 @use "global";
 
-body{
+body {
   margin: 0;
   padding: 0;
   min-width: 100vw;
   min-height: 100vh;
   background: global.$color-grey-1;
 }
-#root{
+
+#root {
   height: 100%;
 }
 
 .App_container {
   background-color: cyan;
   min-height: 100%;
-  min-width:100%;
+  min-width: 100%;
   margin: 0;
   padding: 0;
   font-family: global.$font-primary;

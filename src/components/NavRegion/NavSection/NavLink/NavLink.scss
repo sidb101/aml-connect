@@ -1,8 +1,9 @@
 @use "../../../../global";
+
 .NavLink_container {
 
 
-  .NavLink_link{
+  .NavLink_link {
     $spacing: 0;
     padding: 15px;
     margin-top: $spacing;
@@ -10,22 +11,22 @@
     cursor: not-allowed;
     border-radius: 4px 0 0 4px;
 
-    &___enabled{
+    &___enabled {
       cursor: pointer;
 
-      &:hover{
+      &:hover {
         background-color: global.$color-light-green;
       }
 
-      &:active{
+      &:active {
         background-color: global.$color-dark-light-green;
       }
     }
 
-    &___selected{
+    &___selected {
       background-color: global.$color-light-green;
 
-      &:hover{
+      &:hover {
         background-color: global.$color-dark-light-green;
       }
     }

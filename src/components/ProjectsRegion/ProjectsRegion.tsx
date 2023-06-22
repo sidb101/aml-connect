@@ -1,14 +1,18 @@
 import "./ProjectsRegion.scss";
 
-export interface IProjectsRegion {
+export type ProjectsRegionT = {
     projects: string[];
-}
+};
 
-export const ProjectsRegion = ({projects, ...props}: IProjectsRegion) => {
-    return (<div className={"ProjectsRegion_container"}>
-
-        {projects.map((project:string) =>
-            <div className={"btn btn-solid ProjectsRegion_projectName"}>{project}</div>
-        )}
-    </div>)
-}
+export const ProjectsRegion = ({ projects, ...props }: ProjectsRegionT) => (
+    <div className={"ProjectsRegion_container"}>
+        {projects.map((project: string, index) => (
+            <div
+                key={index}
+                className={"btn btn-solid ProjectsRegion_projectName"}
+            >
+                {project}
+            </div>
+        ))}
+    </div>
+);

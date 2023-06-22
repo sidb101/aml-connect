@@ -1,7 +1,6 @@
-import {INavSection} from "../NavSection/NavSection";
+import type { NavSectionT } from "../NavSection/NavSection";
 
-
-export const newProjectSection : INavSection[] = [
+export const newProjectSection: NavSectionT[] = [
     {
         heading: "New Project",
         isOpen: true,
@@ -10,29 +9,29 @@ export const newProjectSection : INavSection[] = [
                 label: "Overview",
                 route: "",
                 isEnabled: true,
-                isSelected: true
+                isSelected: true,
             },
             {
                 label: "Data Hub",
                 route: "",
-                isEnabled: false
+                isEnabled: false,
             },
             {
                 label: "Model Creation",
                 route: "",
-                isEnabled: false
+                isEnabled: false,
             },
             {
                 label: "Results",
                 route: "",
-                isEnabled: false
+                isEnabled: false,
             },
             {
                 label: "Send to Hardware",
                 route: "",
-                isEnabled: false
-            }
+                isEnabled: false,
+            },
         ],
-        selectedIndex: 0
-    }
+        selectedIndex: 0,
+    },
 ];

@@ -1,29 +1,28 @@
-import {INavSection} from "../NavSection/NavSection";
+import type { NavSectionT } from "../NavSection/NavSection";
 
-
-const openProjectsSections : INavSection[] = [
+const openProjectsSections: NavSectionT[] = [
     {
         heading: "Glass Break Detection",
         isOpen: true,
-        navLinks : [
+        navLinks: [
             {
-                label: "Overview"
+                label: "Overview",
             },
             {
-                label: "Data Hub"
+                label: "Data Hub",
             },
             {
-                label: "Model Creation"
+                label: "Model Creation",
             },
             {
-                label: "Results"
+                label: "Results",
             },
             {
-                label: "Send to Hardware"
-            }
+                label: "Send to Hardware",
+            },
         ],
-        selectedIndex: 0
-    }
+        selectedIndex: 0,
+    },
 ];
 
 export default openProjectsSections;

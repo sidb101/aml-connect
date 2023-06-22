@@ -6,13 +6,13 @@ SCSS Global Theme Variables
 
 
 /* -- Colors -- */
-$color-dark-green: #18646B;// dark primary (for hovers)
+$color-dark-green: #18646B; // dark primary (for hovers)
 $color-green: #1C757D; //primary color
 
-$color-dark-light-green:#23798C; //(for hovers)
+$color-dark-light-green: #23798C; //(for hovers)
 $color-light-green: #257F93;
 
-$color-white: #ffffff;  //mostly for panels
+$color-white: #ffffff; //mostly for panels
 $color-grey-1: #F0F5F9; //mostly for background
 $color-grey-2: #D1D1D1; //mostly for nav-bar text
 $color-grey-3: #97999C; //mostly for boundaries
@@ -30,10 +30,12 @@ $color-light-blue: #D8EEF2; //for network components
   font-family: "Roboto Light";
   src: url("./assets/fonts/roboto/Roboto-Light.ttf");
 }
+
 @font-face {
   font-family: "Roboto Medium";
   src: url("./assets/fonts/roboto/Roboto-Medium.ttf");
 }
+
 @font-face {
   font-family: "Roboto Bold";
   src: url("./assets/fonts/roboto/Roboto-Bold.ttf");
@@ -45,9 +47,9 @@ $color-light-blue: #D8EEF2; //for network components
 }
 
 $font-brand: "Outfit", "Arial", "serif";
-$font-primary-light : "Roboto Light", "Helvetica", "sans-serif";
-$font-primary : "Roboto Medium", "Helvetica", "sans-serif";
-$font-primary-bold : "Roboto Bold", "Helvetica", "sans-serif";
+$font-primary-light: "Roboto Light", "Helvetica", "sans-serif";
+$font-primary: "Roboto Medium", "Helvetica", "sans-serif";
+$font-primary-bold: "Roboto Bold", "Helvetica", "sans-serif";
 
 /* -- Font Sizes -- */
 $text-xsmall: 12px;
