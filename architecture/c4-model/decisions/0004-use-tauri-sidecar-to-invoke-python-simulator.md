@@ -39,7 +39,7 @@ Upon analysis, we identified 4 potential solutions. These solutions along with t
   - Porting to the cloud will not require extra changes. (unless we decouple the simulator into a seperate service. In this case, the added effort will be minimal).
   - Extra effort required to create a command line interface to the AML100 Simulator in Python.
   - Check experiment for details [here](https://aspinity-mse-2023.atlassian.net/browse/A2M-186)
-  > *Verdict: Proposed - Meets all requirements with some added effort.*
+  > *Verdict: Proposed - Meets all requirements with added effort to create CLI app.*
 
 ## Decision
 
