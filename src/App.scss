@@ -1,0 +1,20 @@
+@use "global";
+
+body{
+  margin: 0;
+  height: 100vh;
+}
+.container {
+  display: flex;
+  padding: 0;
+  font-family: global.$font-primary;
+  color: global.$color-dark-blue;
+  height: 100vh;
+}
+.nav-container {
+  padding: global.$nav-padding;
+}
+
+.content-container {
+  padding: global.$content-padding;
+}

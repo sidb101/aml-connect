@@ -7,8 +7,8 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "aml-connect",
-    "version": "0.0.0"
+    "productName": "Analog ML Connect",
+    "version": "1.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -39,8 +39,9 @@
     "windows": [
       {
         "fullscreen": false,
+        "maximized": true,
         "resizable": true,
-        "title": "aml-connect",
+        "title": "Analog ML Connect",
         "width": 800,
         "height": 600
       }
