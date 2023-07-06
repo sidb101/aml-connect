@@ -1,4 +1,4 @@
-import type { NavSectionT } from "../NavSection/NavSection";
+import type { NavSectionT } from "../navSection/NavSection";
 
 export const newProjectSection: NavSectionT[] = [
 	{
@@ -7,28 +7,23 @@ export const newProjectSection: NavSectionT[] = [
 		navLinks: [
 			{
 				label: "Overview",
-				route: "",
 				isEnabled: true,
 				isSelected: true,
 			},
 			{
 				label: "Data Hub",
-				route: "",
 				isEnabled: false,
 			},
 			{
 				label: "Model Creation",
-				route: "",
 				isEnabled: false,
 			},
 			{
 				label: "Results",
-				route: "",
 				isEnabled: false,
 			},
 			{
 				label: "Send to Hardware",
-				route: "",
 				isEnabled: false,
 			},
 		],

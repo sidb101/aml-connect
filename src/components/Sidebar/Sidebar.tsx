@@ -1,6 +1,6 @@
 import "./Sidebar.scss";
 import React from "react";
-import { SideRegion, type SideRegionT } from "./SideRegion/SideRegion";
+import { SideRegion, type SideRegionT } from "./sideRegion/SideRegion";
 
 export type SidebarT = {
 	logo: string;

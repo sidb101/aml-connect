@@ -1,6 +1,6 @@
 import React from "react";
-import type { NavSectionT } from "./NavSection/NavSection";
-import { NavSection } from "./NavSection/NavSection";
+import type { NavSectionT } from "./navSection/NavSection";
+import { NavSection } from "./navSection/NavSection";
 
 export type NavRegionT = {
 	navSections: NavSectionT[];

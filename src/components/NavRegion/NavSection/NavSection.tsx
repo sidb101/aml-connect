@@ -1,5 +1,5 @@
-import { NavLink, type NavLinkT } from "./NavLink/NavLink";
 import "./NavSection.scss";
+import { NavLink, type NavLinkT } from "./navLink/NavLink";
 
 export type NavSectionT = {
 	heading: string;

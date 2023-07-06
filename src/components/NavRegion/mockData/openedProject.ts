@@ -1,4 +1,4 @@
-import type { NavSectionT } from "../NavSection/NavSection";
+import type { NavSectionT } from "../navSection/NavSection";
 
 const openProjectsSections: NavSectionT[] = [
 	{
