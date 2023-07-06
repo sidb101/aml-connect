@@ -9,6 +9,8 @@ const App = () => (
 		<Sidebar
 			logo="AnalogML Connect"
 			sideRegion={[
+				/** Various states of the Navbar. Uncomment the one that you want to choose  **/
+
 				// {
 				//     heading: 'Projects',
 				//     region: <ProjectsRegion projects={allProjects} />
