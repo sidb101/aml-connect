@@ -110,7 +110,7 @@ workspace {
         }
         simulator_crate = softwareSystem "Simulator Crate" {
             python_binary = container "Compiled Python Interpretor"
-            aspinity_simulator = container "Aspinity AML100 simulator"
+            aspinity_simulator = container "Aspinity AML100 Simulator"
             python_app = container "Python CLI Application"
             python_app -> aspinity_simulator "Uses"
             python_app -> python_binary "Runs using"
