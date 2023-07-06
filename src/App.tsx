@@ -1,8 +1,8 @@
 import "./App.scss";
-import { Sidebar } from "./components/sidebar/Sidebar";
 import React from "react";
 import { NavRegion } from "./components/navRegion/NavRegion";
 import openProjectsSections from "./components/navRegion/mockData/openedProject";
+import { Sidebar } from "./components/sideBar/Sidebar";
 
 const App = () => (
 	<div className={"App_container"}>
