@@ -17,7 +17,6 @@ export const NavSection = ({ heading, isOpen, selectedIndex, navLinks, ...props 
 						<NavLink
 							key={index}
 							label={navLink.label}
-							route={navLink.route}
 							isEnabled={navLink.isEnabled}
 							isSelected={navLink.isSelected}
 						/>
