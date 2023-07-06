@@ -21,3 +21,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+architecture/c4-model/.structurizr/*
+3.0.0.tar.gz
+adr-tools-3.0.0/*

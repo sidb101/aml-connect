@@ -1,9 +1,10 @@
 workspace {
-
+    !adrs decisions
     model {
         customer = person "Chip Programmer" "Aspinity's customer"
         engineer = person "Aspinity Engineer" "usually Nick"
         developer = person "System Developer" "Team ChipMonks"
+        filemanager = softwareSystem "File System" "The user's local file system"
         astrl = softwareSystem "Aspinity Development Platform" {
             
             group Clients {
@@ -15,7 +16,6 @@ workspace {
 
                     group Slices {
                         slice1 = component "Sample Slice"
-                        
                     }         
 
                     reduxStore = component "Redux store"
@@ -24,7 +24,6 @@ workspace {
                     apiTransformer = component "API Transformer" "Converts state to DTO object"
                     tauriApiClient = component "Tauri API Client"
                     restAPIClient = component "REST API Client"
-
 
                     component1 -> reduxstore "uses"
                     component1 -> slice1 "uses"
@@ -51,27 +50,24 @@ workspace {
             appserver = container "Application Layer" {
                 datasetup = component "DataManager"
                 projectmanager = component "ProjectManager"
-                filemanager = component "FileManager"
                 resultgenerator = component "ResultGenerator"
                 filtermanager = component "FilterManager" "TBD - Does the simulator return a list of filters and their properties?"
                 featurengineer = component "FeatureEngineer" "TBD - Are we managing neural network features seperately? Do they need to be stored?"
-                mainUI = component "Main UI"
-                mainCLI = component "Main CLI"
+                UIController = component "UI Controller"
+                CLIController = component "CLI Controller"
                 amlConnectCore = component "AML Connect Core"
-                chipsimulator = component "ChipSimulator"
+                chipsimulator = component "AML 100 Simulator"
                 dbmanager = component "DBManager"
                 audiomanager = component "AudioManager"
                 mlinterpretormod = component "MLInterpretor"
                 networkmanager = component "NetworkManager"
-                simulatorInterface = component "Simulator Interface"
+                simulatorInterface = component "Network Simulator"
                 
-
                 amlConnectCore -> networkmanager
                 amlConnectCore -> datasetup
                 amlConnectCore -> projectmanager
                 amlConnectCore -> audiomanager
                 projectmanager -> filemanager
-                datasetup -> filemanager
                 networkmanager -> resultgenerator
                 networkmanager -> filtermanager
                 networkmanager -> simulatorInterface
@@ -79,10 +75,8 @@ workspace {
                 networkmanager -> featurengineer
                 networkmanager -> mlinterpretormod
                 chipsimulator -> simulatorInterface "implements"
-            }
-
-            simulator = container "Simulator" {
-
+                
+                datasetup -> filemanager "retrieve files" "Upload from local PC"
             }
 
             app_db = container "Application Database" {
@@ -94,30 +88,19 @@ workspace {
                 description "focused on caching network files for fast retrieval. Details TBD."
             }
 
-            filesystem = container "Local File System" {
-                description "Responsible for storing audio files and test data"
-                tags "DB"
-            }
-
             ml_interepretor = container "Machine Learning Interpretor" {
                 component "Training Manager"
                 component "Data Visualizer"
             }
-            chipsimulator -> simulator "calls" "TBD"
             mlinterpretormod -> ml_interepretor "calls" "IPC*"
-
-            simulator -> chipsimulator "results" 
+            
             ml_interepretor -> mlinterpretormod "training logs"
 
-            
-            filesystem -> filemanager "retrieve files" "Upload from local PC"
-                
-            cliapp -> mainCLI "calls via bash"
-            tauriApiClient -> mainUI "makes calls to" "[IPC-JSON]"
+            cliapp -> CLIController "calls" "bash commands"
+            tauriApiClient -> UIController "makes calls to" "IPC-JSON"
 
-
-            mainUI -> amlConnectCore 
-            mainCLI -> amlConnectCore
+            UIController -> amlConnectCore 
+            CLIController -> amlConnectCore
 
             dbmanager -> app_db "saves and retreives data" "TBD"
             
@@ -125,11 +108,39 @@ workspace {
             cache -> app_db "retrieves data" "TBD"
 
         }
+        simulator_crate = softwareSystem "Simulator Crate" {
+            python_binary = container "Compiled Python Interpretor"
+            aspinity_simulator = container "Aspinity AML100 simulator"
+            python_app = container "Python CLI Application"
+            python_app -> aspinity_simulator "Uses"
+            python_app -> python_binary "Runs using"
+            aspinity_simulator -> python_binary "Runs using"
+        }
+        
+        chipSimulator -> simulator_crate "Spawns new sidecar"
+        chipsimulator -> python_app "async call" "bash commands"
+        python_app -> chipsimulator "results" 
+        
+        simulator = deploymentEnvironment "Simulator" {
+            deploymentNode "User Laptop" {
+                containerInstance uiLayer
+                deploymentNode "Tauri backend" {
+                    containerInstance appserver
+                    deploymentNode "Embedded Sidecar" {
+                        containerInstance python_app
+                        containerInstance python_binary
+                        containerInstance aspinity_simulator
+                    }
+                }
+            }
+        }
 
-        AML100 = element "AML100" "Aspinity's analog machine learning chip"
+        AML100 = element "AML100ntainernity's analog machine learning chip"
         engineer -> AML100 "Deploy network"
-    }
 
+        appserver -> simulator_crate
+
+    }
     views {
         systemLandscape landscape {
             include *
@@ -140,9 +151,10 @@ workspace {
             include *
             autolayout 
         }
-
+        
         container astrl {
             include *
+            autoLayout
         }
 
         component appserver {
@@ -152,6 +164,12 @@ workspace {
 
         component uiLayer {
             include *
+            autoLayout
+        }
+
+        deployment * simulator {
+            include *
+            autoLayout lr
         }
 
         dynamic appserver {
@@ -160,8 +178,8 @@ workspace {
             networkmanager -> simulatorInterface "passes user-defined network & audio data"
             networkmanager -> simulatorInterface "calls simulate_network()"
             simulatorInterface -> chipsimulator "calls chipSimulator implementation"
-            chipsimulator -> simulator "translates data to simulator input data"
-            simulator -> chipsimulator "sends back audio result"
+            chipsimulator -> simulator_crate "translates data to simulator input data"
+            simulator_crate -> chipsimulator "sends back audio result"
 
             autoLayout lr
         }
