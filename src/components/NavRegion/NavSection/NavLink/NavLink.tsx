@@ -1,10 +1,12 @@
 import "./NavLink.scss";
+import type React from "react";
 
 export type NavLinkT = {
 	label: string;
-	route?: string;
+	route: string;
 	isEnabled?: boolean;
 	isSelected?: boolean;
+	setSelectedIndex?: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export const NavLink = ({ label, route, isEnabled = true, isSelected = false, ...props }: NavLinkT) => {
