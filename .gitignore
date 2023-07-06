@@ -21,3 +21,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#Architecture files
+architecture/c4-model/.structurizr/*
