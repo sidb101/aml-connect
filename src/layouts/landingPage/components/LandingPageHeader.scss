@@ -1,0 +1,26 @@
+.LandingPageHeader_container {
+  display: grid;
+  //grid-template-rows: 1fr 1fr;
+  //gap: 10px;
+  //height: 200px; /* optional: set a fixed height for the container */
+}
+
+.LandingPageHeader_topLeft {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 74px;
+}
+
+.LandingPageHeader_bottomRight {
+  grid-row: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  min-height: 48px;
+}
+
+.LandingPageHeader_verticalContainer {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,44 @@
+@use "../../../global";
+
+.CreateNewProjectPopup_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: white;
+  border-radius: 4px;
+  height: 200px;
+  width: 315px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.CreateNewProjectPopup_heading {
+  color: global.$color-grey-3;
+}
+
+.CreateNewProjectPopup_newProjectContainer {
+  border: solid 1px global.$color-grey-2;
+  border-radius: 4px;
+  width: 100%;
+  height: 81px;
+  padding-bottom: 12px;
+}
+
+.CreateNewProjectPopup_newProjectContainer_internal {
+  padding-left: 12px;
+  padding-top: 12px;
+}
+
+.CreateNewProjectPopup_button {
+  border: solid 1px global.$color-grey-2;
+  border-radius: 4px;
+  background-color: white;
+  //width: 275px;
+  width: 100%;
+  height: 43px;
+  text-align: left;
+  padding-left: 12px;
+}
