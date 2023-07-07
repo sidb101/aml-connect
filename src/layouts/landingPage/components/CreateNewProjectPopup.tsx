@@ -17,7 +17,9 @@ export const CreateNewProjectPopup = () => {
 			<div className={`section-subheading-text grey-text CreateNewProjectPopup_heading`}>
 				OR
 			</div>
-			<button className={`btn CreateNewProjectPopup_button regular-text`}>
+			<button
+				className={`btn CreateNewProjectPopup_button regular-text`}
+			>
 				Create from scratch
 			</button>
 		</div>

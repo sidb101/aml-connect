@@ -19,16 +19,28 @@ export const LandingPageHeader = () => {
 				</div>
 				<div className={`LandingPageHeader_bottomRight`}>
 					<div className={`LandingPageHeader_verticalContainer`}>
-						<button
-							className={`btn btn-outline`}
-							onClick={() => expandPopup()}
-						>
-							Create New Project +
-						</button>
-						{isSelected ?
-							<CreateNewProjectPopup/>
+						{!isSelected ?
+							<button
+								className={`btn btn-solid`}
+								onClick={() => expandPopup()}
+							>
+								Create New Project +
+							</button>
 							:
-							null
+							<>
+								<div className={`LandingPageHeader_backDrop`}></div>
+								<button
+									className={`btn btn-solid LandingPageHeader_openPopupButton`}
+									onClick={() => expandPopup()}
+								>
+									Create New Project +
+								</button>
+								<div>
+									<div className={`LandingPageHeader_popup`}>
+										<CreateNewProjectPopup />
+									</div>
+								</div>
+							</>
 						}
 					</div>
 				</div>
