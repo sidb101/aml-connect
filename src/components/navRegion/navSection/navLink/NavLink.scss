@@ -1,0 +1,34 @@
+@use "../../../../global";
+
+.NavLink_container {
+
+
+  .NavLink_link {
+    $spacing: 0;
+    padding: 15px;
+    margin-top: $spacing;
+    margin-bottom: $spacing;
+    cursor: not-allowed;
+    border-radius: 4px 0 0 4px;
+
+    &___enabled {
+      cursor: pointer;
+
+      &:hover {
+        background-color: global.$color-light-green;
+      }
+
+      &:active {
+        background-color: global.$color-dark-light-green;
+      }
+    }
+
+    &___selected {
+      background-color: global.$color-light-green;
+
+      &:hover {
+        background-color: global.$color-dark-light-green;
+      }
+    }
+  }
+}

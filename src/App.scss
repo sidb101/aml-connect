@@ -1,20 +1,29 @@
 @use "global";
 
-body{
+body {
   margin: 0;
-  height: 100vh;
+  padding: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  background: global.$color-grey-1;
 }
-.container {
-  display: flex;
+
+#root {
+  height: 100%;
+}
+
+.App_container {
+  background-color: cyan;
+  min-height: 100%;
+  min-width: 100%;
+  margin: 0;
   padding: 0;
   font-family: global.$font-primary;
   color: global.$color-dark-blue;
-  height: 100vh;
-}
-.nav-container {
-  padding: global.$nav-padding;
 }
 
 .content-container {
   padding: global.$content-padding;
+  min-height: 100%;
+  margin-left: global.$sidebar-width + global.$content-padding;
 }
