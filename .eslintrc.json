@@ -26,6 +26,8 @@
     ],
     "rules": {
         "prettier/prettier": "error",
-        "arrow-body-style": "warn"
+        "arrow-body-style": "warn",
+        "@typescript-eslint/consistent-type-imports": "off",
+        "@typescript-eslint/prefer-optional-chain": "warn"
     }
 }

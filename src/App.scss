@@ -1,19 +1,11 @@
 @use "global";
 
-body {
-  margin: 0;
-  padding: 0;
-  min-width: 100vw;
-  min-height: 100vh;
-  background: global.$color-grey-1;
-}
-
-#root {
-  height: 100%;
+a {
+  text-decoration: none !important;
+  color: inherit !important;
 }
 
 .App_container {
-  background-color: cyan;
   min-height: 100%;
   min-width: 100%;
   margin: 0;
