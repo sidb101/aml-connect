@@ -1,0 +1,6 @@
+@use "../../global";
+
+.LandingPage_contentContainer {
+  padding-top: calc(218px + (2 * 20px) + 20px);
+  min-width: calc(80% - (2 * 20px) - (2 * 20px));
+}

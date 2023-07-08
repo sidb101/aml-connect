@@ -25,6 +25,12 @@
   width: 100%;
   height: 81px;
   padding-bottom: 12px;
+
+  user-select: none;
+
+  &:hover{
+    background-color: global.$color-grey-2;
+  }
 }
 
 .CreateNewProjectPopup_newProjectContainer_internal {
@@ -41,4 +47,8 @@
   height: 43px;
   text-align: left;
   padding-left: 12px;
+
+  &:hover{
+    background-color: global.$color-grey-2;
+  }
 }

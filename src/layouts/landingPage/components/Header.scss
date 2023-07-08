@@ -1,0 +1,64 @@
+@use "../../../global";
+
+.Header_container {
+  //position: fixed;
+  //top: 0;
+  //left: calc(20% + (2 * 20px));
+  //width: calc(80% - (2 * 20px) - (2 * 20px));
+  //height: 218px;
+  //background-color: global.$color-grey-1;
+  padding: global.$panel-padding;
+  //background-color: blue;
+}
+
+.Header_container___isSelected {
+  padding: global.$panel-padding;
+  //background-color: red;
+  //position: fixed;
+  //left: calc(20% + (2 * 20px));
+  //width: calc(80% - 136px);
+  //padding: global.$panel-padding;
+  //background-color: red;
+}
+
+.Header_gridContainer {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  height: 100%;
+}
+
+.Header_gridRow1 {
+  grid-row: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.Header_gridRow2 {
+  grid-row: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.Header_backDrop {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100vh;
+  width: 100vw;
+  z-index: 0;
+}
+
+.Header_button___isSelected {
+  position: fixed;
+  z-index: 100;
+}
+
+.Header_popup___isSelected {
+  position: fixed;
+  top: 212px;
+  right: 60px;
+  z-index: 100;
+}
