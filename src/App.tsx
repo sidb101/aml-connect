@@ -6,7 +6,6 @@ import {
 	DATA_HUB_ROUTE,
 	MODEL_CREATION_ROUTE,
 	OVERVIEW_ROUTE,
-	PROJECT_BASE_ROUTE,
 	RESULTS_ROUTE,
 	SEND_TO_HARDWARE_ROUTE,
 } from "./routes";
@@ -28,7 +27,7 @@ const App = () => (
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path={BASE_ROUTE} element={<Root />} errorElement={<ErrorPage />}>
-			{/*TODO: Have Error Element for just the Outlet, not whole Root component*/}
+			{/* TODO: Have Error Element for just the Outlet, not whole Root component */}
 
 			<Route index={true} element={<LandingPage />} />
 			<Route path={OVERVIEW_ROUTE} element={<OverviewPage />} />

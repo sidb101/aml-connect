@@ -22,27 +22,28 @@ export type RootOutletContextT = {
 };
 
 const Root = (props: RootT) => {
-	//TODO: Transfer everything to Redux states
+	// TODO: Transfer everything to Redux states
 	const [projectStatus, setProjectStatus] = useState<ProjectStatus>(ProjectStatus.NOT_OPENED);
 	const [projectNames, setProjectNames] = useState<string[]>([]);
-	//TODO: The opened project Index would be decided on the basis of the project slug in the url
+	// TODO: The opened project Index would be decided on the basis of the project slug in the url
 	const [openedProjectIndex, setOpenedProjectIndex] = useState<number>(0);
 
 	const location = useLocation();
 
 	useEffect(() => {
-		//get all the project names and set them in the state
+		// Get all the project names and set them in the state
 		setProjectNames(allProjects);
 	}, []);
 
 	const getOpenedProject = (): string => {
-		//valid state
+		// Valid state
 		if (openedProjectIndex >= 0 && openedProjectIndex < projectNames.length) {
 			return projectNames[openedProjectIndex];
-		} else {
-			return "Undefined Project";
 		}
+
+		return "Undefined Project";
 	};
+
 	const getSideRegion = (): SideRegionT =>
 		projectStatus === ProjectStatus.OPENED
 			? {

@@ -18,4 +18,5 @@ const ResultsPage = (props: ResultsPageT) => {
 		</>
 	);
 };
+
 export default ResultsPage;

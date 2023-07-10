@@ -10,7 +10,11 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 	const { setProjectStatus } = useRootOutletContext();
 
 	useEffect(() => {
-		isNewProject ? setProjectStatus(ProjectStatus.NEW) : setProjectStatus(ProjectStatus.OPENED);
+		if (isNewProject) {
+			setProjectStatus(ProjectStatus.NEW);
+		} else {
+			setProjectStatus(ProjectStatus.OPENED);
+		}
 	});
 
 	return (
