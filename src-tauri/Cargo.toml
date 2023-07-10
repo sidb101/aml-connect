@@ -1,11 +1,10 @@
 [package]
 name = "aml-connect"
 version = "0.0.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
-edition = "2021"
+description = "GUI applicaion for Aspinity's Analog ML Chip simulator"
+authors = { workspace = true }
+repository = { workspace = true }
+edition = { workspace = true }
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
