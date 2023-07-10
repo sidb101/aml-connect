@@ -3,6 +3,7 @@ import React from "react";
 import { NavRegion } from "./components/navRegion/NavRegion";
 import openProjectsSections from "./components/navRegion/mockData/openedProject";
 import { Sidebar } from "./components/sideBar/Sidebar";
+import { LandingPage } from "./layouts/landingPage/LandingPage";
 
 const App = () => (
 	<div className={"App_container"}>
@@ -26,8 +27,8 @@ const App = () => (
 			]}
 		/>
 		<div className={"xlight-panel content-container App_Content"}>
-            <LandingPage />
-        </div>
+			<LandingPage />
+		</div>
 	</div>
 );
 
