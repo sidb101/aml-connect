@@ -7,8 +7,8 @@ type ExampleProjectT = {
 
 export const ExampleProject: React.FC<ExampleProjectT> = (props) => {
 	return (
-		<div className={`StoryContent_container`}>
-			<div className={`white-panel  StoryContent_projectPanel`}>
+		<div className={`ExampleProject_container`}>
+			<div className={`white-panel  ExampleProject_projectPanel`}>
 				<div className="section-heading-text">{props.projectName}</div>
 				<br />
 				<div className="section-subheading-text"> Created By: ChipMonks</div>

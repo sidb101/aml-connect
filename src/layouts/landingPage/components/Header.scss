@@ -1,24 +1,12 @@
 @use "../../../global";
 
 .Header_container {
-  //position: fixed;
-  //top: 0;
-  //left: calc(20% + (2 * 20px));
-  //width: calc(80% - (2 * 20px) - (2 * 20px));
-  //height: 218px;
-  //background-color: global.$color-grey-1;
-  padding: global.$panel-padding;
-  //background-color: blue;
-}
-
-.Header_container___isSelected {
-  padding: global.$panel-padding;
-  //background-color: red;
-  //position: fixed;
-  //left: calc(20% + (2 * 20px));
-  //width: calc(80% - 136px);
-  //padding: global.$panel-padding;
-  //background-color: red;
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin-left: global.$sidebar-width + global.$content-padding;
+  padding: global.$content-padding;
+  width: calc(80vw - 40px);
 }
 
 .Header_gridContainer {
@@ -41,6 +29,13 @@
   align-items: flex-end;
 }
 
+.Header_gridRow3 {
+  grid-row: 3;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
 .Header_backDrop {
   position: fixed;
   left: 0;
@@ -51,14 +46,9 @@
   z-index: 0;
 }
 
-.Header_button___isSelected {
-  position: fixed;
-  z-index: 100;
-}
-
-.Header_popup___isSelected {
-  position: fixed;
-  top: 212px;
-  right: 60px;
+.Header_popupContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   z-index: 100;
 }

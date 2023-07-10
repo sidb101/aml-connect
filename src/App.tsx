@@ -26,7 +26,7 @@ const App = () => (
 				},
 			]}
 		/>
-		<div className={"xlight-panel content-container App_Content"}>
+		<div className={"xlight-panel content-container"}>
 			<LandingPage />
 		</div>
 	</div>
