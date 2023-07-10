@@ -67,7 +67,6 @@ workspace {
                 amlConnectCore -> datasetup
                 amlConnectCore -> projectmanager
                 amlConnectCore -> audiomanager
-                projectmanager -> filemanager
                 networkmanager -> resultgenerator
                 networkmanager -> filtermanager
                 networkmanager -> simulatorInterface
@@ -76,7 +75,7 @@ workspace {
                 networkmanager -> mlinterpretormod
                 chipsimulator -> simulatorInterface "implements"
                 
-                datasetup -> filemanager "retrieve files" "Upload from local PC"
+                filemanager -> datasetup "retrieve files" "Upload from local PC"
             }
 
             app_db = container "Application Database" {
@@ -135,7 +134,7 @@ workspace {
             }
         }
 
-        AML100 = element "AML100ntainernity's analog machine learning chip"
+        AML100 = element "AML100 - Aspinity's analog machine learning chip"
         engineer -> AML100 "Deploy network"
 
         appserver -> simulator_crate
