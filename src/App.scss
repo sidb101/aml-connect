@@ -13,23 +13,18 @@ body {
 }
 
 .App_sidebarContainer {
-  position: fixed;
+  position: fixed; /* Fixed position will make the sidebar stick to the left */
   top: 0;
   left: 0;
-  height: 100vh; /* Takes up the full height of the viewport */
-  width: global.$sidebar-width + global.$content-padding; /* Change this to the width you want the sidebar to be */
-  z-index: 1; /* Places the sidebar above the content */
+  height: 100%; /* Full height */
+  width: global.$sidebar-width + global.$content-padding;
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
 }
 
 .App_container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: cyan;
-  min-height: 100%;
-  min-width: 100%;
-  margin: 0;
-  padding: 0;
+  display: flex;
+  height: 100vh;
+  overflow: hidden; /* This will prevent the entire page from scrolling */
   font-family: global.$font-primary;
   color: global.$color-dark-blue;
 }
