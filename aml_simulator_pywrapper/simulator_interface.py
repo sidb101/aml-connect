@@ -16,3 +16,4 @@ class AspinitySimulatorWrapperInterFace(metaclass=abc.ABCMeta):
         '''Returns a JSON string dump of components available from Aspinity
         Simulator
         '''
+        raise NotImplementedError

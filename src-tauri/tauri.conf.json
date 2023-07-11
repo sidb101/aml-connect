@@ -15,7 +15,11 @@
       "all": false,
       "shell": {
         "all": false,
-        "open": true
+        "open": true,
+        "sidecar": true,
+        "scope": [
+          {"name": "/home/sbhatna2/workspace/aml-connect/src-tauri/binaries/aspinity_test", "sidecar": true}
+        ]
       }
     },
     "bundle": {
@@ -28,7 +32,10 @@
         "icons/icon.ico"
       ],
       "identifier": "com.aml-connect.aspinity",
-      "targets": "all"
+      "targets": "all",
+      "externalBin": [
+        "binaries/aspinity_test"
+      ]
     },
     "security": {
       "csp": null
