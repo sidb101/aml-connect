@@ -1,14 +1,5 @@
 @use "../../../global";
 
-.Header_container {
-  position: fixed;
-  left: 0;
-  top: 0;
-  margin-left: global.$sidebar-width + global.$content-padding;
-  padding: global.$content-padding;
-  width: calc(80vw - 40px);
-}
-
 .Header_gridContainer {
   display: grid;
   grid-template-rows: 1fr 1fr;

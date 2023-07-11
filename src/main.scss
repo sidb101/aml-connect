@@ -30,6 +30,35 @@ Common Classes
   color: global.$color-white;
 }
 
+/* -- Various kinds of containers -- */
+
+.content-container {
+  .header-content-container {
+    position: fixed;
+    top: 0;
+    left: global.$sidebar-width + global.$content-padding; /* This needs to be the same width as the sidebar to make the header start where the sidebar ends */
+    width: calc(100vw - 300px - 80px); /* Adjusts the width of the header based on the width of the sidebar */
+    height: 100px;
+    padding: global.$content-padding;
+    z-index: 1; /* Places the header above the content */
+    background-color: global.$color-grey-1;
+    color: global.$color-dark-blue;
+  }
+
+  .main-content-container {
+    position: relative; /* This helps the content stay below the header and sidebar */
+    margin-top: 100px + 2 * (global.$content-padding); /* This should be the same height as the header */
+    margin-left: global.$sidebar-width + global.$content-padding; /* This should be the same width as the sidebar */
+    width: calc(100% - 300px - 2 * 40px); /* Adjusts the width of the content based on the width of the sidebar */
+    height: calc(100vh - 180px - 2 * 40px); /* Adjusts the height of the content based on the height of the header */
+    overflow: auto; /* Allows content to scroll if it overflows */
+    z-index: 0; /* Places the content below the sidebar and header */
+    padding: global.$content-padding;
+    background-color: global.$color-grey-1;
+    color: global.$color-dark-blue;
+  }
+}
+
 /* -- Various kinds of texts -- */
 
 .brand-text {

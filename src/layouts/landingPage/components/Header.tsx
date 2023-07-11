@@ -11,7 +11,7 @@ export const Header = () => {
 
 	return (
 		<>
-			<div className={`Header_container`}>
+			<div>
 				<div className={`Header_gridContainer`}>
 					<div className={`Header_gridRow1`}>
 						<div className={`main-heading-text`}>Projects</div>

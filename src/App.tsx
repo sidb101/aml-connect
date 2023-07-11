@@ -6,27 +6,29 @@ import { Sidebar } from "./components/sideBar/Sidebar";
 import { LandingPage } from "./layouts/landingPage/LandingPage";
 
 const App = () => (
-	<div className={"App_container"}>
-		<Sidebar
-			logo="AnalogML Connect"
-			sideRegion={[
-				/** Various states of the Navbar. Uncomment the one that you want to choose  **/
+	<div className={`App_container`}>
+		<div className={`App_sidebarContainer`}>
+			<Sidebar
+				logo="AnalogML Connect"
+				sideRegion={[
+					/** Various states of the Navbar. Uncomment the one that you want to choose  **/
 
-				// {
-				//     heading: 'Projects',
-				//     region: <ProjectsRegion projects={allProjects} />
-				// },
-				// {
-				//     heading: 'Project',
-				//     region: <NavRegion navSections={newProjectSection} />
-				// },
-				{
-					heading: "Project",
-					region: <NavRegion navSections={openProjectsSections} />,
-				},
-			]}
-		/>
-		<div className={"xlight-panel content-container"}>
+					// {
+					//     heading: 'Projects',
+					//     region: <ProjectsRegion projects={allProjects} />
+					// },
+					// {
+					//     heading: 'Project',
+					//     region: <NavRegion navSections={newProjectSection} />
+					// },
+					{
+						heading: "Project",
+						region: <NavRegion navSections={openProjectsSections} />,
+					},
+				]}
+			/>
+		</div>
+		<div className={`xlight-panel content-container`}>
 			<LandingPage />
 		</div>
 	</div>
