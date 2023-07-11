@@ -11,7 +11,7 @@ const LandingPage = (props: LandingPageT) => {
 	const projectStatus = useAppSelector((state) => state.general.projectStatus);
 
 	useEffect(() => {
-		//dispatch action only if the status is NOT_OPEN
+		// dispatch action only if the status is NOT_OPEN
 		projectStatus !== ProjectStatus.NOT_OPEN && dispatch(generalActions.closeProject());
 	}, [projectStatus]);
 	return (

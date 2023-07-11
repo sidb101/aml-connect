@@ -10,8 +10,3 @@ export type ProjectT = {
 	name: string;
 	description?: string;
 };
-
-const initialState: ProjectT = {
-	slug: "",
-	name: "",
-};

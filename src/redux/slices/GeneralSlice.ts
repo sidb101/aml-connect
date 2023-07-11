@@ -52,14 +52,28 @@ export const generalSlice = createSlice({
 			state.projectSlug = action.payload;
 		},
 
+		/**
+		 * To declare to app to update status to align with new project state.
+		 * @param state: General state
+		 */
 		newProject: (state) => {
 			state.projectStatus = ProjectStatus.NEW;
 		},
 
+		/**
+		 * To declare to app to update status to align with a closed state.
+		 * @param state: General state
+		 */
 		closeProject: (state) => {
 			state.projectStatus = ProjectStatus.NOT_OPEN;
 		},
 
+		/**
+		 * To update state with the data of all the projects to be loaded for
+		 * that application
+		 * @param state: General state
+		 * @param action: Array of ProjectData objects having basic project data for each project
+		 */
 		setAllProjects: (state, action: PayloadAction<BasicProjectDataT[]>) => {
 			state.allProjects = action.payload;
 		},
