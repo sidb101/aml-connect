@@ -1,17 +1,21 @@
-import { ProjectStatus, useRootOutletContext } from "../Root";
 import { useEffect } from "react";
+import { useAppDispatch } from "../../hooks";
+import { useParams } from "react-router-dom";
+import { generalActions } from "../../redux/slices/GeneralSlice";
 
 export type ModelCreationPageT = {
 	data?: string;
 };
 
 const ModelCreationPage = (props: ModelCreationPageT) => {
-	const { setProjectStatus } = useRootOutletContext();
+	const dispatch = useAppDispatch();
+	const { projectSlug } = useParams();
 
 	useEffect(() => {
-		setProjectStatus(ProjectStatus.OPENED);
-	});
-
+		projectSlug
+			? dispatch(generalActions.openProject(projectSlug))
+			: console.error("projectSlug not present in the URL.");
+	}, [projectSlug]);
 	return (
 		<>
 			<h1>ModelCreationPage</h1>

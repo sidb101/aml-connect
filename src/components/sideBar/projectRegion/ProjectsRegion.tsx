@@ -2,18 +2,19 @@ import "./ProjectsRegion.scss";
 import { Link } from "react-router-dom";
 import { PROJECT_SLUG, projectOverviewRoute } from "../../../routes";
 import React from "react";
+import type { BasicProjectDataT } from "../../../redux/slices/GeneralSlice";
 
 export type ProjectsRegionT = {
-	projects: string[];
+	projects: BasicProjectDataT[];
 };
 
 export const ProjectsRegion = ({ projects, ...props }: ProjectsRegionT) => (
 	<div className={"ProjectsRegion_container"}>
-		{projects.map((project: string, index) => (
+		{projects.map((project: BasicProjectDataT, index) => (
 			<div key={index} className={"btn btn-solid ProjectsRegion_projectName"}>
 				{/* TODO: Try to wrap this link across whole div */}
-				<Link to={projectOverviewRoute(PROJECT_SLUG)} className={"ProjectsRegion_link"}>
-					{project}{" "}
+				<Link to={projectOverviewRoute(project.slug)} className={"ProjectsRegion_link"}>
+					{project.name}{" "}
 				</Link>
 			</div>
 		))}

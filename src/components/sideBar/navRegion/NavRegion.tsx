@@ -1,16 +1,16 @@
 import "./NavRegion.scss";
 import { NavLink, type NavLinkT } from "./navLink/NavLink";
 
-export type NavSectionT = {
+export type NavRegionT = {
 	heading?: string;
 	navLinks?: NavLinkT[];
 };
-export const NavRegion = ({ heading, navLinks, ...props }: NavSectionT) => (
-	<div className={"NavSection_container"}>
-		<div className={"dark-grey-panel NavSection_content"}>
-			{heading && <div className={"NavSection_heading"}> {heading} </div>}
+export const NavRegion = ({ heading, navLinks, ...props }: NavRegionT) => (
+	<div className={"NavRegion_container"}>
+		<div className={"dark-grey-panel NavRegion_content"}>
+			{heading && <div className={"NavRegion_heading"}> {heading} </div>}
 			{navLinks && (
-				<div className={"NavSection_navLinks"}>
+				<div className={"NavRegion_navLinks"}>
 					{navLinks.map((navLink, index) => (
 						<NavLink
 							key={index}

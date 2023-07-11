@@ -1,28 +1,22 @@
-@use "src/global";
+@use "../../../global";
 
-.NavSection_container {
-  margin-top: 20px;
-
-  &:first-of-type {
-    margin-top: initial;
-  }
-
+.NavRegion_container {
   $general-padding: 15px;
 
-  .NavSection_content {
+  .NavRegion_content {
     width: global.$sidebar-width + global.$nav-padding;
     font-family: global.$font-primary;
     border-radius: 4px 0 0 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 
-    .NavSection_heading {
+    .NavRegion_heading {
       background-color: global.$color-dark-green;
       padding: $general-padding;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .NavSection_navLinks {
+    .NavRegion_navLinks {
       padding-left: $general-padding;
     }
   }

@@ -1,5 +1,8 @@
-import { ProjectStatus, useRootOutletContext } from "../Root";
 import { useEffect } from "react";
+import { useAppDispatch } from "../../hooks";
+import { useLocation, useParams } from "react-router-dom";
+import { generalActions } from "../../redux/slices/GeneralSlice";
+import { NEW_PROJECT_ROUTE } from "../../routes";
 
 export type OverviewT = {
 	data?: string;
@@ -7,15 +10,17 @@ export type OverviewT = {
 };
 
 const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
-	const { setProjectStatus } = useRootOutletContext();
+	const dispatch = useAppDispatch();
+	const { projectSlug } = useParams();
+	const { pathname } = useLocation();
 
 	useEffect(() => {
-		if (isNewProject) {
-			setProjectStatus(ProjectStatus.NEW);
-		} else {
-			setProjectStatus(ProjectStatus.OPENED);
-		}
-	});
+		pathname === NEW_PROJECT_ROUTE
+			? dispatch(generalActions.newProject())
+			: projectSlug
+			? dispatch(generalActions.openProject(projectSlug))
+			: console.error("Not a new-project, as well as projectSlug not present in the URL.");
+	}, [projectSlug, pathname]);
 
 	return (
 		<>
