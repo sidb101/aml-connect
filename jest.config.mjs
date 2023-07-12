@@ -18,5 +18,7 @@ export default {
 
   moduleNameMapper: {
     "^.+\\.(css|less|scss)$": "babel-jest"
-  }
+  },
+
+  setupFilesAfterEnv: ["./src/tests/setup.ts"]
 };

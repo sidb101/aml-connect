@@ -1,11 +1,12 @@
 import { Link, useRouteError } from "react-router-dom";
 import "./ErrorPage.scss";
+import { testIds } from "../../tests/test-utils";
 const ErrorPage = () => {
 	const routerError: any = useRouteError();
 	console.error(routerError);
 
 	return (
-		<div className="ErrorPage_container">
+		<div className="ErrorPage_container" data-testid={testIds.errorPage}>
 			<h1>Oops!</h1>
 			<p>Sorry, an unexpected error has occurred.</p>
 			<p>

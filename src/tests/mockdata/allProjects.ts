@@ -1,4 +1,4 @@
-import type { BasicProjectDataT } from "../../../../redux/slices/GeneralSlice";
+import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 
 export const mockProjects: BasicProjectDataT[] = [
 	{ name: "Project 1: Glass Break", slug: "project-1" },

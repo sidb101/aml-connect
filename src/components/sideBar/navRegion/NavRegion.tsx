@@ -1,5 +1,6 @@
 import "./NavRegion.scss";
 import { NavLink, type NavLinkT } from "./navLink/NavLink";
+import { testIds } from "../../../tests/test-utils";
 
 export type NavRegionT = {
 	heading?: string;
@@ -8,7 +9,12 @@ export type NavRegionT = {
 export const NavRegion = ({ heading, navLinks, ...props }: NavRegionT) => (
 	<div className={"NavRegion_container"}>
 		<div className={"dark-grey-panel NavRegion_content"}>
-			{heading && <div className={"NavRegion_heading"}> {heading} </div>}
+			{heading && (
+				<div className={"NavRegion_heading"} data-testid={testIds.navHeading}>
+					{" "}
+					{heading}{" "}
+				</div>
+			)}
 			{navLinks && (
 				<div className={"NavRegion_navLinks"}>
 					{navLinks.map((navLink, index) => (

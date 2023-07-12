@@ -1,5 +1,4 @@
 /* eslint-disable  @typescript-eslint/naming-convention */
-/* eslint-disable spaced-comment */
 
 /*
  * This module would define all the routes used by the application

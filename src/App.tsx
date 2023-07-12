@@ -24,19 +24,20 @@ const App = () => (
 	</div>
 );
 
-const router = createBrowserRouter(
-	createRoutesFromElements(
-		<Route path={BASE_ROUTE} element={<Root />} errorElement={<ErrorPage />}>
-			{/* TODO: Have Error Element for just the Outlet, not whole Root component */}
+/** Exporting the routes to use them in testing as well **/
+export const routes = createRoutesFromElements(
+	<Route path={BASE_ROUTE} element={<Root />} errorElement={<ErrorPage />}>
+		{/* TODO: Have Error Element for just the Outlet, not whole Root component */}
 
-			<Route index={true} element={<LandingPage />} />
-			<Route path={OVERVIEW_ROUTE} element={<OverviewPage />} />
-			<Route path={DATA_HUB_ROUTE} element={<DataSetupPage />} />
-			<Route path={MODEL_CREATION_ROUTE} element={<ModelCreationPage />} />
-			<Route path={RESULTS_ROUTE} element={<ResultsPage />} />
-			<Route path={SEND_TO_HARDWARE_ROUTE} element={<SendToHardwarePage />} />
-		</Route>
-	)
+		<Route index={true} element={<LandingPage />} />
+		<Route path={OVERVIEW_ROUTE} element={<OverviewPage />} />
+		<Route path={DATA_HUB_ROUTE} element={<DataSetupPage />} />
+		<Route path={MODEL_CREATION_ROUTE} element={<ModelCreationPage />} />
+		<Route path={RESULTS_ROUTE} element={<ResultsPage />} />
+		<Route path={SEND_TO_HARDWARE_ROUTE} element={<SendToHardwarePage />} />
+	</Route>
 );
+
+const router = createBrowserRouter(routes);
 
 export default App;

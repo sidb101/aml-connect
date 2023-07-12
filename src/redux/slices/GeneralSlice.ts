@@ -89,7 +89,7 @@ export const generalSlice = createSlice({
  * @return ProjectName if the slug is present in the state, else null
  * @param state: the Root app state
  */
-export const getProjectName = createSelector(
+export const selectCurrentProjectName = createSelector(
 	(state: RootState) => state.general,
 	({ allProjects, projectSlug }) => {
 		const project = allProjects.find((project) => project.slug === projectSlug);

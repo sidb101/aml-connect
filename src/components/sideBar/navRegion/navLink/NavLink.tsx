@@ -1,6 +1,7 @@
 import "./NavLink.scss";
 import type React from "react";
 import { Link } from "react-router-dom";
+import { testIds } from "../../../../tests/test-utils";
 
 export type NavLinkT = {
 	label: string;
@@ -10,14 +11,20 @@ export type NavLinkT = {
 	route: string;
 };
 
+export const linkSelectedClass = "NavLink_link___selected";
+export const linkEnabledClass = "NavLink_link___enabled";
+
 export const NavLink = ({ label, isEnabled = true, isSelected = false, ...props }: NavLinkT) => {
-	const isSelectedClass = isSelected ? "NavLink_link___selected" : "";
-	const isEnabledClass = isEnabled ? "NavLink_link___enabled" : "";
+	const isSelectedClass = isSelected ? linkSelectedClass : "";
+	const isEnabledClass = isEnabled ? linkEnabledClass : "";
 
 	return (
 		<div className={"NavLink_container"}>
-			<Link to={props.route}>
-				<div className={`NavLink_link ${isSelectedClass} ${isEnabledClass}`} data-testid={"NavLink_label"}>
+			<Link to={props.route} data-testid={testIds.navLinks}>
+				<div
+					className={`NavLink_link ${isSelectedClass} ${isEnabledClass}`}
+					data-testid={testIds.navLinkLabels}
+				>
 					{label}
 				</div>
 			</Link>
