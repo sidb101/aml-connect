@@ -28,4 +28,9 @@ adr-tools-3.0.0/*
 
 #Test Coverage Reports
 coverage
+
+# workspace target
 target
+
+# Python
+__pycache__

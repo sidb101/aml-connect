@@ -15,7 +15,7 @@ pub fn do_stuff() {
                 // .expect("failed to emit event");
                 // write to stdin
                 println!("{}", line);
-                child.write("message from Rust\n".as_bytes()).unwrap();
+                // child.write("message from Rust\n".as_bytes()).unwrap();
             }
         }
     });
