@@ -1,10 +1,24 @@
+@use "global";
+
+html, body {
+  min-height: 100vh;
+}
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 100vw;
+  background: global.$color-grey-1;
+}
+
+#root{
+  min-height: 100%;
+}
+
 /******************************
 
 Common Classes
 
 ******************************/
-
-@use "global";
 
 
 /* -- Panels (Blocks) -- */
