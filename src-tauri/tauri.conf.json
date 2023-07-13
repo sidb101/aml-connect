@@ -18,7 +18,16 @@
         "open": true,
         "sidecar": true,
         "scope": [
-          {"name": "/home/sbhatna2/workspace/aml-connect/src-tauri/binaries/aspinity_test", "sidecar": true}
+          {
+            "name": "/home/sbhatna2/workspace/aml-connect/src-tauri/binaries/aspinity_wrapper", 
+            "sidecar": true,
+            "args": [
+              "--get_elements",
+              {
+                "validator": "\\S+"
+              }
+            ]
+          }
         ]
       }
     },
@@ -34,7 +43,7 @@
       "identifier": "com.aml-connect.aspinity",
       "targets": "all",
       "externalBin": [
-        "binaries/aspinity_test"
+        "binaries/aspinity_wrapper"
       ]
     },
     "security": {

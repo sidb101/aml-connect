@@ -4,10 +4,10 @@
 use aml_connect::uicontroller;
 
 fn main() {
-    println!("{}", uicontroller::greet("Sid"));
+    println!("{}", uicontroller::get_elements());
 
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![uicontroller::greet])
+        .invoke_handler(tauri::generate_handler![uicontroller::get_elements])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

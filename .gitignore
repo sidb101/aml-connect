@@ -36,3 +36,4 @@ target
 __pycache__
 .venv
 aml_simulator_pywrapper/build/*
+aml_simulator_pywrapper/aspinity_wrapper-x86_*
