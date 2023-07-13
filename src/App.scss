@@ -1,6 +1,6 @@
 @use "global";
 
-a {
+a {  /*To disable the default link look & feel behaviour of the browser, because its desktop app */
   text-decoration: none !important;
   color: inherit !important;
 }

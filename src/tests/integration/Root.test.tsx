@@ -71,6 +71,7 @@ describe("Testing the Sidebar of the App", () => {
 			for (let i = 0; i < navLinks.length; i++) {
 				fireEvent.click(navLinks[i]);
 
+				//eslint-disable-next-line no-await-in-loop
 				const contentHeading = await within(screen.getByTestId(testIds.contentHeading)).findByText(
 					contentHeadings[i]
 				);
@@ -78,6 +79,7 @@ describe("Testing the Sidebar of the App", () => {
 				expect(contentHeading).toBeInTheDocument();
 
 				//valid nav link is selected
+				//eslint-disable-next-line no-await-in-loop
 				navLinks = await screen.findAllByTestId(testIds.navLinks);
 				expect(within(navLinks[i]).getByTestId(testIds.navLinkLabels)).toHaveClass(linkSelectedClass);
 			}
