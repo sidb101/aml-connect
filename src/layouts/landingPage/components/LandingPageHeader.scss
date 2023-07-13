@@ -1,33 +1,33 @@
 @use "../../../global";
 
-.Header_gridContainer {
+.LandingPageHeader_gridContainer {
   display: grid;
   grid-template-rows: 1fr 1fr;
   height: 100%;
 }
 
-.Header_gridRow1 {
+.LandingPageHeader_gridRow1 {
   grid-row: 1;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
 }
 
-.Header_gridRow2 {
+.LandingPageHeader_gridRow2 {
   grid-row: 2;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
 }
 
-.Header_gridRow3 {
+.LandingPageHeader_gridRow3 {
   grid-row: 3;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
 }
 
-.Header_backDrop {
+.LandingPageHeader_backDrop {
   position: fixed;
   left: 0;
   top: 0;
@@ -37,7 +37,7 @@
   z-index: 99;
 }
 
-.Header_popupContainer {
+.LandingPageHeader_popupContainer {
   display: flex;
   flex-direction: column;
   align-items: flex-end;

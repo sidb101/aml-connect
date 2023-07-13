@@ -32,12 +32,15 @@ Common Classes
 /* -- Various kinds of containers -- */
 
 .content-container {
+  $left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
+  $top-offset: global.$header-height + 2 * global.$content-padding; /* This is the height of the header with padding */
+
   .header-content-container {
     position: fixed; /* Fixed position will make the header stick to the top */
     top: 0;
-    left: global.$sidebar-width + global.$content-padding; /* This should be the same as the width of the sidebar (global.$sidebar-width + global.$content-padding) */
-    min-height: 100px + 0 * global.$content-padding; /* Adjust this value to fit your design */
-    width: calc(100% - 260px - 2 * 20px - 2 * 40px); /* Subtract sidebar width (global.$sidebar-width + global.$content-padding) */
+    left: $left-offset; /* This should be the same as the width of the sidebar */
+    min-height: global.$header-height; /* Adjust this value to fit your design */
+    width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
     overflow: hidden; /* No scrolling in the header */
     padding: global.$content-padding;
     z-index: 1;
@@ -45,10 +48,10 @@ Common Classes
 
   .body-content-container {
     position: absolute; /* Absolute positioning will allow content to move underneath the header and sidebar */
-    margin-top: 100px + 2 * global.$content-padding; /* This should be the same as the height of the header */
-    margin-left: global.$sidebar-width + global.$content-padding; /* This should be the same as the width of the sidebar */
-    width: calc(100% - 260px - 40px - 2 * 40px); /* Subtract sidebar width (global.$sidebar-width + global.$content-padding) */
-    height: calc(100% - 100px - 2 * 40px - 2 * 40px); /* Subtract header height */
+    margin-top: $top-offset; /* This should be the same as the height of the header */
+    margin-left: $left-offset; /* This should be the same as the width of the sidebar */
+    width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
+    height: calc(100% - #{$top-offset} - 2 * #{global.$content-padding}); /* Subtract header height and padding */
     overflow: auto; /* Enable scrolling in both dimensions */
     padding: global.$content-padding;
     z-index: 0;
@@ -56,9 +59,7 @@ Common Classes
 
   .main-content-container {
     position: absolute;
-    width: calc(100% - 2 * 40px);
-    //width: 100%;
-    //padding: global.$content-padding;
+    width: calc(100% - 2 * #{global.$content-padding});
     z-index: 0;
   }
 }

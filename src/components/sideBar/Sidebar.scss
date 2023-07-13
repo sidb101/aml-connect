@@ -1,12 +1,12 @@
 @use "../../global";
 
 .Sidebar_container {
-  height: calc(100% - 2 * 20px); // 20px is the global.$nav-padding;
-  width: calc(100% - 2 * 20px); // 20px is the global.$nav-padding;
+  height: calc(100% - 2 * #{global.$nav-padding}); // 20px is the global.$nav-padding;
+  width: calc(100% - 2 * #{global.$nav-padding}); // 20px is the global.$nav-padding;
   padding: global.$nav-padding;
   overflow: hidden;
 
   .Sidebar_logo {
-    padding-bottom: 40px;
+    padding-bottom: 2 * global.$nav-padding;
   }
 }

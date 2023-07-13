@@ -3,8 +3,6 @@
 body {
   margin: 0;
   padding: 0;
-  //min-width: 100vw;
-  //min-height: 100vh;
   background: global.$color-grey-1;
 }
 
@@ -17,7 +15,7 @@ body {
   top: 0;
   left: 0;
   height: 100%; /* Full height */
-  width: global.$sidebar-width + global.$content-padding;
+  width: global.$sidebar-width + 2 * global.$nav-padding;
   overflow-y: auto; /* Enable vertical scrolling if content overflows */
 }
 
