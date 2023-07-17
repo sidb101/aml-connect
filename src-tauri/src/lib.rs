@@ -1,25 +1,45 @@
 pub mod aml_core;
-use tauri::api::process::Command;
-use core::fmt::Error;
 
-pub fn execute_sidecar_and_fetch_output(sidecar: &str, param: &str) -> Result<String, Error> {
-    let sidecar_command_result = Command::new_sidecar(sidecar);
-    let mut command_handle: Command;
-    match sidecar_command_result {
-        Ok(value) => {
-            command_handle = value;
+pub mod utils {
+    use tauri::api::process::{Command, Output};
+
+    pub trait Execute {
+        fn execute_sidecar_and_fetch_output(
+            &self,
+            params: &[&str],
+        ) -> Result<String, Box<dyn std::error::Error>>;
+    }
+
+    pub struct Sidecar {
+        filename: String
+    }
+
+    impl Sidecar {
+        pub fn new(filename: String) -> Sidecar {
+            Sidecar {filename}
         }
-        Err(error) => {
-            println!("Error while loading command: {}", error);
-            return;
+    }
+
+    impl Execute for Sidecar {
+        fn execute_sidecar_and_fetch_output(
+            &self,
+            params: &[&str],
+        ) -> Result<String, Box<dyn std::error::Error>> {
+            let sidecar = &self.filename;
+            let command: Command = Command::new_sidecar(sidecar)?.args(params);
+            let command_output: Output = command.output()?;
+            let stdout: String = command_output.stdout;
+        
+            match command_output.status.success() {
+                true => Ok(stdout),
+                false => Err(format!("Command failed with exit code: {:?}", command_output.status).into()),
+            }
         }
-    };
+    }
+
     
-    let command_handle_with_args = command_handle.args(["--get_elements"]);
-    let exec_result = command_handle_with_args.output();
 
-    match sidecar_
-
+        
 }
 
 pub mod uicontroller {
@@ -32,9 +52,26 @@ pub mod uicontroller {
 // #[cfg(test)]
 // mod tests {
 //     use super::*;
+//     use double::*;
+
+//     mock_trait!(
+//         MockCommand,
+//         new_sidecar(u64) -> f64);
+    
+//     impl new_sidecar for MockCommand {
+//         mock_method!((&self, timestamp: u64) -> f64);
+//     }
+
+
+//     use 
+//     mock_trait!(MockCommand, new_sidecar(String) -> Result<Self, Err>);
+    
+//     impl ProfitModel for MockCommand {
+//         mock_method!(profit_at(&self, timestamp: u64) -> f64);
+//     }
 
 //     #[test]
 //     fn it_works() {
-//         assert(true);
+//         let res = utils::execute_sidecar_and_fetch_output(sidecar, params);
 //     }
 // }
