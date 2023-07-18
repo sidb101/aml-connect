@@ -1,8 +1,6 @@
 @use "../../../global";
 
 .ProjectsRegion_container {
-
-
   .ProjectsRegion_projectName {
     $padding: 15px;
     margin-top: 20px;
@@ -17,10 +15,6 @@
 
     &:first-of-type {
       margin-top: initial;
-    }
-
-    &:last-of-type {
-      margin-bottom: initial;
     }
   }
 }

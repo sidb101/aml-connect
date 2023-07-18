@@ -7,10 +7,6 @@ export type LandingPageT = {
 	data?: string;
 };
 
-/**
- * It's the data component for the page to handle the redux states. Usually It shouldn't
- * contain the presentation styles.
- */
 const LandingPage = (props: LandingPageT) => {
 	const dispatch = useAppDispatch();
 	const projectStatus = useAppSelector((state) => state.general.projectStatus);

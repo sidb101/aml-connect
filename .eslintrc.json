@@ -31,7 +31,7 @@
           "error" or 2 - turn the rule on as an error (exit code is 1 when triggered)
         **/
         "prettier/prettier": "error",
-        "arrow-body-style": "warn",
+        "arrow-body-style": "off",
         "@typescript-eslint/consistent-type-imports": "off",
         "@typescript-eslint/prefer-optional-chain": "warn",
         "no-warning-comments": "off",

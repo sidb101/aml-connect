@@ -7,10 +7,6 @@ export type LandingPageViewT = {
 	data?: string;
 };
 
-/**
- * It's the presentation component for the page to handle the styles and views. Usually It shouldn't
- * contain the data fetches and redux states
- */
 const LandingView = (props: LandingPageViewT) => {
 	return (
 		<>
