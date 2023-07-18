@@ -1,0 +1,17 @@
+.Footer-both{
+  justify-content: space-between;
+}
+
+.Footer-prev-only{
+  justify-content: flex-start;
+}
+
+.Footer-next-only{
+  justify-content: flex-end;
+}
+
+.Footer-btn {
+  width: 200px;
+  height: 48px;
+  border-radius: 4px;
+}

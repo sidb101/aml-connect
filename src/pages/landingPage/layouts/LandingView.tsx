@@ -13,7 +13,7 @@ const LandingView = (props: LandingPageViewT) => {
 			<div className={`header-content-container`}>
 				<LandingPageHeader />
 			</div>
-			<div className={`body-content-container`}>
+			<div className={`body-content-container-no-footer`}>
 				<div className={`main-content-container`}>
 					<div className={`LandingPageView_gridContainer`}>
 						<div className={`LandingPageView_gridRow1`}>

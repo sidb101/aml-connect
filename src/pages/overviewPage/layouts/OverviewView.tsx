@@ -1,5 +1,6 @@
 import "./OverviewView.scss";
 import React from "react";
+import Footer from "../../../components/footer/Footer";
 
 export type OverviewViewT = {
 	data?: string;
@@ -12,6 +13,7 @@ const OverviewView = (props: OverviewViewT) => {
 				<h1>OverviewPage</h1>
 			</div>
 			<div className={`body-content-container`}></div>
+			<Footer prevBtnText={"Previous"} nextBtnText={"Next"} />
 		</>
 	);
 };
