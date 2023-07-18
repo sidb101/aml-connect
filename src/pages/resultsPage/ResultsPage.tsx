@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../../hooks";
 import { useParams } from "react-router-dom";
 import { generalActions } from "../../redux/slices/GeneralSlice";
+import ResultsView from "./layouts/ResultsView";
 
 export type ResultsPageT = {
 	data?: string;
@@ -16,11 +17,8 @@ const ResultsPage = (props: ResultsPageT) => {
 			? dispatch(generalActions.openProject(projectSlug))
 			: console.error("projectSlug not present in the URL.");
 	}, [projectSlug]);
-	return (
-		<>
-			<h1>ResultsPage</h1>
-		</>
-	);
+
+	return <ResultsView />;
 };
 
 export default ResultsPage;

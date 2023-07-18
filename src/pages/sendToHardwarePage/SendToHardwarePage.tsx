@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../../hooks";
 import { useParams } from "react-router-dom";
 import { generalActions } from "../../redux/slices/GeneralSlice";
+import SendToHardwareView from "./layouts/SendToHardwareView";
 
 export type SendToHardwarePageT = {
 	data?: string;
@@ -17,11 +18,7 @@ const SendToHardwarePage = (props: SendToHardwarePageT) => {
 			: console.error("projectSlug not present in the URL.");
 	}, [projectSlug]);
 
-	return (
-		<>
-			<h1>SendToHardwarePage</h1>
-		</>
-	);
+	return <SendToHardwareView />;
 };
 
 export default SendToHardwarePage;

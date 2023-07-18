@@ -6,9 +6,10 @@ import { mockProjects } from "../tests/mockdata/allProjects";
 import React, { useEffect } from "react";
 import type { SideRegionT } from "../components/sideBar/sideRegion/SideRegion";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { generalActions, selectCurrentProjectName, ProjectStatus } from "../redux/slices/GeneralSlice";
+import { generalActions, ProjectStatus, selectCurrentProjectName } from "../redux/slices/GeneralSlice";
 import { getOpenProjectNavLinks } from "../components/sideBar/navRegion/appNavLinks";
 import { testIds } from "../tests/test-utils";
+import "./Root.scss";
 
 export type RootT = {
 	data?: string;
@@ -57,12 +58,14 @@ const Root = (props: RootT) => {
 			  };
 
 	return (
-		<>
-			<Sidebar logo="AnalogML Connect" sideRegion={[getSideRegion()]} />
-			<div className={"xlight-panel content-container Root_content"} data-testid={testIds.contentHeading}>
+		<div className={`Root_container`}>
+			<div className={`Root_sidebarContainer`}>
+				<Sidebar logo="AnalogML Connect" sideRegion={[getSideRegion()]} />
+			</div>
+			<div className={"xlight-panel content-container"} data-testid={testIds.contentHeading}>
 				<Outlet />
 			</div>
-		</>
+		</div>
 	);
 };
 

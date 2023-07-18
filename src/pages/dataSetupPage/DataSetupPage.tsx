@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { generalActions } from "../../redux/slices/GeneralSlice";
 import { useParams } from "react-router-dom";
+import DataSetupView from "./layouts/DataSetupView";
 
 export type DataSetupPageT = {
 	data?: string;
@@ -17,11 +18,8 @@ const DataSetupPage = (props: DataSetupPageT) => {
 			? dispatch(generalActions.openProject(projectSlug))
 			: console.error("projectSlug not present in the URL.");
 	}, [projectSlug]);
-	return (
-		<>
-			<h1>DataSetupPage</h1>
-		</>
-	);
+
+	return <DataSetupView />;
 };
 
 export default DataSetupPage;

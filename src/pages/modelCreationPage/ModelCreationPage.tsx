@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch } from "../../hooks";
 import { useParams } from "react-router-dom";
 import { generalActions } from "../../redux/slices/GeneralSlice";
+import ModelCreationView from "./layouts/ModelCreationView";
 
 export type ModelCreationPageT = {
 	data?: string;
@@ -16,11 +17,8 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 			? dispatch(generalActions.openProject(projectSlug))
 			: console.error("projectSlug not present in the URL.");
 	}, [projectSlug]);
-	return (
-		<>
-			<h1>ModelCreationPage</h1>
-		</>
-	);
+
+	return <ModelCreationView />;
 };
 
 export default ModelCreationPage;

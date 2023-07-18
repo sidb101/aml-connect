@@ -1,3 +1,4 @@
+import "./App.scss";
 import React from "react";
 import "./App.scss";
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
@@ -18,11 +19,7 @@ import ResultsPage from "./pages/resultsPage/ResultsPage";
 import SendToHardwarePage from "./pages/sendToHardwarePage/SendToHardwarePage";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 
-const App = () => (
-	<div className={"App_container"}>
-		<RouterProvider router={router} />
-	</div>
-);
+const App = () => <RouterProvider router={router} />;
 
 /** Exporting the routes to use them in testing as well **/
 export const routes = createRoutesFromElements(

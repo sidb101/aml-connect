@@ -3,6 +3,7 @@ import { useAppDispatch } from "../../hooks";
 import { useLocation, useParams } from "react-router-dom";
 import { generalActions } from "../../redux/slices/GeneralSlice";
 import { NEW_PROJECT_ROUTE } from "../../routes";
+import OverviewView from "./layouts/OverviewView";
 
 export type OverviewT = {
 	data?: string;
@@ -22,11 +23,7 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 			: console.error("Not a new-project, as well as projectSlug not present in the URL.");
 	}, [projectSlug, pathname]);
 
-	return (
-		<>
-			<h1>OverviewPage</h1>
-		</>
-	);
+	return <OverviewView />;
 };
 
 export default OverviewPage;

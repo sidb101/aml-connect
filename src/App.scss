@@ -1,21 +1,16 @@
 @use "global";
 
-a {  /*To disable the default link look & feel behaviour of the browser, because its desktop app */
+body {
+  margin: 0;
+  padding: 0;
+  background: global.$color-grey-1;
+}
+
+a { /*To disable the default link look & feel behaviour of the browser, because its desktop app */
   text-decoration: none !important;
   color: inherit !important;
 }
 
-.App_container {
-  min-height: 100%;
-  min-width: 100%;
-  margin: 0;
-  padding: 0;
-  font-family: global.$font-primary;
-  color: global.$color-dark-blue;
-}
-
-.content-container {
-  padding: global.$content-padding;
-  min-height: 100%;
-  margin-left: global.$sidebar-width + global.$content-padding;
+#root {
+  height: 100%;
 }
