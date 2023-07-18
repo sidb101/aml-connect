@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useMatches } from "react-router-dom";
 import { Sidebar } from "../components/sideBar/Sidebar";
 import { NavRegion } from "../components/sideBar/navRegion/NavRegion";
 import { ProjectsRegion } from "../components/sideBar/projectRegion/ProjectsRegion";
@@ -10,6 +10,7 @@ import { generalActions, ProjectStatus, selectCurrentProjectName } from "../redu
 import { getOpenProjectNavLinks } from "../components/sideBar/navRegion/appNavLinks";
 import { testIds } from "../tests/test-utils";
 import "./Root.scss";
+import { isNavLinkSelected } from "../components/sideBar/navRegion/navLink/NavLink";
 
 export type RootT = {
 	data?: string;
@@ -22,6 +23,8 @@ export type RootOutletContextT = {
 const Root = (props: RootT) => {
 	const dispatch = useAppDispatch();
 	const { pathname } = useLocation();
+	const matches = useMatches();
+	console.log(matches);
 
 	// getting the required data from the state
 	const { projectStatus, projectSlug, allProjects } = useAppSelector((state) => state.general);
@@ -42,7 +45,7 @@ const Root = (props: RootT) => {
 							navLinks={getOpenProjectNavLinks(projectSlug).map((navLink) => ({
 								...navLink,
 								// setting the selected attribute for the appropriate link
-								isSelected: navLink.route === pathname,
+								isSelected: isNavLinkSelected(pathname, navLink),
 							}))}
 						/>
 					),

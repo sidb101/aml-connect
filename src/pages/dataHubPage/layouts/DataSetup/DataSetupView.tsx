@@ -1,5 +1,4 @@
 import "./DataSetupView.scss";
-import { LandingPageHeader } from "../../landingPage/layouts/components/LandingPageHeader";
 import React from "react";
 
 export type DataSetupViewT = {
@@ -9,10 +8,9 @@ export type DataSetupViewT = {
 const DataSetupView = (props: DataSetupViewT) => {
 	return (
 		<>
-			<div className={`header-content-container`}>
-				<h1>DataSetupPage</h1>
+			<div className={`body-content-container`}>
+				<h2>DataSetupView</h2>
 			</div>
-			<div className={`body-content-container`}></div>
 		</>
 	);
 };

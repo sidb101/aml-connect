@@ -1,6 +1,7 @@
 import type { NavLinkT } from "./navLink/NavLink";
 import {
 	dataHubRoute,
+	dataSetupRoute,
 	modelCreationRoute,
 	projectOverviewRoute,
 	resultsRoute,
@@ -22,7 +23,8 @@ export const getOpenProjectNavLinks = (projectSlug: string): NavLinkT[] => [
 	},
 	{
 		label: "Data Hub",
-		route: dataHubRoute(projectSlug),
+		route: dataSetupRoute(projectSlug),
+		parentRoute: dataHubRoute(projectSlug),
 	},
 	{
 		label: "Model Creation",

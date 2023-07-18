@@ -9,10 +9,15 @@ export type NavLinkT = {
 	isSelected?: boolean;
 	setSelectedIndex?: React.Dispatch<React.SetStateAction<number>>;
 	route: string;
+	parentRoute?: string;
 };
 
 export const linkSelectedClass = "NavLink_link___selected";
 export const linkEnabledClass = "NavLink_link___enabled";
+
+export function isNavLinkSelected(pathname: string, navLink: NavLinkT): boolean {
+	return pathname.startsWith(navLink.route) || (!!navLink.parentRoute && pathname.startsWith(navLink.parentRoute));
+}
 
 export const NavLink = ({ label, isEnabled = true, isSelected = false, ...props }: NavLinkT) => {
 	const isSelectedClass = isSelected ? linkSelectedClass : "";
