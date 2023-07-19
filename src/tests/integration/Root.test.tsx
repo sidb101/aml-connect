@@ -18,7 +18,7 @@ describe("Testing the Sidebar of the App", () => {
 	//define the routing for given test suite
 	const routes = appRoutes;
 
-	const contentHeadings = ["OverviewPage", "DataSetupPage", "ModelCreationPage", "ResultsPage", "SendToHardwarePage"];
+	const contentHeadings = ["OverviewPage", "DataSetupView", "ModelCreationPage", "ResultsPage", "SendToHardwarePage"];
 
 	test(
 		"that 1) sidebar shows all the projects in the app, when app starts. " +
