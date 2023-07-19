@@ -24,7 +24,7 @@ export const getOpenProjectNavLinks = (projectSlug: string): NavLinkT[] => [
 	{
 		label: "Data Hub",
 		route: dataSetupRoute(projectSlug),
-		parentRoute: dataHubRoute(projectSlug),
+		parentLink: { route: dataHubRoute(projectSlug) },
 	},
 	{
 		label: "Model Creation",

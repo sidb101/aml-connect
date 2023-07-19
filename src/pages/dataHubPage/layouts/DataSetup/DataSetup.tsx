@@ -10,7 +10,7 @@ const DataSetup = (props: DataSetupT) => {
 	const { setHeading }: DataHubContextT = useDataHubContext();
 
 	useEffect(() => {
-		setHeading("DataSetup");
+		setHeading("Data Setup");
 	});
 
 	return (
