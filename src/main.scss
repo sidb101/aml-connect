@@ -63,18 +63,6 @@ Common Classes
     height: calc(100% - #{$top-offset} - 2 * #{global.$content-padding}); /* Subtract header height and padding */
   }
 
-  .footer-content-container {
-    position: fixed; /* Fixed position will make the header stick to the top */
-    bottom: 0;
-    left: $left-offset; /* This should be the same as the width of the sidebar */
-    min-height: global.$footer-height; /* Adjust this value to fit your design */
-    width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
-    overflow: hidden; /* No scrolling in the header */
-    padding: global.$content-padding;
-    z-index: 0;
-    display: flex;
-  }
-
   .main-content-container {
     position: absolute;
     width: calc(100% - 2 * #{global.$content-padding});

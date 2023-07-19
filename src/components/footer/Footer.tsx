@@ -1,43 +1,32 @@
 import "./Footer.scss";
 
+export type FooterBtnT = {
+	label: string;
+	route: string;
+};
+
 type FooterT = {
-	prevBtnText: string;
-	nextBtnText: string;
+	prevBtn?: FooterBtnT;
+	nextBtn?: FooterBtnT;
 };
 
 function Footer(props: FooterT) {
-	if (props.prevBtnText !== "" && props.nextBtnText !== "") {
-		return FooterWithPrevAndNext(props.prevBtnText, props.nextBtnText);
-	} else if (props.prevBtnText !== "") {
-		return FooterWithPrevOnly(props.prevBtnText);
-	} else if (props.nextBtnText !== "") {
-		return FooterWithNextOnly(props.nextBtnText);
+	let footerClass: string;
+
+	if (props.prevBtn && props.nextBtn) {
+		footerClass = "Footer-both";
+	} else if (props.prevBtn) {
+		footerClass = "Footer-prev-only";
+	} else if (props.nextBtn) {
+		footerClass = "Footer-next-only";
 	} else {
-		return <h1>Something went wrong</h1>;
+		footerClass = "";
 	}
-}
 
-function FooterWithPrevAndNext(prevText: string, nextText: string) {
 	return (
-		<div className={`footer-content-container Footer-both`}>
-			<button className={`btn-solid Footer-btn`}>{prevText}</button>
-			<button className={`btn-solid Footer-btn`}>{nextText}</button>
-		</div>
-	);
-}
-
-function FooterWithPrevOnly(prevText: string) {
-	return (
-		<div className={`footer-content-container Footer-prev-only`}>
-			<button className={`btn-solid Footer-btn`}>{prevText}</button>
-		</div>
-	);
-}
-
-function FooterWithNextOnly(nextText: string) {
-	return (
-		<div className={`footer-content-container Footer-next-only`}>
-			<button className={`btn-solid Footer-btn`}>{nextText}</button>
+		<div className={`footer-content-container ${footerClass}`}>
+			{props.prevBtn && <button className={`btn-solid Footer-btn`}>{props.prevBtn.label}</button>}
+			{props.nextBtn && <button className={`btn-solid Footer-btn`}>{props.nextBtn.label}</button>}
 		</div>
 	);
 }

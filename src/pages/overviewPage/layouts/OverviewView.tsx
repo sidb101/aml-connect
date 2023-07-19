@@ -13,7 +13,10 @@ const OverviewView = (props: OverviewViewT) => {
 				<h1>OverviewPage</h1>
 			</div>
 			<div className={`body-content-container`}></div>
-			<Footer prevBtnText={"Previous"} nextBtnText={"Next"} />
+			<Footer
+				prevBtn={{ label: "Previous", route: "/previous-route" }}
+				nextBtn={{ label: "Next", route: "/next-route" }}
+			/>
 		</>
 	);
 };
