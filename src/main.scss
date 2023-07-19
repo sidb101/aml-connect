@@ -36,17 +36,6 @@ Common Classes
   $top-offset: global.$header-height + 2 * global.$content-padding; /* This is the height of the header with padding */
   $bottom-offset: global.$footer-height + 2 * global.$panel-padding; /* This is the height of the footer with padding */
 
-  .header-content-container {
-    position: fixed; /* Fixed position will make the header stick to the top */
-    top: 0;
-    left: $left-offset; /* This should be the same as the width of the sidebar */
-    min-height: global.$header-height; /* Adjust this value to fit your design */
-    width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
-    overflow: hidden; /* No scrolling in the header */
-    padding: global.$content-padding;
-    z-index: 1;
-  }
-
   .body-content-container {
     position: absolute; /* Absolute positioning will allow content to move underneath the header and sidebar */
     margin-top: $top-offset; /* This should be the same as the height of the header */

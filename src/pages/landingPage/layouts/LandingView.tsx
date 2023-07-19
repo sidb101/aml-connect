@@ -2,6 +2,7 @@ import { LandingPageHeader } from "./components/LandingPageHeader";
 import { ExampleProject } from "./components/ExampleProject";
 import React from "react";
 import "./LandingView.scss";
+import Header from "../../../components/header/Header";
 
 export type LandingPageViewT = {
 	data?: string;
@@ -10,9 +11,7 @@ export type LandingPageViewT = {
 const LandingView = (props: LandingPageViewT) => {
 	return (
 		<>
-			<div className={`header-content-container`}>
-				<LandingPageHeader />
-			</div>
+			<Header headerTitle={"Projects"} element={<LandingPageHeader />} />
 			<div className={`body-content-container-no-footer`}>
 				<div className={`main-content-container`}>
 					<div className={`LandingPageView_gridContainer`}>
