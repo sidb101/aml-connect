@@ -1,6 +1,7 @@
 import "./DataSetupView.scss";
-import { LandingPageHeader } from "../../landingPage/layouts/components/LandingPageHeader";
 import React from "react";
+import Footer from "../../../components/footer/Footer";
+import { modelCreationRoute, projectOverviewRoute } from "../../../routes";
 
 export type DataSetupViewT = {
 	data?: string;
@@ -13,6 +14,10 @@ const DataSetupView = (props: DataSetupViewT) => {
 				<h1>DataSetupPage</h1>
 			</div>
 			<div className={`body-content-container`}></div>
+			<Footer
+				prevBtn={{ label: "Overview", route: projectOverviewRoute("project-1") }}
+				nextBtn={{ label: "Model Creation", route: modelCreationRoute("project-1") }}
+			/>
 		</>
 	);
 };
