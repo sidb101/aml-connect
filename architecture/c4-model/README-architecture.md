@@ -12,7 +12,7 @@ Use the docker container for easisest setup. Start the docker container as shown
 
 ```bash
 docker pull structurizr/lite
-docker run -it --rm -p 8080:8080 -v (REPO)/architecture/c4-model structurizr/lite
+docker run -it --rm -p 8080:8080 -v (REPO)/architecture/c4-model:/usr/local/structurizr structurizr/lite
 ```
 
 Now, you can open structurize in your browser at [http://localhost:8080](http://localhost:8080) to see the diagram editor
@@ -28,6 +28,8 @@ Check the first ADR for format and advice on how to create good ADRs [here](./de
 We will use [adr-tools](https://github.com/npryce/adr-tools) as our ADR toolset. This tool can be used to create new ADRs as well as overwrite exisint ADRs.
 
 [Instructions to install adr-tools](https://github.com/npryce/adr-tools/blob/master/INSTALL.md)
+
+[Helpful Keyboard Shortcuts](https://structurizr.com/help/keyboard-shortcuts)
 
 Once installed create new ADRs using:
 
