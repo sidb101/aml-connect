@@ -30,7 +30,7 @@ function Footer({ prevBtn, nextBtn, element, className }: FooterT) {
 					{prevBtn && (
 						<Link to={prevBtn.route}>
 							<button className={`btn-solid Footer_btn`}>
-								<FontAwesomeIcon className={`icon-left`} icon={faChevronLeft} />
+								<FontAwesomeIcon className={`Footer_iconLeft`} icon={faChevronLeft} />
 								{prevBtn.label}
 							</button>
 						</Link>
@@ -39,7 +39,7 @@ function Footer({ prevBtn, nextBtn, element, className }: FooterT) {
 						<Link to={nextBtn.route}>
 							<button className={`btn-solid Footer_btn`}>
 								{nextBtn.label}
-								<FontAwesomeIcon className={`icon-right`} icon={faChevronRight} />
+								<FontAwesomeIcon className={`Footer_iconRight`} icon={faChevronRight} />
 							</button>
 						</Link>
 					)}
