@@ -3,12 +3,11 @@
 .footer-content-container {
   $left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
 
-  position: fixed; /* Fixed position will make the header stick to the top */
+  position: fixed; /* Fixed position will make the footer stick to the bottom */
   bottom: 0;
   left: $left-offset; /* This should be the same as the width of the sidebar */
   min-height: global.$footer-height; /* Adjust this value to fit your design */
   width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
-  overflow: hidden; /* No scrolling in the header */
   padding: global.$content-padding;
   z-index: 0;
   display: flex;

@@ -1,4 +1,5 @@
 import "./Footer.scss";
+import type { JSX } from "react";
 
 export type FooterBtnT = {
 	label: string;
@@ -8,26 +9,22 @@ export type FooterBtnT = {
 type FooterT = {
 	prevBtn?: FooterBtnT;
 	nextBtn?: FooterBtnT;
+	element?: JSX.Element | JSX.Element[];
 };
 
-function Footer(props: FooterT) {
-	let footerClass: string;
-
-	if (props.prevBtn && props.nextBtn) {
-		footerClass = "Footer-both";
-	} else if (props.prevBtn) {
-		footerClass = "Footer-prev-only";
-	} else if (props.nextBtn) {
-		footerClass = "Footer-next-only";
-	} else {
-		footerClass = "";
-	}
+function Footer({ prevBtn, nextBtn, element }: FooterT) {
+	const footerClass =
+		prevBtn && nextBtn ? "Footer-both" : prevBtn ? "Footer-prev-only" : nextBtn ? "Footer-next-only" : "";
 
 	return (
-		<div className={`footer-content-container ${footerClass}`}>
-			{props.prevBtn && <button className={`btn-solid Footer-btn`}>{props.prevBtn.label}</button>}
-			{props.nextBtn && <button className={`btn-solid Footer-btn`}>{props.nextBtn.label}</button>}
-		</div>
+		<>
+			{element || (
+				<div className={`footer-content-container ${footerClass}`}>
+					{prevBtn && <button className={`btn-solid Footer-btn`}>{prevBtn.label}</button>}
+					{nextBtn && <button className={`btn-solid Footer-btn`}>{nextBtn.label}</button>}
+				</div>
+			)}
+		</>
 	);
 }
 
