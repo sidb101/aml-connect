@@ -1,5 +1,8 @@
 import "./Footer.scss";
 import type { JSX } from "react";
+import { projectOverviewRoute } from "../../routes";
+import { testIds } from "../../tests/test-utils";
+import { Link } from "react-router-dom";
 
 export type FooterBtnT = {
 	label: string;
@@ -20,8 +23,16 @@ function Footer({ prevBtn, nextBtn, element }: FooterT) {
 		<>
 			{element || (
 				<div className={`footer-content-container ${footerClass}`}>
-					{prevBtn && <button className={`btn-solid Footer-btn`}>{prevBtn.label}</button>}
-					{nextBtn && <button className={`btn-solid Footer-btn`}>{nextBtn.label}</button>}
+					{prevBtn && (
+						<Link to={prevBtn.route}>
+							<button className={`btn-solid Footer-btn`}>{prevBtn.label}</button>
+						</Link>
+					)}
+					{nextBtn && (
+						<Link to={nextBtn.route}>
+							<button className={`btn-solid Footer-btn`}>{nextBtn.label}</button>
+						</Link>
+					)}
 				</div>
 			)}
 		</>

@@ -34,7 +34,7 @@ Common Classes
 .content-container {
   $left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
   $top-offset: global.$header-height + 2 * global.$content-padding; /* This is the height of the header with padding */
-  $bottom-offset: global.$footer-height + 2 * global.$content-padding; /* This is the height of the footer with padding */
+  $bottom-offset: global.$footer-height + 2 * global.$panel-padding; /* This is the height of the footer with padding */
 
   .header-content-container {
     position: fixed; /* Fixed position will make the header stick to the top */
