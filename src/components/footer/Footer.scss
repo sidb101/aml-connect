@@ -1,6 +1,6 @@
 @use "../../global";
 
-.footer-content-container {
+.Footer_contentContainer {
   $left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
 
   position: fixed; /* Fixed position will make the footer stick to the bottom */
@@ -13,20 +13,32 @@
   display: flex;
 }
 
-.Footer-both{
+.Footer___both{
   justify-content: space-between;
 }
 
-.Footer-prev-only{
+.Footer___prevOnly{
   justify-content: flex-start;
 }
 
-.Footer-next-only{
+.Footer___nextOnly{
   justify-content: flex-end;
 }
 
-.Footer-btn {
+.Footer_btn {
   width: 200px;
   height: 48px;
   border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+
+  .icon-left {
+    padding-right: 10px;
+  }
+
+  .icon-right {
+    padding-left: 10px;
+  }
 }
