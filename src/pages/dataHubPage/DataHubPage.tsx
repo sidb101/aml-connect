@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
-import { Link, Outlet, useNavigate, useOutletContext, useParams } from "react-router-dom";
-import { dataSetupRoute, dataVizRoute } from "../../routes";
+import { Outlet, useOutletContext, useParams } from "react-router-dom";
+import { dataVizRoute, projectOverviewRoute } from "../../routes";
+import Footer, { type FooterBtnT } from "../../components/footer/Footer";
 
 export type DataSetupPageT = {
 	data?: string;
@@ -10,14 +11,25 @@ export type DataSetupPageT = {
 
 export type DataHubContextT = {
 	setHeading: React.Dispatch<React.SetStateAction<string>>;
+	setFooter: React.Dispatch<React.SetStateAction<DataHubFooterT>>;
+	projectSlug: string;
+};
+
+export type DataHubFooterT = {
+	nextBtn: FooterBtnT;
+	prevBtn: FooterBtnT;
 };
 
 const DataHubPage = (props: DataSetupPageT) => {
 	const dispatch = useAppDispatch();
-	const { projectSlug } = useParams();
+	const { projectSlug = "" } = useParams();
 	const projectName = useAppSelector(selectCurrentProjectName);
 
 	const [heading, setHeading] = useState<string>("");
+	const [footer, setFooter] = useState<DataHubFooterT>({
+		prevBtn: { label: "Overview", route: projectOverviewRoute(projectSlug) },
+		nextBtn: { label: "Visualize Data", route: dataVizRoute(projectSlug) },
+	});
 
 	//tasks to be done for the whole data hub page
 	useEffect(() => {
@@ -36,17 +48,10 @@ const DataHubPage = (props: DataSetupPageT) => {
 					<h1>
 						{projectName} &gt; Data Hub &gt; {heading}
 					</h1>
-					<Link to={dataVizRoute(projectSlug)}>
-						<button className={`btn btn-solid`}>Visualization</button>
-					</Link>
-					&nbsp;
-					<Link to={dataSetupRoute(projectSlug)}>
-						<button className={`btn btn-solid`}>DataSetup</button>
-					</Link>
 				</div>
 				{/* The outlet would render with given context from the parent */}
-				<Outlet context={{ setHeading } satisfies DataHubContextT} />
-				<h1>Fixed Footer</h1>
+				<Outlet context={{ setHeading, setFooter, projectSlug } satisfies DataHubContextT} />
+				<Footer prevBtn={footer.prevBtn} nextBtn={footer.nextBtn} />
 			</>
 		)
 	);
