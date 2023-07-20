@@ -4,8 +4,6 @@
 use aml_connect::uicontroller;
 
 fn main() {
-    println!("{}", uicontroller::get_elements());
-
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![uicontroller::get_elements])
         .run(tauri::generate_context!())
