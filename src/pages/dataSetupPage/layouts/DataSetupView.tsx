@@ -2,21 +2,22 @@ import "./DataSetupView.scss";
 import React from "react";
 import Footer from "../../../components/footer/Footer";
 import { modelCreationRoute, projectOverviewRoute } from "../../../routes";
+import Header from "../../../components/header/Header";
 
 export type DataSetupViewT = {
 	data?: string;
+	title: string;
+	projectSlug: string;
 };
 
 const DataSetupView = (props: DataSetupViewT) => {
 	return (
 		<>
-			<div className={`header-content-container`}>
-				<h1>DataSetupPage</h1>
-			</div>
+			<Header headerTitle={`${props.title}`} />
 			<div className={`body-content-container`}></div>
 			<Footer
-				prevBtn={{ label: "Overview", route: projectOverviewRoute("project-1") }}
-				nextBtn={{ label: "Model Creation", route: modelCreationRoute("project-1") }}
+				prevBtn={{ label: "Overview", route: projectOverviewRoute(props.projectSlug) }}
+				nextBtn={{ label: "Model Creation", route: modelCreationRoute(props.projectSlug) }}
 			/>
 		</>
 	);

@@ -2,19 +2,20 @@ import "./SendToHardwareView.scss";
 import React from "react";
 import { resultsRoute } from "../../../routes";
 import Footer from "../../../components/footer/Footer";
+import Header from "../../../components/header/Header";
 
 export type SendToHardwareViewT = {
 	data?: string;
+	title: string;
+	projectSlug: string;
 };
 
 const SendToHardwareView = (props: SendToHardwareViewT) => {
 	return (
 		<>
-			<div className={`header-content-container`}>
-				<h1>SendToHardwarePage</h1>
-			</div>
+			<Header headerTitle={`${props.title}`} />
 			<div className={`body-content-container`}></div>
-			<Footer prevBtn={{ label: "Results", route: resultsRoute("project-1") }} />
+			<Footer prevBtn={{ label: "Results", route: resultsRoute(props.projectSlug) }} />
 		</>
 	);
 };

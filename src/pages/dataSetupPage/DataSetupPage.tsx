@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { generalActions } from "../../redux/slices/GeneralSlice";
+import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
 import { useParams } from "react-router-dom";
 import DataSetupView from "./layouts/DataSetupView";
 
@@ -12,6 +12,7 @@ const DataSetupPage = (props: DataSetupPageT) => {
 	const dispatch = useAppDispatch();
 	const { projectSlug } = useParams();
 	const generalState = useAppSelector((state) => state.general);
+	const projectName = useAppSelector(selectCurrentProjectName) || "";
 
 	useEffect(() => {
 		projectSlug
@@ -19,7 +20,7 @@ const DataSetupPage = (props: DataSetupPageT) => {
 			: console.error("projectSlug not present in the URL.");
 	}, [projectSlug]);
 
-	return <DataSetupView />;
+	return projectSlug && <DataSetupView title={`${projectName} > Data Hub`} projectSlug={projectSlug} />;
 };
 
 export default DataSetupPage;
