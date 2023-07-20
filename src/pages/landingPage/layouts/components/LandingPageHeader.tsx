@@ -8,38 +8,35 @@ export const LandingPageHeader = () => {
 	const [isSelected, setIsSelected] = useState(false);
 
 	const togglePopup = () => {
-		setIsSelected(!isSelected);
+		setIsSelected((s) => !s);
 	};
 
 	return (
 		<>
+			{isSelected && (
+				<div
+					className={`LandingPageHeader_backDrop`}
+					onClick={() => {
+						togglePopup();
+					}}
+				></div>
+			)}
 			<div className={`LandingPageHeader_gridContainer`}>
 				<div className={`LandingPageHeader_gridRow1`}>
-					<div className={`main-heading-text`}>Projects</div>
+					<button
+						className={`LandingPageHeader_inFrontOfBackDrop btn ${
+							isSelected ? `btn-solid` : `btn-outline`
+						}`}
+						onClick={() => {
+							togglePopup();
+						}}
+					>
+						Create New Project &nbsp;
+						<FontAwesomeIcon icon={faPlus} />
+					</button>
 				</div>
 				<div className={`LandingPageHeader_gridRow2`}>
-					{isSelected && (
-						<div
-							className={`LandingPageHeader_backDrop`}
-							onClick={() => {
-								togglePopup();
-							}}
-						></div>
-					)}
-					<div className={`LandingPageHeader_popupContainer`}>
-						<button
-							className={`btn ${isSelected ? `btn-solid` : `btn-outline`}`}
-							onClick={() => {
-								togglePopup();
-							}}
-						>
-							Create New Project &nbsp;
-							<FontAwesomeIcon icon={faPlus} />
-						</button>
-					</div>
-				</div>
-				<div className={`LandingPageHeader_gridRow3`}>
-					<div className={`LandingPageHeader_popupContainer`}>{isSelected && <NewProjectPopup />}</div>
+					<div className={`LandingPageHeader_inFrontOfBackDrop`}>{isSelected && <NewProjectPopup />}</div>
 				</div>
 			</div>
 		</>
