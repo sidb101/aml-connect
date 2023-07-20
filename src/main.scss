@@ -6,7 +6,6 @@ Common Classes
 
 @use "global";
 
-
 /* -- Panels (Blocks) -- */
 
 //noinspection ALL
@@ -30,6 +29,47 @@ Common Classes
   color: global.$color-white;
 }
 
+/* -- Various kinds of containers -- */
+
+.content-container {
+  $left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
+  $top-offset: global.$header-height + 2 * global.$content-padding; /* This is the height of the header with padding */
+  $bottom-offset: global.$footer-height + 2 * global.$panel-padding; /* This is the height of the footer with padding */
+
+  .header-content-container {
+    position: fixed; /* Fixed position will make the header stick to the top */
+    top: 0;
+    left: $left-offset; /* This should be the same as the width of the sidebar */
+    min-height: global.$header-height; /* Adjust this value to fit your design */
+    width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
+    overflow: hidden; /* No scrolling in the header */
+    padding: global.$content-padding;
+    z-index: 1;
+  }
+
+  .body-content-container {
+    position: absolute; /* Absolute positioning will allow content to move underneath the header and sidebar */
+    margin-top: $top-offset; /* This should be the same as the height of the header */
+    margin-left: $left-offset; /* This should be the same as the width of the sidebar */
+    width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
+    height: calc(100% - #{$top-offset} - 2 * #{global.$content-padding} - #{$bottom-offset}); /* Subtract header height and padding and footer height */
+    overflow: auto; /* Enable scrolling in both dimensions */
+    padding: global.$content-padding;
+    z-index: 0;
+  }
+
+  .body-content-container-no-footer{
+    @extend .body-content-container;
+    height: calc(100% - #{$top-offset} - 2 * #{global.$content-padding}); /* Subtract header height and padding */
+  }
+
+  .main-content-container {
+    position: absolute;
+    width: calc(100% - 2 * #{global.$content-padding});
+    z-index: 0;
+  }
+}
+
 /* -- Various kinds of texts -- */
 
 .brand-text {
@@ -44,7 +84,6 @@ Common Classes
   font-family: global.$font-primary-bold;
   font-size: global.$text-xxlarge;
   line-height: 36px;
-  padding-top: 20px;
   padding-bottom: 20px;
   color: global.$color-dark-blue;
 }
