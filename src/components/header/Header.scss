@@ -8,7 +8,7 @@
   left: $left-offset; /* This should be the same as the width of the sidebar */
   height: global.$header-height; /* Adjust this value to fit your design */
   width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
-  padding: global.$content-padding;
+  padding: global.$content-padding global.$content-padding 0;
   z-index: 1;
 
   display: grid;

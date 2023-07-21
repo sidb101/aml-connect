@@ -37,7 +37,7 @@ Common Classes
 
 .content-container {
   $left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
-  $top-offset: global.$header-height + 2 * global.$content-padding; /* This is the height of the header with padding */
+  $top-offset: global.$header-height + 1 * global.$content-padding; /* This is the height of the header with top padding */
   $bottom-offset: global.$footer-height + 2 * global.$panel-padding; /* This is the height of the footer with padding */
 
   .body-content-container {
@@ -54,6 +54,12 @@ Common Classes
   .body-content-container-no-footer{
     @extend .body-content-container;
     height: calc(100% - #{$top-offset} - 2 * #{global.$content-padding}); /* Subtract header height and padding */
+  }
+
+  .body-content-container-no-header-btns{
+    @extend .body-content-container;
+    height: calc(100% - #{$top-offset} + 0.5 * #{global.$header-height} - 2 * #{global.$content-padding} -  #{$bottom-offset})  ; /* Subtract header height and padding */
+    margin-top: $top-offset - 0.5 * global.$header-height;
   }
 
   .main-content-container {
