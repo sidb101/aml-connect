@@ -12,21 +12,25 @@ Common Classes
 .white-panel {
   background-color: global.$color-white;
   color: global.$color-dark-blue;
+  border-radius: global.$border-radius;
 }
 
 .xlight-panel {
   background-color: global.$color-grey-1;
   color: global.$color-dark-blue;
+  border-radius: global.$border-radius;
 }
 
 .dark-grey-panel {
   background-color: global.$color-grey-6;
   color: global.$color-white;
+  border-radius: global.$border-radius;
 }
 
 .dark-panel {
   background-color: global.$color-dark-blue;
   color: global.$color-white;
+  border-radius: global.$border-radius;
 }
 
 /* -- Various kinds of containers -- */
@@ -154,7 +158,7 @@ Common Classes
   font-size: global.$text-small;
   font-family: global.$font-primary-light;
   padding: global.$general-padding global.$general-padding * 2;
-  border-radius: 4px;
+  border-radius: global.$border-radius;
   cursor: pointer;
 }
 

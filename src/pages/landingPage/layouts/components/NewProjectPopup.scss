@@ -5,8 +5,6 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  background-color: white;
-  border-radius: 4px;
   height: 200px;
   width: 315px;
   padding: global.$panel-padding;
@@ -18,11 +16,10 @@
 
 .NewProjectPopup_newProjectContainer {
   border: solid 1px global.$color-grey-2;
-  border-radius: 4px;
+  border-radius: global.$border-radius;
   width: 100%;
   height: 81px;
   padding-bottom: 12px;
-
   user-select: none;
 
   &:hover{
@@ -37,9 +34,6 @@
 
 .NewProjectPopup_button {
   border: solid 1px global.$color-grey-2;
-  border-radius: 4px;
-  background-color: white;
-  //width: 275px;
   width: 100%;
   height: 43px;
   text-align: left;

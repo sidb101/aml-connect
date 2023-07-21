@@ -3,14 +3,17 @@ import { useEffect } from "react";
 import type { DataHubContextT } from "../../DataHubPage";
 import { useDataHubContext } from "../../DataHubPage";
 import { dataVizRoute, projectOverviewRoute } from "../../../../routes";
+import { useAppSelector } from "../../../../hooks";
+import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
 
 export type DataSetupT = {
 	data?: string;
 };
 const DataSetup = (props: DataSetupT) => {
-	const { setHeading, setFooter, projectSlug }: DataHubContextT = useDataHubContext();
+	const { setHeading, setFooter }: DataHubContextT = useDataHubContext();
+	const projectSlug = useAppSelector(selectCurrentProjectSlug);
 
-	//Change the headers and footers of DataHub as per the current view
+	//Change the parent elements of DataHub as per the current view
 	useEffect(() => {
 		setHeading("Data Setup");
 		setFooter((state) => ({

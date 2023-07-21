@@ -10,9 +10,7 @@ export type DataSetupViewT = {
 const DataSetupView = (props: DataSetupViewT) => {
 	return (
 		<>
-			<div className={`body-content-container`}>
-				<h2>DataSetupView</h2>
-			</div>
+			<h2>DataSetupView</h2>
 		</>
 	);
 };

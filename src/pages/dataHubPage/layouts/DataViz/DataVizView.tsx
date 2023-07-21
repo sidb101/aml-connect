@@ -8,9 +8,7 @@ export type DataVizViewT = {
 const DataVizView = (props: DataVizViewT) => {
 	return (
 		<>
-			<div className={`body-content-container`}>
-				<h2>DataVizView</h2>
-			</div>
+			<h2>DataVizView</h2>
 		</>
 	);
 };

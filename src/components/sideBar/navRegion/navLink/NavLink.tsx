@@ -22,9 +22,9 @@ export const linkEnabledClass = "NavLink_link___enabled";
  * @param pathname
  * @param navLink
  */
-export function isNavLinkSelected(pathname: string, navLink: NavLinkT): boolean {
+export function isNavLinkSelected(navLink: NavLinkT, pathname: string): boolean {
 	return (
-		pathname.startsWith(navLink.route) || (!!navLink.parentLink && isNavLinkSelected(pathname, navLink.parentLink))
+		pathname.startsWith(navLink.route) || (!!navLink.parentLink && isNavLinkSelected(navLink.parentLink, pathname))
 	);
 }
 

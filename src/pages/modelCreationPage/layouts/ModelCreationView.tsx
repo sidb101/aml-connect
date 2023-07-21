@@ -1,7 +1,7 @@
 import "./ModelCreationView.scss";
 import React from "react";
 import Footer from "../../../components/footer/Footer";
-import { dataSetupRoute, resultsRoute } from "../../../routes";
+import { dataSetupRoute, dataVizRoute, resultsRoute } from "../../../routes";
 
 export type ModelCreationViewT = {
 	data?: string;
@@ -15,7 +15,7 @@ const ModelCreationView = (props: ModelCreationViewT) => {
 			</div>
 			<div className={`body-content-container`}></div>
 			<Footer
-				prevBtn={{ label: "Data Setup", route: dataSetupRoute("project-1") }}
+				prevBtn={{ label: "Visualize Data", route: dataVizRoute("project-1") }}
 				nextBtn={{ label: "Results", route: resultsRoute("project-1") }}
 			/>
 		</>
