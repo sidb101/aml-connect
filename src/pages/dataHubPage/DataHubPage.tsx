@@ -7,6 +7,7 @@ import Footer, { type FooterBtnT } from "../../components/footer/Footer";
 import "./DataHubPage.scss";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "./layouts/NavTabs/PageTabs";
 import { getPageTabs } from "./layouts/pageTabs";
+import Header from "../../components/header/Header";
 
 export type DataSetupPageT = {
 	data?: string;
@@ -54,11 +55,7 @@ const DataHubPage = (props: DataSetupPageT) => {
 	return (
 		projectSlug && (
 			<>
-				<div className={`header-content-container`}>
-					<h1>
-						{projectName} &gt; Data Hub &gt; {heading}
-					</h1>
-				</div>
+				<Header headerTitle={`${projectName || "Undefined Project"} > Data Hub > ${heading}`} />
 				<div className={`body-content-container DataHub_bodyContainer`}>
 					<div className={"DataHub_bodyRow1"}>
 						<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />

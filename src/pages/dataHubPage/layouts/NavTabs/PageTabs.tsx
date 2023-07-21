@@ -23,7 +23,7 @@ const PageTabs = ({ pageTabs, selectedTabIndex = -1 }: PageTabsT) => {
 		<div className={`white-panel section-subheading-text grey-text PageTabs_container`}>
 			{pageTabs.map((pageTab, index) => (
 				<Link to={pageTab.route} key={index}>
-					<div className={`PageTabs_tab ${selectedTabIndex == index && "PageTabs_tab___active"}`}>
+					<div className={`PageTabs_tab ${selectedTabIndex === index ? "PageTabs_tab___active" : ""}`}>
 						<div className={`PageTabs_numCircle`}>{index + 1}</div>
 						<div className={`PageTabs_tabLabel`}>{pageTab.label}</div>
 					</div>
