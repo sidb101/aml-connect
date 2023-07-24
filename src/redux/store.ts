@@ -19,6 +19,8 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) =>
 		preloadedState,
 	});
 
+export const appStore = setupStore();
+
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type AppStore = ReturnType<typeof setupStore>;
 export type RootState = ReturnType<typeof rootReducer>;

@@ -97,4 +97,9 @@ export const selectCurrentProjectName = createSelector(
 	}
 );
 
+export const selectCurrentProjectSlug = createSelector(
+	(state: RootState) => state.general,
+	({ projectSlug }) => projectSlug
+);
+
 export const { name: generalSliceKey, reducer: generalReducer, actions: generalActions } = generalSlice;

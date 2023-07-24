@@ -39,7 +39,8 @@
         "@typescript-eslint/no-unused-expressions": "off",
         "object-shorthand": "off",
         "@typescript-eslint/prefer-nullish-coalescing": "off",
-        "spaced-comment": "off"
+        "spaced-comment": "off",
+        "no-implicit-coercion": "off"
     }
 }
 

@@ -1,0 +1,191 @@
+syntax = "proto3";
+
+package aspinity.proto;
+
+import "google/protobuf/timestamp.proto";
+
+message Signal {
+	uint64 id = 1;
+	string name = 2;
+
+	repeated float samples = 3;
+	uint64 samples_per_second = 4;
+	uint64 sample_count = 5;
+	float duration_seconds = 6;
+
+	string creator_id = 7;
+	google.protobuf.Timestamp creation_time = 8;
+
+    uint64 simulation_id = 9;
+}
+
+message TerminalType {
+	uint64 id = 1;
+	string name = 2;
+	string default_node_name = 3;
+}
+
+message Terminal {
+	uint64 id = 1;
+	uint64 parent_element_id = 2;
+	string type_name = 3;
+	string node_name = 4;
+}
+
+message OptionType {
+	uint64 id = 1;
+	string name = 2;
+	bool is_boolean = 3;
+	repeated string enumerated_values = 4;
+	oneof default_value {
+		bool default_boolean_value = 5;
+		string default_enumerated_value = 6;
+	}
+}
+
+message Option {
+	uint64 id = 1;
+	uint64 parent_element_id = 2;
+	string type_name = 3;
+	oneof value {
+		bool boolean_value = 4;
+		string enumerated_value = 5;
+	}
+}
+
+message ParameterType {
+	uint64 id = 1;
+	string name = 2;
+
+	float default_value = 3;
+}
+
+message Parameter {
+	uint64 id = 1;
+	uint64 parent_element_id = 2;
+
+	string type_name = 3;
+
+    float value = 4;
+}
+
+message ElementType {
+	uint64 id = 1;
+	string name = 2;
+
+	repeated TerminalType terminal_types = 3;
+	repeated ParameterType parameter_types = 4;
+	repeated OptionType option_types = 5;
+}
+
+message Element {
+	uint64 id = 1;
+	uint64 parent_network_id = 2;
+    string type_name = 3;
+
+    repeated Terminal terminals = 4;
+    repeated Parameter parameters = 5;
+    repeated Option options = 6;
+}
+
+message Node {
+	uint64 id = 1;
+	string name = 2;
+	uint64 parent_network_id = 3;
+    repeated uint64 terminal_ids = 4;
+}
+
+message Network {
+	uint64 id = 1;
+    string name = 2;
+
+    repeated Element elements = 3;
+	repeated Node nodes = 4;
+
+	string creator_id = 5;
+	google.protobuf.Timestamp creation_time = 6;
+}
+
+message Simulation {
+	uint64 id = 1;
+    string name = 2;
+	uint64 network_id = 3;
+
+	uint64 source_signal_id = 4;
+	repeated uint64 sink_signal_ids = 5;
+	string sink_signal_name = 6;
+
+	string creator_id = 7;
+	google.protobuf.Timestamp creation_time = 8;
+}
+
+message CreateSimulationRequest {
+    Simulation simulation = 1;
+}
+
+message GetSimulationRequest {
+    uint64 id = 1;
+}
+
+message ListSimulationsRequest {
+	string name = 1;
+}
+
+message ListSimulationsResponse {
+	repeated Simulation simulations = 1;
+}
+
+message CreateSignalRequest {
+    Signal signal = 1;
+}
+
+message GetSignalRequest {
+	uint64 id = 1;
+}
+
+message ListSignalsRequest {
+	string name = 1;
+}
+
+message ListSignalsResponse {
+	repeated Signal signals = 1;
+}
+
+message CreateNetworkRequest {
+    Network network = 1;
+}
+
+message GetNetworkRequest {
+	uint64 id = 1;
+}
+
+message ListNetworksRequest {
+	string name = 1;
+}
+
+message ListNetworksResponse {
+	repeated Network networks = 1;
+}
+
+message ListElementTypesRequest {
+}
+
+message ListElementTypesResponse {
+    repeated ElementType element_types = 1;
+}
+
+service SimulatorService {
+    rpc CreateSignal(CreateSignalRequest) returns (Signal);
+	rpc GetSignal(GetSignalRequest) returns (Signal);
+	rpc ListSignals(ListSignalsRequest) returns (ListSignalsResponse);
+
+    rpc ListElementTypes(ListElementTypesRequest) returns (ListElementTypesResponse);
+
+    rpc CreateNetwork(CreateNetworkRequest) returns (Network);
+    rpc GetNetwork(GetNetworkRequest) returns (Network);
+	rpc ListNetworks(ListNetworksRequest) returns (ListNetworksResponse);
+
+    rpc CreateSimulation(CreateSimulationRequest) returns (Simulation);
+    rpc GetSimulation(GetSimulationRequest) returns (Simulation);
+	rpc ListSimulations(ListSimulationsRequest) returns (ListSimulationsResponse);
+};
