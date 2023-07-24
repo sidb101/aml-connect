@@ -1,7 +1,7 @@
 import "./OverviewView.scss";
 import React from "react";
 import Footer from "../../../components/footer/Footer";
-import { dataHubRoute } from "../../../routes";
+import { dataHubRoute, dataSetupRoute } from "../../../routes";
 import Header from "../../../components/header/Header";
 import ProjectDescription from "./ProjectDescription";
 import ProjectName from "./ProjectName";
@@ -41,7 +41,7 @@ const OverviewView = (props: OverviewViewT) => {
 					{/*</div>*/}
 				</div>
 			</div>
-			<Footer nextBtn={{ label: "Data Set-Up", route: dataHubRoute(props.projectSlug) }} />
+			<Footer nextBtn={{ label: "Data Hub", route: dataSetupRoute(props.projectSlug) }} />
 		</>
 	);
 };
