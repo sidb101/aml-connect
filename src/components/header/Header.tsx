@@ -14,7 +14,7 @@ function Header({ headerTitle = "", element, className = "" }: HeaderT) {
 			<div className={`Header_gridRow1`}>
 				<div className={`main-heading-text`}>{headerTitle}</div>
 			</div>
-			<div className={`Header_gridRow2`}>{element}</div>
+			{element && <div className={`Header_gridRow2`}>{element}</div>}
 		</div>
 	);
 }

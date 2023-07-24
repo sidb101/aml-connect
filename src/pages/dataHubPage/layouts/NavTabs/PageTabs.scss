@@ -1,0 +1,47 @@
+@use "../../../../global";
+
+.PageTabs_container{
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 10%;
+
+  a{
+    padding: global.$general-padding;
+  }
+
+  .PageTabs_tab{
+    display: flex;
+    height: 100%;
+    gap: global.$general-padding;
+
+    .PageTabs_numCircle{
+      background-color: global.$color-grey-5;
+      color: global.$color-white;
+      aspect-ratio: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+    }
+
+    .PageTabs_tabLabel{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &___active{
+      color: global.$color-light-green;
+      .PageTabs_numCircle{
+        background-color: global.$color-light-green;
+      }
+    }
+  }
+}
+
+
+
+

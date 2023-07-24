@@ -18,12 +18,12 @@ describe("Testing the Sidebar of the App", () => {
 	//define the routing for given test suite
 	const routes = appRoutes;
 
-	const contentHeadings = ["OverviewPage", "DataSetupPage", "ModelCreationPage", "ResultsPage", "SendToHardwarePage"];
+	const contentHeadings = ["OverviewPage", "DataSetupView", "ModelCreationPage", "ResultsPage", "SendToHardwarePage"];
 
 	test(
 		"that 1) sidebar shows all the projects in the app, when app starts. " +
 			"2) when visited on any one project, it changes the nav-links accordingly. " +
-			"3) When visited on those links, appropriate components loaded",
+			"3) When visited on those links, appropriate NavTabs loaded",
 		async () => {
 			//ARRANGE
 			//should start with empty store
@@ -60,7 +60,12 @@ describe("Testing the Sidebar of the App", () => {
 			const expectedNavLinks = getOpenProjectNavLinks(projects[0].slug);
 			let navLinks = await screen.findAllByTestId(testIds.navLinks);
 			navLinks.forEach((navLink, index) => {
-				expect(navLink).toHaveTextContent(getExactText(expectedNavLinks[index].label));
+				const navLinkLabel: string = expectedNavLinks[index].label || "";
+				if (navLinkLabel) {
+					expect(navLink).toHaveTextContent(navLinkLabel);
+				} else {
+					fail("Empty Label Found in NavLink.");
+				}
 			});
 			//Valid Default Link
 			expect(within(navLinks[0]).getByTestId(testIds.navLinkLabels)).toHaveClass(linkSelectedClass);
