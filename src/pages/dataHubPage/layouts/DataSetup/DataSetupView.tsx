@@ -8,11 +8,7 @@ export type DataSetupViewT = {
 };
 
 const DataSetupView = (props: DataSetupViewT) => {
-	return (
-		<>
-			<h2>DataSetupView</h2>
-		</>
-	);
+	return <h2>DataSetupView</h2>;
 };
 
 export default DataSetupView;

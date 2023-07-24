@@ -23,11 +23,7 @@ const DataSetup = (props: DataSetupT) => {
 		}));
 	}, [projectSlug]);
 
-	return (
-		<>
-			<DataSetupView />
-		</>
-	);
+	return <DataSetupView />;
 };
 
 export default DataSetup;
