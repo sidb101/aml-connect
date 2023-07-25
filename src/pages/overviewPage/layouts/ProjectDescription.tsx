@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ProjectDescription.scss";
 
 const dummyText =
@@ -12,12 +12,16 @@ const dummyText =
 	"environments (windows, doors, etc).";
 
 function ProjectDescription() {
+	const [projectDescription, setProjectDescription] = useState<string>("");
+
 	return (
 		<>
 			<div className={`green-text section-subheading-text`}>Project Description</div>
 			<textarea
 				className={`regular-text light-grey-text ProjectDescription_container`}
-				value={dummyText}
+				placeholder={dummyText}
+				value={projectDescription}
+				onChange={(e) => setProjectDescription(e.target.value)}
 			></textarea>
 		</>
 	);

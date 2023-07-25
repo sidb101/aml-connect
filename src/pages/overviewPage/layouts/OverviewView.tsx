@@ -15,7 +15,6 @@ export type OverviewViewT = {
 const OverviewView = (props: OverviewViewT) => {
 	return (
 		<>
-			{/*<Header headerTitle={`Glass Break > Overview`} />*/}
 			<Header headerTitle={`${props.title}`} />
 			<div className={`body-content-container`}>
 				<div className={`OverviewView_container`}>
