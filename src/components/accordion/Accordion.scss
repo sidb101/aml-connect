@@ -3,6 +3,7 @@
   display: grid;
   grid-template-rows: 50px;
   width: 100%;
+
   .Accordion_headerContainer{
     display: flex;
     flex-direction: row;
@@ -10,6 +11,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0 global.$panel-padding;
+    cursor: pointer;
 
     .Accordion_toggleBtn{
       display: flex;
@@ -20,29 +22,27 @@
       border-radius: 50%;
       font-size: global.$text-large;
       border: solid 2px global.$color-grey-2;
-      cursor: pointer;
-
-      svg{
-        margin-top: 3px;
-      }
+      transition: all 200ms;
     }
 
   }
 
   .Accordion_bodyContainer{
-    display: none;
     padding: 0 global.$panel-padding;
+    transition: all 200ms;
+    height: 0;
+    overflow-y: hidden;
+
+    &:hover{
+      overflow-y: auto;
+    }
   }
 
-
-  &___open {
-    .Accordion_bodyContainer{
-      display: block;
-    }
-
+  &___closed {
     .Accordion_toggleBtn{
       transform: rotate(180deg);
     }
   }
+
 
 }

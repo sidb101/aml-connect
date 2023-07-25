@@ -10,10 +10,36 @@ const DataSetupView = (props: DataSetupViewT) => {
 	return (
 		<div className={`DataSetupView_container`}>
 			<div className={`DataSetupView_leftContainer`}>
-				<Accordion headerElement={<>Training Dataset</>} bodyElement={<h4>Training Body</h4>} />
+				<Accordion
+					headerElement={<>Training Dataset</>}
+					maxHeight={"200px"}
+					bodyElement={
+						<>
+							Training Body
+							<br />
+							THis occupies
+							<br />
+							too many
+							<br /> new lines
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							<br />
+							Last Line
+							<br />
+						</>
+					}
+				/>
 				<Accordion
 					headerElement={<>Validation Dataset</>}
 					bodyElement={<h4>Validation Body</h4>}
+					maxHeight={"300px"}
 					defaultIsOpen={false}
 				/>
 				<Accordion
