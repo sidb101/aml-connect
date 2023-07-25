@@ -1,12 +1,11 @@
 import "./ModelCreationView.scss";
 import React, { useState } from "react";
 import Footer from "../../../components/footer/Footer";
-import { dataSetupRoute, resultsRoute } from "../../../routes";
+import { dataVizRoute, resultsRoute } from "../../../routes";
 import Header from "../../../components/header/Header";
 import { invoke } from "@tauri-apps/api/tauri";
 
 export type ModelCreationViewT = {
-	data?: string;
 	title: string;
 	projectSlug: string;
 };
@@ -46,7 +45,7 @@ const ModelCreationView = (props: ModelCreationViewT) => {
 				</div>
 			</div>
 			<Footer
-				prevBtn={{ label: "Data Hub", route: dataSetupRoute(props.projectSlug) }}
+				prevBtn={{ label: "Data Hub", route: dataVizRoute(props.projectSlug) }}
 				nextBtn={{ label: "Results", route: resultsRoute(props.projectSlug) }}
 			/>
 		</>

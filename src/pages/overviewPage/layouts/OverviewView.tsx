@@ -7,7 +7,6 @@ import ProjectDescription from "./ProjectDescription";
 import ProjectName from "./ProjectName";
 
 export type OverviewViewT = {
-	data?: string;
 	title: string;
 	projectSlug: string;
 };
