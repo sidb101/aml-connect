@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./ProjectDescription.scss";
 
 const dummyText =
-	"We are developing a smart device for in-home surveillance. This device would " +
+	"e.g. We are developing a smart device for in-home surveillance. This device would " +
 	"detect the sounds of glass break to help trigger a security alert within our " +
 	"system.\n\n" +
 	"Our goal is create a model that can detect the sound of glass break with " +
@@ -21,7 +21,9 @@ function ProjectDescription() {
 				className={`regular-text light-grey-text ProjectDescription_container`}
 				placeholder={dummyText}
 				value={projectDescription}
-				onChange={(e) => setProjectDescription(e.target.value)}
+				onChange={(e) => {
+					setProjectDescription(e.target.value);
+				}}
 			></textarea>
 		</>
 	);

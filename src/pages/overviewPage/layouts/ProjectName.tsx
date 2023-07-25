@@ -11,7 +11,9 @@ function ProjectName() {
 				className={`regular-text light-grey-text ProjectName_input`}
 				placeholder={"e.g. Glass Break Detection"}
 				value={projectName}
-				onChange={(e) => setProjectName(e.target.value)}
+				onChange={(e) => {
+					setProjectName(e.target.value);
+				}}
 			/>
 		</>
 	);
