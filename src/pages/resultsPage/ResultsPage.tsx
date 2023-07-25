@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { useAppDispatch } from "../../hooks";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useParams } from "react-router-dom";
-import { generalActions } from "../../redux/slices/GeneralSlice";
+import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
 import ResultsView from "./layouts/ResultsView";
 
 export type ResultsPageT = {
@@ -11,6 +11,7 @@ export type ResultsPageT = {
 const ResultsPage = (props: ResultsPageT) => {
 	const dispatch = useAppDispatch();
 	const { projectSlug } = useParams();
+	const projectName = useAppSelector(selectCurrentProjectName) || "";
 
 	useEffect(() => {
 		projectSlug
@@ -18,7 +19,7 @@ const ResultsPage = (props: ResultsPageT) => {
 			: console.error("projectSlug not present in the URL.");
 	}, [projectSlug]);
 
-	return <ResultsView />;
+	return projectSlug && <ResultsView title={`${projectName} > Results`} projectSlug={projectSlug} />;
 };
 
 export default ResultsPage;

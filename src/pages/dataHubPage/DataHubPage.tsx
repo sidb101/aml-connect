@@ -5,7 +5,7 @@ import { Outlet, useLocation, useOutletContext, useParams } from "react-router-d
 import { dataVizRoute, projectOverviewRoute } from "../../routes";
 import Footer, { type FooterBtnT } from "../../components/footer/Footer";
 import "./DataHubPage.scss";
-import PageTabs, { getSelectedTabIndex, type PageTabT } from "./layouts/NavTabs/PageTabs";
+import PageTabs, { getSelectedTabIndex, type PageTabT } from "./layouts/PageTabs/PageTabs";
 import { getPageTabs } from "./layouts/pageTabs";
 import Header from "../../components/header/Header";
 
