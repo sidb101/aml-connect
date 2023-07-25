@@ -15,7 +15,20 @@
       "all": false,
       "shell": {
         "all": false,
-        "open": true
+        "open": true,
+        "sidecar": true,
+        "scope": [
+          {
+            "name": "src-tauri/binaries/aspinity_wrapper", 
+            "sidecar": true,
+            "args": [
+              "--get_elements",
+              {
+                "validator": "\\S+"
+              }
+            ]
+          }
+        ]
       }
     },
     "bundle": {
@@ -28,7 +41,10 @@
         "icons/icon.ico"
       ],
       "identifier": "com.aml-connect.aspinity",
-      "targets": "all"
+      "targets": "all",
+      "externalBin": [
+        "binaries/aspinity_wrapper"
+      ]
     },
     "security": {
       "csp": null
