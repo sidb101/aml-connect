@@ -18,7 +18,7 @@ const OverviewView = (props: OverviewViewT) => {
 			<Header headerTitle={`${props.title}`} />
 			<div className={`body-content-container`}>
 				<div className={`OverviewView_container`}>
-					<div className={`OverviewView_column1 white-panel`}>
+					<div className={`white-panel OverviewView_column1`}>
 						<div className={`section-heading-text OverviewView_mainColumn`}>Overview</div>
 						<div className={`OverviewView_detailsContainer`}>
 							<div className={`OverviewView_projectNameContainer`}>
