@@ -23,7 +23,7 @@ describe("Testing the Sidebar of the App", () => {
 	test(
 		"that 1) sidebar shows all the projects in the app, when app starts. " +
 			"2) when visited on any one project, it changes the nav-links accordingly. " +
-			"3) When visited on those links, appropriate NavTabs loaded",
+			"3) When visited on those links, appropriate PageTabs loaded",
 		async () => {
 			//ARRANGE
 			//should start with empty store

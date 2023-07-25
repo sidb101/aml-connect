@@ -1,4 +1,4 @@
-import type { PageTabT } from "./NavTabs/PageTabs";
+import type { PageTabT } from "./PageTabs/PageTabs";
 import { dataSetupRoute, dataVizRoute } from "../../../routes";
 
 export const getPageTabs = (projectSlug: string): PageTabT[] => {
