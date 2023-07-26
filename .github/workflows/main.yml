@@ -35,15 +35,15 @@ jobs:
       
       - name: Install aspinity .whl
         run: |
-          pip install aml_simulator_wrapper/aml_simulator_pywrapper/aspinity-0.7.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+          pip install ./aml_simulator_pywrapper/aspinity-0.7.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
       
       - name: Install requirements.txt
         run: |
-          pip install -r aml_simulator_wrapper/requirements.txt
+          pip install -r ./aml_simulator_pywrapper/requirements.txt
 
       - name: Setup PYTHONPATH
         run: |
-          export PYTHONPATH="${PYTHONPATH}:${pwd}/aml_simulator_wrapper"
+          export PYTHONPATH="${PYTHONPATH}:${pwd}/aml_simulator_pywrapper"
 
       - name: install OS dependencies (ubuntu only)
         run: |
@@ -60,19 +60,19 @@ jobs:
         
       - name: Run Pylint
         run: |
-          cd aml_simulator_wrapper && 
+          cd aml_simulator_pywrapper && 
           pylint *.py && 
           cd ..
       
       - name: Run Pytest tests
         run: |
-          cd aml_simulator_wrapper && 
+          cd aml_simulator_pywrapper && 
           pytest . && 
           cd ..
 
       - name: Create Aspinity Wrapper Binary
         run: |
-          cd aml_simulator_wrapper && 
+          cd aml_simulator_pywrapper && 
           pyinstaller --clean -F simulator_wrapper.py --distpath ../src-tauri/binaries/ -n aspinity_wrapper-x86_64-unknown-linux-gnu
 
       # Setup Rust
