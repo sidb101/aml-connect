@@ -4,6 +4,7 @@ use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::{Connection, SqliteConnection};
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use directories::ProjectDirs;
+use dotenvy::dotenv;
 use log::info;
 use std::env;
 use std::fs;
@@ -20,7 +21,7 @@ pub fn establish_connection() -> Result<SqlitePool> {
 
     let mut db_connection = create_if_not_exists(&db_url)?;
     initialize_diesel_schema(&mut db_connection)?;
-    
+
     let conn_pool = new_conn_pool(db_url)?;
     Ok(conn_pool)
 }
@@ -45,6 +46,7 @@ fn new_conn_pool(db_url: String) -> Result<Pool<ConnectionManager<SqliteConnecti
 }
 
 fn get_url() -> Result<String> {
+    
     dotenv().ok();
 
     let db_path = match env::var("DATABASE_PATH") {
@@ -89,4 +91,19 @@ fn initialize_diesel_schema(db_connection: &mut SqliteConnection) -> Result<()> 
         .setup()
         .with_context(|| "Failed to diesel schema migrations table\n")?;
     Ok(())
+}
+
+#[cfg(test)]
+mod tests{
+    use super::*;
+
+    #[test]
+    fn test_get_url_from_env() {
+        let db_path = "/home/test_user/.local/share/aml_connect";
+        env::set_var("DATABASE_PATH", db_path);
+        let db_url = get_url().unwrap();
+        env::remove_var("DATABASE_PATH");
+
+        assert_eq!(db_url, "/home/test_user/.local/share/aml_connect/aml_connect.db");
+    }
 }
