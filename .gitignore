@@ -22,6 +22,7 @@ dist-ssr
 *.sln
 *.sw?
 
+#Architecture
 architecture/c4-model/.structurizr/*
 architecture/c4-model/workspace.json
 3.0.0.tar.gz
@@ -39,3 +40,5 @@ __pycache__
 aml_simulator_pywrapper/build/*
 aml_simulator_pywrapper/aspinity_wrapper-x86_*
 
+#Rust
+src-tauri/src/*.db
