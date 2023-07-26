@@ -1,10 +1,11 @@
 import "./App.scss";
 import React from "react";
-import "./App.scss";
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 import {
 	BASE_ROUTE,
 	DATA_HUB_ROUTE,
+	DATA_SETUP_ROUTE,
+	DATA_VIZ_ROUTE,
 	MODEL_CREATION_ROUTE,
 	OVERVIEW_ROUTE,
 	RESULTS_ROUTE,
@@ -13,11 +14,13 @@ import {
 import Root from "./pages/Root";
 import LandingPage from "./pages/landingPage/LandingPage";
 import OverviewPage from "./pages/overviewPage/OverviewPage";
-import DataSetupPage from "./pages/dataSetupPage/DataSetupPage";
+import DataHubPage from "./pages/dataHubPage/DataHubPage";
 import ModelCreationPage from "./pages/modelCreationPage/ModelCreationPage";
 import ResultsPage from "./pages/resultsPage/ResultsPage";
 import SendToHardwarePage from "./pages/sendToHardwarePage/SendToHardwarePage";
 import ErrorPage from "./pages/errorPage/ErrorPage";
+import DataSetup from "./pages/dataHubPage/layouts/DataSetup/DataSetup";
+import DataViz from "./pages/dataHubPage/layouts/DataViz/DataViz";
 
 const App = () => <RouterProvider router={router} />;
 
@@ -28,7 +31,10 @@ export const routes = createRoutesFromElements(
 
 		<Route index={true} element={<LandingPage />} />
 		<Route path={OVERVIEW_ROUTE} element={<OverviewPage />} />
-		<Route path={DATA_HUB_ROUTE} element={<DataSetupPage />} />
+		<Route path={DATA_HUB_ROUTE} element={<DataHubPage />}>
+			<Route path={DATA_SETUP_ROUTE} element={<DataSetup />} />
+			<Route path={DATA_VIZ_ROUTE} element={<DataViz />} />
+		</Route>
 		<Route path={MODEL_CREATION_ROUTE} element={<ModelCreationPage />} />
 		<Route path={RESULTS_ROUTE} element={<ResultsPage />} />
 		<Route path={SEND_TO_HARDWARE_ROUTE} element={<SendToHardwarePage />} />

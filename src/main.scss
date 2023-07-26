@@ -12,28 +12,32 @@ Common Classes
 .white-panel {
   background-color: global.$color-white;
   color: global.$color-dark-blue;
+  border-radius: global.$border-radius;
 }
 
 .xlight-panel {
   background-color: global.$color-grey-1;
   color: global.$color-dark-blue;
+  border-radius: global.$border-radius;
 }
 
 .dark-grey-panel {
   background-color: global.$color-grey-6;
   color: global.$color-white;
+  border-radius: global.$border-radius;
 }
 
 .dark-panel {
   background-color: global.$color-dark-blue;
   color: global.$color-white;
+  border-radius: global.$border-radius;
 }
 
 /* -- Various kinds of containers -- */
 
 .content-container {
   $left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
-  $top-offset: global.$header-height + 2 * global.$content-padding; /* This is the height of the header with padding */
+  $top-offset: global.$header-height + 1 * global.$content-padding; /* This is the height of the header with top padding */
   $bottom-offset: global.$footer-height + 2 * global.$panel-padding; /* This is the height of the footer with padding */
 
   .body-content-container {
@@ -41,15 +45,22 @@ Common Classes
     margin-top: $top-offset; /* This should be the same as the height of the header */
     margin-left: $left-offset; /* This should be the same as the width of the sidebar */
     width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
-    height: calc(100% - #{$top-offset} - 2 * #{global.$content-padding} - #{$bottom-offset}); /* Subtract header height and padding and footer height */
+    height: calc(100% - #{$top-offset} - #{global.$content-padding} - #{$bottom-offset}); /* Subtract header height and padding and footer height */
     overflow: auto; /* Enable scrolling in both dimensions */
-    padding: global.$content-padding;
+    padding: global.$content-padding global.$content-padding 0;
+    scrollbar-gutter: stable both-edges;
     z-index: 0;
   }
 
   .body-content-container-no-footer{
     @extend .body-content-container;
-    height: calc(100% - #{$top-offset} - 2 * #{global.$content-padding}); /* Subtract header height and padding */
+    height: calc(100% - #{$top-offset} - #{global.$content-padding}); /* Subtract header height and padding */
+  }
+
+  .body-content-container-no-header-btns{
+    @extend .body-content-container;
+    height: calc(100% - #{$top-offset} + 0.5 * #{global.$header-height} - #{global.$content-padding} -  #{$bottom-offset})  ; /* Subtract header height and padding */
+    margin-top: $top-offset - 0.5 * global.$header-height;
   }
 
   .main-content-container {
@@ -143,7 +154,7 @@ Common Classes
   font-size: global.$text-small;
   font-family: global.$font-primary-light;
   padding: global.$general-padding global.$general-padding * 2;
-  border-radius: 4px;
+  border-radius: global.$border-radius;
   cursor: pointer;
 }
 

@@ -9,7 +9,7 @@
     margin-top: $spacing;
     margin-bottom: $spacing;
     cursor: not-allowed;
-    border-radius: 4px 0 0 4px;
+    border-radius: global.$border-radius 0 0 global.$border-radius;
 
     &___enabled {
       cursor: pointer;
