@@ -84,8 +84,7 @@ jobs:
         uses: swatinem/rust-cache@v2
         with:
           workspaces: |
-            src-tauri -> target
-            target
+            . -> target
 
       
       # Sync node version and setup node cache
