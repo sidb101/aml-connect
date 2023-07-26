@@ -45,20 +45,21 @@ Common Classes
     margin-top: $top-offset; /* This should be the same as the height of the header */
     margin-left: $left-offset; /* This should be the same as the width of the sidebar */
     width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
-    height: calc(100% - #{$top-offset} - 2 * #{global.$content-padding} - #{$bottom-offset}); /* Subtract header height and padding and footer height */
+    height: calc(100% - #{$top-offset} - #{global.$content-padding} - #{$bottom-offset}); /* Subtract header height and padding and footer height */
     overflow: auto; /* Enable scrolling in both dimensions */
-    padding: global.$content-padding;
+    padding: global.$content-padding global.$content-padding 0;
+    scrollbar-gutter: stable both-edges;
     z-index: 0;
   }
 
   .body-content-container-no-footer{
     @extend .body-content-container;
-    height: calc(100% - #{$top-offset} - 2 * #{global.$content-padding}); /* Subtract header height and padding */
+    height: calc(100% - #{$top-offset} - #{global.$content-padding}); /* Subtract header height and padding */
   }
 
   .body-content-container-no-header-btns{
     @extend .body-content-container;
-    height: calc(100% - #{$top-offset} + 0.5 * #{global.$header-height} - 2 * #{global.$content-padding} -  #{$bottom-offset})  ; /* Subtract header height and padding */
+    height: calc(100% - #{$top-offset} + 0.5 * #{global.$header-height} - #{global.$content-padding} -  #{$bottom-offset})  ; /* Subtract header height and padding */
     margin-top: $top-offset - 0.5 * global.$header-height;
   }
 
