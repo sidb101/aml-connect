@@ -8,6 +8,7 @@ use dotenvy::dotenv;
 use log::info;
 use std::env;
 use std::fs;
+use std::path::Path;
 
 pub mod models;
 pub mod schema;
@@ -52,7 +53,7 @@ fn get_url() -> Result<String> {
     let db_path = match env::var("DATABASE_PATH") {
         Ok(env_path) => {
             info!("Using environment variable for database");
-            env_path
+            Path::new(&env_path).join(DB_NAME)
         }
         Err(_) => {
             info!("Using OS specific application directory for database");
@@ -64,14 +65,14 @@ fn get_url() -> Result<String> {
             fs::create_dir_all(app_dir)
                 .with_context(|| "Failed to create application directory\n")?;
 
-            app_dir
-                .to_str()
-                .with_context(|| "Failed to convert application directory to string\n")?
-                .to_owned()
+            proj_dirs.data_local_dir().join(DB_NAME)
         }
     };
 
-    let db_url = db_path + "/" + DB_NAME;
+    let db_url = db_path
+                .to_str()
+                .with_context(|| "Failed to convert database path to string\n")?
+                .to_owned();
     info!("Using database at {}", db_url);
     Ok(db_url)
 }
