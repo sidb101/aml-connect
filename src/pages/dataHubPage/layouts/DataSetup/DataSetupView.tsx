@@ -36,6 +36,38 @@ const files: FileT[] = [
 		name: "file7.wav",
 		length: "1:07",
 	},
+	{
+		name: "file8.wav",
+		length: "5:10",
+	},
+	{
+		name: "file9.wav",
+		length: "2:17",
+	},
+	{
+		name: "file10.wav",
+		length: "33:07",
+	},
+	{
+		name: "file11.wav",
+		length: "5:10",
+	},
+	{
+		name: "file12.wav",
+		length: "2:17",
+	},
+	{
+		name: "file13.wav",
+		length: "4:29",
+	},
+	{
+		name: "file14.wav",
+		length: "5:45",
+	},
+	{
+		name: "file15.wav",
+		length: "23:18",
+	},
 ];
 
 const DataSetupView = (props: DataSetupViewT) => {
@@ -49,13 +81,13 @@ const DataSetupView = (props: DataSetupViewT) => {
 				/>
 				<Accordion
 					headerElement={<>Validation Dataset</>}
-					bodyElement={<h4>Validation Body</h4>}
+					bodyElement={<FileTable files={files} />}
 					maxHeight={"300px"}
 					defaultIsOpen={false}
 				/>
 				<Accordion
 					headerElement={<>Testing Dataset</>}
-					bodyElement={<h4>Testing Body</h4>}
+					bodyElement={<FileTable files={files} />}
 					defaultIsOpen={false}
 				/>
 			</div>

@@ -7,6 +7,7 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 export type FileT = {
 	name: string;
 	length: string;
+	content?: string;
 };
 
 type FileTableProps = {
