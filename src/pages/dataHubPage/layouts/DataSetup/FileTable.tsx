@@ -1,11 +1,12 @@
 import React from "react";
-// @ts-ignore
 import audio from "./Images/transparent-sound-waves-acoustic-wave.png";
 import "./FileTable.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 export type FileT = {
 	name: string;
-	length: number;
+	length: string;
 };
 
 type FileTableProps = {
@@ -16,24 +17,30 @@ export default function FileTable({ files }: FileTableProps) {
 	return (
 		<table className={`FileTable_container`}>
 			<thead>
-			<tr>
-				<th>Select</th>
-				<th>Name</th>
-				<th>Length</th>
-				<th>Image</th>
-			</tr>
+				<tr className={`regular-text green-text`}>
+					<th>Select</th>
+					<th>Name</th>
+					<th>Length</th>
+					<th>Image</th>
+				</tr>
 			</thead>
-			<tbody className={`FileTable_bodyContainer`}>
-			{files.map((file: FileT) => {
-				return (
-					<tr className={`FileTable_tableRowContainer`}>
-						<td><input type="checkbox"/></td>
-						<td>{file.name}</td>
-						<td>🕒 {file.length}</td>
-						<td><img src={audio} alt={file.name}/></td>
-					</tr>
-				);
-			})}
+			<tbody>
+				{files.map((file: FileT, index: number) => {
+					return (
+						<tr key={index}>
+							<td>
+								<input type="checkbox" />
+							</td>
+							<td className={`regular-text grey-text`}>{file.name}</td>
+							<td className={`regular-text grey-text`}>
+								<FontAwesomeIcon icon={faClock} /> {file.length}
+							</td>
+							<td>
+								<img src={audio} alt={file.name} />
+							</td>
+						</tr>
+					);
+				})}
 			</tbody>
 		</table>
 	);
