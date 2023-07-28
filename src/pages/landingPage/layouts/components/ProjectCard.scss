@@ -1,7 +1,7 @@
 @use "../../../../global";
 
 .ProjectCard_container {
-  width: 600px;
+  width: 50%;
   padding: global.$content-padding;
   display: flex;
   flex-direction: column;
@@ -12,8 +12,13 @@
   display: flex;
   gap: global.$general-padding;
 
-  label {
-    height: 10px;
+  .ProjectCard_label {
+    background-color: global.$color-green;
+    color: global.$color-white;
+    border-radius: global.$border-radius;
+    font-size: global.$text-small;
+    font-family: global.$font-primary-light;
+    padding: 0.5 * global.$general-padding global.$general-padding;
   }
 }
 
