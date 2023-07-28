@@ -1,3 +1,14 @@
+.LandingView_container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.LandingView_containerRow {
+  display: flex;
+  gap: 40px;
+}
+
 .LandingPageView_gridContainer {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
