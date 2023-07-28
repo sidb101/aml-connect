@@ -1,10 +1,30 @@
 import "./DataSetupView.scss";
 import React from "react";
 import Accordion from "../../../../components/accordion/Accordion";
+import FileTable, {type FileT} from "./FileTable";
 
 export type DataSetupViewT = {
 	data?: string;
 };
+
+const files: FileT[] = [
+	{
+		name: "file1",
+		length: 1024
+	},
+	{
+		name: "file2",
+		length: 2048
+	},
+	{
+		name: "file3",
+		length: 4096
+	},
+	{
+		name: "file4",
+		length: 8192
+	},
+];
 
 const DataSetupView = (props: DataSetupViewT) => {
 	return (
@@ -14,26 +34,7 @@ const DataSetupView = (props: DataSetupViewT) => {
 					headerElement={<>Training Dataset</>}
 					maxHeight={"200px"}
 					bodyElement={
-						<>
-							Training Body
-							<br />
-							THis occupies
-							<br />
-							too many
-							<br /> new lines
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							Last Line
-							<br />
-						</>
+						<FileTable files={files}/>
 					}
 				/>
 				<Accordion
@@ -49,8 +50,8 @@ const DataSetupView = (props: DataSetupViewT) => {
 				/>
 			</div>
 			<div className={`DataSetupView_rightContainer`}>
-				<Accordion headerElement={<>Add or Merge Data</>} bodyElement={<h4>Data Body</h4>} />
-				<Accordion headerElement={<>Label Data</>} bodyElement={<h4>Label Body</h4>} defaultIsOpen={false} />
+				<Accordion headerElement={<>Add or Merge Data</>} bodyElement={<h4>Data Body</h4>}/>
+				<Accordion headerElement={<>Label Data</>} bodyElement={<h4>Label Body</h4>} defaultIsOpen={false}/>
 			</div>
 		</div>
 	);
