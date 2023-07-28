@@ -1,7 +1,7 @@
+@use "../../../../global";
+
 .ExampleProject_container {
-  //width: 50%;
-  //width: 600px;
-  padding: 40px;
+  padding: global.$panel-padding;
 
   .ExampleProject_projectPanel {
     width: 100%;

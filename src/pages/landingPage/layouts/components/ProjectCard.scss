@@ -1,14 +1,16 @@
+@use "../../../../global";
+
 .ProjectCard_container {
   width: 600px;
-  padding: 40px;
+  padding: global.$content-padding;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: global.$panel-padding;
 }
 
 .ProjectCard_labels {
   display: flex;
-  gap: 10px;
+  gap: global.$general-padding;
 
   label {
     height: 10px;
