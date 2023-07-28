@@ -1,5 +1,5 @@
 import "./OverviewView.scss";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../../../components/footer/Footer";
 import { dataHubRoute, dataSetupRoute } from "../../../routes";
 import Header from "../../../components/header/Header";
@@ -7,21 +7,24 @@ import ProjectDescription from "./ProjectDescription";
 import ProjectName from "./ProjectName";
 
 export type OverviewViewT = {
-	title: string;
+	projectTitle: string;
+	onProjectTitleChange: (newProjectName: string) => void;
 	projectSlug: string;
 };
 
-const OverviewView = (props: OverviewViewT) => {
+const OverviewView = ({ projectTitle, onProjectTitleChange, projectSlug }: OverviewViewT) => {
+	//const [projectName, setProjectName] = useState<string>(projectTitle);
+
 	return (
 		<>
-			<Header headerTitle={`${props.title}`} />
+			<Header headerTitle={`${projectTitle} > Overview`} />
 			<div className={`body-content-container`}>
 				<div className={`OverviewView_container`}>
 					<div className={`white-panel OverviewView_column1`}>
 						<div className={`section-heading-text OverviewView_mainColumn`}>Overview</div>
 						<div className={`OverviewView_detailsContainer`}>
 							<div className={`OverviewView_projectNameContainer`}>
-								<ProjectName />
+								<ProjectName projectName={projectTitle} onProjectTitleChange={onProjectTitleChange} />
 							</div>
 							<div className={`OverviewView_projectDescriptionContainer`}>
 								<ProjectDescription />
@@ -39,7 +42,7 @@ const OverviewView = (props: OverviewViewT) => {
 					{/*</div>*/}
 				</div>
 			</div>
-			<Footer nextBtn={{ label: "Data Hub", route: dataSetupRoute(props.projectSlug) }} />
+			<Footer nextBtn={{ label: "Data Hub", route: dataSetupRoute(projectSlug) }} />
 		</>
 	);
 };
