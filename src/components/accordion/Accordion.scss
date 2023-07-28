@@ -1,0 +1,48 @@
+@use "../../global";
+.Accordion_container {
+  display: grid;
+  grid-template-rows: 50px;
+  width: 100%;
+
+  .Accordion_headerContainer{
+    display: flex;
+    flex-direction: row;
+    border-bottom: solid 2px global.$color-grey-2;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 global.$panel-padding;
+    cursor: pointer;
+
+    .Accordion_toggleBtn{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 65%;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      font-size: global.$text-large;
+      border: solid 2px global.$color-grey-2;
+      transition: all 200ms;
+    }
+
+  }
+
+  .Accordion_bodyContainer{
+    padding: 0 global.$panel-padding;
+    transition: all 200ms;
+    height: 0;
+    overflow-y: hidden;
+
+    &:hover{
+      overflow-y: auto;
+    }
+  }
+
+  &___closed {
+    .Accordion_toggleBtn{
+      transform: rotate(180deg);
+    }
+  }
+
+
+}

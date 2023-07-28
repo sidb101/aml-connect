@@ -1,8 +1,9 @@
-
+@use "../../global";
 
 .DataHub_bodyContainer {
   display: grid;
   grid-template-rows: 50px;
+  gap: global.$general-padding;
 }
 
 .DataHub_bodyRow1 {
