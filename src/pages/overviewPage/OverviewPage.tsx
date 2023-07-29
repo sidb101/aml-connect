@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useLocation, useParams } from "react-router-dom";
 import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
@@ -14,13 +14,7 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 	const dispatch = useAppDispatch();
 	const { projectSlug } = useParams();
 	const { pathname } = useLocation();
-	const reduxProjectName = useAppSelector(selectCurrentProjectName) || "";
-
-	const [projectName, setProjectName] = useState<string>(reduxProjectName);
-
-	function handleProjectNameOnChange(newProjectName: string): void {
-		setProjectName(newProjectName);
-	}
+	const projectName = useAppSelector(selectCurrentProjectName) || "";
 
 	useEffect(() => {
 		pathname === NEW_PROJECT_ROUTE
@@ -30,20 +24,7 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 			: console.error("Not a new-project, as well as projectSlug not present in the URL.");
 	}, [projectSlug, pathname]);
 
-	// This effect will set projectName to reduxProjectName whenever reduxProjectName changes
-	useEffect(() => {
-		setProjectName(reduxProjectName);
-	}, [reduxProjectName]);
-
-	return (
-		projectSlug && (
-			<OverviewView
-				projectTitle={`${projectName}`}
-				onProjectTitleChange={handleProjectNameOnChange}
-				projectSlug={projectSlug}
-			/>
-		)
-	);
+	return projectSlug && <OverviewView title={`${projectName} > Overview`} projectSlug={projectSlug} />;
 };
 
 export default OverviewPage;
