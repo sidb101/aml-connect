@@ -1,18 +1,20 @@
-import React, { useState } from "react";
 import "./ProjectName.scss";
+import type { ChangeEvent } from "react";
 
-function ProjectName() {
-	const [projectName, setProjectName] = useState<string>("");
+type ProjectNameProps = {
+	projectName: string;
+	onProjectTitleChange: (newProjectName: string) => void;
+};
 
+function ProjectName({ projectName, onProjectTitleChange }: ProjectNameProps) {
 	return (
 		<>
 			<div className={`green-text section-subheading-text`}>Project Name</div>
 			<input
 				className={`regular-text light-grey-text ProjectName_input`}
-				placeholder={"e.g. Glass Break Detection"}
 				value={projectName}
-				onChange={(e) => {
-					setProjectName(e.target.value);
+				onChange={(e: ChangeEvent<HTMLInputElement>) => {
+					onProjectTitleChange(e.target.value);
 				}}
 			/>
 		</>

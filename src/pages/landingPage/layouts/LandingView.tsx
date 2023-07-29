@@ -23,13 +23,13 @@ const projectCards: ProjectCardT[][] = [
 	[
 		{
 			projectTitle: "Glass Break Detection",
-			projectLabel: ["1st Label", "2nd Label", "3rd Label"],
+			projectLabel: ["1st Label", "2nd Label", "3rd Label", "4th Label", "5th Label", "6th Label"],
 			projectDescription:
 				"Ultricies mi eget mauris pharetra. Ligula ullamcorper malesuada proin libero nunc consequat interdum varius sit. In fermentum posuere urna nec tincidunt praesent semper feugiat. Etiam tempor orci eu lobortis elementum. Lorem mollis aliquam ut porttitor leo. Euismod elementum nisi quis eleifend.",
 		},
 		{
 			projectTitle: "Lorem ipsum dolor",
-			projectLabel: ["1st Label", "2nd Label", "3rd Label"],
+			projectLabel: ["1st Label", "2nd Label"],
 			projectDescription:
 				"Ultricies mi eget mauris pharetra. Ligula ullamcorper malesuada proin libero nunc consequat interdum varius sit. In fermentum posuere urna nec tincidunt praesent semper feugiat. Etiam tempor orci eu lobortis elementum. Lorem mollis aliquam ut porttitor leo. Euismod elementum nisi quis eleifend.",
 		},
@@ -37,13 +37,13 @@ const projectCards: ProjectCardT[][] = [
 	[
 		{
 			projectTitle: "Vulputate enim nulla",
-			projectLabel: ["1st Label", "2nd Label", "3rd Label"],
+			projectLabel: ["1st Label"],
 			projectDescription:
 				"Ultricies mi eget mauris pharetra. Ligula ullamcorper malesuada proin libero nunc consequat interdum varius sit. In fermentum posuere urna nec tincidunt praesent semper feugiat. Etiam tempor orci eu lobortis elementum. Lorem mollis aliquam ut porttitor leo. Euismod elementum nisi quis eleifend.",
 		},
 		{
 			projectTitle: "Ligula ullamcorper",
-			projectLabel: ["1st Label", "2nd Label", "3rd Label"],
+			projectLabel: [],
 			projectDescription:
 				"Ultricies mi eget mauris pharetra. Ligula ullamcorper malesuada proin libero nunc consequat interdum varius sit. In fermentum posuere urna nec tincidunt praesent semper feugiat. Etiam tempor orci eu lobortis elementum. Lorem mollis aliquam ut porttitor leo. Euismod elementum nisi quis eleifend.",
 		},
