@@ -33,7 +33,7 @@ const DataHubPage = (props: DataSetupPageT) => {
 	const [pageTabs, setPageTabs] = useState<PageTabT[]>([]);
 	const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 	const [footer, setFooter] = useState<DataHubFooterT>({
-		prevBtn: { label: "Overview", route: projectOverviewRoute(projectSlug) },
+		prevBtn: { label: "OverviewColumn", route: projectOverviewRoute(projectSlug) },
 		nextBtn: { label: "Visualize Data", route: dataVizRoute(projectSlug) },
 	});
 

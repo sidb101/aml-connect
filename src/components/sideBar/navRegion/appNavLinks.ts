@@ -18,7 +18,7 @@ import {
  */
 export const getOpenProjectNavLinks = (projectSlug: string): NavLinkT[] => [
 	{
-		label: "Overview",
+		label: "OverviewColumn",
 		route: projectOverviewRoute(projectSlug),
 	},
 	{

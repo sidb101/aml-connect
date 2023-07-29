@@ -18,7 +18,7 @@ const DataSetup = (props: DataSetupT) => {
 		setHeading("Data Setup");
 		setFooter((state) => ({
 			...state,
-			prevBtn: { label: "Overview", route: projectOverviewRoute(projectSlug) },
+			prevBtn: { label: "OverviewColumn", route: projectOverviewRoute(projectSlug) },
 			nextBtn: { label: "Visualize Data", route: dataVizRoute(projectSlug) },
 		}));
 	}, [projectSlug]);

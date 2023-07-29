@@ -1,0 +1,41 @@
+@use "../../../../global";
+
+.OverviewForm_container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure it takes full height of its container */
+  gap: global.$panel-padding;
+}
+
+.OverviewForm_internalContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex-grow: 1; /* This will make the internalContainer take the remaining space after saveBtnContainer has taken the space it needs */
+  gap: global.$panel-padding;
+}
+
+.OverviewForm_internalContainerColumn {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    padding: global.$panel-padding;
+  }
+
+  textarea {
+    flex-grow: 1;
+    padding: global.$panel-padding;
+  }
+}
+
+.OverviewForm_internalContainerColumnContent {
+  height: 100%; /* Ensure it takes full height of its container */
+  display: flex;
+  flex-direction: column;
+  gap: global.$general-padding;
+}
+
+.OverviewForm_saveBtnContainer {
+  display: flex;
+  justify-content: flex-end;
+}
