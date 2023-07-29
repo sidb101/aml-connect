@@ -6,18 +6,18 @@ import OverviewColumn from "./components/OverviewColumn";
 import OverviewForm from "./components/OverviewForm";
 
 export type OverviewViewT = {
-	projectTitle: string;
+	projectName: string;
 	onProjectTitleChange: (newProjectName: string) => void;
 	projectSlug: string;
 };
 
-const OverviewView = ({ projectTitle, onProjectTitleChange, projectSlug }: OverviewViewT) => {
+const OverviewView = ({ projectName, onProjectTitleChange, projectSlug }: OverviewViewT) => {
 	return (
 		<>
-			<Header headerTitle={`${projectTitle} > Overview`} />
+			<Header headerTitle={`${projectName} > Overview`} />
 			<div className={`body-content-container-no-header-btns OverviewView_container`}>
 				<OverviewColumn heading={`Overview`}>
-					<OverviewForm projectTitle={projectTitle} onProjectTitleChange={onProjectTitleChange} />
+					<OverviewForm projectName={projectName} onProjectTitleChange={onProjectTitleChange} />
 				</OverviewColumn>
 				{/*<OverviewColumn heading={`Power Estimation`}>Power estimation</OverviewColumn>*/}
 			</div>

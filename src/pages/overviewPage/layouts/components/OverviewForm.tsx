@@ -1,5 +1,5 @@
 import "./OverviewForm.scss";
-import React, { type ChangeEvent, type FormEvent, useState } from "react";
+import React, { type ChangeEvent, type FormEvent, useEffect, useState } from "react";
 
 const dummyText =
 	"e.g. We are developing a smart device for in-home surveillance. This device would " +
@@ -12,18 +12,23 @@ const dummyText =
 	"environments (windows, doors, etc).";
 
 type OverviewFormProps = {
-	projectTitle: string;
+	projectName: string;
 	onProjectTitleChange: (newProjectName: string) => void;
 };
 
-export default function OverviewForm({ projectTitle, onProjectTitleChange }: OverviewFormProps) {
-	const [projectName, setProjectName] = useState<string>(projectTitle);
-	const [projectDescription, setProjectDescription] = useState<string>("");
+export default function OverviewForm({ projectName, onProjectTitleChange }: OverviewFormProps) {
+	const [name, setName] = useState<string>(projectName);
+	const [description, setDescription] = useState<string>("");
 
 	function handleSubmit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault(); // Prevent the page from reloading on submit
-		onProjectTitleChange(projectName);
+		onProjectTitleChange(name);
 	}
+
+	// This effect will set name to projectName whenever projectName changes
+	useEffect(() => {
+		setName(projectName);
+	}, [projectName]);
 
 	return (
 		<form className={`OverviewForm_container`} onSubmit={handleSubmit}>
@@ -33,8 +38,10 @@ export default function OverviewForm({ projectTitle, onProjectTitleChange }: Ove
 						<div className={`green-text section-heading-text`}>Project Name</div>
 						<input
 							className={`regular-text light-grey-text light-grey-panel`}
-							value={projectName}
-							onChange={(e: ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value)}
+							value={name}
+							onChange={(e: ChangeEvent<HTMLInputElement>) => {
+								setName(e.target.value);
+							}}
 						/>
 					</div>
 				</div>
@@ -44,8 +51,10 @@ export default function OverviewForm({ projectTitle, onProjectTitleChange }: Ove
 						<textarea
 							className={`regular-text light-grey-text light-grey-panel`}
 							placeholder={dummyText}
-							value={projectDescription}
-							onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setProjectDescription(e.target.value)}
+							value={description}
+							onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+								setDescription(e.target.value);
+							}}
 						></textarea>
 					</div>
 				</div>

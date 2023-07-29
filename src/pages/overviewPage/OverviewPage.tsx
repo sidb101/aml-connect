@@ -14,8 +14,8 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 	const dispatch = useAppDispatch();
 	const { projectSlug } = useParams();
 	const { pathname } = useLocation();
-	const reduxProjectName = useAppSelector(selectCurrentProjectName) || "";
 
+	const reduxProjectName = useAppSelector(selectCurrentProjectName) || "";
 	const [projectName, setProjectName] = useState<string>(reduxProjectName);
 
 	function handleProjectNameOnChange(newProjectName: string): void {
@@ -38,7 +38,7 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 	return (
 		projectSlug && (
 			<OverviewView
-				projectTitle={`${projectName}`}
+				projectName={`${projectName}`}
 				onProjectTitleChange={handleProjectNameOnChange}
 				projectSlug={projectSlug}
 			/>
