@@ -25,7 +25,7 @@ const files: FileT[] = [
 		length: "1:18",
 	},
 	{
-		name: "file5.wav",
+		name: "file5isWayToLonggggggggggggggggggggggggggggggggggggggggggg.wav",
 		length: "0:10",
 	},
 	{

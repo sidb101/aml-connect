@@ -1,13 +1,27 @@
 .FileTable_container {
   width: 100%;
+  table-layout: fixed; // This makes the table respect the set widths
 
   img {
     width: 50px;
     height: 25px;
   }
 
-  td {
+  th, td {
     text-align: center;
+    white-space: nowrap;
+  }
+
+  .name-header, .name-column {
+    width: 70%;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .select-column, .length-column, .image-column {
+    width: 10%;
   }
 }
 
