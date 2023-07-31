@@ -6,21 +6,28 @@ import OverviewTextArea from "./OverviewTextArea";
 type OverviewFormProps = {
 	currentProjectName: string;
 	onProjectTitleChange: (newProjectName: string) => void;
+	currentProjectDescription: string;
 };
 
-export default function OverviewForm({ currentProjectName, onProjectTitleChange }: OverviewFormProps) {
+export default function OverviewForm({
+	currentProjectName,
+	onProjectTitleChange,
+	currentProjectDescription,
+}: OverviewFormProps) {
 	const [projectName, setProjectName] = useState<string>(currentProjectName);
-	const [projectDescription, setProjectDescription] = useState<string>("");
+	const [projectDescription, setProjectDescription] = useState<string>(currentProjectDescription);
 
 	function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault(); // Prevent the page from reloading on submit
-		onProjectTitleChange(projectName);
 	}
 
-	// This effect will set projectName to projectName whenever projectName changes
 	useEffect(() => {
 		setProjectName(currentProjectName);
 	}, [currentProjectName]);
+
+	useEffect(() => {
+		setProjectDescription(currentProjectDescription);
+	}, [currentProjectDescription]);
 
 	return (
 		<form className={`OverviewForm_container`} onSubmit={handleSubmit}>

@@ -22,12 +22,15 @@
   }
 }
 
-.ProjectCard_button {
+.ProjectCard_buttonContainer {
   display: flex;
   justify-content: flex-end;
+}
 
-  button {
-    width: 164px;
-    height: 48px;
-  }
+.ProjectCard_link {
+  width: 33%;
+}
+
+.ProjectCard_button {
+  width: 100%;
 }

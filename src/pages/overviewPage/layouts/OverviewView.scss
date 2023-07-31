@@ -2,7 +2,6 @@
 
 .OverviewView_container {
   display: grid;
-  //grid-template-columns: 1fr 1fr; /* Need two columns for release 2 (Power Estimation) */
-  grid-template-columns: 1fr; /* Just 1 column for Release 1 (Overview only) */
+  grid-template-columns: 1fr; // Just 1 column for Release 1 (Overview only), add another 1fr for Release 2
   gap: global.$content-padding;
 }
