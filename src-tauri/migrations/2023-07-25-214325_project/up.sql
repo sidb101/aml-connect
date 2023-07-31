@@ -1,4 +1,4 @@
 -- Your SQL goes here
-CREATE TABLE projects (
+create table projects (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
 )
