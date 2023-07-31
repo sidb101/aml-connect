@@ -1,61 +1,42 @@
 import "./OverviewForm.scss";
-import React, { type ChangeEvent, type FormEvent, useEffect, useState } from "react";
-
-const dummyText =
-	"e.g. We are developing a smart device for in-home surveillance. This device would " +
-	"detect the sounds of glass break to help trigger a security alert within our " +
-	"system.\n\n" +
-	"Our goal is create a model that can detect the sound of glass break with " +
-	"90% accuracy.\n\n" +
-	"This model would be deployed in devices that would ideally live " +
-	"indoor environments with various distances from potential sources of glass " +
-	"environments (windows, doors, etc).";
+import React, { useEffect, useState } from "react";
+import OverviewInput from "./OverviewInput";
+import OverviewTextArea from "./OverviewTextArea";
 
 type OverviewFormProps = {
-	projectName: string;
+	currentProjectName: string;
 	onProjectTitleChange: (newProjectName: string) => void;
 };
 
-export default function OverviewForm({ projectName, onProjectTitleChange }: OverviewFormProps) {
-	const [name, setName] = useState<string>(projectName);
-	const [description, setDescription] = useState<string>("");
+export default function OverviewForm({ currentProjectName, onProjectTitleChange }: OverviewFormProps) {
+	const [projectName, setProjectName] = useState<string>(currentProjectName);
+	const [projectDescription, setProjectDescription] = useState<string>("");
 
-	function handleSubmit(e: FormEvent<HTMLFormElement>) {
+	function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault(); // Prevent the page from reloading on submit
-		onProjectTitleChange(name);
+		onProjectTitleChange(projectName);
 	}
 
-	// This effect will set name to projectName whenever projectName changes
+	// This effect will set projectName to projectName whenever projectName changes
 	useEffect(() => {
-		setName(projectName);
-	}, [projectName]);
+		setProjectName(currentProjectName);
+	}, [currentProjectName]);
 
 	return (
 		<form className={`OverviewForm_container`} onSubmit={handleSubmit}>
 			<div className={`OverviewForm_internalContainer`}>
 				<div className={`OverviewForm_internalContainerColumn`}>
 					<div className={`OverviewForm_internalContainerColumnContent`}>
-						<div className={`green-text section-heading-text`}>Project Name</div>
-						<input
-							className={`regular-text light-grey-text light-grey-panel`}
-							value={name}
-							onChange={(e: ChangeEvent<HTMLInputElement>) => {
-								setName(e.target.value);
-							}}
-						/>
+						<OverviewInput heading={`Project Name`} value={projectName} onChange={setProjectName} />
 					</div>
 				</div>
 				<div className={`OverviewForm_internalContainerColumn`}>
 					<div className={`OverviewForm_internalContainerColumnContent`}>
-						<div className={`green-text section-heading-text`}>Project Description</div>
-						<textarea
-							className={`regular-text light-grey-text light-grey-panel`}
-							placeholder={dummyText}
-							value={description}
-							onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-								setDescription(e.target.value);
-							}}
-						></textarea>
+						<OverviewTextArea
+							heading={`Project Description`}
+							value={projectDescription}
+							onChange={setProjectDescription}
+						/>
 					</div>
 				</div>
 			</div>

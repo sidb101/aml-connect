@@ -1,0 +1,6 @@
+@use "../../../../global";
+
+.OverviewTextArea_textarea {
+  flex-grow: 1;
+  padding: global.$panel-padding;
+}

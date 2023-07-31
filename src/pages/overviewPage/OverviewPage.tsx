@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useLocation, useParams } from "react-router-dom";
 import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
-import { NEW_PROJECT_ROUTE } from "../../routes";
+import { dataSetupRoute, NEW_PROJECT_ROUTE } from "../../routes";
 import OverviewView from "./layouts/OverviewView";
+import Header from "../../components/header/Header";
+import OverviewColumn from "./layouts/components/OverviewColumn";
+import OverviewForm from "./layouts/components/OverviewForm";
+import Footer from "../../components/footer/Footer";
 
 export type OverviewT = {
 	data?: string;
@@ -16,10 +20,10 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 	const { pathname } = useLocation();
 
 	const reduxProjectName = useAppSelector(selectCurrentProjectName) || "";
-	const [projectName, setProjectName] = useState<string>(reduxProjectName);
+	const [currentProjectName, setCurrentProjectName] = useState<string>(reduxProjectName);
 
 	function handleProjectNameOnChange(newProjectName: string): void {
-		setProjectName(newProjectName);
+		setCurrentProjectName(newProjectName);
 	}
 
 	useEffect(() => {
@@ -30,18 +34,26 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 			: console.error("Not a new-project, as well as projectSlug not present in the URL.");
 	}, [projectSlug, pathname]);
 
-	// This effect will set projectName to reduxProjectName whenever reduxProjectName changes
+	// This effect will set currentProjectName to reduxProjectName whenever reduxProjectName changes
 	useEffect(() => {
-		setProjectName(reduxProjectName);
+		setCurrentProjectName(reduxProjectName);
 	}, [reduxProjectName]);
 
 	return (
 		projectSlug && (
-			<OverviewView
-				projectName={`${projectName}`}
-				onProjectTitleChange={handleProjectNameOnChange}
-				projectSlug={projectSlug}
-			/>
+			<>
+				<Header headerTitle={`${currentProjectName} > Overview`} />
+				<OverviewView>
+					<OverviewColumn heading={`Overview`}>
+						<OverviewForm
+							currentProjectName={currentProjectName}
+							onProjectTitleChange={handleProjectNameOnChange}
+						/>
+					</OverviewColumn>
+					{/*<OverviewColumn heading={`Power Estimation`} />*/}
+				</OverviewView>
+				<Footer nextBtn={{ label: "Data Hub", route: dataSetupRoute(projectSlug) }} />
+			</>
 		)
 	);
 };

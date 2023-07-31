@@ -17,15 +17,6 @@
 .OverviewForm_internalContainerColumn {
   display: flex;
   flex-direction: column;
-
-  input {
-    padding: global.$panel-padding;
-  }
-
-  textarea {
-    flex-grow: 1;
-    padding: global.$panel-padding;
-  }
 }
 
 .OverviewForm_internalContainerColumnContent {
