@@ -53,7 +53,7 @@ fn get_url() -> Result<String> {
     let db_path = match env::var("DATABASE_PATH") {
         Ok(env_path) => {
             info!("Using environment variable for database");
-            Path::new(&env_path).join(DB_NAME)
+            Path::new(&env_path).to_owned()
         }
         Err(_) => {
             info!("Using OS specific application directory for database");
@@ -100,11 +100,11 @@ mod tests{
 
     #[test]
     fn test_get_url_from_env() {
-        let db_path = "/home/test_user/.local/share/aml_connect";
+        let db_path = "./db-adapter-test.db";
         env::set_var("DATABASE_PATH", db_path);
         let db_url = get_url().unwrap();
         env::remove_var("DATABASE_PATH");
 
-        assert_eq!(db_url, "/home/test_user/.local/share/aml_connect/aml_connect.db");
+        assert_eq!(db_url, "./db-adapter-test.db");
     }
 }

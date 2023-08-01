@@ -1,14 +1,13 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
-    audio_file (id) {
+    audio_files (id) {
         id -> Integer,
         length -> Nullable<Integer>,
-        #[sql_name = "type"]
-        type_ -> Nullable<Text>,
+        category -> Nullable<Text>,
         peak_frequency -> Nullable<Integer>,
         spi_level -> Nullable<Integer>,
-        input_data_id -> Nullable<Integer>,
+        input_data_id -> Integer,
     }
 }
 
@@ -22,21 +21,22 @@ diesel::table! {
         file_size -> Nullable<Integer>,
         file_path -> Nullable<Text>,
         uploaded_data -> Nullable<Timestamp>,
-        project_id -> Nullable<Integer>,
+        project_id -> Integer,
     }
 }
 
 diesel::table! {
     projects (id) {
         id -> Integer,
+        description -> Nullable<Text>,
     }
 }
 
-diesel::joinable!(audio_file -> input_data (input_data_id));
+diesel::joinable!(audio_files -> input_data (input_data_id));
 diesel::joinable!(input_data -> projects (project_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
-    audio_file,
+    audio_files,
     input_data,
     projects,
 );

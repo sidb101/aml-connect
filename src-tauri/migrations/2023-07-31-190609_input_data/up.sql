@@ -8,6 +8,6 @@ create table input_data (
     file_size INTEGER,
     file_path TEXT,
     uploaded_data DATETIME,
-    project_id INTEGER,
+    project_id INTEGER NOT NULL,
     FOREIGN KEY (project_id) REFERENCES projects (id)
 )
