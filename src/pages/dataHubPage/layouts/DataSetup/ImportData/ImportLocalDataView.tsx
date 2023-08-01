@@ -19,18 +19,24 @@ export type ImportDataViewT = {
 const ImportLocalDataView = ({ handleFilesImport, handleFilesImportError }: ImportDataViewT) => {
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
 	const [playingIndex, setPlayingIndex] = useState<number>(-1);
+	const [selectedFiles, setSelectedFiles] = useState<FileContent[]>([]);
 
 	//Get the file picker component
-	const [openFileSelector, { filesContent }] = useFilePicker({
+	const [openFileSelector] = useFilePicker({
 		accept: SUPPORTED_FILE_TYPES,
 		readAs: "DataURL",
-		onFilesSuccessfulySelected: ({ plainFiles, filesContent }) => {
-			plainFiles.forEach((file) => console.log(file));
+		onFilesSuccessfulySelected: ({ filesContent }) => {
+			setSelectedFiles(filesContent);
 		},
 	});
 
-	const handleModalToggle = () => {
-		setModalOpen((s) => !s);
+	const handleModalOpen = () => {
+		setModalOpen(true);
+	};
+
+	const handleModalClose = () => {
+		setModalOpen(false);
+		setSelectedFiles([]);
 	};
 
 	/**
@@ -61,7 +67,7 @@ const ImportLocalDataView = ({ handleFilesImport, handleFilesImportError }: Impo
 			<div className={"ImportDataView_container"}>
 				<div className={`ImportDataView_dataTypeContainer`}>Type of Data</div>
 				<div className={`ImportDataView_btnContainer`}>
-					<button className={`btn btn-light-outline ImportDataView_btn`} onClick={handleModalToggle}>
+					<button className={`btn btn-light-outline ImportDataView_btn`} onClick={handleModalOpen}>
 						Import Files &nbsp; <FontAwesomeIcon icon={faArrowUpFromBracket} />
 					</button>
 					<div className={`light-grey-text small-text ImportDataView_btnHint`}>WAV format supported only</div>
@@ -69,7 +75,7 @@ const ImportLocalDataView = ({ handleFilesImport, handleFilesImportError }: Impo
 			</div>
 			{modalOpen && (
 				<CenterModal
-					onClose={handleModalToggle}
+					onClose={handleModalClose}
 					closeOnBackdropClick={false}
 					headerElement={<div className={`section-subheading-text`}>Import Files</div>}
 					modalWidth={"60%"}
@@ -77,9 +83,9 @@ const ImportLocalDataView = ({ handleFilesImport, handleFilesImportError }: Impo
 				>
 					<div className={`ImportDataView_modalBodyContainer`}>
 						<div className={`ImportDataView_uploadRegion`}>
-							{filesContent.length > 0 && (
+							{selectedFiles.length > 0 && (
 								<div style={{ marginBottom: "20px" }}>
-									{filesContent.map((file, index) => (
+									{selectedFiles.map((file, index) => (
 										<div key={index}>
 											<div className={`ImportDataView_fileContainer`}>
 												{file.name}: &nbsp; &nbsp; &nbsp;
@@ -104,7 +110,7 @@ const ImportLocalDataView = ({ handleFilesImport, handleFilesImportError }: Impo
 						<button
 							className={`btn btn-light-outline`}
 							onClick={() => {
-								importFiles(filesContent);
+								importFiles(selectedFiles);
 							}}
 						>
 							Import File/s &nbsp; <FontAwesomeIcon icon={faArrowUpFromBracket} />

@@ -1,5 +1,6 @@
 import ImportLocalDataView, { type ImportDataFileT } from "./ImportLocalDataView";
 import { BaseDirectory, writeBinaryFile } from "@tauri-apps/api/fs";
+import { AUDIO_DIR } from "../../../../../constants";
 
 export type ImportLocalDataT = {
 	data?: string;
@@ -16,7 +17,7 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 	const writeToAppDir = async (file: ImportDataFileT) => {
 		const blob = await (await fetch(file.dataUrl)).blob();
 		const fileBinary = await blob.arrayBuffer();
-		await writeBinaryFile(file.name, fileBinary, { dir: BaseDirectory.AppLocalData });
+		await writeBinaryFile(AUDIO_DIR + file.name, fileBinary, { dir: BaseDirectory.AppLocalData });
 	};
 
 	const handleImportError = (e: Error) => console.error("Couldn't Import Files", e);
