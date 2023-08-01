@@ -1,3 +1,5 @@
+@use "../../../../global";
+
 .FileTable_container {
   width: 100%;
   table-layout: fixed; // This makes the table respect the set widths
@@ -23,6 +25,15 @@
 
   .FileTable_smallColumn {
     width: 10%;
+  }
+
+  .FileTable_internalColumn{
+    padding-left: global.$general-padding;
+    padding-right: global.$general-padding;
+  }
+
+  .FileTable_icon {
+    padding-right: 0.5 * global.$general-padding;
   }
 }
 

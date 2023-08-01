@@ -1,10 +1,10 @@
 import "./DataSetupView.scss";
 import React from "react";
 import Accordion from "../../../../components/accordion/Accordion";
-import FileTable, { type FileT } from "./FileTable";
+import FileTable, { type AudioFileT } from "./FileTable";
 
 export type DataSetupViewProps = {
-	audioFiles?: FileT[];
+	audioFiles?: AudioFileT[];
 };
 
 const DataSetupView = ({ audioFiles }: DataSetupViewProps) => {

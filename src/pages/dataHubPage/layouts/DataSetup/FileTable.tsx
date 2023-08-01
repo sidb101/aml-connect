@@ -6,22 +6,23 @@ import { faCirclePlay } from "@fortawesome/free-regular-svg-icons/faCirclePlay";
 import { faCircleStop } from "@fortawesome/free-regular-svg-icons/faCircleStop";
 import { faCirclePause } from "@fortawesome/free-regular-svg-icons/faCirclePause";
 import ReactPlayer from "react-player";
+import { formatTime } from "../../../../utils";
 
-export type FileT = {
+export type AudioFileT = {
 	name: string;
 	length: string;
 	content?: string;
 };
 
 type FileTableProps = {
-	files?: FileT[];
+	files?: AudioFileT[];
 };
 
 export default function FileTable({ files }: FileTableProps) {
 	const [isPlaying, setIsPlaying] = useState<boolean>(false);
-	const [currentAudio, setCurrentAudio] = useState<string | null>(null);
-	const [duration, setDuration] = useState<number | null>(null);
-	const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
+	const [currentAudio, setCurrentAudio] = useState<string | undefined>(undefined);
+	const [duration, setDuration] = useState<number | undefined>(undefined);
+	const [timeRemaining, setTimeRemaining] = useState<number | undefined>(undefined);
 
 	function handlePlay(audio: string) {
 		setIsPlaying(true);
@@ -34,9 +35,9 @@ export default function FileTable({ files }: FileTableProps) {
 
 	function handleStop() {
 		setIsPlaying(false);
-		setCurrentAudio(null);
-		setDuration(null);
-		setTimeRemaining(null);
+		setCurrentAudio(undefined);
+		setDuration(undefined);
+		setTimeRemaining(undefined);
 	}
 
 	function handleDuration(duration: number) {
@@ -49,33 +50,19 @@ export default function FileTable({ files }: FileTableProps) {
 		}
 	}
 
-	function formatTime(seconds: number | null, fileLength: string): string {
-		if (seconds) {
-			const minutes = Math.floor(seconds / 60);
-			const remainingSeconds = Math.floor(seconds % 60);
-
-			const formattedMinutes = minutes.toString().padStart(2, "0");
-			const formattedSeconds = remainingSeconds.toString().padStart(2, "0");
-
-			return `${formattedMinutes}:${formattedSeconds}`;
-		} else {
-			return fileLength;
-		}
-	}
-
 	return (
 		<>
 			<table className={`FileTable_container`}>
 				<tbody>
-					{files?.map((file: FileT, index: number) => {
+					{files?.map((file: AudioFileT, index: number) => {
 						return (
-							<tr>
+							<tr key={index}>
 								<td className={`FileTable_smallColumn`}>
 									<input type="checkbox" />
 								</td>
 								<td className={`regular-text grey-text FileTable_nameColumn`}>{file.name}</td>
-								<td className={`regular-text grey-text FileTable_smallColumn`}>
-									<FontAwesomeIcon icon={faClock} />
+								<td className={`regular-text grey-text FileTable_smallColumn FileTable_internalColumn`}>
+									<FontAwesomeIcon icon={faClock} className={`FileTable_icon`} />
 									{currentAudio === file.content
 										? formatTime(timeRemaining, file.length)
 										: file.length}

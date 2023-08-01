@@ -1,8 +1,8 @@
-import { type FileT } from "../../pages/dataHubPage/layouts/DataSetup/FileTable";
+import { type AudioFileT } from "../../pages/dataHubPage/layouts/DataSetup/FileTable";
 import risingChirp from "./assets/rising-chirp.wav";
 import bearingFaults from "./assets/bearing-faults.wav";
 
-export const audioFiles: FileT[] = [
+export const audioFiles: AudioFileT[] = [
 	{
 		name: "rising-chirp.wav",
 		length: "00:01",
