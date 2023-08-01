@@ -28,6 +28,7 @@ diesel::table! {
 diesel::table! {
     projects (id) {
         id -> Integer,
+        slug -> Text,
         description -> Nullable<Text>,
     }
 }

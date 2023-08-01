@@ -5,6 +5,7 @@ use diesel::prelude::*;
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Project {
     pub id: i32,
+    pub slug: String,
     pub description: Option<String>,
 }
 
@@ -12,6 +13,7 @@ pub struct Project {
 #[diesel(table_name = crate::aml_core::db_adapter::schema::projects)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct NewProject {
+    pub slug: String,
     pub description: Option<String>,
 }
 

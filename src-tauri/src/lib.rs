@@ -2,6 +2,11 @@ pub mod aml_core;
 
 pub mod uicontroller {
 
+    use diesel::r2d2::ConnectionManager;
+    use diesel::r2d2::Pool;
+    use diesel::SqliteConnection;
+    use tauri::State;
+
     use crate::aml_core::data_manager;
     use crate::aml_core::element_repository;
 
@@ -20,7 +25,9 @@ pub mod uicontroller {
     #[tauri::command]
     pub fn put_files(
         input: data_manager::FilesUploadRequest,
-    ) -> data_manager::SaveFilesResponse {
-        data_manager::save_input_files(&input)
+        db_conn: State<Pool<ConnectionManager<SqliteConnection>>>,
+    ) -> data_manager::SaveFilesResponse {  
+        let conn = &mut db_conn.get().expect("Unable to get db connection");
+        data_manager::save_input_files(&input, conn)
     }
 }
