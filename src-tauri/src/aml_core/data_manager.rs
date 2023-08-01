@@ -3,20 +3,20 @@
 //use crate::aml_core::network_manager::*;
 
 use anyhow::{ensure, Context, Result};
-use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
+use diesel::r2d2::{ConnectionManager, PooledConnection};
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl, SqliteConnection};
 use directories::ProjectDirs;
 use std::fmt;
-use std::fs::{self, File};
+use std::fs::{self};
 use std::path::{Path, PathBuf};
-use tauri::State;
+
 use thiserror::Error;
 
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
 use super::db_adapter::models::{NewInputData, Project};
-use super::db_adapter::schema::input_data::ml_dataset_type;
+
 use super::db_adapter::schema::{input_data, projects};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

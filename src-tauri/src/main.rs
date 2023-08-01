@@ -2,7 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use aml_connect::aml_core::data_manager;
-use aml_connect::aml_core::db_adapter::models::{NewProject, Project};
+use aml_connect::aml_core::db_adapter::models::{NewProject};
 use aml_connect::aml_core::db_adapter::schema::projects;
 use aml_connect::aml_core::db_adapter::{establish_connection, run_db_migrations};
 use aml_connect::uicontroller;
