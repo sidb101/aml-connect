@@ -65,58 +65,22 @@ pub struct FilesUploadResponse {
 
 pub type SaveFilesResponse = Result<FilesUploadResponse, Error>;
 
-fn get_relative_path(base_dir: &Path, absolute_path: &Path) -> Option<PathBuf> {
-    // Ensure that both paths are absolute
-    if !base_dir.is_absolute() || !absolute_path.is_absolute() {
-        return None;
-    }
-
-    // Calculate the relative path
-    let relative_path = absolute_path.strip_prefix(base_dir).ok()?;
-    Some(relative_path.to_path_buf())
-}
-
-//retrieves file from source, and store in destination folder
-//returns the absolute file path of the resulting file
-fn copy_file(source_path: &Path, destination_folder: &Path) -> io::Result<PathBuf> {
-    let file_name = source_path
-        .file_name()
-        .ok_or_else(|| io::Error::new(io::ErrorKind::InvalidInput, "Invalid source file path"))?
-        .to_owned();
-
-    let mut source_file = fs::File::open(source_path)?;
-    let mut contents = Vec::new();
-    source_file.read_to_end(&mut contents)?;
-
-    let destination_path = destination_folder.join(&file_name);
-    fs::create_dir_all(destination_folder)?;
-
-    let mut destination_file = fs::File::create(&destination_path)?;
-    destination_file.write_all(&contents)?;
-
-    Ok(destination_path)
-}
-
-pub fn store_in_app_data(file_path: &str, base_dir: &str) -> Result<String> {
+pub fn create_project_dir_if_not_exists() -> Result<()>{
     let proj_dirs = ProjectDirs::from("com", "aspinity", "aml_connect")
         .with_context(|| "Failed to get application directory\n")?;
+    let app_dir = proj_dirs.data_local_dir();
+    if !app_dir.exists() {
+        fs::create_dir_all(app_dir)
+            .with_context(|| "Failed to create application directory\n")?;
+    }
+    Ok(())
+}
 
-    let dest_folder = proj_dirs.data_local_dir();
-    let file_path = Path::new(file_path);
-    let base_dir = Path::new(base_dir);
-
-    //let dest_folder = format!("{}\\",proj_dirs.data_local_dir().display());
-    let abs_dest_file_path = copy_file(file_path, &dest_folder)
-        .with_context(|| "Failed to copy file to destination\n")?;
-
-    let rel_dest_file_path = get_relative_path(base_dir, abs_dest_file_path.as_ref())
-        .with_context(|| "relative path calculation failed.")?;
-
-    let rel_dest_file_path = rel_dest_file_path
-        .to_str()
-        .with_context(|| "Failed to convert application directory to string\n")?
-        .to_owned();
-    Ok(rel_dest_file_path)
+pub fn get_project_dir() -> Result<PathBuf> {
+    let proj_dirs = ProjectDirs::from("com", "aspinity", "aml_connect")
+        .with_context(|| "Failed to get application directory\n")?;
+    let app_dir = proj_dirs.data_local_dir();
+    Ok(app_dir.to_path_buf())
 }
 
 fn validate_extension(f: &FileUploadRequest, extension: String) -> Result<()> {
@@ -160,25 +124,25 @@ pub fn validate_files(files: &Vec<FileUploadRequest>) -> FilesUploadResponse {
         failed: 0,
     };
 
-    for f in files {
-        if validate_exists(f).is_err() {
+    for file in files {
+        if validate_exists(file).is_err() {
             response.failed += 1;
             response.upload_failed_files.push(FileUploadErrorResponse {
-                file_name: f.file_name.clone(),
+                file_name: file.file_name.clone(),
                 error_response: Error::FileNotFound,
             });
         }
-        else if validate_extension(f, "wav".to_string()).is_err() {
+        else if validate_extension(file, "wav".to_string()).is_err() {
             response.failed += 1;
             response.upload_failed_files.push(FileUploadErrorResponse {
-                file_name: f.file_name.clone(),
+                file_name: file.file_name.clone(),
                 error_response: Error::UnsupportedFileExtension,
             });
         }
-        else if validate_size(f).is_err() {
+        else if validate_size(file).is_err() {
             response.failed += 1;
             response.upload_failed_files.push(FileUploadErrorResponse {
-                file_name: f.file_name.clone(),
+                file_name: file.file_name.clone(),
                 error_response: Error::FileTooLarge,
             });
         }
@@ -187,8 +151,8 @@ pub fn validate_files(files: &Vec<FileUploadRequest>) -> FilesUploadResponse {
             response.succeeded += 1;
             response.upload_success_files.push(FileMetadata {
                 file_id: String::from("1234"),
-                file_name: f.file_name.clone(),
-                dataset_type: f.dataset_type.clone(),
+                file_name: file.file_name.clone(),
+                dataset_type: file.dataset_type.clone(),
             });
         }
     }
@@ -208,6 +172,7 @@ pub fn save_input_files(input: &FilesUploadRequest) -> SaveFilesResponse {
     let ans: FilesUploadResponse = validate_files(&input.input_files);
 
     //TODO: save metadata to db
+    
 
     //TODO: return list of IDs for successful uploads
     Ok(ans)
