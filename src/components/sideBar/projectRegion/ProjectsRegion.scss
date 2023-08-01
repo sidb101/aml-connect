@@ -17,7 +17,7 @@
     display: flex;
     justify-content: left;
     align-content: center;
-    height: 0.5 * global.$button-height;
+    min-height: 0px;
 
     &:first-of-type {
       margin-top: initial;

@@ -4,42 +4,20 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
-  height: 200px;
-  width: 315px;
   padding: global.$panel-padding;
-}
+  gap: global.$general-padding;
+  width: 315px;
 
-.NewProjectPopup_heading {
-  color: global.$color-grey-4;
-}
+  .NewProjectPopup_btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: global.$general-padding;
+    border: solid 1px global.$color-grey-3;
+    text-align: left;
 
-.NewProjectPopup_newProjectContainer {
-  border: solid 1px global.$color-grey-3;
-  border-radius: global.$border-radius;
-  width: 100%;
-  height: 81px;
-  padding-bottom: 12px;
-  user-select: none;
-
-  &:hover{
-    background-color: global.$color-grey-2;
-  }
-}
-
-.NewProjectPopup_newProjectContainer_internal {
-  padding-left: 12px;
-  padding-top: 12px;
-}
-
-.NewProjectPopup_button {
-  border: solid 1px global.$color-grey-3;
-  width: 100%;
-  height: 43px;
-  text-align: left;
-  padding-left: 12px;
-
-  &:hover{
-    background-color: global.$color-grey-2;
+    &:hover {
+      background-color: global.$color-grey-2;
+    }
   }
 }

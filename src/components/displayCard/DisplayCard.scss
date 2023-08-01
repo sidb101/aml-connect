@@ -1,6 +1,6 @@
-@use "../../../../global";
+@use "../../global";
 
-.ProjectCard_container {
+.DisplayCard_container {
   padding: global.$content-padding;
   display: flex;
   flex-direction: column;
@@ -8,11 +8,11 @@
   gap: global.$panel-padding;
 }
 
-.ProjectCard_labels {
+.DisplayCard_labels {
   display: flex;
   gap: global.$general-padding;
 
-  .ProjectCard_label {
+  .DisplayCard_label {
     background-color: global.$color-green;
     color: global.$color-white;
     border-radius: global.$border-radius;
@@ -22,15 +22,15 @@
   }
 }
 
-.ProjectCard_buttonContainer {
+.DisplayCard_buttonContainer {
   display: flex;
   justify-content: flex-end;
 }
 
-.ProjectCard_link {
+.DisplayCard_link {
   width: 33%;
 }
 
-.ProjectCard_button {
+.DisplayCard_button {
   width: 100%;
 }
