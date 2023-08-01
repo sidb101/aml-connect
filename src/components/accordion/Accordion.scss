@@ -32,6 +32,7 @@
     transition: all 200ms;
     height: 0;
     overflow-y: hidden;
+    scrollbar-gutter: stable both-edges;
 
     &:hover{
       overflow-y: auto;

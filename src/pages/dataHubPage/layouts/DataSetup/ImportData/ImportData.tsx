@@ -1,4 +1,4 @@
-import ImportDataView from "./ImportDataView";
+import ImportLocalData from "./ImportLocalData";
 
 export type ImportDataT = {
 	data?: string;
@@ -6,10 +6,10 @@ export type ImportDataT = {
 
 /**
  * Module to handle all the functionalities regarding importing the data from various sources,
- * and providing a view for that
+ * and rendering components for that.
  */
 const ImportData = (props: ImportDataT) => {
-	return <ImportDataView />;
+	return <ImportLocalData />;
 };
 
 export default ImportData;
