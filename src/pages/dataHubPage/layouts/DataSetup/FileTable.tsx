@@ -11,7 +11,7 @@ export type FileT = {
 };
 
 type FileTableProps = {
-	files: FileT[];
+	files?: FileT[];
 };
 
 export default function FileTable({ files }: FileTableProps) {
@@ -19,25 +19,25 @@ export default function FileTable({ files }: FileTableProps) {
 		<table className={`FileTable_container`}>
 			<thead>
 				<tr className={`regular-text green-text`}>
-					<th className="select-column">Select</th>
-					<th className={`name-header`}>Name</th>
-					<th className="length-column">Length</th>
-					<th className="image-column">Image</th>
+					<th className={`FileTable_smallColumn`}>Select</th>
+					<th className={`FileTable_nameColumn`}>Name</th>
+					<th className={`FileTable_smallColumn`}>Length</th>
+					<th className={`FileTable_smallColumn`}>Image</th>
 				</tr>
 			</thead>
 			<tbody>
-				{files.map((file: FileT, index: number) => {
+				{files?.map((file: FileT, index: number) => {
 					return (
 						<tr key={index}>
-							<td className="select-column">
+							<td className={`FileTable_smallColumn`}>
 								<input type="checkbox" />
 							</td>
-							<td className={`regular-text grey-text name-column`}>{file.name}</td>
-							<td className={`regular-text grey-text length-column`}>
+							<td className={`regular-text grey-text FileTable_nameColumn`}>{file.name}</td>
+							<td className={`regular-text grey-text FileTable_smallColumn`}>
 								<FontAwesomeIcon icon={faClock} /> {file.length}
 							</td>
-							<td className="image-column">
-								<img src={audio} alt={file.name} />
+							<td className={`FileTable_smallColumn`}>
+								<img src={audio} alt={`Audio Icon`} />
 							</td>
 						</tr>
 					);
