@@ -6,17 +6,13 @@ import CenterModal from "../../../../../components/modal/CenterModal";
 import { type FileContent, useFilePicker } from "use-file-picker";
 import ReactPlayer from "react-player";
 import { SUPPORTED_FILE_TYPES } from "../../../../../constants";
+import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
 
-export type ImportDataFileT = {
-	name: string;
-	dataUrl: string;
-};
 export type ImportDataViewT = {
-	handleFilesImport: (files: ImportDataFileT[]) => Promise<void>;
-	handleFilesImportError?: (error: Error) => void;
+	handleFilesImport: (files: InputFileDataT[]) => Promise<void>;
 };
 
-const ImportLocalDataView = ({ handleFilesImport, handleFilesImportError }: ImportDataViewT) => {
+const ImportLocalDataView = ({ handleFilesImport }: ImportDataViewT) => {
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
 	const [playingIndex, setPlayingIndex] = useState<number>(-1);
 	const [selectedFiles, setSelectedFiles] = useState<FileContent[]>([]);
@@ -41,7 +37,7 @@ const ImportLocalDataView = ({ handleFilesImport, handleFilesImportError }: Impo
 
 	/**
 	 * Method to play and pause any particular file
-	 * @param index
+	 * @param index Index of the file to be played.
 	 */
 	const handlePlayToggle = (index: number) => {
 		index == playingIndex ? setPlayingIndex(-1) : setPlayingIndex(index);
@@ -52,14 +48,12 @@ const ImportLocalDataView = ({ handleFilesImport, handleFilesImportError }: Impo
 	 * @param files: Selected Files
 	 */
 	const importFiles = (files: FileContent[]) => {
-		const chosenFiles: ImportDataFileT[] = files.map((file) => ({
-			name: file.name,
+		const chosenFiles: InputFileDataT[] = files.map((file) => ({
+			metadata: { name: file.name },
 			dataUrl: file.content,
 		}));
 
-		handleFilesImport(chosenFiles).catch((e) =>
-			handleFilesImportError ? handleFilesImportError(e) : console.error(e)
-		);
+		handleFilesImport(chosenFiles).catch((e) => console.error(e));
 	};
 
 	return (

@@ -1,6 +1,7 @@
-import ImportLocalDataView, { type ImportDataFileT } from "./ImportLocalDataView";
-import { BaseDirectory, writeBinaryFile } from "@tauri-apps/api/fs";
+import ImportLocalDataView from "./ImportLocalDataView";
 import { AUDIO_DIR } from "../../../../../constants";
+import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
+import fileSystemTransformer from "../../../../../transformers/FileSystemTransformer";
 
 export type ImportLocalDataT = {
 	data?: string;
@@ -10,21 +11,18 @@ export type ImportLocalDataT = {
  * and providing a view for that
  */
 const ImportLocalData = (props: ImportLocalDataT) => {
-	const handleFilesImport = async (files: ImportDataFileT[]) => {
-		files.forEach((file) => writeToAppDir(file));
+	const handleFilesImport = async (files: InputFileDataT[]) => {
+		//wait for all the files to get written
+		const importedFiles = await Promise.all(
+			files.map(async (file) => await fileSystemTransformer.writeFileToAppStorage(file, AUDIO_DIR))
+		);
+
+		//call the server to send the files.
+		console.log("Sending file meta data to server: ", importedFiles);
 	};
-
-	const writeToAppDir = async (file: ImportDataFileT) => {
-		const blob = await (await fetch(file.dataUrl)).blob();
-		const fileBinary = await blob.arrayBuffer();
-		await writeBinaryFile(AUDIO_DIR + file.name, fileBinary, { dir: BaseDirectory.AppLocalData });
-	};
-
-	const handleImportError = (e: Error) => console.error("Couldn't Import Files", e);
-
 	return (
 		<>
-			<ImportLocalDataView handleFilesImport={handleFilesImport} handleFilesImportError={handleImportError} />
+			<ImportLocalDataView handleFilesImport={handleFilesImport} />
 		</>
 	);
 };
