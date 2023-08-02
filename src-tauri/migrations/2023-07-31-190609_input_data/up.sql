@@ -1,7 +1,7 @@
 -- Your SQL goes here
 create table input_data (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    file_name TEXT UNIQUE,
+    file_name TEXT UNIQUE NOT NULL,
     ml_dataset_type TEXT,
     file_type TEXT,
     file_extension TEXT,

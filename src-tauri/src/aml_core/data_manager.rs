@@ -15,7 +15,7 @@ use thiserror::Error;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
-use super::db_adapter::models::{NewInputData, Project};
+use super::db_adapter::models::{NewInputData, InputData, Project};
 
 use super::db_adapter::schema::{input_data, projects};
 
@@ -48,8 +48,12 @@ pub enum FileUploadError {
     FileTooLarge,
     #[error("unsupported file extension")]
     UnsupportedFileExtension,
-    #[error("database error")]
+    #[error("database query error")]
+    UnableToQueryDatabase(String),
+    #[error("database update error")]
     UnableToStoreInDatabase(String),
+    #[error("Unable to delete file from Filesystem")]
+    UnableToDeleteFile(String),
     // Add more error variants as needed.
 }
 
@@ -203,22 +207,20 @@ pub fn validate_files(files: &Vec<FileUploadRequest>) -> FilesUploadResponse {
 /// * `FilesUploadRequest`: JSON struct holding project_slug and vector of FileUploadRequest
 ///
 /// # Returns
-/// * `SaveFilesResponse`: A result type, holding Ok(FilesUploadResponse) and Err(Error) variants
+/// * `SaveFilesResponse`: A result typedef, holding Ok(FilesUploadResponse) and Err(Error) variants
 pub fn save_input_files(
     input: &FilesUploadRequest,
     conn: &mut PooledConnection<ConnectionManager<SqliteConnection>>,
 ) -> SaveFilesResponse {
     // validation of the list of input file paths (file will be deleted if invalid)
-    let ans: FilesUploadResponse = validate_files(&input.input_files);
+    let mut ans: FilesUploadResponse = validate_files(&input.input_files);
     let succesfull_uploads = ans.upload_success_files.clone();
-
-    // let conn = &mut conn_pool.get().expect("Unable to get db connection");
 
     // Assuming that project with slug test_project already exists in db
     let found_project = projects::table
         .filter(projects::slug.eq("test_project"))
         .first::<Project>(conn)
-        .map_err(|e| FileUploadError::UnableToStoreInDatabase(e.to_string()))?;
+        .map_err(|e| FileUploadError::UnableToQueryDatabase(e.to_string()))?;
 
     for file in succesfull_uploads {
         let dataset_type = file.dataset_type.to_string();
@@ -241,6 +243,27 @@ pub fn save_input_files(
             .execute(conn)
             .map_err(|e| FileUploadError::UnableToStoreInDatabase(e.to_string()))?;
     }
+
+    // delete all files that failed to upload
+    for file in ans.upload_failed_files.iter() {
+        let file_path = get_file_absolute_path(file.file_name.clone()).unwrap();
+        println!("Deleting file: {:?}", file_path);
+        if file_path.exists() {
+            fs::remove_file(file_path).map_err(
+                |e| FileUploadError::UnableToDeleteFile(file.file_name.clone()),
+            )?;
+        }
+    }
+
     //TODO: return list of IDs for successful uploads
+    for file in ans.upload_success_files.iter_mut() {
+        let found_file = input_data::table
+            .filter(input_data::file_name.eq(&file.file_name))
+            .first::<InputData>(conn)
+            .map_err(|e| FileUploadError::UnableToQueryDatabase(e.to_string()))?;
+        
+        file.file_id = found_file.id.to_string();
+    }
+    
     Ok(ans)
 }

@@ -22,7 +22,7 @@ pub struct NewProject {
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct InputData {
     pub id: i32,
-    pub file_name: Option<String>,
+    pub file_name: String,
     pub ml_dataset_type: Option<String>,
     pub file_type: Option<String>,
     pub file_extension: Option<String>,

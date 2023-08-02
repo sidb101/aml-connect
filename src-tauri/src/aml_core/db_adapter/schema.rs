@@ -14,7 +14,7 @@ diesel::table! {
 diesel::table! {
     input_data (id) {
         id -> Integer,
-        file_name -> Nullable<Text>,
+        file_name -> Text,
         ml_dataset_type -> Nullable<Text>,
         file_type -> Nullable<Text>,
         file_extension -> Nullable<Text>,
