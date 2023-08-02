@@ -223,7 +223,57 @@ fn validate_file_and_save_metadata_check_extension () {
 
     let file_upload_response = data_manager::save_input_files(&request, conn);
     println!("file_upload_response : {:?}", file_upload_response);
-    // assert!(file_upload_response.is_ok());
+    assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_failed_files.len() == 1);
-    // assert!(file_upload_response.unwrap().upload_success_files[0].file_name == "bearing-faults.wav");
+}
+
+// ignore unless - youve created bearing-faults.wav, heart-rate.wav and rising-chirp.wav in ~/.local/share/aml_connect
+#[ignore]
+#[test]
+fn validate_file_and_save_metadata_then_check_get_files () {
+    // if exists, purge db before test
+    let db_path = "./tests/integration-test-3.db";
+
+    if Path::new(db_path).exists() {
+        std::fs::remove_file(db_path).unwrap();
+    }
+    env::set_var("DATABASE_PATH", db_path);
+    println!("DATABASE_PATH : {:?}", env::var("DATABASE_PATH"));
+    let conn_pool = db_adapter::establish_connection().unwrap();
+    env::remove_var("DATABASE_PATH");
+    db_adapter::run_db_migrations(&conn_pool).unwrap();
+    let conn = &mut conn_pool.get().unwrap();
+
+    let request = FilesUploadRequest {
+        proj_slug: "test_project".to_string(),
+        input_files: vec![FileUploadRequest {
+            file_name: "bearing-faults.wav".to_string(),
+            dataset_type: DataSet::Training, 
+         },
+         FileUploadRequest {
+            file_name: "heart-rate.wav".to_string(),
+            dataset_type: DataSet::Training, 
+         },
+         FileUploadRequest {
+            file_name: "rising-chirp.wav".to_string(),
+            dataset_type: DataSet::Training, 
+         }], 
+    };
+
+    let project_slug = "test_project";
+    let dummy_project = NewProject {
+        slug: project_slug.to_owned(),
+        description: Some("This is a test project".to_owned()),
+    };
+    diesel::insert_into(projects::table)
+        .values(&dummy_project)
+        .execute(conn).unwrap();
+
+    let file_upload_response = data_manager::save_input_files(&request, conn);
+    println!("file_upload_response : {:?}", file_upload_response);
+    assert!(file_upload_response.is_ok());
+    assert!(file_upload_response.unwrap().upload_success_files.len() == 3);
+
+    let get_files_response = data_manager::list_files(conn);
+    assert!(get_files_response.unwrap().files.len() == 3);
 }

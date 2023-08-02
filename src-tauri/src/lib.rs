@@ -26,8 +26,16 @@ pub mod uicontroller {
     pub fn put_files(
         input: data_manager::FilesUploadRequest,
         db_conn: State<Pool<ConnectionManager<SqliteConnection>>>,
-    ) -> data_manager::SaveFilesResponse {  
+    ) -> data_manager::SaveFilesResponseResult {  
         let conn = &mut db_conn.get().expect("Unable to get db connection");
         data_manager::save_input_files(&input, conn)
+    }
+
+    #[tauri::command]
+    pub fn get_files(
+        db_conn: State<Pool<ConnectionManager<SqliteConnection>>>,
+    ) -> data_manager::GetFilesResponseResult {  
+        let conn = &mut db_conn.get().expect("Unable to get db connection");
+        data_manager::list_files(conn)
     }
 }

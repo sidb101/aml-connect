@@ -87,6 +87,14 @@ pub struct FileMetadata {
     pub dataset_type: DataSet,
 }
 
+#[derive(Clone, Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+pub struct GetFilesResponse {
+    pub files: Vec<FileMetadata>,
+}
+
+pub type GetFilesResponseResult = Result<GetFilesResponse, FileUploadError>;
+
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 pub struct FilesUploadResponse {
@@ -97,7 +105,7 @@ pub struct FilesUploadResponse {
     pub failed: i32,
 }
 
-pub type SaveFilesResponse = Result<FilesUploadResponse, FileUploadError>;
+pub type SaveFilesResponseResult = Result<FilesUploadResponse, FileUploadError>;
 
 pub fn create_project_dir_if_not_exists() -> Result<()> {
     let proj_dirs = ProjectDirs::from("com", "aspinity", "aml_connect")
@@ -207,11 +215,11 @@ pub fn validate_files(files: &Vec<FileUploadRequest>) -> FilesUploadResponse {
 /// * `FilesUploadRequest`: JSON struct holding project_slug and vector of FileUploadRequest
 ///
 /// # Returns
-/// * `SaveFilesResponse`: A result typedef, holding Ok(FilesUploadResponse) and Err(Error) variants
+/// * `SaveFilesResponseResult`: A result typedef, holding Ok(FilesUploadResponse) and Err(Error) variants
 pub fn save_input_files(
     input: &FilesUploadRequest,
     conn: &mut PooledConnection<ConnectionManager<SqliteConnection>>,
-) -> SaveFilesResponse {
+) -> SaveFilesResponseResult {
     // validation of the list of input file paths (file will be deleted if invalid)
     let mut ans: FilesUploadResponse = validate_files(&input.input_files);
     let succesfull_uploads = ans.upload_success_files.clone();
@@ -265,5 +273,40 @@ pub fn save_input_files(
         file.file_id = found_file.id.to_string();
     }
     
+    Ok(ans)
+}
+
+pub fn list_files(conn: &mut PooledConnection<ConnectionManager<SqliteConnection>>) -> GetFilesResponseResult {
+    let mut ans: GetFilesResponse = GetFilesResponse {
+        files: Vec::new(),
+    };
+
+    let found_project = projects::table
+        .filter(projects::slug.eq("test_project"))
+        .first::<Project>(conn)
+        .map_err(|e| FileUploadError::UnableToQueryDatabase(e.to_string()))?;
+    
+    let project_id = found_project.id;
+
+    let results = input_data::table
+        .filter(input_data::project_id.eq(project_id))
+        .load::<InputData>(conn)
+        .map_err(|e| FileUploadError::UnableToQueryDatabase(e.to_string()))?;
+
+    for file in results {
+        ans.files.push(FileMetadata {
+            file_id: file.id.to_string(),
+            file_name: file.file_name,
+            dataset_type: match file.ml_dataset_type.unwrap().to_string().as_ref() {
+                "training" => DataSet::Training,
+                "testing" => DataSet::Testing,
+                "validation" => DataSet::Validation,
+                _ => { 
+                    panic!("Invalid dataset type")
+                }
+            }
+        });
+    }
+
     Ok(ans)
 }
