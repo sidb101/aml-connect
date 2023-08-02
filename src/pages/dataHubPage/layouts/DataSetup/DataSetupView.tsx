@@ -1,12 +1,12 @@
 import "./DataSetupView.scss";
-import React from "react";
+import React, { type JSX } from "react";
 import Accordion from "../../../../components/accordion/Accordion";
 
 export type DataSetupViewT = {
-	data?: string;
+	importDataComponent: JSX.Element | JSX.Element[];
 };
 
-const DataSetupView = (props: DataSetupViewT) => {
+const DataSetupView = ({ importDataComponent }: DataSetupViewT) => {
 	return (
 		<div className={`DataSetupView_container`}>
 			<div className={`DataSetupView_leftContainer`}>
@@ -49,7 +49,10 @@ const DataSetupView = (props: DataSetupViewT) => {
 				/>
 			</div>
 			<div className={`DataSetupView_rightContainer`}>
-				<Accordion headerElement={<>Add or Merge Data</>} bodyElement={<h4>Data Body</h4>} />
+				<Accordion
+					headerElement={<div className={`section-heading-text`}>Add or Merge Data</div>}
+					bodyElement={importDataComponent}
+				/>
 				<Accordion headerElement={<>Label Data</>} bodyElement={<h4>Label Body</h4>} defaultIsOpen={false} />
 			</div>
 		</div>

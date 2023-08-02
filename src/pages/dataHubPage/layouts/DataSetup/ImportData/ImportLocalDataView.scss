@@ -1,0 +1,55 @@
+@use "../../../../../global";
+
+.ImportDataView_container{
+  padding: global.$content-padding;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2*global.$general-padding;
+
+
+  .ImportDataView_btnContainer{
+    display: flex;
+    flex-direction: column;
+    gap: global.$general-padding;
+
+
+    .ImportDataView_btn{
+      width: 50%;
+    }
+  }
+}
+
+.ImportDataView_modalBodyContainer{
+  padding: global.$panel-padding;
+  display: grid;
+  grid-template-rows: auto global.$btn-height;
+  gap: global.$general-padding;
+  height: calc(100% - 2*#{global.$panel-padding});
+
+
+  .ImportDataView_uploadRegion{
+    width: 100%;
+    border: dashed 1px global.$color-light-green;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .ImportDataView_browse{
+      border-bottom: solid 1px global.$color-green;
+      cursor: pointer;
+    }
+
+    .ImportDataView_fileContainer{
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      div{
+        display: none;
+      }
+
+    }
+  }
+
+}
