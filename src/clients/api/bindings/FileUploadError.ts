@@ -6,5 +6,7 @@ export type FileUploadError =
 	| "FileTooLarge"
 	| "UnsupportedFileExtension"
 	| {
-			UnableToStoreInDatabase: string;
-	  };
+			UnableToQueryDatabase: string;
+	  }
+	| { UnableToStoreInDatabase: string }
+	| { UnableToDeleteFile: string };
