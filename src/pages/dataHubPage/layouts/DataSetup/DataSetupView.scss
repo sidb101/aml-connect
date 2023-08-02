@@ -1,8 +1,10 @@
 @use "../../../../global";
+
 .DataSetupView_container{
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: global.$general-padding;
+  height: 100%;
 
   .DataSetupView_leftContainer{
     display: flex;
