@@ -1,5 +1,5 @@
 use crate::aml_connect::aml_core::db_adapter::models::*;
-use std::{env, path::Path};
+use std::{env, path::{Path, PathBuf}};
 
 use aml_connect::{
     self,
@@ -8,9 +8,10 @@ use aml_connect::{
 use diesel::{
     query_dsl::methods::FilterDsl, Connection, ExpressionMethods, RunQueryDsl, SelectableHelper,
 };
+use directories::BaseDirs;
 use log::info;
 
-#[ignore]
+// #[ignore]
 #[test]
 fn save_on_db() {
     // if exists, purge db before test
@@ -27,7 +28,7 @@ fn save_on_db() {
     conn.begin_test_transaction().unwrap();
 }
 
-#[ignore]
+// #[ignore]
 #[test]
 fn save_file_metadata() {
     // if exists, purge db before test
@@ -99,7 +100,7 @@ fn save_file_metadata() {
     assert!(found_project.description == project.description);
 }
 
-#[ignore]
+// #[ignore]
 #[test]
 fn validate_file_and_save_metadata () {
     // if exists, purge db before test
@@ -136,14 +137,16 @@ fn validate_file_and_save_metadata () {
         .values(&dummy_project)
         .execute(conn).unwrap();
 
-    let file_upload_response = data_manager::save_input_files(&request, conn);
+    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir());
+
+    let file_upload_response = data_manager::save_input_files(&request, &app_dir, conn);
 
     assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_success_files.len() == 2);
     // assert!(file_upload_response.unwrap().upload_success_files[0].file_name == "bearing-faults.wav");
 }
 
-#[ignore]
+// #[ignore]
 #[test]
 fn validate_file_and_save_metadata_check_exists () {
     // if exists, purge db before test
@@ -180,7 +183,8 @@ fn validate_file_and_save_metadata_check_exists () {
         .values(&dummy_project)
         .execute(conn).unwrap();
 
-    let file_upload_response = data_manager::save_input_files(&request, conn);
+    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir());
+    let file_upload_response = data_manager::save_input_files(&request, &app_dir, conn );
     println!("file_upload_response : {:?}", file_upload_response);
     // assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_failed_files.len() == 2);
@@ -188,7 +192,7 @@ fn validate_file_and_save_metadata_check_exists () {
 }
 
 // ignore unless - youve created f2.txt in ~/.local/share/aml_connect
-#[ignore]
+// #[ignore]
 #[test]
 fn validate_file_and_save_metadata_check_extension () {
     // if exists, purge db before test
@@ -221,14 +225,15 @@ fn validate_file_and_save_metadata_check_extension () {
         .values(&dummy_project)
         .execute(conn).unwrap();
 
-    let file_upload_response = data_manager::save_input_files(&request, conn);
+    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir());
+    let file_upload_response = data_manager::save_input_files(&request, &app_dir, conn);
     println!("file_upload_response : {:?}", file_upload_response);
     assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_failed_files.len() == 1);
 }
 
 // ignore unless - youve created bearing-faults.wav, heart-rate.wav and rising-chirp.wav in ~/.local/share/aml_connect
-#[ignore]
+// #[ignore]
 #[test]
 fn put_files_then_check_get_files () {
     // if exists, purge db before test
@@ -269,7 +274,8 @@ fn put_files_then_check_get_files () {
         .values(&dummy_project)
         .execute(conn).unwrap();
 
-    let file_upload_response = data_manager::save_input_files(&request, conn);
+    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir());
+    let file_upload_response = data_manager::save_input_files(&request, &app_dir, conn);
     println!("file_upload_response : {:?}", file_upload_response);
     assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_success_files.len() == 3);
@@ -283,7 +289,7 @@ fn put_files_then_check_get_files () {
 }
 
 // ignore unless - youve created bearing-faults.wav, heart-rate.wav and rising-chirp.wav in ~/.local/share/aml_connect
-#[ignore]
+// #[ignore]
 #[test]
 fn put_files_then_check_get_files_unauthorized_access () {
     // if exists, purge db before test
@@ -324,7 +330,8 @@ fn put_files_then_check_get_files_unauthorized_access () {
         .values(&dummy_project)
         .execute(conn).unwrap();
 
-    let file_upload_response = data_manager::save_input_files(&request, conn);
+    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir());
+    let file_upload_response = data_manager::save_input_files(&request, &app_dir, conn);
     println!("file_upload_response : {:?}", file_upload_response);
     assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_success_files.len() == 3);
