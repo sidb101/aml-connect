@@ -25,16 +25,18 @@ pub mod uicontroller {
     #[tauri::command]
     pub fn put_files(
         input: data_manager::FilesUploadRequest,
+        app_dir: State<std::path::PathBuf>,
         db_conn: State<Pool<ConnectionManager<SqliteConnection>>>,
-    ) -> data_manager::SaveFilesResponseResult {  
+    ) -> data_manager::SaveFilesResponseResult {
         let conn = &mut db_conn.get().expect("Unable to get db connection");
-        data_manager::save_input_files(&input, conn)
+        data_manager::save_input_files(&input, &app_dir, conn)
     }
 
     #[tauri::command]
     pub fn get_files(
+        app_dir: State<std::path::PathBuf>,
         db_conn: State<Pool<ConnectionManager<SqliteConnection>>>,
-    ) -> data_manager::GetFilesResponseResult {  
+    ) -> data_manager::GetFilesResponseResult {
         let conn = &mut db_conn.get().expect("Unable to get db connection");
         data_manager::list_files(conn)
     }

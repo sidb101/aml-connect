@@ -9,13 +9,14 @@ use directories::ProjectDirs;
 use std::fmt;
 use std::fs::{self};
 use std::path::{Path, PathBuf};
+use tauri::api::path;
 
 use thiserror::Error;
 
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
-use super::db_adapter::models::{NewInputData, InputData, Project};
+use super::db_adapter::models::{InputData, NewInputData, Project};
 
 use super::db_adapter::schema::{input_data, projects};
 
@@ -107,33 +108,44 @@ pub struct FilesUploadResponse {
 
 pub type SaveFilesResponseResult = Result<FilesUploadResponse, FileUploadError>;
 
-pub fn create_project_dir_if_not_exists() -> Result<()> {
-    let proj_dirs = ProjectDirs::from("com", "aspinity", "aml_connect")
+pub fn create_app_dir_if_not_exists(path_resolver: &tauri::PathResolver) -> Result<PathBuf> {
+    // let proj_dirs = ProjectDirs::from("com", "aspinity", "aml_connect")
+    //     .with_context(|| "Failed to get application directory\n")?;
+    // let app_dir = proj_dirs.data_local_dir();
+
+    let app_dir = path_resolver
+        .app_data_dir()
         .with_context(|| "Failed to get application directory\n")?;
-    let app_dir = proj_dirs.data_local_dir();
+
     if !app_dir.exists() {
-        fs::create_dir_all(app_dir).with_context(|| "Failed to create application directory\n")?;
+        fs::create_dir_all(app_dir.clone()).with_context(|| "Failed to create application directory\n")?;
     }
-    Ok(())
+    Ok(app_dir)
 }
 
-pub fn get_project_dir() -> Result<PathBuf> {
-    let proj_dirs = ProjectDirs::from("com", "aspinity", "aml_connect")
-        .with_context(|| "Failed to get application directory\n")?;
-    let app_dir = proj_dirs.data_local_dir();
-    Ok(app_dir.to_path_buf())
+// pub fn get_project_dir() -> Result<PathBuf> {
+//     let proj_dirs = ProjectDirs::from("com", "aspinity", "aml_connect")
+//         .with_context(|| "Failed to get application directory\n")?;
+//     let app_dir = proj_dirs.data_local_dir();
+//     Ok(app_dir.to_path_buf())
+// }
+
+fn get_file_absolute_path(project_dir: &str, file_name: String, app_dir: &PathBuf) -> Result<PathBuf> {
+    // let base_dir = get_project_dir()?;
+    // let rel_path = Path::new(&rel_path);
+    Ok(app_dir.join(project_dir).join("audio").join(file_name))
 }
 
-fn get_file_absolute_path(rel_path: String) -> Result<PathBuf> {
-    let base_dir = get_project_dir()?;
-    let rel_path = Path::new(&rel_path);
-    Ok(base_dir.join(rel_path))
+fn validate_exists(project_slug: &str, f: &FileUploadRequest, app_dir: &PathBuf) -> Result<PathBuf> {
+    // validate file exists at the given relative path
+    let file_path = get_file_absolute_path(project_slug, f.file_name.clone(), app_dir)?;
+    ensure!(file_path.exists(), "File does not exist");
+    Ok(file_path)
 }
 
-
-fn validate_extension(f: &FileUploadRequest, extension: String) -> Result<()> {
+fn validate_extension(file_path: &PathBuf, extension: String) -> Result<()> {
     ensure!(
-        get_file_absolute_path(f.file_name.clone())?
+        file_path
             .extension()
             .unwrap()
             .to_os_string()
@@ -145,29 +157,16 @@ fn validate_extension(f: &FileUploadRequest, extension: String) -> Result<()> {
     Ok(())
 }
 
-fn validate_exists(f: &FileUploadRequest) -> Result<()> {
-    // validate file exists at the given relative path
-    ensure!(
-        get_file_absolute_path(f.file_name.clone())?.exists(),
-        "File does not exist"
-    );
-    Ok(())
-}
-
-fn validate_size(f: &FileUploadRequest) -> Result<()> {
+fn validate_size(file_path: &PathBuf) -> Result<()> {
     // validate file size is less than 20 MB
     ensure!(
-        get_file_absolute_path(f.file_name.clone())?
-            .metadata()
-            .unwrap()
-            .len()
-            < 20 * 1024 * 1024,
+        file_path.metadata().unwrap().len() < 20 * 1024 * 1024,
         "File size is too large"
     );
     Ok(())
 }
 
-pub fn validate_files(files: &Vec<FileUploadRequest>) -> FilesUploadResponse {
+pub fn validate_files(project_slug: &str, files: &Vec<FileUploadRequest>, app_dir: &PathBuf) -> FilesUploadResponse {
     let mut response: FilesUploadResponse = FilesUploadResponse {
         upload_success_files: Vec::new(),
         upload_failed_files: Vec::new(),
@@ -177,33 +176,66 @@ pub fn validate_files(files: &Vec<FileUploadRequest>) -> FilesUploadResponse {
     };
 
     for file in files {
-        if validate_exists(file).is_err() {
-            response.failed += 1;
-            response.upload_failed_files.push(FileUploadErrorResponse {
-                file_name: file.file_name.clone(),
-                error_response: FileUploadError::FileNotFound,
-            });
-        } else if validate_extension(file, "wav".to_string()).is_err() {
-            response.failed += 1;
-            response.upload_failed_files.push(FileUploadErrorResponse {
-                file_name: file.file_name.clone(),
-                error_response: FileUploadError::UnsupportedFileExtension,
-            });
-        } else if validate_size(file).is_err() {
-            response.failed += 1;
-            response.upload_failed_files.push(FileUploadErrorResponse {
-                file_name: file.file_name.clone(),
-                error_response: FileUploadError::FileTooLarge,
-            });
-        } else {
-            // generate file_id by calling db here and add to response
-            response.succeeded += 1;
-            response.upload_success_files.push(FileMetadata {
-                file_id: String::from("1234"),
-                file_name: file.file_name.clone(),
-                dataset_type: file.dataset_type.clone(),
-            });
+        let file_path = validate_exists(project_slug, file, app_dir);
+
+        match file_path {
+            Err(_) => {
+                response.failed += 1;
+                response.upload_failed_files.push(FileUploadErrorResponse {
+                    file_name: file.file_name.clone(),
+                    error_response: FileUploadError::FileNotFound,
+                });
+            }
+            Ok(file_path) => {
+                if validate_extension(&file_path, "wav".to_string()).is_err() {
+                    response.failed += 1;
+                    response.upload_failed_files.push(FileUploadErrorResponse {
+                        file_name: file.file_name.clone(),
+                        error_response: FileUploadError::UnsupportedFileExtension,
+                    });
+                } else if validate_size(&file_path).is_err() {
+                    response.failed += 1;
+                    response.upload_failed_files.push(FileUploadErrorResponse {
+                        file_name: file.file_name.clone(),
+                        error_response: FileUploadError::FileTooLarge,
+                    });
+                } else {
+                    response.succeeded += 1;
+                    response.upload_success_files.push(FileMetadata {
+                        file_id: String::from("1234"),
+                        file_name: file.file_name.clone(),
+                        dataset_type: file.dataset_type.clone(),
+                    });
+                }
+            }
         }
+        // if file_path.is_err() {
+        //     response.failed += 1;
+        //     response.upload_failed_files.push(FileUploadErrorResponse {
+        //         file_name: file.file_name.clone(),
+        //         error_response: FileUploadError::FileNotFound,
+        //     });
+        // } else if validate_extension(, "wav".to_string()).is_err() {
+        //     response.failed += 1;
+        //     response.upload_failed_files.push(FileUploadErrorResponse {
+        //         file_name: file.file_name.clone(),
+        //         error_response: FileUploadError::UnsupportedFileExtension,
+        //     });
+        // } else if validate_size(file).is_err() {
+        //     response.failed += 1;
+        //     response.upload_failed_files.push(FileUploadErrorResponse {
+        //         file_name: file.file_name.clone(),
+        //         error_response: FileUploadError::FileTooLarge,
+        //     });
+        // } else {
+        //     // generate file_id by calling db here and add to response
+        //     response.succeeded += 1;
+        //     response.upload_success_files.push(FileMetadata {
+        //         file_id: String::from("1234"),
+        //         file_name: file.file_name.clone(),
+        //         dataset_type: file.dataset_type.clone(),
+        //     });
+        // }
     }
 
     response
@@ -218,10 +250,11 @@ pub fn validate_files(files: &Vec<FileUploadRequest>) -> FilesUploadResponse {
 /// * `SaveFilesResponseResult`: A result typedef, holding Ok(FilesUploadResponse) and Err(Error) variants
 pub fn save_input_files(
     input: &FilesUploadRequest,
+    app_dir: &PathBuf,
     conn: &mut PooledConnection<ConnectionManager<SqliteConnection>>,
 ) -> SaveFilesResponseResult {
     // validation of the list of input file paths (file will be deleted if invalid)
-    let mut ans: FilesUploadResponse = validate_files(&input.input_files);
+    let mut ans: FilesUploadResponse = validate_files(&input.proj_slug ,&input.input_files, app_dir);
     let succesfull_uploads = ans.upload_success_files.clone();
 
     // Assuming that project with slug test_project already exists in db
@@ -254,12 +287,11 @@ pub fn save_input_files(
 
     // delete all files that failed to upload
     for file in ans.upload_failed_files.iter() {
-        let file_path = get_file_absolute_path(file.file_name.clone()).unwrap();
+        let file_path = get_file_absolute_path(&input.proj_slug, file.file_name.clone(), app_dir).unwrap();
         println!("Deleting file: {:?}", file_path);
         if file_path.exists() {
-            fs::remove_file(file_path).map_err(
-                |e| FileUploadError::UnableToDeleteFile(file.file_name.clone()),
-            )?;
+            fs::remove_file(file_path)
+                .map_err(|e| FileUploadError::UnableToDeleteFile(file.file_name.clone()))?;
         }
     }
 
@@ -269,23 +301,23 @@ pub fn save_input_files(
             .filter(input_data::file_name.eq(&file.file_name))
             .first::<InputData>(conn)
             .map_err(|e| FileUploadError::UnableToQueryDatabase(e.to_string()))?;
-        
+
         file.file_id = found_file.id.to_string();
     }
-    
+
     Ok(ans)
 }
 
-pub fn list_files(conn: &mut PooledConnection<ConnectionManager<SqliteConnection>>) -> GetFilesResponseResult {
-    let mut ans: GetFilesResponse = GetFilesResponse {
-        files: Vec::new(),
-    };
+pub fn list_files(
+    conn: &mut PooledConnection<ConnectionManager<SqliteConnection>>,
+) -> GetFilesResponseResult {
+    let mut ans: GetFilesResponse = GetFilesResponse { files: Vec::new() };
 
     let found_project = projects::table
         .filter(projects::slug.eq("test_project"))
         .first::<Project>(conn)
         .map_err(|e| FileUploadError::UnableToQueryDatabase(e.to_string()))?;
-    
+
     let project_id = found_project.id;
 
     let results = input_data::table
@@ -301,10 +333,10 @@ pub fn list_files(conn: &mut PooledConnection<ConnectionManager<SqliteConnection
                 "training" => DataSet::Training,
                 "testing" => DataSet::Testing,
                 "validation" => DataSet::Validation,
-                _ => { 
+                _ => {
                     panic!("Invalid dataset type")
                 }
-            }
+            },
         });
     }
 
