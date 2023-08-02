@@ -1,7 +1,7 @@
 import ImportLocalDataView from "./ImportLocalDataView";
 import { AUDIO_DIR } from "../../../../../constants";
 import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
-import fileSystemTransformer from "../../../../../transformers/FileSystemTransformer";
+import tauriFsClient from "../../../../../clients/fs/TauriFsClient";
 
 export type ImportLocalDataT = {
 	data?: string;
@@ -14,7 +14,7 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 	const handleFilesImport = async (files: InputFileDataT[]) => {
 		//wait for all the files to get written
 		const importedFiles = await Promise.all(
-			files.map(async (file) => await fileSystemTransformer.writeFileToAppStorage(file, AUDIO_DIR))
+			files.map(async (file) => await tauriFsClient.writeFileToAppStorage(file, AUDIO_DIR))
 		);
 
 		//call the server to send the files.

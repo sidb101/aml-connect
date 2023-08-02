@@ -1,18 +1,15 @@
 //This module will transform all the tauri specific API calls related to File System, to the current system
 
-import type { InputFileDataT } from "../redux/slices/DataHubSlice";
+import type { InputFileDataT } from "../../redux/slices/DataHubSlice";
 import { BaseDirectory, writeBinaryFile } from "@tauri-apps/api/fs";
+import type { FsInterface } from "./FsInterface";
 
-export type FileSystemTransformerT = {
+const tauriFsClient: FsInterface = {
 	/**
-	 * Used for writing given file to the given path. It uses tauri API to write the file.
-	 * @param fileData : Object having name and data-url of the file
-	 * @param path: Path related to the storage, where files need to be saved.
+	 * This method would write the file into the path relative to local app dir.
+	 * @param fileData: Data for given file
+	 * @param path: Relative path from the LocalAppDir
 	 */
-	writeFileToAppStorage(fileData: InputFileDataT, path: string): Promise<InputFileDataT>;
-};
-
-const fileSystemTransformer: FileSystemTransformerT = {
 	async writeFileToAppStorage(fileData: InputFileDataT, path: string): Promise<InputFileDataT> {
 		console.log("Writing file: ", fileData.metadata.name);
 		try {
@@ -49,4 +46,4 @@ async function uInt8ArrayToDataUrl(binaryData: Uint8Array, extension: string) {
 	return `data:audio/${extension};base64,` + b64;
 }
 
-export default fileSystemTransformer;
+export default tauriFsClient;
