@@ -1,11 +1,12 @@
 import "./DataSetupView.scss";
 import React from "react";
 import Accordion from "../../../../components/accordion/Accordion";
-import FileTable, { type AudioFileT } from "./FileTable";
+import AudioFileTable from "./AudioFileTable";
 import NewAccordion from "../../../../components/accordion/NewAccordion";
+import type { InputFileDataT } from "../../../../redux/slices/DataHubSlice";
 
 export type DataSetupViewProps = {
-	audioFiles?: AudioFileT[];
+	audioFiles?: InputFileDataT[];
 };
 
 const DataSetupView = ({ audioFiles }: DataSetupViewProps) => {
@@ -13,17 +14,17 @@ const DataSetupView = ({ audioFiles }: DataSetupViewProps) => {
 		<div className={`DataSetupView_container`}>
 			<div className={`DataSetupView_leftContainer`}>
 				<NewAccordion bodyMaxHeight={`calc(33vh - 150px)`} header={<>Training Dataset</>}>
-					<FileTable files={audioFiles} />
+					<AudioFileTable files={audioFiles} />
 				</NewAccordion>
 				<NewAccordion
 					bodyMaxHeight={`calc(33vh - 150px)`}
 					defaultIsOpen={false}
 					header={<>Validation Dataset</>}
 				>
-					<FileTable files={audioFiles} />
+					<AudioFileTable files={audioFiles} />
 				</NewAccordion>
 				<NewAccordion bodyMaxHeight={`calc(33vh - 150px)`} defaultIsOpen={false} header={<>Testing Dataset</>}>
-					<FileTable files={audioFiles} />
+					<AudioFileTable files={audioFiles} />
 				</NewAccordion>
 			</div>
 			<div className={`DataSetupView_rightContainer`}>
