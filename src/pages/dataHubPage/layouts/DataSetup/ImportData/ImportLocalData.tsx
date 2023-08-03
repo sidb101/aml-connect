@@ -24,7 +24,8 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 	const handleFilesImport = async (files: InputFileDataT[]) => {
 		//wait for all the files to get written
 		const importedFiles = await Promise.all(
-			files.map(async (file) => await tauriFsClient.writeFileToAppStorage(file, `${projectSlug}/audio`))
+			//TODO: create a directory for the project
+			files.map(async (file) => await tauriFsClient.writeFileToAppStorage(file, `${projectSlug}/${AUDIO_DIR}`))
 		);
 
 		//call the server to send the files.
@@ -37,6 +38,7 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 		try {
 			//send it to the backend
 			const filesUploadResponse = await tauriApiClient.uploadFiles(filesUploadRequest);
+			console.log(filesUploadResponse);
 			if (filesUploadResponse.upload_failed_files.length > 0) {
 				console.log("Some files failed to upload", filesUploadResponse.upload_failed_files);
 			} else {

@@ -1,5 +1,5 @@
 use crate::aml_connect::aml_core::db_adapter::models::*;
-use std::{env, path::Path};
+use std::{env, path::{Path, PathBuf}};
 
 use aml_connect::{
     self,
@@ -8,6 +8,7 @@ use aml_connect::{
 use diesel::{
     query_dsl::methods::FilterDsl, Connection, ExpressionMethods, RunQueryDsl, SelectableHelper,
 };
+use directories::BaseDirs;
 use log::info;
 
 #[ignore]
@@ -136,7 +137,9 @@ fn validate_file_and_save_metadata () {
         .values(&dummy_project)
         .execute(conn).unwrap();
 
-    let file_upload_response = data_manager::save_input_files(&request, conn);
+    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir());
+
+    let file_upload_response = data_manager::save_input_files(&request, &app_dir, conn);
 
     assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_success_files.len() == 2);
@@ -180,7 +183,8 @@ fn validate_file_and_save_metadata_check_exists () {
         .values(&dummy_project)
         .execute(conn).unwrap();
 
-    let file_upload_response = data_manager::save_input_files(&request, conn);
+    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir());
+    let file_upload_response = data_manager::save_input_files(&request, &app_dir, conn );
     println!("file_upload_response : {:?}", file_upload_response);
     // assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_failed_files.len() == 2);
@@ -221,7 +225,8 @@ fn validate_file_and_save_metadata_check_extension () {
         .values(&dummy_project)
         .execute(conn).unwrap();
 
-    let file_upload_response = data_manager::save_input_files(&request, conn);
+    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir());
+    let file_upload_response = data_manager::save_input_files(&request, &app_dir, conn);
     println!("file_upload_response : {:?}", file_upload_response);
     assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_failed_files.len() == 1);
@@ -269,7 +274,8 @@ fn validate_file_and_save_metadata_then_check_get_files () {
         .values(&dummy_project)
         .execute(conn).unwrap();
 
-    let file_upload_response = data_manager::save_input_files(&request, conn);
+    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir());
+    let file_upload_response = data_manager::save_input_files(&request, &app_dir, conn);
     println!("file_upload_response : {:?}", file_upload_response);
     assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_success_files.len() == 3);
