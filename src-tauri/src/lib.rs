@@ -34,10 +34,10 @@ pub mod uicontroller {
 
     #[tauri::command]
     pub fn get_files(
-        app_dir: State<std::path::PathBuf>,
+        input: data_manager::GetFilesRequest,
         db_conn: State<Pool<ConnectionManager<SqliteConnection>>>,
     ) -> data_manager::GetFilesResponseResult {
         let conn = &mut db_conn.get().expect("Unable to get db connection");
-        data_manager::list_files(conn)
+        data_manager::list_files(&input, conn)
     }
 }

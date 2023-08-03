@@ -54,6 +54,8 @@ const ImportLocalDataView = ({ handleFilesImport }: ImportDataViewT) => {
 		}));
 
 		handleFilesImport(chosenFiles).catch((e) => console.error(e));
+
+		handleModalClose();
 	};
 
 	return (

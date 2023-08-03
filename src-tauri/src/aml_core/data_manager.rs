@@ -57,6 +57,8 @@ pub enum FileUploadError {
     UnableToStoreInDatabase(String),
     #[error("Unable to delete file from Filesystem")]
     UnableToDeleteFile(String),
+    #[error("Unauthorized Access")]
+    UnauthorizedAccess(String),
     // Add more error variants as needed.
 }
 
@@ -130,7 +132,7 @@ pub fn create_app_dir_if_not_exists(path_resolver: &tauri::PathResolver) -> Resu
     // let app_dir = proj_dirs.data_local_dir();
 
     let app_dir = path_resolver
-        .app_data_dir()
+        .app_local_data_dir()
         .with_context(|| "Failed to get application directory\n")?;
 
     if !app_dir.exists() {
@@ -304,7 +306,7 @@ pub fn save_input_files(
     // delete all files that failed to upload
     for file in ans.upload_failed_files.iter() {
         let file_path = get_file_absolute_path(&input.proj_slug, file.file_name.clone(), app_dir).unwrap();
-        println!("Deleting file: {:?}", file_path);
+        println!("Deleting file: {:?} for reason {}", file_path, file.error_response);
         if file_path.exists() {
             fs::remove_file(file_path)
                 .map_err(|e| FileUploadError::UnableToDeleteFile(file.file_name.clone()))?;
@@ -325,22 +327,32 @@ pub fn save_input_files(
 }
 
 pub fn list_files(
+    input: &GetFilesRequest,
     conn: &mut PooledConnection<ConnectionManager<SqliteConnection>>,
 ) -> GetFilesResponseResult {
-    let mut ans: GetFilesResponse = GetFilesResponse { files: Vec::new() };
+    let mut ans: GetFilesResponse = GetFilesResponse {
+        files: Vec::new(),
+    };
 
     let found_project = projects::table
         .filter(projects::slug.eq("test_project"))
         .first::<Project>(conn)
         .map_err(|e| FileUploadError::UnableToQueryDatabase(e.to_string()))?;
 
-    let project_id = found_project.id;
+    if found_project.slug != input.proj_slug {
+        return Err(FileUploadError::UnauthorizedAccess(String::from("User does not have access to this project")));
+    }
 
+    let project_id = found_project.id;
+    let dataset = input.dataset_type.to_string();
+    
+    // filter input_data table by project_id and dataset
     let results = input_data::table
         .filter(input_data::project_id.eq(project_id))
+        .filter(input_data::ml_dataset_type.eq(dataset))
         .load::<InputData>(conn)
         .map_err(|e| FileUploadError::UnableToQueryDatabase(e.to_string()))?;
-
+    
     for file in results {
         ans.files.push(FileMetadata {
             file_id: file.id.to_string(),

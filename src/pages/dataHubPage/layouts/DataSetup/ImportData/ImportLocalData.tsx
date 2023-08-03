@@ -4,10 +4,19 @@ import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
 import { dataHubActions, DataSetT } from "../../../../../redux/slices/DataHubSlice";
 import tauriFsClient from "../../../../../clients/fs/TauriFsClient";
 import type { FilesUploadRequest } from "../../../../../clients/api/bindings/FilesUploadRequest";
-import { createFilesUploadRequest, parseSuccessFilesUploadResponse } from "../../../../../clients/api/ApiTransformer";
+import {
+	createFilesGetRequest,
+	createFilesUploadRequest,
+	parseFilesGetResponse,
+	parseSuccessFilesUploadResponse,
+} from "../../../../../clients/api/ApiTransformer";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
 import { selectCurrentProjectSlug } from "../../../../../redux/slices/GeneralSlice";
 import tauriApiClient from "../../../../../clients/api/TauriApiClient";
+import type { GetFilesRequest } from "../../../../../clients/api/bindings/GetFilesRequest";
+import { getFileInfo } from "prettier";
+import Backdrop from "../../../../../components/backdrop/Backdrop";
+import { useState } from "react";
 
 export type ImportLocalDataT = {
 	data?: string;
@@ -21,7 +30,12 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 
 	const dispatch = useAppDispatch();
 
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	const handleFilesImport = async (files: InputFileDataT[]) => {
+		//Put Backdrop
+		setIsLoading(true);
+
 		//wait for all the files to get written
 		const importedFiles = await Promise.all(
 			//TODO: create a directory for the project
@@ -37,23 +51,31 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 		const filesUploadRequest: FilesUploadRequest = createFilesUploadRequest(projectSlug, files, DataSetT.TRAINING);
 		try {
 			//send it to the backend
-			const filesUploadResponse = await tauriApiClient.uploadFiles(filesUploadRequest);
+			const filesUploadResponse = await tauriApiClient.uploadInputFiles(filesUploadRequest);
 			console.log(filesUploadResponse);
+
+			//parse the response
 			if (filesUploadResponse.upload_failed_files.length > 0) {
 				console.log("Some files failed to upload", filesUploadResponse.upload_failed_files);
 			} else {
 				console.log("All the files uploaded successfully", filesUploadResponse.upload_success_files);
 			}
+			const inputFiles = parseSuccessFilesUploadResponse(filesUploadResponse, files);
 
 			//update it in the redux state
-			const successFulFileUploads = parseSuccessFilesUploadResponse(filesUploadResponse, files);
-			dispatch(dataHubActions.addInputFiles({ dataSet: DataSetT.TRAINING, inputFiles: successFulFileUploads }));
+			if (inputFiles.length > 0) {
+				dispatch(dataHubActions.addInputFiles({ dataSet: DataSetT.TRAINING, inputFiles: inputFiles }));
+				console.log("Updated The redux state");
+			}
+
+			setIsLoading(false);
 		} catch (e) {
 			console.error(e);
 		}
 	};
 	return (
 		<>
+			{isLoading && <Backdrop />}
 			<ImportLocalDataView handleFilesImport={handleFilesImport} />
 		</>
 	);

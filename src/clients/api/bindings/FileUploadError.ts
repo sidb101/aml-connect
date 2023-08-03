@@ -9,4 +9,5 @@ export type FileUploadError =
 			UnableToQueryDatabase: string;
 	  }
 	| { UnableToStoreInDatabase: string }
-	| { UnableToDeleteFile: string };
+	| { UnableToDeleteFile: string }
+	| { UnauthorizedAccess: string };

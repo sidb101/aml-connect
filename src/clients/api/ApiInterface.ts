@@ -6,6 +6,8 @@
  */
 import type { FilesUploadRequest } from "./bindings/FilesUploadRequest";
 import type { FilesUploadResponse } from "./bindings/FilesUploadResponse";
+import type { GetFilesRequest } from "./bindings/GetFilesRequest";
+import type { GetFilesResponse } from "./bindings/GetFilesResponse";
 
 export type ApiInterface = {
 	/**
@@ -13,5 +15,11 @@ export type ApiInterface = {
 	 * and persistence.
 	 * @param filesUploadRequest: Request containing the required data to upload the files
 	 */
-	uploadFiles(filesUploadRequest: FilesUploadRequest): Promise<FilesUploadResponse>;
+	uploadInputFiles(filesUploadRequest: FilesUploadRequest): Promise<FilesUploadResponse>;
+
+	/**
+	 * This method would get files metadata from the backend, that were uploaded by the user
+	 * @param getFilesRequest: Request containing required data to get the files.
+	 */
+	getInputFiles(getFilesRequest: GetFilesRequest): Promise<GetFilesResponse>;
 };

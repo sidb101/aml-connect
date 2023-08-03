@@ -4,8 +4,8 @@
  * The slice would give different actions that can be dispatched to update the
  * given data hub state
  */
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { generalSlice } from "./GeneralSlice";
+import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { type RootState } from "../store";
 
 export type DataHubState = {
 	[dataSet in DataSetT]: InputFileDataT[];
@@ -40,6 +40,9 @@ export const dataHubSlice = createSlice({
 	name: "dataHub",
 	initialState, // the type of this slice of the state would be inferred from the type of initial state
 	reducers: {
+		setInputFiles: (state, action: PayloadAction<{ dataSet: DataSetT; inputFiles: InputFileDataT[] }>) => {
+			state[action.payload.dataSet] = action.payload.inputFiles;
+		},
 		/**
 		 * To add the input files into appropriate data set.
 		 * @param state: Data hub State
@@ -50,5 +53,12 @@ export const dataHubSlice = createSlice({
 		},
 	},
 });
+
+export const selectInputFiles = createSelector(
+	[(state: RootState) => state.dataHub, (state: RootState, dataSet: DataSetT) => dataSet],
+	(state, dataSet) => {
+		return state[dataSet];
+	}
+);
 
 export const { name: dataHubSliceKey, reducer: dataHubReducer, actions: dataHubActions } = dataHubSlice;
