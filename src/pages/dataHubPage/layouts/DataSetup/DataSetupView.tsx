@@ -1,5 +1,6 @@
 import "./DataSetupView.scss";
-import React, { type JSX, useEffect } from "react";
+import React, { type JSX, useEffect, useState } from "react";
+import AudioFileTable from "./AudioFileTable";
 import Accordion from "../../../../components/accordion/Accordion";
 import type { GetFilesRequest } from "../../../../clients/api/bindings/GetFilesRequest";
 import { createFilesGetRequest, parseFilesGetResponse } from "../../../../clients/api/ApiTransformer";
@@ -9,7 +10,7 @@ import tauriApiClient from "../../../../clients/api/TauriApiClient";
 import { useAppDispatch, useAppSelector } from "../../../../hooks";
 import { selectCurrentProjectAudioDir, selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
 import tauriFsClient from "../../../../clients/fs/TauriFsClient";
-import { BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
+import Backdrop from "../../../../components/backdrop/Backdrop";
 
 export type DataSetupViewT = {
 	importDataComponent: JSX.Element | JSX.Element[];
@@ -22,6 +23,7 @@ const DataSetupView = ({ importDataComponent }: DataSetupViewT) => {
 	const projectAudioDir = useAppSelector(selectCurrentProjectAudioDir);
 
 	const importedInputFiles = useAppSelector((state) => selectInputFiles(state, DataSetT.TRAINING));
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	// console.log("Rendering: ", importedInputFiles, projectSlug);
 	useEffect(() => {
@@ -37,6 +39,7 @@ const DataSetupView = ({ importDataComponent }: DataSetupViewT) => {
 	 */
 	const getInputFiles = async (dataSet: DataSetT) => {
 		try {
+			setIsLoading(true);
 			const inputFilesMetaData = await getFilesMetaData(dataSet);
 
 			//get the files data along with content from the given metadata
@@ -50,6 +53,7 @@ const DataSetupView = ({ importDataComponent }: DataSetupViewT) => {
 
 			//update it in the redux state
 			dispatch(dataHubActions.setInputFiles({ dataSet, inputFiles }));
+			setIsLoading(false);
 			console.log("Set input files in the redux state");
 		} catch (e) {
 			console.error(e);
@@ -72,39 +76,25 @@ const DataSetupView = ({ importDataComponent }: DataSetupViewT) => {
 
 	return (
 		<div className={`DataSetupView_container`}>
+			{isLoading && <Backdrop />}
 			<div className={`DataSetupView_leftContainer`}>
-				<Accordion
-					headerElement={<>Training Dataset</>}
-					maxHeight={"500px"}
-					bodyElement={
-						<>
-							{importedInputFiles.map((inputFile, index) => (
-								<div key={index}>
-									<span>{inputFile.metadata.name}</span>
-									<br />
-								</div>
-							))}
-						</>
-					}
-				/>
-				<Accordion
-					headerElement={<>Validation Dataset</>}
-					bodyElement={<h4>Validation Body</h4>}
-					maxHeight={"300px"}
-					defaultIsOpen={false}
-				/>
-				<Accordion
-					headerElement={<>Testing Dataset</>}
-					bodyElement={<h4>Testing Body</h4>}
-					defaultIsOpen={false}
-				/>
+				<Accordion bodyMaxHeight={`calc(33vh - 150px)`} header={<>Training Dataset</>}>
+					<AudioFileTable files={importedInputFiles} />
+				</Accordion>
+				<Accordion bodyMaxHeight={`calc(33vh - 150px)`} defaultIsOpen={false} header={<>Validation Dataset</>}>
+					<AudioFileTable files={[]} />
+				</Accordion>
+				<Accordion bodyMaxHeight={`calc(33vh - 150px)`} defaultIsOpen={false} header={<>Testing Dataset</>}>
+					<AudioFileTable files={[]} />
+				</Accordion>
 			</div>
 			<div className={`DataSetupView_rightContainer`}>
-				<Accordion
-					headerElement={<div className={`section-heading-text`}>Add or Merge Data</div>}
-					bodyElement={importDataComponent}
-				/>
-				<Accordion headerElement={<>Label Data</>} bodyElement={<h4>Label Body</h4>} defaultIsOpen={false} />
+				<Accordion bodyMaxHeight={`calc(33vh - 150px)`} header={<>Add or Merge Data</>}>
+					{importDataComponent}
+				</Accordion>
+				<Accordion bodyMaxHeight={`calc(33vh - 150px)`} header={<>Label Data</>} defaultIsOpen={false}>
+					<>Label Body</>
+				</Accordion>
 			</div>
 		</div>
 	);

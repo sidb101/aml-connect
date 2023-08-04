@@ -36,6 +36,11 @@
     justify-content: center;
     align-items: center;
 
+    &___filesPresent{
+      padding: global.$general-padding 0;
+      justify-content: initial;
+    }
+
     .ImportDataView_browse{
       border-bottom: solid 1px global.$color-green;
       cursor: pointer;
