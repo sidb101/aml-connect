@@ -7,6 +7,7 @@ import { type FileContent, useFilePicker } from "use-file-picker";
 import ReactPlayer from "react-player";
 import { SUPPORTED_FILE_TYPES } from "../../../../../constants";
 import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
+import { getFileExtension } from "../../../../../clients/api/ApiTransformer";
 
 export type ImportDataViewT = {
 	handleFilesImport: (files: InputFileDataT[]) => Promise<void>;
@@ -48,13 +49,15 @@ const ImportLocalDataView = ({ handleFilesImport }: ImportDataViewT) => {
 	 * @param files: Selected Files
 	 */
 	const importFiles = (files: FileContent[]) => {
-		const chosenFiles: InputFileDataT[] = files.map((file) => ({
-			metadata: { name: file.name },
-			dataUrl: file.content,
-		}));
+		const chosenFiles: InputFileDataT[] = files.map((file) => {
+			const extension = getFileExtension(file.name);
+			return {
+				metadata: { name: file.name, extension, mediaType: `audio/${extension}` },
+				dataUrl: file.content,
+			};
+		});
 
 		handleFilesImport(chosenFiles).catch((e) => console.error(e));
-
 		handleModalClose();
 	};
 

@@ -18,6 +18,8 @@ export type InputFileDataT = {
 
 export type InputFileMetaDataT = {
 	name: string;
+	extension: string;
+	mediaType: string;
 	length?: string;
 };
 
@@ -49,6 +51,7 @@ export const dataHubSlice = createSlice({
 		 * @param action: The action would have dataSet and input files to be added
 		 */
 		addInputFiles: (state, action: PayloadAction<{ dataSet: DataSetT; inputFiles: InputFileDataT[] }>) => {
+			//TODO: Handle the duplicate file names. If a file already exists, then overwrite that file.
 			state[action.payload.dataSet] = [...state[action.payload.dataSet], ...action.payload.inputFiles];
 		},
 	},
