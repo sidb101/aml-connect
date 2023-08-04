@@ -37,7 +37,8 @@ const Accordion = ({ defaultIsOpen = true, bodyElement, maxHeight, headerElement
 				style={
 					isOpen && accBodyRef.current
 						? {
-								height: String(accBodyRef.current.scrollHeight) + "px",
+								// height: String(accBodyRef.current.scrollHeight) + "px",
+								height: "500px",
 								maxHeight: maxHeight,
 						  }
 						: {

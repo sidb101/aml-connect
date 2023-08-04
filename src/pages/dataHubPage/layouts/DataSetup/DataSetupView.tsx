@@ -1,38 +1,59 @@
 import "./DataSetupView.scss";
-import React from "react";
+import React, { type JSX, useEffect } from "react";
 import Accordion from "../../../../components/accordion/Accordion";
+import type { GetFilesRequest } from "../../../../clients/api/bindings/GetFilesRequest";
+import { createFilesGetRequest, parseFilesGetResponse } from "../../../../clients/api/ApiTransformer";
+import type { InputFileDataT } from "../../../../redux/slices/DataHubSlice";
+import { dataHubActions, DataSetT, selectInputFiles } from "../../../../redux/slices/DataHubSlice";
+import tauriApiClient from "../../../../clients/api/TauriApiClient";
+import { useAppDispatch, useAppSelector } from "../../../../hooks";
+import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
 
 export type DataSetupViewT = {
-	data?: string;
+	importDataComponent: JSX.Element | JSX.Element[];
 };
 
-const DataSetupView = (props: DataSetupViewT) => {
+const DataSetupView = ({ importDataComponent }: DataSetupViewT) => {
+	const dispatch = useAppDispatch();
+
+	const projectSlug = useAppSelector(selectCurrentProjectSlug);
+
+	const importedInputFiles = useAppSelector((state) => selectInputFiles(state, DataSetT.TRAINING));
+
+	console.log("Rendering: ", importedInputFiles, projectSlug);
+	useEffect(() => {
+		if (projectSlug != "" && importedInputFiles.length == 0) {
+			getInputFiles(projectSlug, DataSetT.TRAINING).catch((e) => console.log(e));
+		}
+	}, [projectSlug]);
+
+	const getInputFiles = async (projectSlug: string, dataset: DataSetT) => {
+		//get the files information
+		const filesGetRequest: GetFilesRequest = createFilesGetRequest(projectSlug, dataset);
+		console.log("Request", filesGetRequest);
+		const filesGetResponse = await tauriApiClient.getInputFiles(filesGetRequest);
+		console.log(filesGetResponse);
+		const inputFiles: InputFileDataT[] = parseFilesGetResponse(filesGetResponse);
+		console.log("Transformed: ", inputFiles);
+
+		//update it in the redux state
+		dispatch(dataHubActions.setInputFiles({ dataSet: dataset, inputFiles: inputFiles }));
+	};
+
 	return (
 		<div className={`DataSetupView_container`}>
 			<div className={`DataSetupView_leftContainer`}>
 				<Accordion
 					headerElement={<>Training Dataset</>}
-					maxHeight={"200px"}
+					maxHeight={"500px"}
 					bodyElement={
 						<>
-							Training Body
-							<br />
-							THis occupies
-							<br />
-							too many
-							<br /> new lines
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							Last Line
-							<br />
+							{importedInputFiles.map((inputFile, index) => (
+								<div key={index}>
+									<span>{inputFile.metadata.name}</span>
+									<br />
+								</div>
+							))}
 						</>
 					}
 				/>
@@ -49,7 +70,10 @@ const DataSetupView = (props: DataSetupViewT) => {
 				/>
 			</div>
 			<div className={`DataSetupView_rightContainer`}>
-				<Accordion headerElement={<>Add or Merge Data</>} bodyElement={<h4>Data Body</h4>} />
+				<Accordion
+					headerElement={<div className={`section-heading-text`}>Add or Merge Data</div>}
+					bodyElement={importDataComponent}
+				/>
 				<Accordion headerElement={<>Label Data</>} bodyElement={<h4>Label Body</h4>} defaultIsOpen={false} />
 			</div>
 		</div>

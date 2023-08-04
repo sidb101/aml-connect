@@ -5,6 +5,7 @@ import { useDataHubContext } from "../../DataHubPage";
 import { dataVizRoute, projectOverviewRoute } from "../../../../routes";
 import { useAppSelector } from "../../../../hooks";
 import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
+import ImportData from "./ImportData/ImportData";
 
 export type DataSetupT = {
 	data?: string;
@@ -23,7 +24,7 @@ const DataSetup = (props: DataSetupT) => {
 		}));
 	}, [projectSlug]);
 
-	return <DataSetupView />;
+	return <DataSetupView importDataComponent={<ImportData />} />;
 };
 
 export default DataSetup;
