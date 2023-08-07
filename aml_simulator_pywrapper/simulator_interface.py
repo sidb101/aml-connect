@@ -9,8 +9,9 @@ class AspinitySimulatorWrapperInterFace(metaclass=abc.ABCMeta):
     def __subclasshook__(cls, subclass):
         return hasattr(subclass, "get_elements") and callable(subclass.get_elements)
 
+    @classmethod
     @abc.abstractmethod
-    def get_elements(self):
+    def get_elements(cls):
         """Returns a JSON string dump of components available from Aspinity
         Simulator
         """

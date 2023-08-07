@@ -23,6 +23,28 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Setup Python version
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+
+      - name: Create and start virtual environment
+        run: |
+          python3 -m venv .venv
+          source .venv/bin/activate
+      
+      - name: Install aspinity .whl
+        run: |
+          pip install ./aml_simulator_pywrapper/aspinity-0.7.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+      
+      - name: Install requirements.txt
+        run: |
+          pip install -r ./aml_simulator_pywrapper/requirements.txt
+
+      - name: Setup PYTHONPATH
+        run: |
+          export PYTHONPATH="${PYTHONPATH}:${pwd}/aml_simulator_pywrapper"
+
       - name: install OS dependencies (ubuntu only)
         run: |
           sudo apt update
@@ -33,7 +55,25 @@ jobs:
           libssl-dev \
           libgtk-3-dev \
           libayatana-appindicator3-dev \
-          librsvg2-dev
+          librsvg2-dev \
+          python-pip
+        
+      - name: Run Pylint
+        run: |
+          cd aml_simulator_pywrapper && 
+          pylint *.py && 
+          cd ..
+      
+      - name: Run Pytest tests
+        run: |
+          cd aml_simulator_pywrapper && 
+          pytest . && 
+          cd ..
+
+      - name: Create Aspinity Wrapper Binary
+        run: |
+          cd aml_simulator_pywrapper && 
+          pyinstaller --clean -F simulator_wrapper.py --distpath ../src-tauri/binaries/ -n aspinity_wrapper-x86_64-unknown-linux-gnu
 
       # Setup Rust
       - name: Rust setup
@@ -43,7 +83,9 @@ jobs:
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
-          workspaces: './src-tauri -> target'
+          workspaces: |
+            . -> target
+
       
       # Sync node version and setup node cache
       - name: Sync node version and setup cache
