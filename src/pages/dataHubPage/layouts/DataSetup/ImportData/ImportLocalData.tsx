@@ -1,22 +1,15 @@
 import ImportLocalDataView from "./ImportLocalDataView";
-import { AUDIO_DIR } from "../../../../../constants";
 import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
 import { dataHubActions, DataSetT } from "../../../../../redux/slices/DataHubSlice";
 import tauriFsClient from "../../../../../clients/fs/TauriFsClient";
 import type { FilesUploadRequest } from "../../../../../clients/api/bindings/FilesUploadRequest";
-import {
-	createFilesGetRequest,
-	createFilesUploadRequest,
-	parseFilesGetResponse,
-	parseSuccessFilesUploadResponse,
-} from "../../../../../clients/api/ApiTransformer";
+import { createFilesUploadRequest, parseSuccessFilesUploadResponse } from "../../../../../clients/api/ApiTransformer";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
-import { selectCurrentProjectSlug } from "../../../../../redux/slices/GeneralSlice";
+import { selectCurrentProjectAudioDir, selectCurrentProjectSlug } from "../../../../../redux/slices/GeneralSlice";
 import tauriApiClient from "../../../../../clients/api/TauriApiClient";
-import type { GetFilesRequest } from "../../../../../clients/api/bindings/GetFilesRequest";
-import { getFileInfo } from "prettier";
-import Backdrop from "../../../../../components/backdrop/Backdrop";
 import { useState } from "react";
+import { BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
+import Spinner from "../../../../../components/spinner/Spinner";
 
 export type ImportLocalDataT = {
 	data?: string;
@@ -27,6 +20,7 @@ export type ImportLocalDataT = {
  */
 const ImportLocalData = (props: ImportLocalDataT) => {
 	const projectSlug = useAppSelector(selectCurrentProjectSlug);
+	const audioProjectDir = useAppSelector(selectCurrentProjectAudioDir);
 
 	const dispatch = useAppDispatch();
 
@@ -39,7 +33,7 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 		//wait for all the files to get written
 		const importedFiles = await Promise.all(
 			//TODO: create a directory for the project
-			files.map(async (file) => await tauriFsClient.writeFileToAppStorage(file, `${projectSlug}/${AUDIO_DIR}`))
+			files.map(async (file) => await tauriFsClient.writeInputFileToStorage(file, audioProjectDir))
 		);
 
 		//call the server to send the files.
@@ -62,10 +56,10 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 			}
 			const inputFiles = parseSuccessFilesUploadResponse(filesUploadResponse, files);
 
-			//update it in the redux state
+			//add the successfully uploaded files in the redux state
 			if (inputFiles.length > 0) {
 				dispatch(dataHubActions.addInputFiles({ dataSet: DataSetT.TRAINING, inputFiles: inputFiles }));
-				console.log("Updated The redux state");
+				console.log("Updated The redux state.");
 			}
 
 			setIsLoading(false);
@@ -75,7 +69,7 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 	};
 	return (
 		<>
-			{isLoading && <Backdrop />}
+			{isLoading && <Spinner />}
 			<ImportLocalDataView handleFilesImport={handleFilesImport} />
 		</>
 	);

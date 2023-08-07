@@ -7,6 +7,8 @@ import { type FileContent, useFilePicker } from "use-file-picker";
 import ReactPlayer from "react-player";
 import { SUPPORTED_FILE_TYPES } from "../../../../../constants";
 import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
+import { getFileExtension } from "../../../../../clients/api/ApiTransformer";
+import AudioFileTable from "../AudioFileTable";
 
 export type ImportDataViewT = {
 	handleFilesImport: (files: InputFileDataT[]) => Promise<void>;
@@ -14,15 +16,21 @@ export type ImportDataViewT = {
 
 const ImportLocalDataView = ({ handleFilesImport }: ImportDataViewT) => {
 	const [modalOpen, setModalOpen] = useState<boolean>(false);
-	const [playingIndex, setPlayingIndex] = useState<number>(-1);
-	const [selectedFiles, setSelectedFiles] = useState<FileContent[]>([]);
+	const [selectedFiles, setSelectedFiles] = useState<InputFileDataT[]>([]);
 
 	//Get the file picker component
 	const [openFileSelector] = useFilePicker({
 		accept: SUPPORTED_FILE_TYPES,
 		readAs: "DataURL",
 		onFilesSuccessfulySelected: ({ filesContent }) => {
-			setSelectedFiles(filesContent);
+			const chosenFiles: InputFileDataT[] = filesContent.map((file) => {
+				const extension = getFileExtension(file.name);
+				return {
+					metadata: { name: file.name, extension, mediaType: `audio/${extension}` },
+					dataUrl: file.content,
+				};
+			});
+			setSelectedFiles(chosenFiles);
 		},
 	});
 
@@ -36,32 +44,52 @@ const ImportLocalDataView = ({ handleFilesImport }: ImportDataViewT) => {
 	};
 
 	/**
-	 * Method to play and pause any particular file
-	 * @param index Index of the file to be played.
+	 * Handler when user clicks the import files button in the modal.
+	 * @param inputFiles: Selected Files
 	 */
-	const handlePlayToggle = (index: number) => {
-		index == playingIndex ? setPlayingIndex(-1) : setPlayingIndex(index);
+	const importFiles = (inputFiles: InputFileDataT[]) => {
+		handleFilesImport(inputFiles).catch((e) => console.error(e));
+		handleModalClose();
 	};
 
-	/**
-	 * Handler when user clicks the import files button in the modal.
-	 * @param files: Selected Files
-	 */
-	const importFiles = (files: FileContent[]) => {
-		const chosenFiles: InputFileDataT[] = files.map((file) => ({
-			metadata: { name: file.name },
-			dataUrl: file.content,
-		}));
+	const [selectedOption, setSelectedOption] = useState("Training Dataset");
 
-		handleFilesImport(chosenFiles).catch((e) => console.error(e));
-
-		handleModalClose();
+	const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setSelectedOption(event.target.value);
 	};
 
 	return (
 		<>
 			<div className={"ImportDataView_container"}>
-				<div className={`ImportDataView_dataTypeContainer`}>Type of Data</div>
+				<div className="ImportDataView_dataTypeContainer regular-text grey-text">
+					<label>
+						<input
+							type="radio"
+							value="Training Dataset"
+							checked={selectedOption === "Training Dataset"}
+							onChange={handleOptionChange}
+						/>
+						Training Dataset
+					</label>
+					<label>
+						<input
+							type="radio"
+							value="Validation Dataset"
+							checked={selectedOption === "Validation Dataset"}
+							onChange={handleOptionChange}
+						/>
+						Validation Dataset
+					</label>
+					<label>
+						<input
+							type="radio"
+							value="Testing Dataset"
+							checked={selectedOption === "Testing Dataset"}
+							onChange={handleOptionChange}
+						/>
+						Testing Dataset
+					</label>
+				</div>
 				<div className={`ImportDataView_btnContainer`}>
 					<button className={`btn btn-light-outline ImportDataView_btn`} onClick={handleModalOpen}>
 						Import Files &nbsp; <FontAwesomeIcon icon={faArrowUpFromBracket} />
@@ -78,27 +106,12 @@ const ImportLocalDataView = ({ handleFilesImport }: ImportDataViewT) => {
 					modalHeight={"70%"}
 				>
 					<div className={`ImportDataView_modalBodyContainer`}>
-						<div className={`ImportDataView_uploadRegion`}>
-							{selectedFiles.length > 0 && (
-								<div style={{ marginBottom: "20px" }}>
-									{selectedFiles.map((file, index) => (
-										<div key={index}>
-											<div className={`ImportDataView_fileContainer`}>
-												{file.name}: &nbsp; &nbsp; &nbsp;
-												<button
-													className={`btn btn-light-solid`}
-													onClick={() => handlePlayToggle(index)}
-												>
-													{" "}
-													{playingIndex == index ? `Stop` : `Play`}
-												</button>
-												<ReactPlayer url={file.content} playing={playingIndex == index} />
-											</div>
-											<br />
-										</div>
-									))}
-								</div>
-							)}
+						<div
+							className={`ImportDataView_uploadRegion ${
+								selectedFiles.length > 0 ? "ImportDataView_uploadRegion___filesPresent" : ""
+							}`}
+						>
+							{selectedFiles.length > 0 && <AudioFileTable files={selectedFiles} />}
 							<span className={`green-text ImportDataView_browse`} onClick={openFileSelector}>
 								BROWSE YOUR PC
 							</span>

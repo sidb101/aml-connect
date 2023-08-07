@@ -6,6 +6,7 @@
   .NavRegion_content {
     width: global.$sidebar-width + global.$nav-padding;
     font-family: global.$font-primary;
+    font-size: global.$text-large;
     border-radius: 4px 0 0 4px;
 
     .NavRegion_heading {

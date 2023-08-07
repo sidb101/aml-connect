@@ -18,7 +18,7 @@ export const LandingPageHeader = () => {
 			<div className={`LandingPageHeader_gridContainer`}>
 				<div className={`LandingPageHeader_gridRow1`}>
 					<button
-						className={`LandingPageHeader_inFrontOfBackDrop btn ${
+						className={`btn LandingPageHeader_inFrontOfBackDrop ${
 							isSelected ? `btn-solid` : `btn-outline`
 						}`}
 						onClick={() => {

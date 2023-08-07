@@ -8,10 +8,16 @@
     padding: $padding;
     width: global.$sidebar-width + global.$nav-padding - 2*$padding; // - 2*padding
     font-family: global.$font-primary;
+    font-size: global.$text-large;
     border-radius: global.$border-radius 0 0 global.$border-radius;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    display: flex;
+    justify-content: left;
+    align-content: center;
+    min-height: 0px;
 
     &:first-of-type {
       margin-top: initial;
