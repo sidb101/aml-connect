@@ -57,6 +57,7 @@ fn get_url() -> Result<String> {
         }
         Err(_) => {
             info!("Using OS specific application directory for database");
+            // TODO: Move this to file management module
             let proj_dirs = ProjectDirs::from("com", "aspinity", "aml_connect")
                 .with_context(|| "Failed to get application directory\n")?;
 

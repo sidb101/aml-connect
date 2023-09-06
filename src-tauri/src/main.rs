@@ -2,7 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use aml_connect::uicontroller;
-use aml_connect::aml_core::db_adapter::{establish_connection, run_db_migrations};
+use aml_connect::aml_core::db_adapter;
 use log::{info, warn};
 use simple_logger::SimpleLogger;
 use diesel::SqliteConnection;
@@ -22,12 +22,12 @@ fn main() {
 }
 
 fn init_db() -> Pool<ConnectionManager<SqliteConnection>> {
-    let db_conn_pool= establish_connection().unwrap_or_else(|e| { 
+    let db_conn_pool= db_adapter::establish_connection().unwrap_or_else(|e| { 
         panic!("Could not establish connection to database :{:?}", e);
     });
 
     //Ensures that the migrations are run before the application starts
-    run_db_migrations(&db_conn_pool).unwrap_or_else(|e| { 
+    db_adapter::run_db_migrations(&db_conn_pool).unwrap_or_else(|e| { 
         warn!("Failed to run pending database migrations :{:?}", e);
         ()
     });
