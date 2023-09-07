@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Accordion.scss";
-import { faAngleUp } from "@fortawesome/free-solid-svg-icons/faAngleUp";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons/faAngleDown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type AccordionProps = {
@@ -30,7 +30,7 @@ const Accordion: React.FC<React.PropsWithChildren<AccordionProps>> = ({
 			<div className={`Accordion_headerContainer ${active}`} onClick={onTitleClick}>
 				<div className={`section-heading-text Accordion_header`}>{header}</div>
 				<i className={`green-text Accordion_dropdown`}>
-					<FontAwesomeIcon icon={faAngleUp} />
+					<FontAwesomeIcon icon={faAngleDown} />
 				</i>
 			</div>
 			<div className={`Accordion_body ${active}`} style={isActive ? { maxHeight: bodyMaxHeight } : {}}>
