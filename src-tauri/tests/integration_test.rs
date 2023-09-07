@@ -1,5 +1,19 @@
+use std::env;
+
+use aml_connect::{self, aml_core::db_adapter};
+use diesel::Connection;
+
 use aml_connect::aml_core::network_manager::{self, SimulatorError, NetworkSimulator};
 use serde_json::{self, Value};
+
+#[test]
+fn save_on_db() {
+    env::set_var("DATABASE_PATH", "./tests");
+    let conn_pool = db_adapter::establish_connection().unwrap();
+    env::remove_var("DATABASE_PATH");
+    let mut conn = conn_pool.get().unwrap();
+    conn.begin_test_transaction().unwrap();
+}
 
 #[test]
 fn test_list_elements_from_simulator() {
@@ -15,5 +29,3 @@ fn test_list_elements_from_simulator() {
     // check that one of the keys "AcDiff" exist in elements_json
     assert!(elements_json["AcDiff"].is_object());
 }
-
-
