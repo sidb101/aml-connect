@@ -1,7 +1,7 @@
 import DataVizView from "./DataVizView";
 import { type DataHubContextT, useDataHubContext } from "../../DataHubPage";
 import { useEffect } from "react";
-import { dataSetupRoute, dataVizRoute, modelCreationRoute, projectOverviewRoute } from "../../../../routes";
+import { dataSetupRoute, modelRoute } from "../../../../routes";
 import { useLocation } from "react-router-dom";
 import { useAppSelector } from "../../../../hooks";
 import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
@@ -20,7 +20,7 @@ const DataViz = (props: DataVizT) => {
 		setFooter((state) => ({
 			...state,
 			prevBtn: { label: "Data Setup", route: dataSetupRoute(projectSlug) },
-			nextBtn: { label: "Model Creation", route: modelCreationRoute(projectSlug) },
+			nextBtn: { label: "Model Creation", route: modelRoute(projectSlug) },
 		}));
 	}, [projectSlug]);
 
