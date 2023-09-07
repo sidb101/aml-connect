@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
 import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
-import { dataVizRoute, neuralNetworkRoute } from "../../routes";
+import { dataVizRoute, modelRoute, neuralNetworkRoute } from "../../routes";
 import Footer, { type FooterBtnT } from "../../components/footer/Footer";
 import "./ModelCreationPage.scss";
-import PageTabs, { getSelectedTabIndex, type PageTabT } from "./layouts/PageTabs/PageTabs";
-import { getPageTabs } from "./layouts/pageTabs";
 import Header from "../../components/header/Header";
+import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
 
 export type ModelCreationPageT = {
 	data?: string;
@@ -51,6 +50,19 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 	useEffect(() => {
 		setSelectedTabIndex(getSelectedTabIndex(pageTabs, pathname));
 	}, [pageTabs, pathname]);
+
+	const getPageTabs = (projectSlug: string): PageTabT[] => {
+		return [
+			{
+				label: "Model",
+				route: modelRoute(projectSlug),
+			},
+			{
+				label: "Neural Networks",
+				route: neuralNetworkRoute(projectSlug),
+			},
+		];
+	};
 
 	return (
 		projectSlug && (

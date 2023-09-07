@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
 import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
-import { projectOverviewRoute, dataVizRoute } from "../../routes";
+import { projectOverviewRoute, dataVizRoute, dataSetupRoute } from "../../routes";
 import Footer, { type FooterBtnT } from "../../components/footer/Footer";
 import "./DataHubPage.scss";
-import PageTabs, { getSelectedTabIndex, type PageTabT } from "./layouts/PageTabs/PageTabs";
-import { getPageTabs } from "./layouts/pageTabs";
 import Header from "../../components/header/Header";
+import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
 
 export type DataSetupPageT = {
 	data?: string;
@@ -51,6 +50,19 @@ const DataHubPage = (props: DataSetupPageT) => {
 	useEffect(() => {
 		setSelectedTabIndex(getSelectedTabIndex(pageTabs, pathname));
 	}, [pageTabs, pathname]);
+
+	const getPageTabs = (projectSlug: string): PageTabT[] => {
+		return [
+			{
+				label: "Data Setup",
+				route: dataSetupRoute(projectSlug),
+			},
+			{
+				label: "Visualize Data",
+				route: dataVizRoute(projectSlug),
+			},
+		];
+	};
 
 	return (
 		projectSlug && (
