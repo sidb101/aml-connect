@@ -38,7 +38,7 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 
 		//call the server to send the files.
 		console.log("Sending file meta data to server: ", importedFiles);
-		sendFilesMetaData(importedFiles).catch((e) => console.error(e));
+		sendFilesMetaData(importedFiles);
 	};
 
 	const sendFilesMetaData = async (files: InputFileDataT[]) => {
@@ -49,17 +49,17 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 			console.log(filesUploadResponse);
 
 			//parse the response
-			if (filesUploadResponse.upload_failed_files.length > 0) {
-				console.log("Some files failed to upload", filesUploadResponse.upload_failed_files);
-			} else {
-				console.log("All the files uploaded successfully", filesUploadResponse.upload_success_files);
-			}
+			// if (filesUploadResponse.upload_failed_files.length > 0) {
+			// 	console.log("Some files failed to upload", filesUploadResponse.upload_failed_files);
+			// } else {
+			// 	console.log("All the files uploaded successfully", filesUploadResponse.upload_success_files);
+			// }
 			const inputFiles = parseSuccessFilesUploadResponse(filesUploadResponse, files);
 
 			//add the successfully uploaded files in the redux state
 			if (inputFiles.length > 0) {
 				dispatch(dataHubActions.addInputFiles({ dataSet: DataSetT.TRAINING, inputFiles: inputFiles }));
-				console.log("Updated The redux state.");
+				// console.log("Updated The redux state.");
 			}
 
 			setIsLoading(false);

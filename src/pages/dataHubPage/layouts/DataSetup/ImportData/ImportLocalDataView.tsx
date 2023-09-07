@@ -9,6 +9,7 @@ import { SUPPORTED_FILE_TYPES } from "../../../../../constants";
 import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
 import { getFileExtension } from "../../../../../clients/api/ApiTransformer";
 import AudioFileTable from "../AudioFileTable";
+import { testIds } from "../../../../../tests/test-utils";
 
 export type ImportDataViewT = {
 	handleFilesImport: (files: InputFileDataT[]) => Promise<void>;
@@ -91,7 +92,11 @@ const ImportLocalDataView = ({ handleFilesImport }: ImportDataViewT) => {
 					</label>
 				</div>
 				<div className={`ImportDataView_btnContainer`}>
-					<button className={`btn btn-light-outline ImportDataView_btn`} onClick={handleModalOpen}>
+					<button
+						className={`btn btn-light-outline ImportDataView_btn`}
+						onClick={handleModalOpen}
+						data-testid={testIds.importFilesBtn}
+					>
 						Import Files &nbsp; <FontAwesomeIcon icon={faArrowUpFromBracket} />
 					</button>
 					<div className={`light-grey-text small-text ImportDataView_btnHint`}>WAV format supported only</div>
@@ -105,14 +110,18 @@ const ImportLocalDataView = ({ handleFilesImport }: ImportDataViewT) => {
 					modalWidth={"60%"}
 					modalHeight={"70%"}
 				>
-					<div className={`ImportDataView_modalBodyContainer`}>
+					<div className={`ImportDataView_modalBodyContainer`} data-testid={testIds.importModalBody}>
 						<div
 							className={`ImportDataView_uploadRegion ${
 								selectedFiles.length > 0 ? "ImportDataView_uploadRegion___filesPresent" : ""
 							}`}
 						>
 							{selectedFiles.length > 0 && <AudioFileTable files={selectedFiles} />}
-							<span className={`green-text ImportDataView_browse`} onClick={openFileSelector}>
+							<span
+								className={`green-text ImportDataView_browse`}
+								onClick={openFileSelector}
+								data-testid={testIds.browsePCLink}
+							>
 								BROWSE YOUR PC
 							</span>
 						</div>
@@ -121,6 +130,7 @@ const ImportLocalDataView = ({ handleFilesImport }: ImportDataViewT) => {
 							onClick={() => {
 								importFiles(selectedFiles);
 							}}
+							data-testid={testIds.modalImportFilesBtn}
 						>
 							Import File/s &nbsp; <FontAwesomeIcon icon={faArrowUpFromBracket} />
 						</button>

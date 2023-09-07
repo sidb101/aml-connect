@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../../hooks";
 import { selectCurrentProjectAudioDir, selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
 import tauriFsClient from "../../../../clients/fs/TauriFsClient";
 import Spinner from "../../../../components/spinner/Spinner";
+import { testIds } from "../../../../tests/test-utils";
 
 export type DataSetupViewT = {
 	importDataComponent: JSX.Element | JSX.Element[];
