@@ -1,7 +1,7 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::path::{PathBuf, Path};
+use std::path::PathBuf;
 
 use aml_connect::aml_core::db_adapter::models::NewProject;
 use aml_connect::aml_core::db_adapter::schema::projects;
@@ -12,6 +12,8 @@ use log::{info, warn};
 use simple_logger::SimpleLogger;
 use diesel::{SqliteConnection, RunQueryDsl};
 use diesel::r2d2::{ConnectionManager, Pool};
+
+use aml_connect::aml_core::file_data_manager;
 
 fn main() {
     info!("Starting AML Connect...");
@@ -73,10 +75,9 @@ fn add_dummy_project(
 
 fn init_fs(path_resolver: &tauri::PathResolver) -> PathBuf {
     // TODO: Fix
-    PathBuf::from("C:\\Users\\johan\\AppData\\Roaming\\AML Connect")
-    // data_manager::create_app_dir_if_not_exists(path_resolver).unwrap_or_else(|e| {
-    //     panic!("Could not create app dir :{:?}", e);
-    // })
+    file_data_manager::create_app_dir_if_not_exists(path_resolver).unwrap_or_else(|e| {
+        panic!("Could not create app dir :{:?}", e);
+    })
 }
 
 fn init_logger() {

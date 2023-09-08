@@ -1,50 +1,50 @@
 @use "../../global";
 
 .Accordion_container {
-  .Accordion_headerContainer {
-    display: flex;
-    height: 50px;
-    border-bottom: solid 2px global.$color-grey-2;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 global.$panel-padding;
-    cursor: pointer;
+	.Accordion_headerContainer {
+		display: flex;
+		height: 50px;
+		border-bottom: solid 2px global.$color-grey-2;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 global.$panel-padding;
+		cursor: pointer;
 
-    .Accordion_header {
-      padding: 0 global.$panel-padding;
-    }
+		.Accordion_header {
+			padding: 0 global.$panel-padding;
+		}
 
-    .Accordion_dropdown {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 65%;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      font-size: global.$text-large;
-      border: solid 2px global.$color-grey-2;
-      transition: all 200ms;
-    }
-  }
+		.Accordion_dropdown {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 65%;
+			aspect-ratio: 1;
+			border-radius: 50%;
+			font-size: global.$text-large;
+			border: solid 2px global.$color-grey-2;
+			transition: all 200ms;
+		}
+	}
 
-  .Accordion_body {
-    padding: 0 global.$panel-padding;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 200ms;
+	.Accordion_body {
+		padding: 0 global.$panel-padding;
+		max-height: 0;
+		overflow: hidden;
+		transition: all 200ms;
 
-    &.Accordion_active {
-      max-height: 15vh;
-    }
+		&.Accordion_active {
+			max-height: 15vh;
+		}
 
-    &:hover{
-      overflow-y: auto;
-    }
-  }
+		&:hover {
+			overflow-y: auto;
+		}
+	}
 
-  .Accordion_headerContainer.Accordion_active {
-    .Accordion_dropdown {
-      transform: rotate(180deg);
-    }
-  }
+	.Accordion_headerContainer.Accordion_active {
+		.Accordion_dropdown {
+			transform: rotate(180deg);
+		}
+	}
 }

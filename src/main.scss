@@ -10,211 +10,215 @@ Common Classes
 
 //noinspection ALL
 .white-panel {
-  background-color: global.$color-white;
-  color: global.$color-dark-blue;
-  border-radius: global.$border-radius;
+	background-color: global.$color-white;
+	color: global.$color-dark-blue;
+	border-radius: global.$border-radius;
 }
 
 .xlight-panel {
-  background-color: global.$color-grey-1;
-  color: global.$color-dark-blue;
-  border-radius: global.$border-radius;
+	background-color: global.$color-grey-1;
+	color: global.$color-dark-blue;
+	border-radius: global.$border-radius;
 }
 
 .dark-grey-panel {
-  background-color: global.$color-grey-6;
-  color: global.$color-white;
-  border-radius: global.$border-radius;
+	background-color: global.$color-grey-6;
+	color: global.$color-white;
+	border-radius: global.$border-radius;
 }
 
 .dark-panel {
-  background-color: global.$color-dark-blue;
-  color: global.$color-white;
-  border-radius: global.$border-radius;
+	background-color: global.$color-dark-blue;
+	color: global.$color-white;
+	border-radius: global.$border-radius;
 }
 
 /* -- Various kinds of containers -- */
 
 .content-container {
-  $left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
-  $top-offset: global.$header-height + 1 * global.$content-padding; /* This is the height of the header with top padding */
-  $bottom-offset: global.$footer-height + 2 * global.$panel-padding; /* This is the height of the footer with padding */
+	$left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
+	$top-offset: global.$header-height + 1 * global.$content-padding; /* This is the height of the header with top padding */
+	$bottom-offset: global.$footer-height + 2 * global.$panel-padding; /* This is the height of the footer with padding */
 
-  .body-content-container {
-    position: absolute; /* Absolute positioning will allow content to move underneath the header and sidebar */
-    margin-top: $top-offset; /* This should be the same as the height of the header */
-    margin-left: $left-offset; /* This should be the same as the width of the sidebar */
-    width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
-    height: calc(100% - #{$top-offset} - #{global.$content-padding} - #{$bottom-offset}); /* Subtract header height and padding and footer height */
-    overflow: auto; /* Enable scrolling in both dimensions */
-    padding: global.$content-padding global.$content-padding 0;
-    scrollbar-gutter: stable both-edges;
-    z-index: 0;
-  }
+	.body-content-container {
+		position: absolute; /* Absolute positioning will allow content to move underneath the header and sidebar */
+		margin-top: $top-offset; /* This should be the same as the height of the header */
+		margin-left: $left-offset; /* This should be the same as the width of the sidebar */
+		width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
+		height: calc(
+			100% - #{$top-offset} - #{global.$content-padding} - #{$bottom-offset}
+		); /* Subtract header height and padding and footer height */
+		overflow: auto; /* Enable scrolling in both dimensions */
+		padding: global.$content-padding global.$content-padding 0;
+		scrollbar-gutter: stable both-edges;
+		z-index: 0;
+	}
 
-  .body-content-container-no-footer{
-    @extend .body-content-container;
-    height: calc(100% - #{$top-offset} - #{global.$content-padding}); /* Subtract header height and padding */
-  }
+	.body-content-container-no-footer {
+		@extend .body-content-container;
+		height: calc(100% - #{$top-offset} - #{global.$content-padding}); /* Subtract header height and padding */
+	}
 
-  .body-content-container-no-header-btns{
-    @extend .body-content-container;
-    height: calc(100% - #{$top-offset} + 0.5 * #{global.$header-height} - #{global.$content-padding} -  #{$bottom-offset})  ; /* Subtract header height and padding */
-    margin-top: $top-offset - 0.5 * global.$header-height;
-  }
+	.body-content-container-no-header-btns {
+		@extend .body-content-container;
+		height: calc(
+			100% - #{$top-offset} + 0.5 * #{global.$header-height} - #{global.$content-padding} - #{$bottom-offset}
+		); /* Subtract header height and padding */
+		margin-top: $top-offset - 0.5 * global.$header-height;
+	}
 
-  .main-content-container {
-    position: absolute;
-    width: calc(100% - 2 * #{global.$content-padding});
-    z-index: 0;
-  }
+	.main-content-container {
+		position: absolute;
+		width: calc(100% - 2 * #{global.$content-padding});
+		z-index: 0;
+	}
 }
 
 /* -- Various kinds of texts -- */
 
 .brand-text {
-  font-family: global.$font-brand;
-  font-size: global.$text-brand;
-  text-align: center;
-  font-weight: 400;
+	font-family: global.$font-brand;
+	font-size: global.$text-brand;
+	text-align: center;
+	font-weight: 400;
 }
 
 //noinspection ALL
 .main-heading-text {
-  font-family: global.$font-primary-bold;
-  font-size: global.$text-xxlarge;
-  line-height: 36px;
-  padding-bottom: 20px;
-  color: global.$color-dark-blue;
+	font-family: global.$font-primary-bold;
+	font-size: global.$text-xxlarge;
+	line-height: 36px;
+	padding-bottom: 20px;
+	color: global.$color-dark-blue;
 }
 
 //noinspection ALL
 .section-heading-text {
-  font-family: global.$font-primary-light;
-  font-size: global.$text-xlarge;
-  color: global.$color-dark-blue;
+	font-family: global.$font-primary-light;
+	font-size: global.$text-xlarge;
+	color: global.$color-dark-blue;
 }
 
 //noinspection ALL
 .section-subheading-text {
-  font-family: global.$font-primary-light;
-  font-size: global.$text-large;
-  color: global.$color-dark-blue
+	font-family: global.$font-primary-light;
+	font-size: global.$text-large;
+	color: global.$color-dark-blue;
 }
 
 .regular-text {
-  font-family: global.$font-primary-light;
-  font-size: global.$text-regular;
-  color: global.$color-dark-blue;
-  font-weight: bold;
+	font-family: global.$font-primary-light;
+	font-size: global.$text-regular;
+	color: global.$color-dark-blue;
+	font-weight: bold;
 }
 
 .small-text {
-  font-family: global.$font-primary-light;
-  font-size: global.$text-small;
-  color: global.$color-dark-blue;
-  font-weight: bold;
+	font-family: global.$font-primary-light;
+	font-size: global.$text-small;
+	color: global.$color-dark-blue;
+	font-weight: bold;
 }
 
 //noinspection ALL
 .xsmall-text {
-  font-family: global.$font-primary-light;
-  font-size: global.$text-xsmall;
-  color: global.$color-dark-blue;
-  font-weight: bold;
+	font-family: global.$font-primary-light;
+	font-size: global.$text-xsmall;
+	color: global.$color-dark-blue;
+	font-weight: bold;
 }
 
 //noinspection ALL
 .green-text {
-  color: global.$color-light-green;
+	color: global.$color-light-green;
 }
 
 //noinspection ALL
 .grey-text {
-  color: global.$color-grey-5;
+	color: global.$color-grey-5;
 }
 
 //noinspection ALL
 .light-grey-text {
-  color: global.$color-grey-4;
+	color: global.$color-grey-4;
 }
 
 .light-text {
-  color: global.$color-grey-2;
+	color: global.$color-grey-2;
 }
 
 //noinspection ALL
 .white-text {
-  color: global.$color-white;
+	color: global.$color-white;
 }
 
 /* -- Various kinds of Buttons -- */
 
 .btn {
-  font-size: global.$text-small;
-  font-family: global.$font-primary-light;
-  padding: global.$general-padding global.$general-padding * 2;
-  border-radius: global.$border-radius;
-  cursor: pointer;
+	font-size: global.$text-small;
+	font-family: global.$font-primary-light;
+	padding: global.$general-padding global.$general-padding * 2;
+	border-radius: global.$border-radius;
+	cursor: pointer;
 }
 
 .btn-solid {
-  background-color: global.$color-green;
-  border: none;
-  color: global.$color-white;
+	background-color: global.$color-green;
+	border: none;
+	color: global.$color-white;
 
-  &:hover {
-    background-color: global.$color-dark-green;
-  }
+	&:hover {
+		background-color: global.$color-dark-green;
+	}
 
-  &:active {
-    background-color: global.$color-green;
-  }
+	&:active {
+		background-color: global.$color-green;
+	}
 }
 
 //noinspection ALL
 .btn-outline {
-  background: none;
-  border: global.$color-green solid 1px;
-  color: global.$color-green;
+	background: none;
+	border: global.$color-green solid 1px;
+	color: global.$color-green;
 
-  &:hover {
-    background-color: global.$color-green;
-    color: global.$color-white;
-  }
+	&:hover {
+		background-color: global.$color-green;
+		color: global.$color-white;
+	}
 
-  &:active {
-    background-color: global.$color-dark-green;
-  }
+	&:active {
+		background-color: global.$color-dark-green;
+	}
 
-  //noinspection ALL
-  .btn-light-solid {
-    background-color: global.$color-light-green;
-    border: none;
-    color: global.$color-white;
+	//noinspection ALL
+	.btn-light-solid {
+		background-color: global.$color-light-green;
+		border: none;
+		color: global.$color-white;
 
-    &:hover {
-      background-color: global.$color-dark-light-green;
-    }
+		&:hover {
+			background-color: global.$color-dark-light-green;
+		}
 
-    &:active {
-      background-color: global.$color-light-green;
-    }
-  }
+		&:active {
+			background-color: global.$color-light-green;
+		}
+	}
 
-  //noinspection ALL
-  .btn-light-outline {
-    background: none;
-    border: global.$color-light-green solid 1px;
-    color: global.$color-light-green;
+	//noinspection ALL
+	.btn-light-outline {
+		background: none;
+		border: global.$color-light-green solid 1px;
+		color: global.$color-light-green;
 
-    &:hover {
-      background-color: global.$color-light-green;
-      color: global.$color-white;
-    }
+		&:hover {
+			background-color: global.$color-light-green;
+			color: global.$color-white;
+		}
 
-    &:active {
-      background-color: global.$color-dark-light-green;
-    }
-  }
+		&:active {
+			background-color: global.$color-dark-light-green;
+		}
+	}
 }

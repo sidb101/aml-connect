@@ -4,46 +4,44 @@ SCSS Global Theme Variables
 
 ******************************/
 
-
 /* -- Colors -- */
-$color-dark-green: #18646B; // dark primary (for hovers)
-$color-green: #1C757D; //primary color
+$color-dark-green: #18646b; // dark primary (for hovers)
+$color-green: #1c757d; //primary color
 
-$color-dark-light-green: #23798C; //(for hovers)
-$color-light-green: #257F93;
+$color-dark-light-green: #23798c; //(for hovers)
+$color-light-green: #257f93;
 
 $color-white: #ffffff; //mostly for panels
-$color-grey-1: #F0F5F9; //mostly for background
-$color-grey-2: #EFEFEF; //mostly for hover over color-grey-1
-$color-grey-3: #CED0D3; //mostly for boundaries
-$color-grey-4: #97999C; //for light text
-$color-grey-5: #5F6267; //mostly for text
-$color-grey-6: #3E434A; //for nav bar
+$color-grey-1: #f0f5f9; //mostly for background
+$color-grey-2: #efefef; //mostly for hover over color-grey-1
+$color-grey-3: #ced0d3; //mostly for boundaries
+$color-grey-4: #97999c; //for light text
+$color-grey-5: #5f6267; //mostly for text
+$color-grey-6: #3e434a; //for nav bar
 
 $color-dark-blue: #222831; //mostly for nav-bar (secondary color)
 $color-bright-blue: #0072bd; //mostly for waveforms
-$color-light-blue: #D8EEF2; //for network PageTabs
-
+$color-light-blue: #d8eef2; //for network PageTabs
 
 /* -- Font Families -- */
 @font-face {
-  font-family: "Roboto Light";
-  src: url("./assets/fonts/roboto/Roboto-Light.ttf");
+	font-family: "Roboto Light";
+	src: url("./assets/fonts/roboto/Roboto-Light.ttf");
 }
 
 @font-face {
-  font-family: "Roboto Medium";
-  src: url("./assets/fonts/roboto/Roboto-Medium.ttf");
+	font-family: "Roboto Medium";
+	src: url("./assets/fonts/roboto/Roboto-Medium.ttf");
 }
 
 @font-face {
-  font-family: "Roboto Bold";
-  src: url("./assets/fonts/roboto/Roboto-Bold.ttf");
+	font-family: "Roboto Bold";
+	src: url("./assets/fonts/roboto/Roboto-Bold.ttf");
 }
 
 @font-face {
-  font-family: "Outfit";
-  src: url("./assets/fonts/outfit/Outfit-VariableFont_wght.ttf");
+	font-family: "Outfit";
+	src: url("./assets/fonts/outfit/Outfit-VariableFont_wght.ttf");
 }
 
 $font-brand: "Outfit", "Arial", "serif";
@@ -73,12 +71,5 @@ $sidebar-width: 260px;
 $header-height: 100px;
 $footer-height: 50px;
 
-
 /* -- Borders -- */
 $border-radius: 4px;
-
-
-
-
-
-

@@ -1,17 +1,17 @@
 .ExampleProject_container {
-  //width: 50%;
-  padding: 40px;
+	//width: 50%;
+	padding: 40px;
 
-  .ExampleProject_projectPanel {
-    width: 100%;
-    min-width: 400px;
-    height: 30%;
-  }
+	.ExampleProject_projectPanel {
+		width: 100%;
+		min-width: 400px;
+		height: 30%;
+	}
 
-  .ExampleProject_buttonContainer{
-    width: 40%;
-    display: flex;
-    padding: 20px;
-    justify-content: space-around;
-  }
+	.ExampleProject_buttonContainer {
+		width: 40%;
+		display: flex;
+		padding: 20px;
+		justify-content: space-around;
+	}
 }

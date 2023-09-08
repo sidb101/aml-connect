@@ -1,39 +1,39 @@
 @use "../../global";
 
 .Footer_contentContainer {
-  $left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
+	$left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
 
-  position: fixed; /* Fixed position will make the footer stick to the bottom */
-  bottom: 0;
-  left: $left-offset; /* This should be the same as the width of the sidebar */
-  min-height: global.$footer-height; /* Adjust this value to fit your design */
-  width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
-  padding: global.$panel-padding global.$content-padding; // (Top & Bottom) (Left & Right)
-  z-index: 0;
-  display: flex;
+	position: fixed; /* Fixed position will make the footer stick to the bottom */
+	bottom: 0;
+	left: $left-offset; /* This should be the same as the width of the sidebar */
+	min-height: global.$footer-height; /* Adjust this value to fit your design */
+	width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
+	padding: global.$panel-padding global.$content-padding; // (Top & Bottom) (Left & Right)
+	z-index: 0;
+	display: flex;
 }
 
-.Footer___both{
-  justify-content: space-between;
+.Footer___both {
+	justify-content: space-between;
 }
 
-.Footer___prevOnly{
-  justify-content: flex-start;
+.Footer___prevOnly {
+	justify-content: flex-start;
 }
 
-.Footer___nextOnly{
-  justify-content: flex-end;
+.Footer___nextOnly {
+	justify-content: flex-end;
 }
 
 .Footer_btn {
-  width: 200px;
-  height: 48px;
+	width: 200px;
+	height: 48px;
 
-  .Footer_iconLeft {
-    padding-right: 10px;
-  }
+	.Footer_iconLeft {
+		padding-right: 10px;
+	}
 
-  .Footer_iconRight {
-    padding-left: 10px;
-  }
+	.Footer_iconRight {
+		padding-left: 10px;
+	}
 }
