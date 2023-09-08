@@ -1,31 +1,73 @@
-import React, { useCallback } from "react";
+import { useState, useCallback } from "react";
 import ReactFlow, {
 	addEdge,
-	Background,
-	type Connection,
-	Controls,
+	type FitViewOptions,
+	applyNodeChanges,
+	applyEdgeChanges,
+	type Node,
 	type Edge,
+	type OnNodesChange,
+	type OnEdgesChange,
+	type OnConnect,
+	type NodeTypes,
+	type DefaultEdgeOptions,
+	Controls,
 	MiniMap,
-	useEdgesState,
-	useNodesState,
+	Background,
+	BackgroundVariant,
 } from "reactflow";
 
 import "./Canvas.scss";
 import "reactflow/dist/style.css";
+import CustomNode from "./CustomNode";
+import SourceNode from "./SourceNode";
+import SinkNode from "./SinkNode";
 
-const initialNodes = [
-	{ id: "1", position: { x: 0, y: 0 }, data: { label: "1" } },
-	{ id: "2", position: { x: 0, y: 100 }, data: { label: "2" } },
+const initialNodes: Node[] = [
+	{ id: "1", type: "source", position: { x: 50, y: 200 }, data: { label: "IN" } },
+	{ id: "2", type: "custom", position: { x: 250, y: 100 }, data: { label: "BPF" } },
+	{ id: "3", type: "custom", position: { x: 450, y: 200 }, data: { label: "GAIN" } },
+	{ id: "4", type: "sink", position: { x: 650, y: 200 }, data: { label: "OUT" } },
 ];
-const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
+const initialEdges: Edge[] = [
+	{ id: "e1-2", source: "1", target: "2", type: "step" },
+	{ id: "e2-3", source: "2", target: "3", type: "step" },
+	{ id: "e3-4", source: "3", target: "4", type: "step" },
+];
+
+const fitViewOptions: FitViewOptions = {
+	padding: 0.2,
+};
+
+const defaultEdgeOptions: DefaultEdgeOptions = {
+	animated: false,
+};
+
+const nodeTypes: NodeTypes = {
+	source: SourceNode,
+	custom: CustomNode,
+	sink: SinkNode,
+};
 
 export default function Canvas() {
-	const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
-	const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+	const [nodes, setNodes] = useState<Node[]>(initialNodes);
+	const [edges, setEdges] = useState<Edge[]>(initialEdges);
 
-	const onConnect = useCallback(
-		(params: Edge | Connection) => {
-			setEdges((eds) => addEdge(params, eds));
+	const onNodesChange: OnNodesChange = useCallback(
+		(changes) => {
+			setNodes((nds) => applyNodeChanges(changes, nds));
+		},
+		[setNodes]
+	);
+	const onEdgesChange: OnEdgesChange = useCallback(
+		(changes) => {
+			setEdges((eds) => applyEdgeChanges(changes, eds));
+		},
+		[setEdges]
+	);
+	const onConnect: OnConnect = useCallback(
+		(connection) => {
+			setEdges((eds) => addEdge(connection, eds));
 		},
 		[setEdges]
 	);
@@ -38,10 +80,14 @@ export default function Canvas() {
 				onNodesChange={onNodesChange}
 				onEdgesChange={onEdgesChange}
 				onConnect={onConnect}
+				fitView
+				fitViewOptions={fitViewOptions}
+				defaultEdgeOptions={defaultEdgeOptions}
+				nodeTypes={nodeTypes}
 			>
 				<Controls />
 				<MiniMap />
-				<Background variant="dots" gap={12} size={1} />
+				<Background variant={BackgroundVariant.Dots} gap={12} size={1} />
 			</ReactFlow>
 		</div>
 	);
