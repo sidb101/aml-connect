@@ -1,6 +1,8 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use std::path::{PathBuf, Path};
+
 use aml_connect::uicontroller;
 use aml_connect::aml_core::db_adapter;
 use log::{info, warn};
@@ -15,7 +17,15 @@ fn main() {
     let db_conn_pool = init_db();
 
     tauri::Builder::default()
-        .manage(db_conn_pool)
+        .setup(|app| {
+            init_logger();
+            info!("Initializing AML Connect...");
+            let db_conn_pool = init_db();
+            let app_dir = init_fs(&app.path_resolver());
+            tauri::Manager::manage(app, db_conn_pool);
+            tauri::Manager::manage(app, app_dir);
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![uicontroller::get_elements])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -32,6 +42,14 @@ fn init_db() -> Pool<ConnectionManager<SqliteConnection>> {
         ()
     });
     db_conn_pool
+}
+
+fn init_fs(path_resolver: &tauri::PathResolver) -> PathBuf {
+    // TODO: Fix
+    PathBuf::from("C:\\Users\\johan\\AppData\\Roaming\\AML Connect")
+    // data_manager::create_app_dir_if_not_exists(path_resolver).unwrap_or_else(|e| {
+    //     panic!("Could not create app dir :{:?}", e);
+    // })
 }
 
 fn init_logger() {
