@@ -17,7 +17,6 @@ use aml_connect::aml_core::file_data_manager;
 
 fn main() {
     info!("Starting AML Connect...");
-    init_logger();
     
     tauri::Builder::default()
         .setup(|app| {
@@ -82,6 +81,6 @@ fn init_fs(path_resolver: &tauri::PathResolver) -> PathBuf {
 
 fn init_logger() {
     SimpleLogger::new().init().unwrap_or_else(|e| { 
-        panic!("Failed to initialize logger :{:?}", e);
+        panic!("Failed to initialize logger :{:?}", e.to_string());
     });
 }
