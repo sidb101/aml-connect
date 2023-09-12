@@ -10,7 +10,7 @@ use aml_connect::aml_core::db_adapter;
 use anyhow::Context;
 use log::{info, warn};
 use simple_logger::SimpleLogger;
-use diesel::{SqliteConnection, RunQueryDsl};
+use diesel::{ExpressionMethods, QueryDsl, SqliteConnection, RunQueryDsl};
 use diesel::r2d2::{ConnectionManager, Pool};
 
 use aml_connect::aml_core::file_data_manager;
@@ -46,7 +46,7 @@ fn init_db() -> Pool<ConnectionManager<SqliteConnection>> {
 
     // TODO: Remove this
     add_dummy_project("test_project", &db_conn_pool).unwrap_or_else(|e| {
-        warn!("Failed to add dummy project :{:?}", e);
+        warn!("Failed to add dummy project OR project already exists:{:?}", e);
         ()
     });
 
@@ -61,15 +61,30 @@ fn add_dummy_project(
     let conn = &mut db_conn_pool
         .get()
         .with_context(|| "failed to get db connection to add dummy project")?;
-    let dummy_project = NewProject {
-        slug: project_slug.to_owned(),
-        description: Some("This is a test project".to_owned()),
-    };
-    diesel::insert_into(projects::table)
-        .values(&dummy_project)
-        .execute(conn)
-        .with_context(|| format!("failed to insert dummy project : {project_slug}"))?;
-    Ok(())
+    
+    let match_count = projects::table
+        .filter(projects::slug.eq(project_slug))
+        .count()
+        .get_result::<i64>(conn)
+        .with_context(|| format!("failed to get count of projects with slug : {project_slug}"))?;
+    
+    if match_count == 1 {
+        info!("Dummy project already exists");
+        Ok(())
+    }
+    else  {
+        info!("Adding dummy project");
+        let dummy_project = NewProject {
+            slug: project_slug.to_owned(),
+            description: Some("This is a test project".to_owned()),
+        };
+        diesel::insert_into(projects::table)
+            .values(&dummy_project)
+            .execute(conn)
+            .with_context(|| format!("failed to insert dummy project : {project_slug}"))?;
+        Ok(())
+    }
+    
 }
 
 fn init_fs(path_resolver: &tauri::PathResolver) -> PathBuf {
