@@ -1,9 +1,26 @@
+
+use anyhow::{ensure, Context, Result};
 use mockall::{automock, predicate::*};
 use tauri::api::process::Command;
-use tauri::Error;
+use serde::{Deserialize, Serialize};
+use ts_rs::TS;
+
+use thiserror::Error;
 
 pub struct AmlSimulatorSidecar {
-    sidecar_name: String,
+    pub sidecar_name: String,
+}
+
+#[derive(Error, Debug, Serialize, Deserialize, TS, PartialEq, Clone)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub enum SimulatorError {
+    #[error("Failed to Build sidecar command")]
+    CommandBuildError(String),
+    #[error("Failed to execute sidecar command")]
+    CommandExecutionError(String),
+    #[error("Failed to parse sidecar output as JSON")]
+    JsonParseError(String),
 }
 
 impl AmlSimulatorSidecar {
@@ -20,45 +37,31 @@ impl AmlSimulatorSidecar {
 
 #[automock]
 pub trait ExecutableSidecar {
-    fn get_output(&self, params: Vec<String>) -> Result<String, Error>;
+    fn get_output(&self, params: Vec<String>) -> Result<String, SimulatorError>;
 }
 
 impl ExecutableSidecar for AmlSimulatorSidecar {
-    fn get_output(&self, params: Vec<String>) -> Result<String, Error> {
-        let command_result = Command::new_sidecar(self.get_sidecar_name());
-        let command = match command_result {
-            Ok(cmd) => cmd,
-            Err(e) => {
-                return Err(e);
-            }
-        };
-        let command_output = command.args(&params).output();
-        match command_output {
-            Ok(output) => Ok(output.stdout),
-            Err(e) => {
-                return Err(tauri::Error::FailedToExecuteApi(e));
-            }
-        }
+    fn get_output(&self, params: Vec<String>) -> Result<String, SimulatorError> {
+        let command_output = Command::new_sidecar(self.get_sidecar_name())
+            .map_err(|e| SimulatorError::CommandBuildError(e.to_string()))?
+            .args(&params)
+            .output()
+            .map_err(|e| SimulatorError::CommandExecutionError(e.to_string()))?;
+        
+        Ok(command_output.stdout)
     }
 }
 
 pub trait NetworkSimulator {
-    fn list_elements<E: ExecutableSidecar>(&self, sidecar: &E) -> Option<String>;
+    fn list_elements<E: ExecutableSidecar>(sidecar: &E) -> Result<String, SimulatorError>;
 }
 
 pub struct AmlSimulator {}
 
 impl NetworkSimulator for AmlSimulator {
-    fn list_elements<E: ExecutableSidecar>(&self, sidecar: &E) -> Option<String> {
+    fn list_elements<E: ExecutableSidecar>(sidecar: &E) -> Result<String, SimulatorError> {
         let params = vec!["--get_elements".to_string()];
-        let res = sidecar.get_output(params);
-        match res {
-            Ok(str) => Some(str),
-            Err(e) => {
-                eprintln!("Failed to list elements: {}", e);
-                None
-            }
-        }
+        sidecar.get_output(params)
     }
 }
 
@@ -82,8 +85,8 @@ mod tests {
     fn test_list_elements_uses_correct_params() {
         // arrange
         let expected_param: Vec<String> = vec!["--get_elements".to_string()];
-        let expected_output: Option<String> = Some("Dummy output".to_string());
-        let expected_output_result: Result<String, Error> = Ok(expected_output.clone().unwrap());
+        let expected_output: String = String::from("Dummy output");
+        let expected_output_result: Result<String, SimulatorError> = Ok(expected_output.clone());
 
         let mut mock = MockExecutableSidecar::new();
         mock.expect_get_output()
@@ -91,12 +94,10 @@ mod tests {
             .times(1)
             .return_once(move |_| expected_output_result);
 
-        let sim = AmlSimulator {};
-
         // act
-        let output = sim.list_elements(&mock);
+        let output = AmlSimulator::list_elements(&mock);
 
         //assert
-        assert_eq!(expected_output, output);
+        assert_eq!(Ok(expected_output), output);
     }
 }
