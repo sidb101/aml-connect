@@ -28,7 +28,10 @@ fn main() {
             tauri::Manager::manage(app, app_dir);
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![uicontroller::get_elements])
+        .invoke_handler(tauri::generate_handler![
+            uicontroller::get_elements,
+            uicontroller::put_files,
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

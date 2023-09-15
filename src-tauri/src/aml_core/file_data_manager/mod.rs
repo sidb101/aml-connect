@@ -6,6 +6,8 @@ use thiserror::Error;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
 
+pub mod put_files;
+
 #[derive(Debug, Clone, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/clients/api/bindings/")]
@@ -64,7 +66,7 @@ pub struct FilesUploadRequest {
     pub input_files: Vec<FileUploadRequest>,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize, TS)] 
 #[ts(export)]
 #[ts(export_to = "../src/clients/api/bindings/")]
 pub struct FileUploadErrorResponse {

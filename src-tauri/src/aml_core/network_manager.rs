@@ -1,5 +1,5 @@
 
-use anyhow::{ensure, Context, Result};
+use anyhow::Result;
 use mockall::{automock, predicate::*};
 use tauri::api::process::Command;
 use serde::{Deserialize, Serialize};
@@ -69,7 +69,6 @@ impl NetworkSimulator for AmlSimulator {
 mod tests {
     use crate::aml_core::network_manager::*;
     use mockall::*;
-    use tauri::Error;
 
     #[test]
     fn test_aml_simulator_sidecar_name() {
