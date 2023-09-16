@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { generalActions, ProjectStatus } from "../../redux/slices/GeneralSlice";
 import LandingPageView from "./layouts/LandingView";
-import { projectCards } from "../../tests/mockdata/allProjectCards";
 
-type LandingPageProps = {
+export type LandingPageT = {
 	data?: string;
 };
 
-const LandingPage = (props: LandingPageProps) => {
+const LandingPage = (props: LandingPageT) => {
 	const dispatch = useAppDispatch();
 	const projectStatus = useAppSelector((state) => state.general.projectStatus);
 
@@ -19,7 +18,7 @@ const LandingPage = (props: LandingPageProps) => {
 
 	return (
 		<>
-			<LandingPageView projectCards={projectCards} />
+			<LandingPageView />
 		</>
 	);
 };

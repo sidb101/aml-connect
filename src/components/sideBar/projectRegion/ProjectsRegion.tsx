@@ -13,7 +13,7 @@ export const ProjectsRegion = ({ projects, ...props }: ProjectsRegionT) => (
 	<div className={"ProjectsRegion_container"}>
 		{projects.map((project: BasicProjectDataT, index) => (
 			<Link key={index} to={projectOverviewRoute(project.slug)} data-testid={testIds.projectLinks}>
-				<div className={"ProjectsRegion_projectName btn btn-solid"}>{project.name}</div>
+				<div className={"btn btn-solid ProjectsRegion_projectName"}>{project.name}</div>
 			</Link>
 		))}
 	</div>

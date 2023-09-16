@@ -143,7 +143,7 @@ workspace {
     views {
         systemLandscape landscape {
             include *
-            autolayout
+            autolayout lr
         }
 
         systemContext astrl {

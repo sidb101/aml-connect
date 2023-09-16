@@ -3,7 +3,6 @@ import { NewProjectPopup } from "./NewProjectPopup";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
-import Backdrop from "../../../../components/backdrop/Backdrop";
 
 export const LandingPageHeader = () => {
 	const [isSelected, setIsSelected] = useState(false);
@@ -14,11 +13,18 @@ export const LandingPageHeader = () => {
 
 	return (
 		<>
-			{isSelected && <Backdrop clickHandler={togglePopup} />}
+			{isSelected && (
+				<div
+					className={`LandingPageHeader_backDrop`}
+					onClick={() => {
+						togglePopup();
+					}}
+				></div>
+			)}
 			<div className={`LandingPageHeader_gridContainer`}>
 				<div className={`LandingPageHeader_gridRow1`}>
 					<button
-						className={`btn LandingPageHeader_inFrontOfBackDrop ${
+						className={`LandingPageHeader_inFrontOfBackDrop btn ${
 							isSelected ? `btn-solid` : `btn-outline`
 						}`}
 						onClick={() => {

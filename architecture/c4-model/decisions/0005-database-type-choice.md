@@ -6,8 +6,6 @@ Date: 2023-07-10
 
 Proposed
 
-Superceded by [6. Use Sqlite Database](0006-use-sqlite-database.md)
-
 ## Context
 
 We need to chose a database technology to store data on the backend. The important data entities are *networks* and *projects*.
