@@ -29,16 +29,6 @@
             ]
           }
         ]
-      },
-      "fs": {
-        "scope": ["$APPLOCALDATA/**"],
-        "readFile": true,
-        "readDir": true,
-        "exists": true,
-        "writeFile": true
-      },
-      "path": {
-        "all": true
       }
     },
     "bundle": {
@@ -50,7 +40,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "aml-connect",
+      "identifier": "com.aml-connect.aspinity",
       "targets": "all",
       "externalBin": [
         "binaries/aspinity_wrapper"

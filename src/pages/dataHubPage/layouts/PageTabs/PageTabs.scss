@@ -24,6 +24,7 @@
       min-width: 30px;
       height: 100%;
       aspect-ratio: 1;
+      font-size: global.$text-large + 1; //to accommodate the center pf the circle for given typeface
     }
 
     .PageTabs_tabLabel{

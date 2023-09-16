@@ -12,7 +12,7 @@
 We are using Sqlite to run the application.
 
 - Ensure that you have rust version > 1.65
-- Install sqlite3 for your operating system. Ensure that you have the latest version of sqlite (3.42). You might need to download the binary directly from the website. Debian seems to have an outdated version as of 7/31/2023.
+- Install sqlite3 for your operating system.
 - Install Diesel CLI. It is being used as our ORM Default installation will fail if it cannot find sqlite, mysql, and postgresql installed. To avoid this ask it explicilty to not check for mysql and postgres
 
 ```bash

@@ -6,7 +6,6 @@ import { faCirclePlay } from "@fortawesome/free-regular-svg-icons/faCirclePlay";
 import { faCircleStop } from "@fortawesome/free-regular-svg-icons/faCircleStop";
 import ReactPlayer from "react-player";
 import type { InputFileDataT } from "../../../../redux/slices/DataHubSlice";
-import { testIds } from "../../../../tests/test-utils";
 
 type AudioFileTableProps = {
 	files?: InputFileDataT[];
@@ -29,7 +28,7 @@ export default function AudioFileTable({ files }: AudioFileTableProps) {
 	return (
 		<>
 			<table className={`AudioFileTable_container`}>
-				<tbody data-testid={testIds.audioTableBody}>
+				<tbody>
 					{files?.map((file: InputFileDataT, index: number) => {
 						return (
 							<tr key={index}>
@@ -39,12 +38,12 @@ export default function AudioFileTable({ files }: AudioFileTableProps) {
 								<td className={`regular-text grey-text AudioFileTable_nameColumn`}>
 									{file.metadata.name}
 								</td>
-								{/* <td */}
-								{/* 	className={`regular-text grey-text AudioFileTable_smallColumn AudioFileTable_internalColumn`} */}
-								{/* > */}
-								{/* 	<FontAwesomeIcon icon={faClock} className={`AudioFileTable_icon`} /> */}
-								{/* 	{file.metadata.length ?} */}
-								{/* </td> */}
+								<td
+									className={`regular-text grey-text AudioFileTable_smallColumn AudioFileTable_internalColumn`}
+								>
+									<FontAwesomeIcon icon={faClock} className={`AudioFileTable_icon`} />
+									{file.metadata.length}
+								</td>
 								<td className={`AudioFileTable_smallColumn`}>
 									{isPlaying && currentAudio === file ? (
 										<FontAwesomeIcon

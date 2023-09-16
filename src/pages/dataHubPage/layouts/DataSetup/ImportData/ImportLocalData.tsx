@@ -12,13 +12,14 @@ import { BaseDirectory, readBinaryFile } from "@tauri-apps/api/fs";
 import Spinner from "../../../../../components/spinner/Spinner";
 
 export type ImportLocalDataT = {
-	data?: string;
+	onClose: () => void;
 };
 /**
  * Module to handle all the functionalities regarding importing the data from local file system,
  * and providing a view for that
+ * @param onClose: Method called when this component needs to be unmounted
  */
-const ImportLocalData = (props: ImportLocalDataT) => {
+const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 	const projectSlug = useAppSelector(selectCurrentProjectSlug);
 	const audioProjectDir = useAppSelector(selectCurrentProjectAudioDir);
 
@@ -26,7 +27,7 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const handleFilesImport = async (files: InputFileDataT[]) => {
+	const onFilesImport = async (files: InputFileDataT[]) => {
 		//Put Backdrop
 		setIsLoading(true);
 
@@ -38,7 +39,7 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 
 		//call the server to send the files.
 		console.log("Sending file meta data to server: ", importedFiles);
-		sendFilesMetaData(importedFiles);
+		await sendFilesMetaData(importedFiles);
 	};
 
 	const sendFilesMetaData = async (files: InputFileDataT[]) => {
@@ -49,11 +50,6 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 			console.log(filesUploadResponse);
 
 			//parse the response
-			// if (filesUploadResponse.upload_failed_files.length > 0) {
-			// 	console.log("Some files failed to upload", filesUploadResponse.upload_failed_files);
-			// } else {
-			// 	console.log("All the files uploaded successfully", filesUploadResponse.upload_success_files);
-			// }
 			const inputFiles = parseSuccessFilesUploadResponse(filesUploadResponse, files);
 
 			//add the successfully uploaded files in the redux state
@@ -70,7 +66,7 @@ const ImportLocalData = (props: ImportLocalDataT) => {
 	return (
 		<>
 			{isLoading && <Spinner />}
-			<ImportLocalDataView handleFilesImport={handleFilesImport} />
+			<ImportLocalDataView onClose={onClose} onFilesImport={onFilesImport} />
 		</>
 	);
 };

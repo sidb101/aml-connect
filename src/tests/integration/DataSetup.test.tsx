@@ -2,12 +2,6 @@
  * Performing tests on Data Input functionality
  */
 
-import {
-	createFilesGetRequest,
-	createFilesUploadRequest,
-	parseFilesGetResponse,
-	parseSuccessFilesUploadResponse,
-} from "../../clients/api/ApiTransformer";
 import tauriApiClient from "../../clients/api/TauriApiClient";
 import tauriFsClient from "../../clients/fs/TauriFsClient";
 import { routes as appRoutes } from "../../App";

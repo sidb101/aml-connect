@@ -12,11 +12,16 @@ import AudioFileTable from "../AudioFileTable";
 import { testIds } from "../../../../../tests/test-utils";
 
 export type ImportDataViewT = {
-	handleFilesImport: (files: InputFileDataT[]) => Promise<void>;
+	onClose: () => void;
+	onFilesImport: (files: InputFileDataT[]) => Promise<void>;
 };
 
-const ImportLocalDataView = ({ handleFilesImport }: ImportDataViewT) => {
-	const [modalOpen, setModalOpen] = useState<boolean>(false);
+/**
+ * Will open the Modal to Browse for Items Locally and allow the user to choose and upload files to the system
+ * @param onClose: Method that would be called when View needs to be closed
+ * @param onFilesImport: Method that would be called when files are ready to be imported to the project
+ */
+const ImportLocalDataView = ({ onFilesImport, onClose }: ImportDataViewT) => {
 	const [selectedFiles, setSelectedFiles] = useState<InputFileDataT[]>([]);
 
 	//Get the file picker component
@@ -35,13 +40,9 @@ const ImportLocalDataView = ({ handleFilesImport }: ImportDataViewT) => {
 		},
 	});
 
-	const handleModalOpen = () => {
-		setModalOpen(true);
-	};
-
 	const handleModalClose = () => {
-		setModalOpen(false);
 		setSelectedFiles([]);
+		onClose();
 	};
 
 	/**
@@ -49,94 +50,45 @@ const ImportLocalDataView = ({ handleFilesImport }: ImportDataViewT) => {
 	 * @param inputFiles: Selected Files
 	 */
 	const importFiles = (inputFiles: InputFileDataT[]) => {
-		handleFilesImport(inputFiles).catch((e) => console.error(e));
+		onFilesImport(inputFiles).catch((e) => console.error(e));
 		handleModalClose();
-	};
-
-	const [selectedOption, setSelectedOption] = useState("Training Dataset");
-
-	const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setSelectedOption(event.target.value);
 	};
 
 	return (
 		<>
-			<div className={"ImportDataView_container"}>
-				<div className="ImportDataView_dataTypeContainer regular-text grey-text">
-					<label>
-						<input
-							type="radio"
-							value="Training Dataset"
-							checked={selectedOption === "Training Dataset"}
-							onChange={handleOptionChange}
-						/>
-						Training Dataset
-					</label>
-					<label>
-						<input
-							type="radio"
-							value="Validation Dataset"
-							checked={selectedOption === "Validation Dataset"}
-							onChange={handleOptionChange}
-						/>
-						Validation Dataset
-					</label>
-					<label>
-						<input
-							type="radio"
-							value="Testing Dataset"
-							checked={selectedOption === "Testing Dataset"}
-							onChange={handleOptionChange}
-						/>
-						Testing Dataset
-					</label>
-				</div>
-				<div className={`ImportDataView_btnContainer`}>
-					<button
-						className={`btn btn-light-outline ImportDataView_btn`}
-						onClick={handleModalOpen}
-						data-testid={testIds.importFilesBtn}
+			<CenterModal
+				onClose={handleModalClose}
+				closeOnBackdropClick={false}
+				headerElement={<div className={`section-subheading-text`}>Import Files</div>}
+				modalWidth={"60%"}
+				modalHeight={"70%"}
+			>
+				<div className={`ImportLocalDataView_modalBodyContainer`} data-testid={testIds.importModalBody}>
+					<div
+						className={`ImportLocalDataView_uploadRegion ${
+							selectedFiles.length > 0 ? "ImportLocalDataView_uploadRegion___filesPresent" : ""
+						}`}
 					>
-						Import Files &nbsp; <FontAwesomeIcon icon={faArrowUpFromBracket} />
-					</button>
-					<div className={`light-grey-text small-text ImportDataView_btnHint`}>WAV format supported only</div>
-				</div>
-			</div>
-			{modalOpen && (
-				<CenterModal
-					onClose={handleModalClose}
-					closeOnBackdropClick={false}
-					headerElement={<div className={`section-subheading-text`}>Import Files</div>}
-					modalWidth={"60%"}
-					modalHeight={"70%"}
-				>
-					<div className={`ImportDataView_modalBodyContainer`} data-testid={testIds.importModalBody}>
-						<div
-							className={`ImportDataView_uploadRegion ${
-								selectedFiles.length > 0 ? "ImportDataView_uploadRegion___filesPresent" : ""
-							}`}
+						{selectedFiles.length > 0 && <AudioFileTable files={selectedFiles} />}
+						<span
+							className={`green-text ImportLocalDataView_browse`}
+							onClick={openFileSelector}
+							data-testid={testIds.browsePCLink}
 						>
-							{selectedFiles.length > 0 && <AudioFileTable files={selectedFiles} />}
-							<span
-								className={`green-text ImportDataView_browse`}
-								onClick={openFileSelector}
-								data-testid={testIds.browsePCLink}
-							>
-								BROWSE YOUR PC
-							</span>
-						</div>
-						<button
-							className={`btn btn-light-outline`}
-							onClick={() => {
-								importFiles(selectedFiles);
-							}}
-							data-testid={testIds.modalImportFilesBtn}
-						>
-							Import File/s &nbsp; <FontAwesomeIcon icon={faArrowUpFromBracket} />
-						</button>
+							BROWSE YOUR PC
+						</span>
 					</div>
-				</CenterModal>
-			)}
+					<button
+						className={`btn btn-light-outline`}
+						onClick={() => {
+							importFiles(selectedFiles);
+						}}
+						data-testid={testIds.modalImportFilesBtn}
+					>
+						Import File/s &nbsp; <FontAwesomeIcon icon={faArrowUpFromBracket} />
+					</button>
+				</div>
+			</CenterModal>
 		</>
 	);
 };

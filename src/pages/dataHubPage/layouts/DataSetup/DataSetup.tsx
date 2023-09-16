@@ -5,6 +5,7 @@ import { useDataHubContext } from "../../DataHubPage";
 import { dataVizRoute, projectOverviewRoute } from "../../../../routes";
 import { useAppSelector } from "../../../../hooks";
 import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
+import { audioFiles } from "../../../../tests/mockdata/allAudioFiles";
 import ImportData from "./ImportData/ImportData";
 
 export type DataSetupT = {
@@ -24,7 +25,7 @@ const DataSetup = (props: DataSetupT) => {
 		}));
 	}, [projectSlug]);
 
-	return <DataSetupView importDataComponent={<ImportData />} />;
+	return <DataSetupView audioFiles={audioFiles} importDataComponent={<ImportData />} />;
 };
 
 export default DataSetup;

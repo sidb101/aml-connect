@@ -1,100 +1,44 @@
 import "./DataSetupView.scss";
-import React, { type JSX, useEffect, useState } from "react";
+import React, { type JSX, useRef } from "react";
 import AudioFileTable from "./AudioFileTable";
 import Accordion from "../../../../components/accordion/Accordion";
-import type { GetFilesRequest } from "../../../../clients/api/bindings/GetFilesRequest";
-import { createFilesGetRequest, parseFilesGetResponse } from "../../../../clients/api/ApiTransformer";
-import type { InputFileMetaDataT } from "../../../../redux/slices/DataHubSlice";
-import { dataHubActions, DataSetT, selectInputFiles } from "../../../../redux/slices/DataHubSlice";
-import tauriApiClient from "../../../../clients/api/TauriApiClient";
-import { useAppDispatch, useAppSelector } from "../../../../hooks";
-import { selectCurrentProjectAudioDir, selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
-import tauriFsClient from "../../../../clients/fs/TauriFsClient";
-import Spinner from "../../../../components/spinner/Spinner";
-import { testIds } from "../../../../tests/test-utils";
+import type { InputFileDataT } from "../../../../redux/slices/DataHubSlice";
+import type { ImportDataT } from "./ImportData/ImportData";
 
-export type DataSetupViewT = {
+export type DataSetupViewProps = {
+	audioFiles?: InputFileDataT[];
 	importDataComponent: JSX.Element | JSX.Element[];
 };
+/**
+ * A view component that would load the required widgets as per the passed properties
+ */
+const DataSetupView = ({ audioFiles, importDataComponent }: DataSetupViewProps) => {
+	const containerRef = useRef<HTMLDivElement>(null);
 
-const DataSetupView = ({ importDataComponent }: DataSetupViewT) => {
-	const dispatch = useAppDispatch();
-
-	const projectSlug = useAppSelector(selectCurrentProjectSlug);
-	const projectAudioDir = useAppSelector(selectCurrentProjectAudioDir);
-
-	const importedInputFiles = useAppSelector((state) => selectInputFiles(state, DataSetT.TRAINING));
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-
-	// console.log("Rendering: ", importedInputFiles, projectSlug);
-	useEffect(() => {
-		if (projectSlug != "" && importedInputFiles.length == 0) {
-			getInputFiles(DataSetT.TRAINING).catch((e) => console.error(e));
-		}
-	}, [projectSlug]);
-
-	/**
-	 * Will get the input files metadata from the server, and then read the corresponding file binaries from the
-	 * filesystem
-	 * @param dataSet: The type of input files to be fetched.
-	 */
-	const getInputFiles = async (dataSet: DataSetT) => {
-		try {
-			setIsLoading(true);
-			const inputFilesMetaData = await getFilesMetaData(dataSet);
-
-			//get the files data along with content from the given metadata
-			const inputFiles = await Promise.all(
-				inputFilesMetaData.map(
-					async (fileMetaData) => await tauriFsClient.readInputFileFromStorage(fileMetaData, projectAudioDir)
-				)
-			);
-
-			console.log("Read the files: ", inputFiles);
-
-			//update it in the redux state
-			dispatch(dataHubActions.setInputFiles({ dataSet, inputFiles }));
-			setIsLoading(false);
-			console.log("Set input files in the redux state");
-		} catch (e) {
-			console.error(e);
-		}
-	};
-
-	const getFilesMetaData = async (dataSet: DataSetT) => {
-		//get the files information
-		const filesGetRequest: GetFilesRequest = createFilesGetRequest(projectSlug, dataSet);
-		console.log("Request", filesGetRequest);
-
-		const filesGetResponse = await tauriApiClient.getInputFiles(filesGetRequest);
-		console.log(filesGetResponse);
-
-		const inputFilesMetaData: InputFileMetaDataT[] = parseFilesGetResponse(filesGetResponse);
-		console.log("Transformed: ", inputFilesMetaData);
-
-		return inputFilesMetaData;
-	};
+	//To dynamically resize the accordions
+	const getContainerHeight = () => containerRef.current?.scrollHeight;
+	//Gives height of a single accordion, considering the fraction of height allocated for that accordion
+	const getAccHeight = (fraction: number) => `${(getContainerHeight() || 0) / fraction}px`;
 
 	return (
-		<div className={`DataSetupView_container`}>
-			{isLoading && <Spinner />}
+		<div className={`DataSetupView_container`} ref={containerRef}>
 			<div className={`DataSetupView_leftContainer`}>
-				<Accordion bodyMaxHeight={`calc(33vh - 150px)`} header={<>Training Dataset</>}>
-					<AudioFileTable files={importedInputFiles} />
+				<Accordion bodyMaxHeight={getAccHeight(3)} header={<>Training Dataset</>}>
+					<AudioFileTable files={audioFiles} />
 				</Accordion>
-				<Accordion bodyMaxHeight={`calc(33vh - 150px)`} defaultIsOpen={false} header={<>Validation Dataset</>}>
-					<AudioFileTable files={[]} />
+				<Accordion bodyMaxHeight={getAccHeight(3)} defaultIsOpen={false} header={<>Validation Dataset</>}>
+					<AudioFileTable files={audioFiles ? [audioFiles[0], audioFiles[1]] : []} />
 				</Accordion>
-				<Accordion bodyMaxHeight={`calc(33vh - 150px)`} defaultIsOpen={false} header={<>Testing Dataset</>}>
-					<AudioFileTable files={[]} />
+				<Accordion bodyMaxHeight={getAccHeight(3)} defaultIsOpen={false} header={<>Testing Dataset</>}>
+					<AudioFileTable files={audioFiles} />
 				</Accordion>
 			</div>
 			<div className={`DataSetupView_rightContainer`}>
-				<Accordion bodyMaxHeight={`calc(50vh - 150px)`} header={<>Add or Merge Data</>}>
+				<Accordion bodyMaxHeight={getAccHeight(2)} header={<>Add or Merge Data</>}>
 					{importDataComponent}
 				</Accordion>
-				<Accordion bodyMaxHeight={`calc(50vh - 150px)`} header={<>Label Data</>} defaultIsOpen={false}>
-					<>Label Body</>
+				<Accordion bodyMaxHeight={getAccHeight(2)} header={<>Label Data</>} defaultIsOpen={false}>
+					<h4>Label Body</h4>
 				</Accordion>
 			</div>
 		</div>

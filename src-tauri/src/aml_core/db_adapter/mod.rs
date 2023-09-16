@@ -53,10 +53,11 @@ fn get_url() -> Result<String> {
     let db_path = match env::var("DATABASE_PATH") {
         Ok(env_path) => {
             info!("Using environment variable for database");
-            Path::new(&env_path).to_owned()
+            Path::new(&env_path).join(DB_NAME)
         }
         Err(_) => {
             info!("Using OS specific application directory for database");
+            // TODO: Move this to file management module
             let proj_dirs = ProjectDirs::from("com", "aspinity", "aml_connect")
                 .with_context(|| "Failed to get application directory\n")?;
 
@@ -100,11 +101,11 @@ mod tests{
 
     #[test]
     fn test_get_url_from_env() {
-        let db_path = "./db-adapter-test.db";
+        let db_path = "/home/test_user/.local/share/aml_connect";
         env::set_var("DATABASE_PATH", db_path);
         let db_url = get_url().unwrap();
         env::remove_var("DATABASE_PATH");
 
-        assert_eq!(db_url, "./db-adapter-test.db");
+        assert_eq!(db_url, "/home/test_user/.local/share/aml_connect/aml_connect.db");
     }
 }
