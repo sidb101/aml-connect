@@ -3,11 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpFromBracket } from "@fortawesome/free-solid-svg-icons/faArrowUpFromBracket";
 import { useState } from "react";
 import CenterModal from "../../../../../components/modal/CenterModal";
-import { type FileContent, useFilePicker } from "use-file-picker";
-import ReactPlayer from "react-player";
+import { useFilePicker } from "use-file-picker";
 import { SUPPORTED_FILE_TYPES } from "../../../../../constants";
 import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
-import { getFileExtension } from "../../../../../clients/api/ApiTransformer";
 import AudioFileTable from "../AudioFileTable";
 import { testIds } from "../../../../../tests/test-utils";
 
@@ -30,7 +28,7 @@ const ImportLocalDataView = ({ onFilesImport, onClose }: ImportDataViewT) => {
 		readAs: "DataURL",
 		onFilesSuccessfulySelected: ({ filesContent }) => {
 			const chosenFiles: InputFileDataT[] = filesContent.map((file) => {
-				const extension = getFileExtension(file.name);
+				const extension = "wav";
 				return {
 					metadata: { name: file.name, extension, mediaType: `audio/${extension}` },
 					dataUrl: file.content,

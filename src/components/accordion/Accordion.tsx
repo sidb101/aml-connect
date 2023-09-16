@@ -36,7 +36,7 @@ const Accordion: React.FC<React.PropsWithChildren<AccordionProps>> = ({
 					<FontAwesomeIcon icon={faAngleDown} />
 				</i>
 			</div>
-			<div className={`Accordion_body ${active}`} style={isActive ? { maxHeight: bodyMaxHeight } : {}}>
+			<div className={`Accordion_bodyContainer ${active}`} style={isActive ? { maxHeight: bodyMaxHeight } : {}}>
 				<div>{children}</div>
 			</div>
 		</div>

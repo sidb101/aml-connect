@@ -3,7 +3,6 @@ import React, { type JSX, useRef } from "react";
 import AudioFileTable from "./AudioFileTable";
 import Accordion from "../../../../components/accordion/Accordion";
 import type { InputFileDataT } from "../../../../redux/slices/DataHubSlice";
-import type { ImportDataT } from "./ImportData/ImportData";
 
 export type DataSetupViewProps = {
 	audioFiles?: InputFileDataT[];

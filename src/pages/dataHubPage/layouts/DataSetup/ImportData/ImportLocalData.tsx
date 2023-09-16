@@ -3,7 +3,6 @@ import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
 import { selectCurrentProjectAudioDir, selectCurrentProjectSlug } from "../../../../../redux/slices/GeneralSlice";
 import { useState } from "react";
-import Spinner from "../../../../../components/spinner/Spinner";
 
 export type ImportLocalDataT = {
 	onClose: () => void;
@@ -31,7 +30,6 @@ const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 	};
 	return (
 		<>
-			{isLoading && <Spinner />}
 			<ImportLocalDataView onClose={onClose} onFilesImport={onFilesImport} />
 		</>
 	);
