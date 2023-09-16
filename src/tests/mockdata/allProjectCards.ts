@@ -1,8 +1,8 @@
 import { projectOverviewRoute } from "../../routes";
-import type { ProjectCardT } from "../../components/displayCard/DisplayCard";
+import type { DisplayCardT } from "../../components/displayCard/DisplayCard";
 import { mockProjects } from "./allProjects";
 
-export const projectCards: ProjectCardT[] = [
+export const projectCards: DisplayCardT[] = [
 	{
 		route: projectOverviewRoute(mockProjects[0].slug),
 		title: "Glass Break Detection",
