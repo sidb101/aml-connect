@@ -3,8 +3,8 @@ import React from "react";
 import { resultsRoute } from "../../../routes";
 import Footer from "../../../components/footer/Footer";
 import Header from "../../../components/header/Header";
-import type { ProjectCardT } from "../../../components/projectCard/ProjectCard";
-import ProjectCard from "../../../components/projectCard/ProjectCard";
+import type { DisplayCardT } from "../../../components/displayCard/DisplayCard";
+import DisplayCard from "../../../components/displayCard/DisplayCard";
 
 export type SendToHardwareViewT = {
 	data?: string;
@@ -13,7 +13,7 @@ export type SendToHardwareViewT = {
 };
 
 const SendToHardwareView = (props: SendToHardwareViewT) => {
-	const sentToHardwareCard: ProjectCardT = {
+	const sentToHardwareCard: DisplayCardT = {
 		route: "/",
 		title: "You're all set. Leave the rest to us.",
 		description:
@@ -26,7 +26,7 @@ const SendToHardwareView = (props: SendToHardwareViewT) => {
 			<Header headerTitle={`${props.title}`} />
 			<div className={`body-content-container`}>
 				<div className={`SendToHardwareView_container`}>
-					<ProjectCard projectCard={sentToHardwareCard} />
+					<DisplayCard displayCard={sentToHardwareCard} />
 				</div>
 			</div>
 			<Footer

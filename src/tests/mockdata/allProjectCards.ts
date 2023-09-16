@@ -1,5 +1,5 @@
 import { projectOverviewRoute } from "../../routes";
-import type { ProjectCardT } from "../../components/projectCard/ProjectCard";
+import type { ProjectCardT } from "../../components/displayCard/DisplayCard";
 import { mockProjects } from "./allProjects";
 
 export const projectCards: ProjectCardT[] = [

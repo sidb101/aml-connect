@@ -1,17 +1,16 @@
-@use "../../../../global";
+@use "../../global";
 
-.OverviewColumn_container {
+.DisplayPanel_container {
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
-.OverviewColumn_heading {
+.DisplayPanel_heading {
   padding: global.$panel-padding;
   border-bottom: 2px solid global.$color-grey-1;
 }
 
-.OverviewColumn_body {
+.DisplayPanel_body {
   flex-grow: 1;
   padding: global.$panel-padding;
 }
