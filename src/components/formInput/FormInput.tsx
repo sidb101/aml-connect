@@ -1,5 +1,5 @@
 import React from "react";
-import "./OverviewInput.scss";
+import "./FormInput.scss";
 
 type OverviewInputProps = {
 	heading: string;
@@ -7,12 +7,13 @@ type OverviewInputProps = {
 	onChange: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export default function OverviewInput({ heading, value, onChange }: OverviewInputProps) {
+export default function FormInput({ heading, value, onChange }: OverviewInputProps) {
 	return (
 		<>
 			<div className={`green-text section-heading-text`}>{heading}</div>
 			<input
-				className={`regular-text light-grey-text light-grey-panel OverviewInput_input`}
+				type={"text"}
+				className={`regular-text light-grey-text light-grey-panel FormInput_input`}
 				value={value}
 				onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
 					onChange(e.target.value);

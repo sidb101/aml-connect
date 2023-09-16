@@ -1,6 +1,9 @@
 import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 
 export const mockProjects: BasicProjectDataT[] = [
-	{ name: "Glass Break", slug: "project-1" },
-	// { name: "Dog Barks in a very long way !", slug: "project-2" },
+	{ name: "Glass Break Detection", slug: "project-1" },
+	{ name: "Dog Bark Detection", slug: "project-2" },
+	{ name: "Alexa Wakeword Detection", slug: "project-3" },
+	{ name: "Vibration Detection", slug: "project-4" },
+	{ name: "Irregular Heartbeat Detection", slug: "project-5" },
 ];

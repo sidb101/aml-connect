@@ -1,7 +1,7 @@
 import "./OverviewForm.scss";
 import React, { useEffect, useState } from "react";
-import OverviewInput from "./OverviewInput";
-import OverviewTextArea from "./OverviewTextArea";
+import FormInput from "../../../../components/formInput/FormInput";
+import FormTextArea from "../../../../components/formTextArea/FormTextArea";
 
 type OverviewFormProps = {
 	currentProjectName: string;
@@ -34,12 +34,12 @@ export default function OverviewForm({
 			<div className={`OverviewForm_internalContainer`}>
 				<div className={`OverviewForm_internalContainerColumn`}>
 					<div className={`OverviewForm_internalContainerColumnContent`}>
-						<OverviewInput heading={`Project Name`} value={projectName} onChange={setProjectName} />
+						<FormInput heading={`Project Name`} value={projectName} onChange={setProjectName} />
 					</div>
 				</div>
 				<div className={`OverviewForm_internalContainerColumn`}>
 					<div className={`OverviewForm_internalContainerColumnContent`}>
-						<OverviewTextArea
+						<FormTextArea
 							heading={`Project Description`}
 							value={projectDescription}
 							onChange={setProjectDescription}

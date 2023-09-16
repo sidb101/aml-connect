@@ -5,8 +5,6 @@ import { generalActions, selectCurrentProjectName } from "../../redux/slices/Gen
 import { dataSetupRoute, NEW_PROJECT_ROUTE } from "../../routes";
 import OverviewView from "./layouts/OverviewView";
 import Header from "../../components/header/Header";
-import OverviewColumn from "./layouts/components/OverviewColumn";
-import OverviewForm from "./layouts/components/OverviewForm";
 import Footer from "../../components/footer/Footer";
 
 export type OverviewT = {
@@ -44,15 +42,11 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 		projectSlug && (
 			<>
 				<Header headerTitle={`${currentProjectName} > Overview`} />
-				<OverviewView>
-					<OverviewColumn heading={`Overview`}>
-						<OverviewForm
-							currentProjectName={currentProjectName}
-							onProjectTitleChange={handleProjectNameOnChange}
-							currentProjectDescription={currentProjectDescription}
-						/>
-					</OverviewColumn>
-				</OverviewView>
+				<OverviewView
+					currentProjectName={currentProjectName}
+					onProjectTitleChange={handleProjectNameOnChange}
+					currentProjectDescription={currentProjectDescription}
+				/>
 				<Footer nextBtn={{ label: "Data Hub", route: dataSetupRoute(projectSlug) }} />
 			</>
 		)
