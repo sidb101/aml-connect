@@ -1,7 +1,7 @@
-import { type DisplayCardT } from "../../components/displayCard/DisplayCard";
 import { projectOverviewRoute } from "../../routes";
+import type { ProjectCardT } from "../../components/projectCard/ProjectCard";
 
-export const projectCards: DisplayCardT[] = [
+export const projectCards: ProjectCardT[] = [
 	{
 		route: projectOverviewRoute("project-1"),
 		title: "Glass Break Detection",
