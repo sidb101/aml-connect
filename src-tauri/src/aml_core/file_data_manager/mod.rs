@@ -1,14 +1,26 @@
 use anyhow::{Context, Result};
+use diesel::ExpressionMethods;
+use diesel::QueryDsl;
+use diesel::RunQueryDsl;
+use diesel::result::Error::NotFound;
+use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::fs;
 use std::path::PathBuf;
 use thiserror::Error;
-use serde::{Deserialize, Serialize};
 use ts_rs::TS;
+use strum_macros::EnumString;
 
+
+use crate::aml_core::db_adapter::models::Project;
+use crate::aml_core::db_adapter::schema::projects;
+
+use super::db_adapter::DbConn;
+
+pub mod get_files;
 pub mod put_files;
 
-#[derive(Debug, Clone, Serialize, Deserialize, TS)]
+#[derive(Debug, Clone, Serialize, Deserialize, TS, EnumString)]
 #[ts(export)]
 #[ts(export_to = "../src/clients/api/bindings/")]
 pub enum DataSet {
@@ -30,6 +42,8 @@ impl fmt::Display for DataSet {
 #[derive(Error, Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/clients/api/bindings/")]
+// TODO: @sidb101, I think we should rename this so that it can be used by other methods in file data manager.
+// I also think errors that are specific to the DB should be defined in DB adapater and used throughout the app. Let me know what you think.
 pub enum FileUploadError {
     #[error("file not found")]
     FileNotFound,
@@ -39,6 +53,8 @@ pub enum FileUploadError {
     FileTooLarge,
     #[error("unsupported file extension")]
     UnsupportedFileExtension,
+    #[error("project not found")]
+    ProjectNotFound(String),
     #[error("database query error")]
     UnableToQueryDatabase(String),
     #[error("database update error")]
@@ -66,7 +82,7 @@ pub struct FilesUploadRequest {
     pub input_files: Vec<FileUploadRequest>,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)] 
+#[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/clients/api/bindings/")]
 pub struct FileUploadErrorResponse {
@@ -89,7 +105,7 @@ pub struct FileMetadata {
 #[ts(export_to = "../src/clients/api/bindings/")]
 pub struct GetFilesRequest {
     pub proj_slug: String,
-    pub dataset_type: DataSet,
+    pub dataset_type: Option<DataSet>,
 }
 
 #[derive(Clone, Debug, Serialize, Deserialize, TS)]
@@ -99,7 +115,7 @@ pub struct GetFilesResponse {
     pub files: Vec<FileMetadata>,
 }
 
-pub type GetFilesResponseResult = Result<GetFilesResponse, FileUploadError>;
+pub type GetFilesResponseResult = Result<GetFilesResponse>;
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
@@ -124,7 +140,31 @@ pub fn create_app_dir_if_not_exists(path_resolver: &tauri::PathResolver) -> Resu
         .with_context(|| "Failed to get application directory\n")?;
 
     if !app_dir.exists() {
-        fs::create_dir_all(app_dir.clone()).with_context(|| "Failed to create application directory\n")?;
+        fs::create_dir_all(app_dir.clone())
+            .with_context(|| "Failed to create application directory\n")?;
     }
     Ok(app_dir)
+}
+
+// TODO: Move to project manager once that module is created
+fn project_exists(proj_slug: &str, db_conn: &mut DbConn) -> Result<bool, FileUploadError> {
+    let found_project = projects::table
+        .filter(projects::slug.eq(proj_slug))
+        .first::<Project>(db_conn);
+
+    print!("Found project: {:?}", found_project);
+    match found_project {
+        Ok(_) => Ok(true),
+        Err(NotFound) => Ok(false),
+        Err(_) => {
+            eprintln!("Error finding project - {}", proj_slug);
+            Err(FileUploadError::UnableToQueryDatabase(
+                "Database error while searching for project".to_string(),
+            ))
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
 }

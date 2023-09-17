@@ -37,6 +37,8 @@ dotenvy = "0.15"
 libsqlite3-sys = { version = "0.26.0", features = ["bundled"] }
 ts-rs = "6.1"
 dirs = "3.0"
+strum = "0.25"
+strum_macros = "0.25"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
