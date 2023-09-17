@@ -4,7 +4,7 @@
 .ImportLocalDataView_modalBodyContainer{
   padding: global.$panel-padding;
   display: grid;
-  grid-template-rows: auto global.$btn-height;
+  grid-template-rows: auto global.$button-height;
   gap: global.$general-padding;
   height: calc(100% - 2*#{global.$panel-padding});
 

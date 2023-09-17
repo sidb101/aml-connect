@@ -1,45 +1,22 @@
 import { LandingPageHeader } from "./components/LandingPageHeader";
-import { ExampleProject } from "./components/ExampleProject";
-import React from "react";
 import "./LandingView.scss";
 import Header from "../../../components/header/Header";
+import DisplayCard, { type DisplayCardT } from "../../../components/displayCard/DisplayCard";
 
-export type LandingPageViewT = {
-	data?: string;
+type LandingPageViewProps = {
+	projectCards?: DisplayCardT[];
 };
 
-const LandingView = (props: LandingPageViewT) => {
+const LandingView = ({ projectCards }: LandingPageViewProps) => {
 	return (
 		<>
 			<Header headerTitle={"Projects"} element={<LandingPageHeader />} />
 			<div className={`body-content-container-no-footer`}>
 				<div className={`main-content-container`}>
-					<div className={`LandingPageView_gridContainer`}>
-						<div className={`LandingPageView_gridRow1`}>
-							<ExampleProject projectName="Example Project: Dog Bark Detection" />
-							<ExampleProject projectName="Glass Break Detection" />
-							<ExampleProject projectName="Glass Break Detection" />
-						</div>
-						<div className={`LandingPageView_gridRow2`}>
-							<ExampleProject projectName="Alexa Voice" />
-							<ExampleProject projectName="Alexa Voice" />
-							<ExampleProject projectName="Alexa Voice" />
-						</div>
-						<div className={`LandingPageView_gridRow3`}>
-							<ExampleProject projectName="Alexa Voice" />
-							<ExampleProject projectName="Alexa Voice" />
-							<ExampleProject projectName="Alexa Voice" />
-						</div>
-						<div className={`LandingPageView_gridRow4`}>
-							<ExampleProject projectName="Alexa Voice" />
-							<ExampleProject projectName="Alexa Voice" />
-							<ExampleProject projectName="Alexa Voice" />
-						</div>
-						<div className={`LandingPageView_gridRow5`}>
-							<ExampleProject projectName="Alexa Voice" />
-							<ExampleProject projectName="Alexa Voice" />
-							<ExampleProject projectName="Alexa Voice" />
-						</div>
+					<div className={`LandingView_container`}>
+						{projectCards?.map((projectCard: DisplayCardT, index: number) => (
+							<DisplayCard key={index} displayCard={projectCard} />
+						))}
 					</div>
 				</div>
 			</div>

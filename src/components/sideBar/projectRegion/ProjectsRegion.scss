@@ -8,10 +8,12 @@
     padding: $padding;
     width: global.$sidebar-width + global.$nav-padding - 2*$padding; // - 2*padding
     font-family: global.$font-primary;
+    font-size: global.$text-regular;
     border-radius: global.$border-radius 0 0 global.$border-radius;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    min-height: 0px;
 
     &:first-of-type {
       margin-top: initial;
