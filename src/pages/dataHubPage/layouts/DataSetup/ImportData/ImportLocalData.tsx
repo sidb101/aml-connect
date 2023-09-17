@@ -28,6 +28,7 @@ const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 	const sendFilesMetaData = async (files: InputFileDataT[]) => {
 		//TODO: Write logic to send files meta data to server
 	};
+
 	return (
 		<>
 			<ImportLocalDataView onClose={onClose} onFilesImport={onFilesImport} />

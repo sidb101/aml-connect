@@ -48,7 +48,9 @@ const ImportLocalDataView = ({ onFilesImport, onClose }: ImportDataViewT) => {
 	 * @param inputFiles: Selected Files
 	 */
 	const importFiles = (inputFiles: InputFileDataT[]) => {
-		onFilesImport(inputFiles).catch((e) => console.error(e));
+		onFilesImport(inputFiles).catch((e) => {
+			console.error(e);
+		});
 		handleModalClose();
 	};
 
@@ -71,7 +73,7 @@ const ImportLocalDataView = ({ onFilesImport, onClose }: ImportDataViewT) => {
 						<span
 							className={`green-text ImportLocalDataView_browse`}
 							onClick={openFileSelector}
-							data-testid={testIds.browsePCLink}
+							data-testid={testIds.browsePcLink}
 						>
 							BROWSE YOUR PC
 						</span>

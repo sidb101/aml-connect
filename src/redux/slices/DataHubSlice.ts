@@ -24,15 +24,17 @@ export type InputFileMetaDataT = {
 };
 
 export enum DataSetT {
+	//The String values are consistent with the backend contract
 	TESTING = "Testing",
 	VALIDATION = "Validation",
 	TRAINING = "Training",
 }
 
 const initialState: DataHubState = {
-	Testing: [],
-	Validation: [],
-	Training: [],
+	//These attributes are consistent with the Enum Values of DataSetT
+	Testing: [] /* eslint-disable-line @typescript-eslint/naming-convention */,
+	Validation: [] /* eslint-disable-line @typescript-eslint/naming-convention */,
+	Training: [] /* eslint-disable-line @typescript-eslint/naming-convention */,
 };
 
 /**

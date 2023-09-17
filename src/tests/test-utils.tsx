@@ -80,6 +80,6 @@ export const testIds = {
 
 	importFilesBtn: "import-files-btn",
 	importModalBody: "import-modal-body",
-	browsePCLink: "browse-pc-link",
+	browsePcLink: "browse-pc-link",
 	modalImportFilesBtn: "modal-import-files-btn",
 };
