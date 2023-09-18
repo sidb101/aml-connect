@@ -2,4 +2,10 @@
 import type { FileMetadata } from "./FileMetadata";
 import type { FileUploadErrorResponse } from "./FileUploadErrorResponse";
 
-export interface FilesUploadResponse { upload_success_files: Array<FileMetadata>, upload_failed_files: Array<FileUploadErrorResponse>, attempted: number, succeeded: number, failed: number, }
+export type FilesUploadResponse = {
+	upload_success_files: FileMetadata[];
+	upload_failed_files: FileUploadErrorResponse[];
+	attempted: number;
+	succeeded: number;
+	failed: number;
+};

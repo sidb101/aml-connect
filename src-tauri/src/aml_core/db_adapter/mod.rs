@@ -16,7 +16,7 @@ pub mod schema;
 pub type SqlitePool = Pool<ConnectionManager<SqliteConnection>>;
 pub type DbConn = PooledConnection<ConnectionManager<SqliteConnection>>;
 
-const DB_NAME: &'static str = "aml_connect.db";
+pub const DB_NAME: &'static str = "aml_connect.db";
 pub const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
 
 pub fn establish_connection() -> Result<SqlitePool> {
