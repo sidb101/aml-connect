@@ -125,14 +125,17 @@ pub fn save_input_files(
 
     for file in succesfull_uploads {
         let dataset_type = file.dataset_type.to_string();
+        let fpath = get_file_absolute_path(&input.proj_slug, file.file_name.clone(), app_dir).unwrap();
+        let fpath_str = fpath.to_str().unwrap();
+        let fsize = fpath.metadata().unwrap().len();
         let new_input_files = NewInputData {
             project_id: found_project.id,
             ml_dataset_type: Some(dataset_type.as_ref()),
             file_name: Some(file.file_name.as_ref()),
             file_type: Some("audio"),
             file_extension: Some(".wav"),
-            file_size: None,
-            file_path: None,
+            file_size: Some(fsize as i32),
+            file_path: Some(fpath_str),
             uploaded_data: None,
         };
 
