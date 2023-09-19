@@ -6,7 +6,7 @@
   .NavRegion_content {
     width: global.$sidebar-width + global.$nav-padding;
     font-family: global.$font-primary;
-    border-radius: 4px 0 0 4px;
+    border-radius: global.$border-radius 0 0 global.$border-radius;
 
     .NavRegion_heading {
       background-color: global.$color-dark-green;
@@ -14,6 +14,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      border-top-left-radius: global.$border-radius;
     }
 
     .NavRegion_navLinks {

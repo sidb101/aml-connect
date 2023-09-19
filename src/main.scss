@@ -21,6 +21,12 @@ Common Classes
   border-radius: global.$border-radius;
 }
 
+.light-grey-panel {
+  background-color: global.$color-grey-1;
+  border: 2px solid global.$color-grey-2;
+  border-radius: global.$border-radius;
+}
+
 .dark-grey-panel {
   background-color: global.$color-grey-6;
   color: global.$color-white;
@@ -49,7 +55,6 @@ Common Classes
     overflow: auto; /* Enable scrolling in both dimensions */
     padding: global.$content-padding global.$content-padding 0;
     scrollbar-gutter: stable both-edges;
-    z-index: 0;
   }
 
   .body-content-container-no-footer{
@@ -89,6 +94,12 @@ Common Classes
 }
 
 //noinspection ALL
+.section-superheading-text {
+  font-family: global.$font-primary-light;
+  font-size: global.$text-xxlarge;
+  color: global.$color-dark-blue;
+}
+
 .section-heading-text {
   font-family: global.$font-primary-light;
   font-size: global.$text-xlarge;
@@ -106,14 +117,12 @@ Common Classes
   font-family: global.$font-primary-light;
   font-size: global.$text-regular;
   color: global.$color-dark-blue;
-  font-weight: bold;
 }
 
 .small-text {
   font-family: global.$font-primary-light;
   font-size: global.$text-small;
   color: global.$color-dark-blue;
-  font-weight: bold;
 }
 
 //noinspection ALL
@@ -121,7 +130,6 @@ Common Classes
   font-family: global.$font-primary-light;
   font-size: global.$text-xsmall;
   color: global.$color-dark-blue;
-  font-weight: bold;
 }
 
 //noinspection ALL
@@ -148,6 +156,10 @@ Common Classes
   color: global.$color-white;
 }
 
+.bold-text {
+  font-weight: bold;
+}
+
 /* -- Various kinds of Buttons -- */
 
 .btn {
@@ -156,6 +168,7 @@ Common Classes
   padding: global.$general-padding global.$general-padding * 2;
   border-radius: global.$border-radius;
   cursor: pointer;
+  min-height: global.$button-height;
 }
 
 .btn-solid {
@@ -172,7 +185,6 @@ Common Classes
   }
 }
 
-//noinspection ALL
 .btn-outline {
   background: none;
   border: global.$color-green solid 1px;
@@ -186,35 +198,33 @@ Common Classes
   &:active {
     background-color: global.$color-dark-green;
   }
+}
 
-  //noinspection ALL
-  .btn-light-solid {
-    background-color: global.$color-light-green;
-    border: none;
-    color: global.$color-white;
+.btn-light-solid {
+  background-color: global.$color-light-green;
+  border: none;
+  color: global.$color-white;
 
-    &:hover {
-      background-color: global.$color-dark-light-green;
-    }
-
-    &:active {
-      background-color: global.$color-light-green;
-    }
+  &:hover {
+    background-color: global.$color-dark-light-green;
   }
 
-  //noinspection ALL
-  .btn-light-outline {
-    background: none;
-    border: global.$color-light-green solid 1px;
-    color: global.$color-light-green;
+  &:active {
+    background-color: global.$color-light-green;
+  }
+}
 
-    &:hover {
-      background-color: global.$color-light-green;
-      color: global.$color-white;
-    }
+.btn-light-outline {
+  background: none;
+  border: global.$color-light-green solid 1px;
+  color: global.$color-light-green;
 
-    &:active {
-      background-color: global.$color-dark-light-green;
-    }
+  &:hover {
+    background-color: global.$color-light-green;
+    color: global.$color-white;
+  }
+
+  &:active {
+    background-color: global.$color-dark-light-green;
   }
 }

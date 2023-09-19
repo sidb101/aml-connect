@@ -25,6 +25,7 @@ log = "0.4"
 simple_logger = "4.2.0"
 dotenvy = "0.15"
 libsqlite3-sys = { version = "0.26.0", features = ["bundled"] }
+ts-rs = "6.1"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

@@ -1,45 +1,25 @@
 import "./OverviewView.scss";
-import React from "react";
-import Footer from "../../../components/footer/Footer";
-import { dataHubRoute, dataSetupRoute } from "../../../routes";
-import Header from "../../../components/header/Header";
-import ProjectDescription from "./ProjectDescription";
-import ProjectName from "./ProjectName";
+import OverviewForm from "./components/OverviewForm";
+import DisplayPanel from "../../../components/displayPanel/DisplayPanel";
 
-export type OverviewViewT = {
-	title: string;
-	projectSlug: string;
+type OverviewViewProps = {
+	currentProjectName: string;
+	onProjectTitleChange: (newProjectName: string) => void;
+	currentProjectDescription: string;
 };
 
-const OverviewView = (props: OverviewViewT) => {
+const OverviewView = ({ currentProjectName, onProjectTitleChange, currentProjectDescription }: OverviewViewProps) => {
 	return (
 		<>
-			<Header headerTitle={`${props.title}`} />
-			<div className={`body-content-container`}>
-				<div className={`OverviewView_container`}>
-					<div className={`white-panel OverviewView_column1`}>
-						<div className={`section-heading-text OverviewView_mainColumn`}>Overview</div>
-						<div className={`OverviewView_detailsContainer`}>
-							<div className={`OverviewView_projectNameContainer`}>
-								<ProjectName />
-							</div>
-							<div className={`OverviewView_projectDescriptionContainer`}>
-								<ProjectDescription />
-								<div className={`OverviewView_saveBtnContainer`}>
-									<button className={`btn btn-outline`}>Save</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					{/*<div className={`OverviewView_column2`}>*/}
-					{/*	<div className={`white-panel section-heading-text OverviewView_mainColumn`}>*/}
-					{/*		Power Estimation*/}
-					{/*	</div>*/}
-					{/*	<div className={`white-panel OverviewView_column2SubContainer`}></div>*/}
-					{/*</div>*/}
-				</div>
+			<div className={`body-content-container-no-header-btns OverviewView_container`}>
+				<DisplayPanel heading={`Overview`}>
+					<OverviewForm
+						currentProjectName={currentProjectName}
+						onProjectTitleChange={onProjectTitleChange}
+						currentProjectDescription={currentProjectDescription}
+					/>
+				</DisplayPanel>
 			</div>
-			<Footer nextBtn={{ label: "Data Hub", route: dataSetupRoute(props.projectSlug) }} />
 		</>
 	);
 };

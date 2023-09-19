@@ -1,56 +1,44 @@
 import "./DataSetupView.scss";
-import React from "react";
+import React, { type ReactNode, useRef } from "react";
+import AudioFileTable from "./AudioFileTable";
 import Accordion from "../../../../components/accordion/Accordion";
+import type { InputFileDataT } from "../../../../redux/slices/DataHubSlice";
 
-export type DataSetupViewT = {
-	data?: string;
+export type DataSetupViewProps = {
+	audioFiles?: InputFileDataT[];
+	importDataComponent: ReactNode | ReactNode[];
 };
+/**
+ * A view component that would load the required widgets as per the passed properties
+ */
+const DataSetupView = ({ audioFiles, importDataComponent }: DataSetupViewProps) => {
+	const containerRef = useRef<HTMLDivElement>(null);
 
-const DataSetupView = (props: DataSetupViewT) => {
+	//To dynamically resize the accordions
+	const getContainerHeight = () => containerRef.current?.scrollHeight;
+	//Gives height of a single accordion, considering the fraction of height allocated for that accordion
+	const getAccHeight = (fraction: number) => `${(getContainerHeight() || 0) / fraction}px`;
+
 	return (
-		<div className={`DataSetupView_container`}>
+		<div className={`DataSetupView_container`} ref={containerRef}>
 			<div className={`DataSetupView_leftContainer`}>
-				<Accordion
-					headerElement={<>Training Dataset</>}
-					maxHeight={"200px"}
-					bodyElement={
-						<>
-							Training Body
-							<br />
-							THis occupies
-							<br />
-							too many
-							<br /> new lines
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							<br />
-							Last Line
-							<br />
-						</>
-					}
-				/>
-				<Accordion
-					headerElement={<>Validation Dataset</>}
-					bodyElement={<h4>Validation Body</h4>}
-					maxHeight={"300px"}
-					defaultIsOpen={false}
-				/>
-				<Accordion
-					headerElement={<>Testing Dataset</>}
-					bodyElement={<h4>Testing Body</h4>}
-					defaultIsOpen={false}
-				/>
+				<Accordion bodyMaxHeight={getAccHeight(3)} header={<>Training Dataset</>}>
+					<AudioFileTable files={audioFiles} />
+				</Accordion>
+				<Accordion bodyMaxHeight={getAccHeight(3)} defaultIsOpen={false} header={<>Validation Dataset</>}>
+					<AudioFileTable files={audioFiles ? [audioFiles[0], audioFiles[1]] : []} />
+				</Accordion>
+				<Accordion bodyMaxHeight={getAccHeight(3)} defaultIsOpen={false} header={<>Testing Dataset</>}>
+					<AudioFileTable files={audioFiles} />
+				</Accordion>
 			</div>
 			<div className={`DataSetupView_rightContainer`}>
-				<Accordion headerElement={<>Add or Merge Data</>} bodyElement={<h4>Data Body</h4>} />
-				<Accordion headerElement={<>Label Data</>} bodyElement={<h4>Label Body</h4>} defaultIsOpen={false} />
+				<Accordion bodyMaxHeight={getAccHeight(2)} header={<>Add or Merge Data</>}>
+					{importDataComponent}
+				</Accordion>
+				<Accordion bodyMaxHeight={getAccHeight(2)} header={<>Label Data</>} defaultIsOpen={false}>
+					<h4>Label Body</h4>
+				</Accordion>
 			</div>
 		</div>
 	);
