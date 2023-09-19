@@ -1,7 +1,5 @@
 import "./Footer.scss";
-import type { JSX } from "react";
-import { projectOverviewRoute } from "../../routes";
-import { testIds } from "../../tests/test-utils";
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
@@ -12,14 +10,21 @@ export type FooterBtnT = {
 	route: string;
 };
 
-type FooterT = {
+export type FooterBtnGroupT = {
 	prevBtn?: FooterBtnT;
 	nextBtn?: FooterBtnT;
-	element?: JSX.Element | JSX.Element[];
+};
+
+type FooterProps = {
+	footerBtnGroup?: FooterBtnGroupT;
+	element?: ReactNode;
 	className?: string;
 };
 
-function Footer({ prevBtn, nextBtn, element, className }: FooterT) {
+function Footer({ footerBtnGroup, element, className }: FooterProps) {
+	const prevBtn = footerBtnGroup?.prevBtn;
+	const nextBtn = footerBtnGroup?.nextBtn;
+
 	const footerClass =
 		prevBtn && nextBtn ? "Footer___both" : prevBtn ? "Footer___prevOnly" : nextBtn ? "Footer___nextOnly" : "";
 

@@ -16,8 +16,10 @@ const ResultsView = (props: ResultsViewT) => {
 			<Header headerTitle={`${props.title}`} />
 			<div className={`body-content-container`}></div>
 			<Footer
-				prevBtn={{ label: "Neural Networks", route: neuralNetworkRoute(props.projectSlug) }}
-				nextBtn={{ label: "Send To Hardware", route: sendToHardwareRoute(props.projectSlug) }}
+				footerBtnGroup={{
+					prevBtn: { label: "Neural Networks", route: neuralNetworkRoute(props.projectSlug) },
+					nextBtn: { label: "Send To Hardware", route: sendToHardwareRoute(props.projectSlug) },
+				}}
 			/>
 		</>
 	);

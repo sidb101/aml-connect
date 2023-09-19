@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
 import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
 import { dataVizRoute, neuralNetworkRoute } from "../../routes";
-import Footer, { type FooterBtnT } from "../../components/footer/Footer";
+import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import "./ModelCreationPage.scss";
 import Header from "../../components/header/Header";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
@@ -13,14 +13,9 @@ export type ModelCreationPageT = {
 	data?: string;
 };
 
-export type ModelCreationPageFooterT = {
-	nextBtn: FooterBtnT;
-	prevBtn: FooterBtnT;
-};
-
 export type ModelCreationPageContextT = {
 	setHeading: React.Dispatch<React.SetStateAction<string>>;
-	setFooter: React.Dispatch<React.SetStateAction<ModelCreationPageFooterT>>;
+	setFooter: React.Dispatch<React.SetStateAction<FooterBtnGroupT>>;
 };
 
 const ModelCreationPage = (props: ModelCreationPageT) => {
@@ -32,7 +27,7 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 	const [heading, setHeading] = useState<string>("");
 	const [pageTabs, setPageTabs] = useState<PageTabT[]>([]);
 	const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
-	const [footer, setFooter] = useState<ModelCreationPageFooterT>({
+	const [footer, setFooter] = useState<FooterBtnGroupT>({
 		prevBtn: { label: "Visualize Data", route: dataVizRoute(projectSlug) },
 		nextBtn: { label: "Neural Networks", route: neuralNetworkRoute(projectSlug) },
 	});
@@ -72,7 +67,7 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 						/>
 					</div>
 				</div>
-				<Footer prevBtn={footer.prevBtn} nextBtn={footer.nextBtn} />
+				<Footer footerBtnGroup={footer} />
 			</>
 		)
 	);

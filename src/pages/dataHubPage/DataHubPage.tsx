@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
 import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
 import { projectOverviewRoute, dataVizRoute } from "../../routes";
-import Footer, { type FooterBtnT } from "../../components/footer/Footer";
+import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import "./DataHubPage.scss";
 import Header from "../../components/header/Header";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
@@ -15,12 +15,7 @@ export type DataSetupPageT = {
 
 export type DataHubContextT = {
 	setHeading: React.Dispatch<React.SetStateAction<string>>;
-	setFooter: React.Dispatch<React.SetStateAction<DataHubFooterT>>;
-};
-
-export type DataHubFooterT = {
-	nextBtn: FooterBtnT;
-	prevBtn: FooterBtnT;
+	setFooter: React.Dispatch<React.SetStateAction<FooterBtnGroupT>>;
 };
 
 const DataHubPage = (props: DataSetupPageT) => {
@@ -32,7 +27,7 @@ const DataHubPage = (props: DataSetupPageT) => {
 	const [heading, setHeading] = useState<string>("");
 	const [pageTabs, setPageTabs] = useState<PageTabT[]>([]);
 	const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
-	const [footer, setFooter] = useState<DataHubFooterT>({
+	const [footer, setFooter] = useState<FooterBtnGroupT>({
 		prevBtn: { label: "Overview", route: projectOverviewRoute(projectSlug) },
 		nextBtn: { label: "Visualize Data", route: dataVizRoute(projectSlug) },
 	});
@@ -72,7 +67,7 @@ const DataHubPage = (props: DataSetupPageT) => {
 						/>
 					</div>
 				</div>
-				<Footer prevBtn={footer.prevBtn} nextBtn={footer.nextBtn} />
+				<Footer footerBtnGroup={footer} />
 			</>
 		)
 	);
