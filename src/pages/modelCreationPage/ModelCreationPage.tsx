@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
 import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
-import { dataVizRoute, modelRoute, neuralNetworkRoute } from "../../routes";
+import { dataVizRoute, neuralNetworkRoute } from "../../routes";
 import Footer, { type FooterBtnT } from "../../components/footer/Footer";
 import "./ModelCreationPage.scss";
 import Header from "../../components/header/Header";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
+import { getModelCreationPageTabs } from "./modelCreationPageTabs";
 
 export type ModelCreationPageT = {
 	data?: string;
@@ -41,7 +42,7 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 		if (projectSlug) {
 			//Update the global state
 			dispatch(generalActions.openProject(projectSlug));
-			setPageTabs(getPageTabs(projectSlug));
+			setPageTabs(getModelCreationPageTabs(projectSlug));
 		} else {
 			console.error("projectSlug not present in the URL.");
 		}
@@ -50,19 +51,6 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 	useEffect(() => {
 		setSelectedTabIndex(getSelectedTabIndex(pageTabs, pathname));
 	}, [pageTabs, pathname]);
-
-	const getPageTabs = (projectSlug: string): PageTabT[] => {
-		return [
-			{
-				label: "Model",
-				route: modelRoute(projectSlug),
-			},
-			{
-				label: "Neural Networks",
-				route: neuralNetworkRoute(projectSlug),
-			},
-		];
-	};
 
 	return (
 		projectSlug && (
