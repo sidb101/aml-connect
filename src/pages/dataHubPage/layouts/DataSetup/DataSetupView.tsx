@@ -1,12 +1,12 @@
 import "./DataSetupView.scss";
-import React, { type JSX, useRef } from "react";
+import React, { type ReactNode, useRef } from "react";
 import AudioFileTable from "./AudioFileTable";
 import Accordion from "../../../../components/accordion/Accordion";
 import type { InputFileDataT } from "../../../../redux/slices/DataHubSlice";
 
 export type DataSetupViewProps = {
 	audioFiles?: InputFileDataT[];
-	importDataComponent: JSX.Element | JSX.Element[];
+	importDataComponent: ReactNode | ReactNode[];
 };
 /**
  * A view component that would load the required widgets as per the passed properties
