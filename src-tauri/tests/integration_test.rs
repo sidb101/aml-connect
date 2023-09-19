@@ -17,7 +17,7 @@ fn save_on_db() {
 
 #[test]
 fn test_list_elements_from_simulator() {
-    
+
     let mut sc = network_manager::AmlSimulatorSidecar::new();
     sc.sidecar_name = String::from("../aspinity_wrapper");
     let elements_json_str = network_manager::AmlSimulator::list_elements(&sc)

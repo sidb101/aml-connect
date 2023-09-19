@@ -38,12 +38,12 @@ export default function AudioFileTable({ files }: AudioFileTableProps) {
 								<td className={`regular-text grey-text AudioFileTable_nameColumn`}>
 									{file.metadata.name}
 								</td>
-								<td
-									className={`regular-text grey-text AudioFileTable_smallColumn AudioFileTable_internalColumn`}
-								>
-									<FontAwesomeIcon icon={faClock} className={`AudioFileTable_icon`} />
-									{file.metadata.length}
-								</td>
+								{/* <td */}
+								{/* 	className={`regular-text grey-text AudioFileTable_smallColumn AudioFileTable_internalColumn`} */}
+								{/* > */}
+								{/* 	<FontAwesomeIcon icon={faClock} className={`AudioFileTable_icon`} /> */}
+								{/* 	{file.metadata.length} */}
+								{/* </td> */}
 								<td className={`AudioFileTable_smallColumn`}>
 									{isPlaying && currentAudio === file ? (
 										<FontAwesomeIcon
