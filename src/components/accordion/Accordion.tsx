@@ -10,6 +10,9 @@ type AccordionProps = {
 	className?: string;
 };
 
+export const accordionActiveClass = "Accordion_active";
+export const accordionInactiveClass = "Accordion_inactive";
+
 const Accordion: React.FC<React.PropsWithChildren<AccordionProps>> = ({
 	defaultIsOpen = true,
 	header,
@@ -23,7 +26,7 @@ const Accordion: React.FC<React.PropsWithChildren<AccordionProps>> = ({
 		setIsActive(!isActive);
 	};
 
-	const active = isActive ? "Accordion_active" : "Accordion_inactive";
+	const active = isActive ? accordionActiveClass : accordionInactiveClass;
 
 	return (
 		<div className={`white-panel Accordion_container ${className} ${active}`}>
@@ -33,7 +36,7 @@ const Accordion: React.FC<React.PropsWithChildren<AccordionProps>> = ({
 					<FontAwesomeIcon icon={faAngleDown} />
 				</i>
 			</div>
-			<div className={`Accordion_body ${active}`} style={isActive ? { maxHeight: bodyMaxHeight } : {}}>
+			<div className={`Accordion_bodyContainer ${active}`} style={isActive ? { maxHeight: bodyMaxHeight } : {}}>
 				<div>{children}</div>
 			</div>
 		</div>

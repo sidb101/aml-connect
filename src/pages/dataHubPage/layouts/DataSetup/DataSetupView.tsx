@@ -1,14 +1,17 @@
 import "./DataSetupView.scss";
-import React, { useRef } from "react";
+import React, { type ReactNode, useRef } from "react";
 import AudioFileTable from "./AudioFileTable";
 import Accordion from "../../../../components/accordion/Accordion";
 import type { InputFileDataT } from "../../../../redux/slices/DataHubSlice";
 
 export type DataSetupViewProps = {
 	audioFiles?: InputFileDataT[];
+	importDataComponent: ReactNode | ReactNode[];
 };
-
-const DataSetupView = ({ audioFiles }: DataSetupViewProps) => {
+/**
+ * A view component that would load the required widgets as per the passed properties
+ */
+const DataSetupView = ({ audioFiles, importDataComponent }: DataSetupViewProps) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	//To dynamically resize the accordions
@@ -31,7 +34,7 @@ const DataSetupView = ({ audioFiles }: DataSetupViewProps) => {
 			</div>
 			<div className={`DataSetupView_rightContainer`}>
 				<Accordion bodyMaxHeight={getAccHeight(2)} header={<>Add or Merge Data</>}>
-					<h4>Data Body</h4>
+					{importDataComponent}
 				</Accordion>
 				<Accordion bodyMaxHeight={getAccHeight(2)} header={<>Label Data</>} defaultIsOpen={false}>
 					<h4>Label Body</h4>

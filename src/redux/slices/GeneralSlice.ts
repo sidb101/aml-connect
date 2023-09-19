@@ -7,6 +7,7 @@
 
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
+import { AUDIO_DIR } from "../../constants";
 
 type GeneralState = {
 	projectStatus: ProjectStatus;
@@ -100,6 +101,11 @@ export const selectCurrentProjectName = createSelector(
 export const selectCurrentProjectSlug = createSelector(
 	(state: RootState) => state.general,
 	({ projectSlug }) => projectSlug
+);
+
+export const selectCurrentProjectAudioDir = createSelector(
+	(state: RootState) => state.general,
+	({ projectSlug }) => `${projectSlug}/${AUDIO_DIR}`
 );
 
 export const { name: generalSliceKey, reducer: generalReducer, actions: generalActions } = generalSlice;
