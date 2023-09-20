@@ -4,14 +4,10 @@ import { fireEvent, screen, within } from "@testing-library/react";
 import { when } from "jest-when";
 import { invoke } from "@tauri-apps/api/tauri";
 import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
-import { getExactText, renderWithProviders, testIds } from "../test-utils";
+import { renderWithProviders, testIds } from "../test-utils";
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE, CREATE_MODEL_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjects";
-import { getOpenProjectNavLinks } from "../../components/sideBar/navRegion/appNavLinks";
-import { linkSelectedClass } from "../../components/sideBar/navRegion/navLink/NavLink";
-import CreateModel from "../../pages/modelCreationPage/layouts/CreateModel/CreateModel";
-import { Route } from "react-router-dom";
 import React from "react";
 import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageTabs";
 import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
@@ -73,10 +69,10 @@ describe("Testing the Model Creation navigation", () => {
 			// Testing that the page tabs are what they should be
 			pageTabLinks.forEach((pageTabLink, index) => {
 				const pageTabLabel: string = expectedPageTabs[index].label;
-				if (pageTabLabel !== "") {
-					expect(pageTabLink).toHaveTextContent(pageTabLabel);
-				} else {
+				if (pageTabLabel === "") {
 					fail("Empty Label Found in Page Tab.");
+				} else {
+					expect(pageTabLink).toHaveTextContent(pageTabLabel);
 				}
 			});
 
@@ -84,11 +80,11 @@ describe("Testing the Model Creation navigation", () => {
 			expect(within(pageTabLinks[0]).getByTestId(testIds.pageTabLinkLabel)).toHaveClass(pageTabsActiveClass);
 
 			// Testing the previous button in the footer is correct
-			const prevBtn = screen.getByTestId(testIds.prevBtn);
+			let prevBtn = screen.getByTestId(testIds.prevBtn);
 			expect(prevBtn).toHaveTextContent(expectedCreateModelBtns[0]);
 
 			// Testing the next button in the footer is correct
-			const nextBtn = screen.getByTestId(testIds.nextBtn);
+			let nextBtn = screen.getByTestId(testIds.nextBtn);
 			expect(nextBtn).toHaveTextContent(expectedPageTabs[1].label);
 
 			// Testing the page heading is correct i.e. X > Model Creation > Create Model
@@ -99,8 +95,104 @@ describe("Testing the Model Creation navigation", () => {
 			).toBeInTheDocument();
 
 			// ACT - 2
+			// -> Click "Neural Networks"
+			fireEvent.click(pageTabLinks[1]);
 
 			// ASSERT -2
+			// -> Testing that the page tabs are what they should be
+			pageTabLinks.forEach((pageTabLink, index) => {
+				const pageTabLabel: string = expectedPageTabs[index].label;
+				if (pageTabLabel === "") {
+					fail("Empty Label Found in Page Tab.");
+				} else {
+					expect(pageTabLink).toHaveTextContent(pageTabLabel);
+				}
+			});
+
+			// Testing the default selected tab in the page tabs
+			expect(within(pageTabLinks[1]).getByTestId(testIds.pageTabLinkLabel)).toHaveClass(pageTabsActiveClass);
+
+			// Testing the previous button in the footer is correct
+			prevBtn = screen.getByTestId(testIds.prevBtn);
+			expect(prevBtn).toHaveTextContent(expectedPageTabs[0].label);
+
+			// Testing the next button in the footer is correct
+			nextBtn = screen.getByTestId(testIds.nextBtn);
+			expect(nextBtn).toHaveTextContent(expectedCreateModelBtns[1]);
+
+			// Testing the page heading is correct i.e. X > Model Creation > Create Model
+			expect(
+				within(screen.getByTestId(testIds.contentHeading)).getByText(
+					projects[0].name + " > Model Creation > " + expectedPageTabs[1].label
+				)
+			).toBeInTheDocument();
+
+			// ACT - 3
+			// -> Click previous button
+			fireEvent.click(prevBtn);
+
+			// ASSERT - 3
+			// -> Testing that the page tabs are what they should be
+			// Testing that the page tabs are what they should be
+			pageTabLinks.forEach((pageTabLink, index) => {
+				const pageTabLabel: string = expectedPageTabs[index].label;
+				if (pageTabLabel === "") {
+					fail("Empty Label Found in Page Tab.");
+				} else {
+					expect(pageTabLink).toHaveTextContent(pageTabLabel);
+				}
+			});
+
+			// Testing the default selected tab in the page tabs
+			expect(within(pageTabLinks[0]).getByTestId(testIds.pageTabLinkLabel)).toHaveClass(pageTabsActiveClass);
+
+			// Testing the previous button in the footer is correct
+			prevBtn = screen.getByTestId(testIds.prevBtn);
+			expect(prevBtn).toHaveTextContent(expectedCreateModelBtns[0]);
+
+			// Testing the next button in the footer is correct
+			nextBtn = screen.getByTestId(testIds.nextBtn);
+			expect(nextBtn).toHaveTextContent(expectedPageTabs[1].label);
+
+			// Testing the page heading is correct i.e. X > Model Creation > Create Model
+			expect(
+				within(screen.getByTestId(testIds.contentHeading)).getByText(
+					projects[0].name + " > Model Creation > " + expectedPageTabs[0].label
+				)
+			).toBeInTheDocument();
+
+			// ACT - 4
+			// -> Click next button
+			fireEvent.click(nextBtn);
+
+			// ASSERT - 4
+			// -> Testing that the page tabs are what they should be
+			pageTabLinks.forEach((pageTabLink, index) => {
+				const pageTabLabel: string = expectedPageTabs[index].label;
+				if (pageTabLabel === "") {
+					fail("Empty Label Found in Page Tab.");
+				} else {
+					expect(pageTabLink).toHaveTextContent(pageTabLabel);
+				}
+			});
+
+			// Testing the default selected tab in the page tabs
+			expect(within(pageTabLinks[1]).getByTestId(testIds.pageTabLinkLabel)).toHaveClass(pageTabsActiveClass);
+
+			// Testing the previous button in the footer is correct
+			prevBtn = screen.getByTestId(testIds.prevBtn);
+			expect(prevBtn).toHaveTextContent(expectedPageTabs[0].label);
+
+			// Testing the next button in the footer is correct
+			nextBtn = screen.getByTestId(testIds.nextBtn);
+			expect(nextBtn).toHaveTextContent(expectedCreateModelBtns[1]);
+
+			// Testing the page heading is correct i.e. X > Model Creation > Create Model
+			expect(
+				within(screen.getByTestId(testIds.contentHeading)).getByText(
+					projects[0].name + " > Model Creation > " + expectedPageTabs[1].label
+				)
+			).toBeInTheDocument();
 		}
 	);
 });
