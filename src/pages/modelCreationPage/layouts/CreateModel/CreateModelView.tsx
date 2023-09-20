@@ -1,11 +1,11 @@
-import "./ModelCreationView.scss";
+import "./CreateModelView.scss";
 import React from "react";
 
 export type ModelCreationViewT = {
 	data?: string;
 };
 
-const ModelCreationView = (props: ModelCreationViewT) => {
+const CreateModelView = (props: ModelCreationViewT) => {
 	return (
 		<>
 			<h2>ModelCreationView</h2>
@@ -13,4 +13,4 @@ const ModelCreationView = (props: ModelCreationViewT) => {
 	);
 };
 
-export default ModelCreationView;
+export default CreateModelView;

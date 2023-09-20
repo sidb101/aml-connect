@@ -1,4 +1,4 @@
-import ModelCreationView from "./ModelCreationView";
+import CreateModelView from "./CreateModelView";
 import { type ModelCreationPageContextT, useModelCreationContext } from "../../ModelCreationPage";
 import { useEffect } from "react";
 import { dataVizRoute, neuralNetworkRoute } from "../../../../routes";
@@ -9,7 +9,7 @@ export type ModelPageT = {
 	data?: string;
 };
 
-const ModelCreation = (props: ModelPageT) => {
+const CreateModel = (props: ModelPageT) => {
 	const { setHeading, setFooter }: ModelCreationPageContextT = useModelCreationContext();
 	const projectSlug = useAppSelector(selectCurrentProjectSlug);
 
@@ -25,9 +25,9 @@ const ModelCreation = (props: ModelPageT) => {
 
 	return (
 		<>
-			<ModelCreationView />
+			<CreateModelView />
 		</>
 	);
 };
 
-export default ModelCreation;
+export default CreateModel;

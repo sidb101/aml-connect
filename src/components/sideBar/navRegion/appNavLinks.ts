@@ -3,7 +3,7 @@ import {
 	dataHubRoute,
 	dataSetupRoute,
 	modelCreationRoute,
-	modelRoute,
+	createModelRoute,
 	projectOverviewRoute,
 	resultsRoute,
 	sendToHardwareRoute,
@@ -29,7 +29,7 @@ export const getOpenProjectNavLinks = (projectSlug: string): NavLinkT[] => [
 	},
 	{
 		label: "Model Creation",
-		route: modelRoute(projectSlug),
+		route: createModelRoute(projectSlug),
 		parentLink: { route: modelCreationRoute(projectSlug) },
 	},
 	{

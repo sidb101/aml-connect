@@ -1,10 +1,10 @@
-import { modelRoute, neuralNetworkRoute } from "../../routes";
+import { createModelRoute, neuralNetworkRoute } from "../../routes";
 import type { PageTabT } from "../../components/pageTabs/PageTabs";
 
 export const getModelCreationPageTabs = (projectSlug: string): PageTabT[] => [
 	{
 		label: "Create Model",
-		route: modelRoute(projectSlug),
+		route: createModelRoute(projectSlug),
 	},
 	{
 		label: "Neural Networks",

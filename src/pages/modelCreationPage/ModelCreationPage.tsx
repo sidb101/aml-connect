@@ -27,10 +27,7 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 	const [heading, setHeading] = useState<string>("");
 	const [pageTabs, setPageTabs] = useState<PageTabT[]>([]);
 	const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
-	const [footer, setFooter] = useState<FooterBtnGroupT>({
-		prevBtn: { label: "Visualize Data", route: dataVizRoute(projectSlug) },
-		nextBtn: { label: "Neural Networks", route: neuralNetworkRoute(projectSlug) },
-	});
+	const [footer, setFooter] = useState<FooterBtnGroupT>({});
 
 	//tasks to be done for the whole model creation page
 	useEffect(() => {

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons/faChevronLeft";
+import { testIds } from "../../tests/test-utils";
 
 export type FooterBtnT = {
 	label: string;
@@ -34,7 +35,7 @@ function Footer({ footerBtnGroup, element, className }: FooterProps) {
 				<div className={`Footer_contentContainer ${footerClass}`}>
 					{prevBtn && (
 						<Link to={prevBtn.route}>
-							<button className={`btn btn-solid Footer_btn`}>
+							<button className={`btn btn-solid Footer_btn`} data-testid={testIds.prevBtn}>
 								<FontAwesomeIcon className={`Footer_iconLeft`} icon={faChevronLeft} />
 								{prevBtn.label}
 							</button>
@@ -42,7 +43,7 @@ function Footer({ footerBtnGroup, element, className }: FooterProps) {
 					)}
 					{nextBtn && (
 						<Link to={nextBtn.route}>
-							<button className={`btn btn-solid Footer_btn`}>
+							<button className={`btn btn-solid Footer_btn`} data-testid={testIds.nextBtn}>
 								{nextBtn.label}
 								<FontAwesomeIcon className={`Footer_iconRight`} icon={faChevronRight} />
 							</button>
