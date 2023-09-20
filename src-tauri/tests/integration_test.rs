@@ -3,7 +3,7 @@ use std::{env, path::{Path, PathBuf}};
 
 use aml_connect::{
     self,
-    aml_core::{db_adapter::{self, schema::projects}, file_data_manager::{FilesUploadRequest, FileUploadRequest, DataSet, self}},
+    aml_core::{db_adapter::{self, schema::projects}, file_data_manager::{FilesUploadRequest, FileUploadRequest, DataSet, self, GetFilesRequest}},
 };
 use diesel::{
     query_dsl::methods::FilterDsl, Connection, ExpressionMethods, RunQueryDsl, SelectableHelper,
@@ -216,5 +216,74 @@ fn validate_file_and_save_metadata_check_exists () {
     assert!(file_upload_response.as_ref().unwrap().attempted == 2);
     assert!(file_upload_response.as_ref().unwrap().succeeded == 0);
     assert!(file_upload_response.as_ref().unwrap().failed == 2);
+
+}
+
+#[test]
+fn get_audio_files_invalid_request () {
+
+    let db_dir_path = "./tests";
+    env::set_var("DATABASE_PATH", &db_dir_path);
+
+    // if exists, purge db under "./tests" before test
+    let db_name = db_adapter::DB_NAME;
+    let db_path = format!("{db_dir_path}/{db_name}");
+    if Path::new(&db_path).exists() {
+        std::fs::remove_file(&db_path).unwrap();
+    }
+    
+    let conn_pool = db_adapter::establish_connection().unwrap();
+    env::remove_var("DATABASE_PATH");
+    db_adapter::run_db_migrations(&conn_pool).unwrap();
+    
+    let conn = &mut conn_pool.get().unwrap();
+
+    let request = GetFilesRequest {
+        proj_slug: "".to_string(),
+        dataset_type: None,
+    };
+
+    let files = file_data_manager::get_files::get_input_files(&request, conn);
+
+    assert!(files.is_err());
+
+    let request = GetFilesRequest {
+        proj_slug: "invalid_project".to_string(),
+        dataset_type: Some(DataSet::Training),
+    };
+
+    let files = file_data_manager::get_files::get_input_files(&request, conn);
+
+    assert!(files.is_err());
+
+}
+
+#[test]
+fn get_audio_files_valid_request () {
+
+    let db_dir_path = "./tests";
+    env::set_var("DATABASE_PATH", &db_dir_path);
+
+    // if exists, purge db under "./tests" before test
+    let db_name = db_adapter::DB_NAME;
+    let db_path = format!("{db_dir_path}/{db_name}");
+    if Path::new(&db_path).exists() {
+        std::fs::remove_file(&db_path).unwrap();
+    }
+    
+    let conn_pool = db_adapter::establish_connection().unwrap();
+    env::remove_var("DATABASE_PATH");
+    db_adapter::run_db_migrations(&conn_pool).unwrap();
+    
+    let conn = &mut conn_pool.get().unwrap();
+
+    let request = GetFilesRequest {
+        proj_slug: "".to_string(),
+        dataset_type: None,
+    };
+
+    let _files = file_data_manager::get_files::get_input_files(&request, conn);
+
+    // TODO: Use @sidb101's code to insert audio files.
 
 }
