@@ -3,7 +3,7 @@
 .Accordion_container {
   .Accordion_headerContainer {
     display: flex;
-    height: 50px;
+    height: global.$panel-header-height;
     border-bottom: solid 2px global.$color-grey-2;
     justify-content: space-between;
     align-items: center;
@@ -27,11 +27,12 @@
     }
   }
 
-  .Accordion_body {
+  .Accordion_bodyContainer {
     padding: 0 global.$panel-padding;
     max-height: 0;
     overflow: hidden;
     transition: all 200ms;
+    scrollbar-gutter: stable both-edges;
 
     &.Accordion_active {
       max-height: 15vh;

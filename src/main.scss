@@ -55,7 +55,6 @@ Common Classes
     overflow: auto; /* Enable scrolling in both dimensions */
     padding: global.$content-padding global.$content-padding 0;
     scrollbar-gutter: stable both-edges;
-    z-index: 0;
   }
 
   .body-content-container-no-footer{
@@ -118,14 +117,12 @@ Common Classes
   font-family: global.$font-primary-light;
   font-size: global.$text-regular;
   color: global.$color-dark-blue;
-  font-weight: bold;
 }
 
 .small-text {
   font-family: global.$font-primary-light;
   font-size: global.$text-small;
   color: global.$color-dark-blue;
-  font-weight: bold;
 }
 
 //noinspection ALL
@@ -133,7 +130,6 @@ Common Classes
   font-family: global.$font-primary-light;
   font-size: global.$text-xsmall;
   color: global.$color-dark-blue;
-  font-weight: bold;
 }
 
 //noinspection ALL
@@ -158,6 +154,10 @@ Common Classes
 //noinspection ALL
 .white-text {
   color: global.$color-white;
+}
+
+.bold-text {
+  font-weight: bold;
 }
 
 /* -- Various kinds of Buttons -- */
@@ -185,7 +185,6 @@ Common Classes
   }
 }
 
-//noinspection ALL
 .btn-outline {
   background: none;
   border: global.$color-green solid 1px;
@@ -199,35 +198,33 @@ Common Classes
   &:active {
     background-color: global.$color-dark-green;
   }
+}
 
-  //noinspection ALL
-  .btn-light-solid {
-    background-color: global.$color-light-green;
-    border: none;
-    color: global.$color-white;
+.btn-light-solid {
+  background-color: global.$color-light-green;
+  border: none;
+  color: global.$color-white;
 
-    &:hover {
-      background-color: global.$color-dark-light-green;
-    }
-
-    &:active {
-      background-color: global.$color-light-green;
-    }
+  &:hover {
+    background-color: global.$color-dark-light-green;
   }
 
-  //noinspection ALL
-  .btn-light-outline {
-    background: none;
-    border: global.$color-light-green solid 1px;
-    color: global.$color-light-green;
+  &:active {
+    background-color: global.$color-light-green;
+  }
+}
 
-    &:hover {
-      background-color: global.$color-light-green;
-      color: global.$color-white;
-    }
+.btn-light-outline {
+  background: none;
+  border: global.$color-light-green solid 1px;
+  color: global.$color-light-green;
 
-    &:active {
-      background-color: global.$color-dark-light-green;
-    }
+  &:hover {
+    background-color: global.$color-light-green;
+    color: global.$color-white;
+  }
+
+  &:active {
+    background-color: global.$color-dark-light-green;
   }
 }
