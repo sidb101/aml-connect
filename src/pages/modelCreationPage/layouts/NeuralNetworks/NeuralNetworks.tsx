@@ -1,33 +1,33 @@
-import ModelCreationView from "./ModelCreationView";
+import NeuralNetworksView from "./NeuralNetworksView";
 import { type ModelCreationPageContextT, useModelCreationContext } from "../../ModelCreationPage";
 import { useEffect } from "react";
-import { dataVizRoute, neuralNetworkRoute } from "../../../../routes";
+import { modelCreationRoute, modelRoute, resultsRoute } from "../../../../routes";
 import { useAppSelector } from "../../../../hooks";
 import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
 
-export type ModelPageT = {
+export type NeuralNetworksPageT = {
 	data?: string;
 };
 
-const ModelCreation = (props: ModelPageT) => {
+const NeuralNetworks = (props: NeuralNetworksPageT) => {
 	const { setHeading, setFooter }: ModelCreationPageContextT = useModelCreationContext();
 	const projectSlug = useAppSelector(selectCurrentProjectSlug);
 
 	//Change the headers and footers of Model Creation as per the current view
 	useEffect(() => {
-		setHeading("Model Creation Page");
+		setHeading("Neural Networks");
 		setFooter((state) => ({
 			...state,
-			prevBtn: { label: "Visualize Data", route: dataVizRoute(projectSlug) },
-			nextBtn: { label: "Neural Networks", route: neuralNetworkRoute(projectSlug) },
+			prevBtn: { label: "Create Model", route: modelRoute(projectSlug) },
+			nextBtn: { label: "Results", route: resultsRoute(projectSlug) },
 		}));
 	}, [projectSlug]);
 
 	return (
 		<>
-			<ModelCreationView />
+			<NeuralNetworksView />
 		</>
 	);
 };
 
-export default ModelCreation;
+export default NeuralNetworks;

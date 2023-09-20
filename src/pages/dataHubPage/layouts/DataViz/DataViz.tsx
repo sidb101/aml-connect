@@ -20,7 +20,7 @@ const DataViz = (props: DataVizT) => {
 		setFooter((state) => ({
 			...state,
 			prevBtn: { label: "Data Setup", route: dataSetupRoute(projectSlug) },
-			nextBtn: { label: "Model Creation", route: modelRoute(projectSlug) },
+			nextBtn: { label: "Create Model", route: modelRoute(projectSlug) },
 		}));
 	}, [projectSlug]);
 

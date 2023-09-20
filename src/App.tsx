@@ -23,8 +23,8 @@ import SendToHardwarePage from "./pages/sendToHardwarePage/SendToHardwarePage";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import DataSetup from "./pages/dataHubPage/layouts/DataSetup/DataSetup";
 import DataViz from "./pages/dataHubPage/layouts/DataViz/DataViz";
-import ModelCreation from "./pages/modelCreationPage/layouts/ModelPage/ModelCreation";
-import NeuralNetworks from "./pages/modelCreationPage/layouts/NeuralNetworksPage/NeuralNetworks";
+import ModelCreation from "./pages/modelCreationPage/layouts/ModelCreation/ModelCreation";
+import NeuralNetworks from "./pages/modelCreationPage/layouts/NeuralNetworks/NeuralNetworks";
 
 const App = () => <RouterProvider router={router} />;
 

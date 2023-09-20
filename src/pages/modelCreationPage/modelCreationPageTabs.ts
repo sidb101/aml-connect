@@ -3,7 +3,7 @@ import type { PageTabT } from "../../components/pageTabs/PageTabs";
 
 export const getModelCreationPageTabs = (projectSlug: string): PageTabT[] => [
 	{
-		label: "Model",
+		label: "Create Model",
 		route: modelRoute(projectSlug),
 	},
 	{
