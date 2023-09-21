@@ -1,6 +1,6 @@
 import "./ResultsView.scss";
 import React from "react";
-import { modelCreationRoute, sendToHardwareRoute } from "../../../routes";
+import { neuralNetworkRoute, sendToHardwareRoute } from "../../../routes";
 import Footer from "../../../components/footer/Footer";
 import Header from "../../../components/header/Header";
 import Canvas from "./Canvas";
@@ -19,8 +19,10 @@ const ResultsView = (props: ResultsViewT) => {
 				<Canvas />
 			</div>
 			<Footer
-				prevBtn={{ label: "Model Creation", route: modelCreationRoute(props.projectSlug) }}
-				nextBtn={{ label: "Send To Hardware", route: sendToHardwareRoute(props.projectSlug) }}
+				footerBtnGroup={{
+					prevBtn: { label: "Neural Networks", route: neuralNetworkRoute(props.projectSlug) },
+					nextBtn: { label: "Send To Hardware", route: sendToHardwareRoute(props.projectSlug) },
+				}}
 			/>
 		</>
 	);

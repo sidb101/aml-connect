@@ -7,6 +7,8 @@ import {
 	DATA_SETUP_ROUTE,
 	DATA_VIZ_ROUTE,
 	MODEL_CREATION_ROUTE,
+	CREATE_MODEL_ROUTE,
+	NEURAL_NETWORK_ROUTE,
 	OVERVIEW_ROUTE,
 	RESULTS_ROUTE,
 	SEND_TO_HARDWARE_ROUTE,
@@ -21,6 +23,8 @@ import SendToHardwarePage from "./pages/sendToHardwarePage/SendToHardwarePage";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import DataSetup from "./pages/dataHubPage/layouts/DataSetup/DataSetup";
 import DataViz from "./pages/dataHubPage/layouts/DataViz/DataViz";
+import CreateModel from "./pages/modelCreationPage/layouts/CreateModel/CreateModel";
+import NeuralNetworks from "./pages/modelCreationPage/layouts/NeuralNetworks/NeuralNetworks";
 
 const App = () => <RouterProvider router={router} />;
 
@@ -35,7 +39,10 @@ export const routes = createRoutesFromElements(
 			<Route path={DATA_SETUP_ROUTE} element={<DataSetup />} />
 			<Route path={DATA_VIZ_ROUTE} element={<DataViz />} />
 		</Route>
-		<Route path={MODEL_CREATION_ROUTE} element={<ModelCreationPage />} />
+		<Route path={MODEL_CREATION_ROUTE} element={<ModelCreationPage />}>
+			<Route path={CREATE_MODEL_ROUTE} element={<CreateModel />} />
+			<Route path={NEURAL_NETWORK_ROUTE} element={<NeuralNetworks />} />
+		</Route>
 		<Route path={RESULTS_ROUTE} element={<ResultsPage />} />
 		<Route path={SEND_TO_HARDWARE_ROUTE} element={<SendToHardwarePage />} />
 	</Route>
