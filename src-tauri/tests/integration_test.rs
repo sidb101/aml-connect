@@ -285,8 +285,7 @@ fn get_audio_files_invalid_request () {
 }
 
 #[test]
-fn get_audio_files_valid_request () {
-
+fn get_non_existent_files () {
     let db_dir_path = "./tests";
     env::set_var("DATABASE_PATH", &db_dir_path);
 
@@ -300,18 +299,48 @@ fn get_audio_files_valid_request () {
     let conn_pool = db_adapter::establish_connection().unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
-    
     let conn = &mut conn_pool.get().unwrap();
 
-    let request = GetFilesRequest {
-        proj_slug: "".to_string(),
-        dataset_type: None,
+    let request = FilesUploadRequest {
+        proj_slug: "test_project".to_string(),
+        input_files: vec![FileUploadRequest {
+            file_name: "bearing-faults.wav".to_string(),
+            dataset_type: DataSet::Training, 
+         },
+         FileUploadRequest {
+            file_name: "heart-rate.wav".to_string(),
+            dataset_type: DataSet::Training, 
+         },
+         FileUploadRequest {
+            file_name: "rising-chirp.wav".to_string(),
+            dataset_type: DataSet::Training, 
+         }], 
     };
 
-    let _files = file_data_manager::get_files::get_input_files(&request, conn);
+    let project_slug = "test_project";
+    let dummy_project = NewProject {
+        slug: project_slug.to_owned(),
+        description: Some("This is a test project".to_owned()),
+    };
+    diesel::insert_into(projects::table)
+        .values(&dummy_project)
+        .execute(conn).unwrap();
 
-    // TODO: Use @sidb101's code to insert audio files.
+    let app_dir = create_app_dir_if_not_exists().unwrap();
+    integration_test_setup(app_dir.clone());
 
+    let file_upload_response = file_data_manager::put_files::save_input_files(&request, &app_dir, conn);
+    println!("file_upload_response : {:?}", file_upload_response);
+    assert!(file_upload_response.is_ok());
+    assert!(file_upload_response.unwrap().upload_success_files.len() == 3);
+
+    let get_file_request = file_data_manager::GetFilesRequest {
+        proj_slug: "test_project".to_string(),
+        dataset_type: Some(DataSet::Validation),
+    };
+
+    let get_file_response = file_data_manager::get_files::get_input_files(&get_file_request, conn);   
+    assert!(get_file_response.unwrap().files.len() == 0);
 }
 
 // ignore unless - youve created bearing-faults.wav, heart-rate.wav and rising-chirp.wav in ~/.local/share/aml_connect
@@ -372,6 +401,7 @@ fn put_files_then_check_get_files () {
     };
     let get_files_response = file_data_manager::get_files::get_input_files(&get_file_request, conn);
     assert!(get_files_response.unwrap().files.len() == 3);
+
 }
 
 #[test]
