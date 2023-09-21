@@ -6,193 +6,156 @@ import { invoke } from "@tauri-apps/api/tauri";
 import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 import { renderWithProviders, testIds } from "../test-utils";
 import { routes as appRoutes } from "../../App";
-import { BASE_ROUTE, CREATE_MODEL_ROUTE } from "../../routes";
+import { BASE_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjects";
 import React from "react";
 import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageTabs";
 import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
 
-/**
- * Performing test on basic Navigation Functionality
- */
-describe("Testing the Model Creation navigation", () => {
-	//mock the invoke method of backend module
-	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
+const getPageElements = () => {
+	const actualPageTabLinks = screen.getAllByTestId(testIds.pageTabLink);
+	const actualPageTabLabels = screen.getAllByTestId(testIds.pageTabLinkLabel);
+	const actualPrevBtn = screen.getByTestId(testIds.prevBtn);
+	const actualNextBtn = screen.getByTestId(testIds.nextBtn);
 
-	//define the routing for given test suite
+	return {
+		actualPageTabLinks,
+		actualPageTabLabels,
+		actualPrevBtn,
+		actualNextBtn,
+	};
+};
+
+const verifyPageTabLinkIsActive = (actualPageTabLinks: HTMLElement) => {
+	expect(within(actualPageTabLinks).getByTestId(testIds.pageTabLinkLabel)).toHaveClass(pageTabsActiveClass);
+};
+
+const verifyPageTabLabels = (expectedPageTabLabels: string[], actualPageTabLabels: HTMLElement[]) => {
+	if (expectedPageTabLabels.length !== actualPageTabLabels.length) {
+		fail("Mismatch in the length of expected and actual page tab labels.");
+		return;
+	}
+
+	expectedPageTabLabels.forEach((label, index) => {
+		if (actualPageTabLabels[index].textContent === "") {
+			fail(`Empty Label Found in Page Tab at index: ${index}`);
+		} else {
+			expect(actualPageTabLabels[index]).toHaveTextContent(label);
+		}
+	});
+};
+
+const verifyFooterButtons = (expectedPrevBtnText: string, actualPrevBtn: HTMLElement) => {
+	expect(actualPrevBtn).toHaveTextContent(expectedPrevBtnText);
+};
+
+describe("Testing the Model Creation navigation", () => {
+	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 	const routes = appRoutes;
 
-	const expectedCreateModelBtns = ["Visualize Data", "Results"];
+	test("Model Creation: Test 1: Testing the model creation page exists, and the page tabs exist on the model creation page", () => {
+		// ARRANGE (from where to start the test)
 
-	test(
-		"Model Creation: Test 1: Testing the model creation page exists, " +
-			"and the page tabs exist on the model creation page",
-		async () => {
-			// ARRANGE (from where to start the test)
-			// -> should start with empty store
-			const storeState = {};
+		// -> should start with empty store
+		const storeState = {};
+		const projects: BasicProjectDataT[] = mockProjects;
 
-			// -> mock the response from backend
-			const projects: BasicProjectDataT[] = mockProjects;
-			when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
+		// -> mock the response from backend
+		when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
 
-			// -> Need to start from the base route
-			const routeToRender = [BASE_ROUTE];
+		// -> Start this app with this store state and this ("/") as the current route
+		renderWithProviders(routes, {
+			preloadedState: storeState,
+			initialEntries: [BASE_ROUTE],
+		});
 
-			// -> Start this app with this store state and this ("/") as the current route
-			renderWithProviders(routes, {
-				preloadedState: storeState,
-				initialEntries: routeToRender,
-			});
+		// -> Get all the project links in the sidebar with a given test ID
+		// NOTE: getAllByTestId() does not need the await keyword
+		// NOTE: DO NOT WRITE testIDs everywhere, only where needed
+		const sideBarLinks = screen.getAllByTestId(testIds.projectLinks);
 
-			// -> Get all the project links in the sidebar with a given test ID
-			// NOTE: getAllByTestId() does not need the await keyword
-			// NOTE: DO NOT WRITE testIDs everywhere, only where needed
-			const sideBarLinks = screen.getAllByTestId(testIds.projectLinks);
+		// -> Click the first sidebar link
+		fireEvent.click(sideBarLinks[0]);
 
-			// -> Click the first sidebar link
-			fireEvent.click(sideBarLinks[0]);
+		// -> Get the nav links in the sidebar e.g. "Overview, Data Hub, etc."
+		// NOTE: findAllByTestId() needs the await keyword
+		const navLinks = screen.getAllByTestId(testIds.navLinks);
 
-			// -> Get the nav links in the sidebar e.g. "Overview, Data Hub, etc."
-			// NOTE: findAllByTestId() needs the await keyword
-			const navLinks = await screen.findAllByTestId(testIds.navLinks);
+		const expectedPageTabLinks = getModelCreationPageTabs(projects[0].slug);
+		const expectedPageTabLabels = expectedPageTabLinks.map((tab) => tab.label);
+		const expectedPrevBtnTexts = ["Visualize Data", expectedPageTabLabels[0]];
+		const expectedNextBtnTexts = [expectedPageTabLabels[1], "Results"];
 
-			// ACT - 1
-			// -> Click the "Model Creation" link
-			fireEvent.click(navLinks[2]);
+		let page: number;
 
-			// ASSERT - 1
-			const pageTabLinks = await screen.findAllByTestId(testIds.pageTabLink);
+		let actualPageTabLinks: HTMLElement[];
+		let actualPageTabLabels: HTMLElement[];
+		let actualPrevBtn: HTMLElement;
+		let actualNextBtn: HTMLElement;
 
-			const expectedPageTabs = getModelCreationPageTabs(projects[0].slug);
+		// -----------------------------------------------------------------------------------
+		// ACT - 1: Click the "Model Creation" link in the sidebar
+		// -----------------------------------------------------------------------------------
+		page = 0;
+		fireEvent.click(navLinks[2]);
+		({ actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } = getPageElements());
 
-			// Testing that the page tabs are what they should be
-			pageTabLinks.forEach((pageTabLink, index) => {
-				const pageTabLabel: string = expectedPageTabs[index].label;
-				if (pageTabLabel === "") {
-					fail("Empty Label Found in Page Tab.");
-				} else {
-					expect(pageTabLink).toHaveTextContent(pageTabLabel);
-				}
-			});
+		// ASSERT - 1
+		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
+		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
+		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
+		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
 
-			// Testing the default selected tab in the page tabs
-			expect(within(pageTabLinks[0]).getByTestId(testIds.pageTabLinkLabel)).toHaveClass(pageTabsActiveClass);
+		// -----------------------------------------------------------------------------------
+		// ACT - 2: Click the "Neural Networks" in the page tabs up the top of the page
+		// -----------------------------------------------------------------------------------
+		page = 1;
+		fireEvent.click(actualPageTabLinks[page]);
+		({ actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } = getPageElements());
 
-			// Testing the previous button in the footer is correct
-			let prevBtn = screen.getByTestId(testIds.prevBtn);
-			expect(prevBtn).toHaveTextContent(expectedCreateModelBtns[0]);
+		// ASSERT - 2
+		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
+		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
+		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
+		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
 
-			// Testing the next button in the footer is correct
-			let nextBtn = screen.getByTestId(testIds.nextBtn);
-			expect(nextBtn).toHaveTextContent(expectedPageTabs[1].label);
+		// -----------------------------------------------------------------------------------
+		// ACT - 3: Click the "Create Model" in the page tabs up the top of the page
+		// -----------------------------------------------------------------------------------
+		page = 0;
+		fireEvent.click(actualPageTabLinks[page]);
+		({ actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } = getPageElements());
 
-			// Testing the page heading is correct i.e. X > Model Creation > Create Model
-			expect(
-				within(screen.getByTestId(testIds.contentHeading)).getByText(
-					projects[0].name + " > Model Creation > " + expectedPageTabs[0].label
-				)
-			).toBeInTheDocument();
+		// ASSERT - 3
+		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
+		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
+		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
+		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
 
-			// ACT - 2
-			// -> Click "Neural Networks"
-			fireEvent.click(pageTabLinks[1]);
+		// -----------------------------------------------------------------------------------
+		// ACT - 4: Click the next button in the footer of the page
+		// -----------------------------------------------------------------------------------
+		page = 1;
+		fireEvent.click(screen.getByTestId(testIds.nextBtn));
+		({ actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } = getPageElements());
 
-			// ASSERT -2
-			// -> Testing that the page tabs are what they should be
-			pageTabLinks.forEach((pageTabLink, index) => {
-				const pageTabLabel: string = expectedPageTabs[index].label;
-				if (pageTabLabel === "") {
-					fail("Empty Label Found in Page Tab.");
-				} else {
-					expect(pageTabLink).toHaveTextContent(pageTabLabel);
-				}
-			});
+		// ASSERT - 4
+		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
+		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
+		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
+		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
 
-			// Testing the default selected tab in the page tabs
-			expect(within(pageTabLinks[1]).getByTestId(testIds.pageTabLinkLabel)).toHaveClass(pageTabsActiveClass);
+		// -----------------------------------------------------------------------------------
+		// ACT - 5: Click the previous button in the footer of the page
+		// -----------------------------------------------------------------------------------
+		page = 0;
+		fireEvent.click(screen.getByTestId(testIds.prevBtn));
+		({ actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } = getPageElements());
 
-			// Testing the previous button in the footer is correct
-			prevBtn = screen.getByTestId(testIds.prevBtn);
-			expect(prevBtn).toHaveTextContent(expectedPageTabs[0].label);
-
-			// Testing the next button in the footer is correct
-			nextBtn = screen.getByTestId(testIds.nextBtn);
-			expect(nextBtn).toHaveTextContent(expectedCreateModelBtns[1]);
-
-			// Testing the page heading is correct i.e. X > Model Creation > Create Model
-			expect(
-				within(screen.getByTestId(testIds.contentHeading)).getByText(
-					projects[0].name + " > Model Creation > " + expectedPageTabs[1].label
-				)
-			).toBeInTheDocument();
-
-			// ACT - 3
-			// -> Click previous button
-			fireEvent.click(prevBtn);
-
-			// ASSERT - 3
-			// -> Testing that the page tabs are what they should be
-			// Testing that the page tabs are what they should be
-			pageTabLinks.forEach((pageTabLink, index) => {
-				const pageTabLabel: string = expectedPageTabs[index].label;
-				if (pageTabLabel === "") {
-					fail("Empty Label Found in Page Tab.");
-				} else {
-					expect(pageTabLink).toHaveTextContent(pageTabLabel);
-				}
-			});
-
-			// Testing the default selected tab in the page tabs
-			expect(within(pageTabLinks[0]).getByTestId(testIds.pageTabLinkLabel)).toHaveClass(pageTabsActiveClass);
-
-			// Testing the previous button in the footer is correct
-			prevBtn = screen.getByTestId(testIds.prevBtn);
-			expect(prevBtn).toHaveTextContent(expectedCreateModelBtns[0]);
-
-			// Testing the next button in the footer is correct
-			nextBtn = screen.getByTestId(testIds.nextBtn);
-			expect(nextBtn).toHaveTextContent(expectedPageTabs[1].label);
-
-			// Testing the page heading is correct i.e. X > Model Creation > Create Model
-			expect(
-				within(screen.getByTestId(testIds.contentHeading)).getByText(
-					projects[0].name + " > Model Creation > " + expectedPageTabs[0].label
-				)
-			).toBeInTheDocument();
-
-			// ACT - 4
-			// -> Click next button
-			fireEvent.click(nextBtn);
-
-			// ASSERT - 4
-			// -> Testing that the page tabs are what they should be
-			pageTabLinks.forEach((pageTabLink, index) => {
-				const pageTabLabel: string = expectedPageTabs[index].label;
-				if (pageTabLabel === "") {
-					fail("Empty Label Found in Page Tab.");
-				} else {
-					expect(pageTabLink).toHaveTextContent(pageTabLabel);
-				}
-			});
-
-			// Testing the default selected tab in the page tabs
-			expect(within(pageTabLinks[1]).getByTestId(testIds.pageTabLinkLabel)).toHaveClass(pageTabsActiveClass);
-
-			// Testing the previous button in the footer is correct
-			prevBtn = screen.getByTestId(testIds.prevBtn);
-			expect(prevBtn).toHaveTextContent(expectedPageTabs[0].label);
-
-			// Testing the next button in the footer is correct
-			nextBtn = screen.getByTestId(testIds.nextBtn);
-			expect(nextBtn).toHaveTextContent(expectedCreateModelBtns[1]);
-
-			// Testing the page heading is correct i.e. X > Model Creation > Create Model
-			expect(
-				within(screen.getByTestId(testIds.contentHeading)).getByText(
-					projects[0].name + " > Model Creation > " + expectedPageTabs[1].label
-				)
-			).toBeInTheDocument();
-		}
-	);
+		// ASSERT - 5
+		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
+		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
+		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
+		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
+	});
 });
