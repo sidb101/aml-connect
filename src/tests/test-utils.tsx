@@ -82,4 +82,12 @@ export const testIds = {
 	importModalBody: "import-modal-body",
 	browsePcLink: "browse-pc-link",
 	modalImportFilesBtn: "modal-import-files-btn",
+
+	// PageTabs Links
+	pageTabLink: "page-tab-link",
+	pageTabLinkLabel: "page-tab-label",
+
+	// Footer buttons
+	prevBtn: "previous-btn",
+	nextBtn: "next-btn",
 };
