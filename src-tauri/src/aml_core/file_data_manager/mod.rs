@@ -32,9 +32,9 @@ pub enum DataSet {
 impl fmt::Display for DataSet {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            DataSet::Testing => write!(f, "testing"),
-            DataSet::Validation => write!(f, "validation"),
-            DataSet::Training => write!(f, "training"),
+            DataSet::Testing => write!(f, "Testing"),
+            DataSet::Validation => write!(f, "Validation"),
+            DataSet::Training => write!(f, "Training"),
         }
     }
 }
