@@ -30,8 +30,10 @@ const SendToHardwareView = (props: SendToHardwareViewT) => {
 				</div>
 			</div>
 			<Footer
-				prevBtn={{ label: "Results", route: resultsRoute(props.projectSlug) }}
-				nextBtn={{ label: "Homepage", route: "/" }}
+				footerBtnGroup={{
+					prevBtn: { label: "Results", route: resultsRoute(props.projectSlug) },
+					nextBtn: { label: "Homepage", route: "/" },
+				}}
 			/>
 		</>
 	);
