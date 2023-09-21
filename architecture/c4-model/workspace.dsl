@@ -9,8 +9,7 @@ workspace {
             
             group Clients {
             
-                //Proposed UI Layer
-                uiLayer = container "Proposed UI Layer"{
+                uiLayer = container "UI Layer"{
 
                     group ReactComponents {
                         reactComponent = component "Sample React Component" "UI Smart Component dealing with states and data"   
@@ -38,7 +37,6 @@ workspace {
                     remoteService -> tauriApiClient "has"
                     storageService -> tauriFsClient "has"
 
-
                     tauriApiClient -> remoteClient "implements"
                     tauriFsClient -> storageClient "implements"
 
@@ -48,9 +46,6 @@ workspace {
                     reactComponent -> engineer "Receives customized network"
                     developer -> reactComponent "Maintains" 
                 }
-
-
-
 
                 cliapp = container "Command Line Application" {
                     customer -> this "Design customized networks"
@@ -180,11 +175,6 @@ workspace {
             autoLayout
         }
 
-        component proposedUiLayer {
-            include *
-            autoLayout
-        }
-
         deployment * simulator {
             include *
             autoLayout lr
@@ -205,11 +195,11 @@ workspace {
         dynamic uiLayer {
             title "[Performance] Add Network Element"
 
-            customer -> component1 "user request to add network element"
-            component1 -> reduxStore "asks for metadata regarding network element"
-            reduxStore -> component1 "data is received"
-            component1 -> slice1 "user defined network is updated with the additional network element"
-            component1 -> customer "new network element is displayed on canvas"
+            customer -> reactComponent "user request to add network element"
+            reactComponent -> reduxStore "asks for metadata regarding network element"
+            reduxStore -> reactComponent "data is received"
+            reactComponent -> slice "user defined network is updated with the additional network element"
+            reactComponent -> customer "new network element is displayed on canvas"
             
             autoLayout lr
         }
