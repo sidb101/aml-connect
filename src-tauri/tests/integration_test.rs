@@ -112,7 +112,7 @@ fn save_file_metadata() {
     assert!(found_project.description == project.description);
 }
 
-#[ignore]
+// #[ignore]
 #[test]
 fn validate_file_and_save_metadata () {
     // set DATABASE_PATH env var
