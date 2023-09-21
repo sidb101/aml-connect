@@ -2,8 +2,6 @@ use crate::aml_connect::aml_core::db_adapter::models::*;
 use std::{env, path::{Path, PathBuf}};
 use anyhow::Result;
 use std::fs;
-// use tauri::api::path;
-// use tauri::Context;
 use aml_connect::{
     self,
     aml_core::{db_adapter::{self, schema::projects}, file_data_manager::{FilesUploadRequest, FileUploadRequest, DataSet, self, GetFilesRequest}},
