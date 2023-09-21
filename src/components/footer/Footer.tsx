@@ -1,6 +1,5 @@
 import "./Footer.scss";
 import type { JSX } from "react";
-import { projectOverviewRoute } from "../../routes";
 import { testIds } from "../../tests/test-utils";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

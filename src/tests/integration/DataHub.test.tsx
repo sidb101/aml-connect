@@ -13,16 +13,25 @@ import { pageTabsActiveClass } from "../../pages/dataHubPage/layouts/PageTabs/Pa
 //import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageTabs";
 
 const getPageElements = () => {
+	const actualPageHeading = screen.getByTestId(testIds.contentHeading);
 	const actualPageTabLinks = screen.getAllByTestId(testIds.pageTabLink);
 	const actualPageTabLabels = screen.getAllByTestId(testIds.pageTabLinkLabel);
 	const actualPrevBtn = screen.getByTestId(testIds.prevBtn);
 	const actualNextBtn = screen.getByTestId(testIds.nextBtn);
 
 	return {
+		actualPageHeading,
 		actualPageTabLinks,
 		actualPageTabLabels,
 		actualPrevBtn,
 		actualNextBtn,
+	};
+};
+
+const verifyPageHeading = (expectedPageHeading: string, actualPageHeading: HTMLElement) => {
+	const verifyPageHeading = (expectedPageHeading: string, actualPageHeading: HTMLElement) => {
+		const regExp = new RegExp(expectedPageHeading, "i"); // 'i' flag for case-insensitive matching
+		expect(within(screen.getByTestId(testIds.contentHeading)).getByText(regExp)).toBeInTheDocument();
 	};
 };
 
@@ -93,11 +102,16 @@ describe("Testing the Model Creation navigation", () => {
 		];
 		//const expectedPageTabLinks = getModelCreationPageTabs(projects[0].slug);
 		const expectedPageTabLabels = expectedPageTabLinks.map((tab) => tab.label);
+		const expectedPageHeadings = [
+			projects[0].name + " > Data Hub > " + expectedPageTabLabels[0],
+			projects[0].name + " > Data Hub > " + expectedPageTabLabels[1],
+		];
 		const expectedPrevBtnTexts = ["Overview", expectedPageTabLabels[0]];
 		const expectedNextBtnTexts = [expectedPageTabLabels[1], "Model Creation"];
 
 		let page: number;
 
+		let actualPageHeading: HTMLElement;
 		let actualPageTabLinks: HTMLElement[];
 		let actualPageTabLabels: HTMLElement[];
 		let actualPrevBtn: HTMLElement;
@@ -108,9 +122,11 @@ describe("Testing the Model Creation navigation", () => {
 		// -----------------------------------------------------------------------------------
 		page = 0;
 		fireEvent.click(navLinks[1]);
-		({ actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } = getPageElements());
+		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
+			getPageElements());
 
 		// ASSERT - 1
+		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
 		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
 		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
 		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
@@ -121,9 +137,11 @@ describe("Testing the Model Creation navigation", () => {
 		// -----------------------------------------------------------------------------------
 		page = 1;
 		fireEvent.click(actualPageTabLinks[page]);
-		({ actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } = getPageElements());
+		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
+			getPageElements());
 
 		// ASSERT - 2
+		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
 		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
 		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
 		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
@@ -134,9 +152,11 @@ describe("Testing the Model Creation navigation", () => {
 		// // -----------------------------------------------------------------------------------
 		page = 0;
 		fireEvent.click(actualPageTabLinks[page]);
-		({ actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } = getPageElements());
+		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
+			getPageElements());
 
 		// ASSERT - 3
+		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
 		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
 		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
 		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
@@ -147,9 +167,11 @@ describe("Testing the Model Creation navigation", () => {
 		// // -----------------------------------------------------------------------------------
 		page = 1;
 		fireEvent.click(screen.getByTestId(testIds.nextBtn));
-		({ actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } = getPageElements());
+		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
+			getPageElements());
 
 		// ASSERT - 4
+		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
 		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
 		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
 		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
@@ -160,9 +182,11 @@ describe("Testing the Model Creation navigation", () => {
 		// // -----------------------------------------------------------------------------------
 		page = 0;
 		fireEvent.click(screen.getByTestId(testIds.prevBtn));
-		({ actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } = getPageElements());
+		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
+			getPageElements());
 
 		// ASSERT - 5
+		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
 		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
 		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
 		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
