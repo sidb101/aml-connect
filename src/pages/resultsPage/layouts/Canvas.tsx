@@ -83,6 +83,7 @@ export default function Canvas() {
 				data: { label: "Added node" },
 			};
 		};
+
 		setNodes((nodes: Node[]) => nodes.concat(newNode(nodes)));
 	}, []);
 
