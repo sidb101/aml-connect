@@ -373,3 +373,46 @@ fn put_files_then_check_get_files () {
     let get_files_response = file_data_manager::get_files::get_input_files(&get_file_request, conn);
     assert!(get_files_response.unwrap().files.len() == 3);
 }
+
+#[test]
+fn validate_file_and_save_metadata_check_extension () {
+    let db_dir_path = "./tests";
+    env::set_var("DATABASE_PATH", &db_dir_path);
+
+    // if exists, purge db under "./tests" before test
+    let db_name = db_adapter::DB_NAME;
+    let db_path = format!("{db_dir_path}/{db_name}");
+    if Path::new(&db_path).exists() {
+        std::fs::remove_file(&db_path).unwrap();
+    }
+
+    let conn_pool = db_adapter::establish_connection().unwrap();
+    env::remove_var("DATABASE_PATH");
+    db_adapter::run_db_migrations(&conn_pool).unwrap();
+    let conn = &mut conn_pool.get().unwrap();
+
+    let request = FilesUploadRequest {
+        proj_slug: "test_project".to_string(),
+        input_files: vec![FileUploadRequest {
+           file_name: "f2.txt".to_string(),
+           dataset_type: DataSet::Training, 
+        }], 
+    };
+
+    let project_slug = "test_project";
+    let dummy_project = NewProject {
+        slug: project_slug.to_owned(),
+        description: Some("This is a test project".to_owned()),
+    };
+    diesel::insert_into(projects::table)
+        .values(&dummy_project)
+        .execute(conn).unwrap();
+
+    let app_dir = create_app_dir_if_not_exists().unwrap();
+    integration_test_setup(app_dir.clone());
+
+    let file_upload_response = file_data_manager::put_files::save_input_files(&request, &app_dir, conn);
+    println!("file_upload_response : {:?}", file_upload_response);
+    assert!(file_upload_response.is_ok());
+    assert!(file_upload_response.unwrap().upload_failed_files.len() == 1);
+}
