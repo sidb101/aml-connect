@@ -21,25 +21,15 @@ import ReactFlow, {
 	Panel,
 	ConnectionLineType,
 	type ReactFlowInstance,
+	ControlButton,
 } from "reactflow";
 
-import "./Canvas.scss";
 import "reactflow/dist/style.css";
+import "./Canvas.scss";
 import CustomNode from "./CustomNode";
 import SourceNode from "./SourceNode";
 import SinkNode from "./SinkNode";
-
-const initialNodes: Node[] = [
-	{ id: "1", type: "source", position: { x: 50, y: 200 }, data: { label: "IN" } },
-	{ id: "2", type: "custom", position: { x: 250, y: 100 }, data: { label: "BPF" } },
-	{ id: "3", type: "custom", position: { x: 450, y: 200 }, data: { label: "GAIN" } },
-	{ id: "4", type: "sink", position: { x: 650, y: 200 }, data: { label: "OUT" } },
-];
-const initialEdges: Edge[] = [
-	{ id: "e1-2", source: "1", target: "2" },
-	{ id: "e2-3", source: "2", target: "3" },
-	{ id: "e3-4", source: "3", target: "4" },
-];
+import { initialEdges, initialNodes } from "../../../../../tests/mockdata/allNodesAndEdges";
 
 const fitViewOptions: FitViewOptions = {
 	padding: 0.2,
@@ -101,10 +91,14 @@ export default function Canvas() {
 				nodeTypes={nodeTypes}
 				connectionLineType={ConnectionLineType.Step}
 			>
-				<Panel position={`top-right`}>
-					<button onClick={onAdd}>add node</button>
-				</Panel>
-				<Controls />
+				{/*<Panel position={`top-right`}>*/}
+				{/*	<button onClick={onAdd}>add node</button>*/}
+				{/*</Panel>*/}
+				<Controls className={`Canvas_controls`}>
+					<ControlButton className={`Canvas_controlButton`} onClick={onAdd}>
+						<div title={"My Tooltip"}>1</div>
+					</ControlButton>
+				</Controls>
 				<MiniMap />
 				<Background variant={BackgroundVariant.Dots} gap={12} size={1} />
 			</ReactFlow>
