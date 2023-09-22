@@ -10,6 +10,7 @@ import { BASE_ROUTE, dataSetupRoute, dataVizRoute } from "../../routes";
 import { mockProjects } from "../mockdata/allProjects";
 import React from "react";
 import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
+import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageTabs";
 
 const getPageElements = () => {
 	const actualPageHeading = screen.getByTestId(testIds.contentHeading);
@@ -89,24 +90,14 @@ describe("Testing the Model Creation navigation", () => {
 		// NOTE: findAllByTestId() needs the await keyword
 		const navLinks = screen.getAllByTestId(testIds.navLinks);
 
-		const expectedPageTabLinks = [
-			{
-				label: "Data Setup",
-				route: dataSetupRoute(projects[0].slug),
-			},
-			{
-				label: "Visualize Data",
-				route: dataVizRoute(projects[0].slug),
-			},
-		];
-		//const expectedPageTabLinks = getModelCreationPageTabs(projects[0].slug);
+		const expectedPageTabLinks = getDataHubPageTabs(projects[0].slug);
 		const expectedPageTabLabels = expectedPageTabLinks.map((tab) => tab.label);
 		const expectedPageHeadings = [
 			projects[0].name + " > Data Hub > " + expectedPageTabLabels[0],
 			projects[0].name + " > Data Hub > " + expectedPageTabLabels[1],
 		];
 		const expectedPrevBtnTexts = ["Overview", expectedPageTabLabels[0]];
-		const expectedNextBtnTexts = [expectedPageTabLabels[1], "Model Creation"];
+		const expectedNextBtnTexts = [expectedPageTabLabels[1], "Create Model"];
 
 		let page: number;
 
