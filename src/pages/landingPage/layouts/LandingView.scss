@@ -1,34 +1,8 @@
-.LandingPageView_gridContainer {
-	display: grid;
-	grid-template-rows: 1fr 1fr 1fr;
-	height: 100%;
-}
+@use "../../../global";
 
-.LandingPageView_gridRow1 {
-	display: flex;
-	grid-row: 1;
-	align-items: center;
-}
-
-.LandingPageView_gridRow2 {
-	display: flex;
-	grid-row: 2;
-	align-items: center;
-}
-
-.LandingPageView_gridRow3 {
-	display: flex;
-	grid-row: 3;
-	align-items: center;
-}
-
-.LandingPageView_gridRow4 {
-	display: flex;
-	grid-row: 4;
-	align-items: center;
-}
-.LandingPageView_gridRow5 {
-	display: flex;
-	grid-row: 5;
-	align-items: center;
+.LandingView_container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: global.$content-padding;
+  padding: global.$content-padding;
 }

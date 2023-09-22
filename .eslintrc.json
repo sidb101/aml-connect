@@ -24,6 +24,9 @@
         "react",
         "prettier"
     ],
+    "ignorePatterns" : [
+        "src/clients/api/bindings/*.ts"
+    ],
     "rules": {
         /**
           "off" or 0 - turn the rule off

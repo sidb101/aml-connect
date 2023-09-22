@@ -72,4 +72,22 @@ export const testIds = {
 	navLinkLabels: "nav-link-labels",
 	contentHeading: "content-heading",
 	errorPage: "error-page",
+
+	accordion: "accordion-test",
+	accordionHeader: "accordion-head",
+	accordionBody: "accordion-body",
+	audioTableBody: "audio-table-body",
+
+	importFilesBtn: "import-files-btn",
+	importModalBody: "import-modal-body",
+	browsePcLink: "browse-pc-link",
+	modalImportFilesBtn: "modal-import-files-btn",
+
+	// PageTabs Links
+	pageTabLink: "page-tab-link",
+	pageTabLinkLabel: "page-tab-label",
+
+	// Footer buttons
+	prevBtn: "previous-btn",
+	nextBtn: "next-btn",
 };

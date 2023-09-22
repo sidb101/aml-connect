@@ -17,7 +17,7 @@ export default {
   testEnvironment: "jsdom",
 
   moduleNameMapper: {
-    "^.+\\.(css|less|scss)$": "babel-jest"
+    "^.+\\.(css|less|scss|wav)$": "babel-jest"
   },
 
   setupFilesAfterEnv: ["./src/tests/setup.ts"]
