@@ -1,6 +1,6 @@
-@use "../../../global";
+@use "../../../../../global";
 
-.SourceNode {
+.SinkNode {
   color: white;
   background: global.$color-grey-5;
   border: 1px solid black;
