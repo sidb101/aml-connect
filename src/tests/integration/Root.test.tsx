@@ -10,11 +10,13 @@ import { BASE_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjects";
 import { getOpenProjectNavLinks } from "../../components/sideBar/navRegion/appNavLinks";
 import { linkSelectedClass } from "../../components/sideBar/navRegion/navLink/NavLink";
+import { mockReactFlow } from "../mockdata/mockReactFlow";
 
 /**
  * Performing test on basic Navigation Functionality
  */
 describe("Testing the Sidebar of the App", () => {
+	mockReactFlow();
 	//mock the invoke method of backend module
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 

@@ -11,6 +11,7 @@ import { mockProjects } from "../mockdata/allProjects";
 import React from "react";
 import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageTabs";
 import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
+import { mockReactFlow } from "../mockdata/mockReactFlow";
 
 const getPageElements = () => {
 	const actualPageHeading = screen.getByTestId(testIds.contentHeading);
@@ -56,6 +57,7 @@ const verifyFooterButtons = (expectedPrevBtnText: string, actualPrevBtn: HTMLEle
 };
 
 describe("Testing the Model Creation navigation", () => {
+	mockReactFlow();
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 	const routes = appRoutes;
 
