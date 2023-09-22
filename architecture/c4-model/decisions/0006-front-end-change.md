@@ -10,7 +10,7 @@ Accepted
 
 This record talks about the modification needed in the front-end architecture with respect to how UI components interact with backend components (like Server or Storage Systems). 
 
-The current front-end architecture (as shown below) talks about using a **Single API Transformer**, that would receive the data (UI Specific) from React Components and then convert into required DTO  and then return that data to the component. Then component would call **API Interface** with the requested DTO, get the response and then again call **API Transformer** to convert the response DTO in UI specific data.
+The current front-end architecture (as shown below) talks about using a **Single API Transformer**, that would receive the data (UI Specific) from React Components and then convert into required Data Transfer Object (DTO) and then return that data to the component. Then component would call **API Interface** with the requested DTO, get the response and then again call **API Transformer** to convert the response DTO in UI specific data.
 
 Following are the motivations behind the change in this architecture:
  - We don't want React components to deal with DTO, because change in DTO might cause change in the React components.
