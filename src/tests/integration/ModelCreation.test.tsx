@@ -6,9 +6,10 @@ import { invoke } from "@tauri-apps/api/tauri";
 import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 import { renderWithProviders, testIds } from "../test-utils";
 import { routes as appRoutes } from "../../App";
-import { BASE_ROUTE, dataSetupRoute, dataVizRoute } from "../../routes";
+import { BASE_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjects";
 import React from "react";
+import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageTabs";
 import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
 
 const getPageElements = () => {
@@ -28,10 +29,7 @@ const getPageElements = () => {
 };
 
 const verifyPageHeading = (expectedPageHeading: string, actualPageHeading: HTMLElement) => {
-	const verifyPageHeading = (expectedPageHeading: string, actualPageHeading: HTMLElement) => {
-		const regExp = new RegExp(expectedPageHeading, "i"); // 'i' flag for case-insensitive matching
-		expect(within(screen.getByTestId(testIds.contentHeading)).getByText(regExp)).toBeInTheDocument();
-	};
+	expect(within(screen.getByTestId(testIds.contentHeading)).getByText(expectedPageHeading)).toBeInTheDocument();
 };
 
 const verifyPageTabLinkIsActive = (actualPageTabLinks: HTMLElement) => {
@@ -61,7 +59,7 @@ describe("Testing the Model Creation navigation", () => {
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 	const routes = appRoutes;
 
-	test("Data Hub: Test 1: Testing the data hub page exists, and the page tabs exist on the data hub page", () => {
+	test("Model Creation: Test 1: Testing the model creation page exists, and the page tabs exist on the model creation page", () => {
 		// ARRANGE (from where to start the test)
 
 		// -> should start with empty store
@@ -89,24 +87,14 @@ describe("Testing the Model Creation navigation", () => {
 		// NOTE: findAllByTestId() needs the await keyword
 		const navLinks = screen.getAllByTestId(testIds.navLinks);
 
-		const expectedPageTabLinks = [
-			{
-				label: "Data Setup",
-				route: dataSetupRoute(projects[0].slug),
-			},
-			{
-				label: "Visualize Data",
-				route: dataVizRoute(projects[0].slug),
-			},
-		];
-		//const expectedPageTabLinks = getModelCreationPageTabs(projects[0].slug);
+		const expectedPageTabLinks = getModelCreationPageTabs(projects[0].slug);
 		const expectedPageTabLabels = expectedPageTabLinks.map((tab) => tab.label);
 		const expectedPageHeadings = [
-			projects[0].name + " > Data Hub > " + expectedPageTabLabels[0],
-			projects[0].name + " > Data Hub > " + expectedPageTabLabels[1],
+			projects[0].name + " > Model Creation > " + expectedPageTabLabels[0],
+			projects[0].name + " > Model Creation > " + expectedPageTabLabels[1],
 		];
-		const expectedPrevBtnTexts = ["Overview", expectedPageTabLabels[0]];
-		const expectedNextBtnTexts = [expectedPageTabLabels[1], "Model Creation"];
+		const expectedPrevBtnTexts = ["Visualize Data", expectedPageTabLabels[0]];
+		const expectedNextBtnTexts = [expectedPageTabLabels[1], "Results"];
 
 		let page: number;
 
@@ -117,10 +105,10 @@ describe("Testing the Model Creation navigation", () => {
 		let actualNextBtn: HTMLElement;
 
 		// -----------------------------------------------------------------------------------
-		// ACT - 1: Click the "Data Hub" link in the sidebar
+		// ACT - 1: Click the "Model Creation" link in the sidebar
 		// -----------------------------------------------------------------------------------
 		page = 0;
-		fireEvent.click(navLinks[1]);
+		fireEvent.click(navLinks[2]);
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
 			getPageElements());
 
@@ -146,9 +134,9 @@ describe("Testing the Model Creation navigation", () => {
 		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
 		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
 
-		// // -----------------------------------------------------------------------------------
-		// // ACT - 3: Click the "Create Model" in the page tabs up the top of the page
-		// // -----------------------------------------------------------------------------------
+		// -----------------------------------------------------------------------------------
+		// ACT - 3: Click the "Create Model" in the page tabs up the top of the page
+		// -----------------------------------------------------------------------------------
 		page = 0;
 		fireEvent.click(actualPageTabLinks[page]);
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
@@ -161,9 +149,9 @@ describe("Testing the Model Creation navigation", () => {
 		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
 		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
 
-		// // -----------------------------------------------------------------------------------
-		// // ACT - 4: Click the next button in the footer of the page
-		// // -----------------------------------------------------------------------------------
+		// -----------------------------------------------------------------------------------
+		// ACT - 4: Click the next button in the footer of the page
+		// -----------------------------------------------------------------------------------
 		page = 1;
 		fireEvent.click(screen.getByTestId(testIds.nextBtn));
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
@@ -176,9 +164,9 @@ describe("Testing the Model Creation navigation", () => {
 		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
 		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
 
-		// // -----------------------------------------------------------------------------------
-		// // ACT - 5: Click the previous button in the footer of the page
-		// // -----------------------------------------------------------------------------------
+		// -----------------------------------------------------------------------------------
+		// ACT - 5: Click the previous button in the footer of the page
+		// -----------------------------------------------------------------------------------
 		page = 0;
 		fireEvent.click(screen.getByTestId(testIds.prevBtn));
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =

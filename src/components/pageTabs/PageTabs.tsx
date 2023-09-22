@@ -1,6 +1,6 @@
 import "./PageTabs.scss";
 import { Link } from "react-router-dom";
-import { testIds } from "../../../../tests/test-utils";
+import { testIds } from "../../tests/test-utils";
 
 export type PageTabsT = {
 	pageTabs: PageTabT[];
