@@ -1,9 +1,9 @@
 @use "../../global";
 
 .DataHub_bodyContainer {
-  display: grid;
-  grid-template-rows: global.$panel-header-height;
-  gap: global.$general-padding;
+	display: grid;
+	grid-template-rows: global.$panel-header-height;
+	gap: global.$general-padding;
 }
 
 .DataHub_bodyRow1 {
