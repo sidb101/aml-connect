@@ -58,7 +58,7 @@ const verifyFooterButtons = (expectedPrevBtnText: string, actualPrevBtn: HTMLEle
 	expect(actualPrevBtn).toHaveTextContent(expectedPrevBtnText);
 };
 
-describe("Testing the Model Creation navigation", () => {
+describe("Testing the Data Hub navigation", () => {
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 	const routes = appRoutes;
 
@@ -123,7 +123,7 @@ describe("Testing the Model Creation navigation", () => {
 		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
 
 		// -----------------------------------------------------------------------------------
-		// ACT - 2: Click the "Neural Networks" in the page tabs up the top of the page
+		// ACT - 2: Click the "Visualize Data" in the page tabs up the top of the page
 		// -----------------------------------------------------------------------------------
 		page = 1;
 		fireEvent.click(actualPageTabLinks[page]);
@@ -138,7 +138,7 @@ describe("Testing the Model Creation navigation", () => {
 		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
 
 		// // -----------------------------------------------------------------------------------
-		// // ACT - 3: Click the "Create Model" in the page tabs up the top of the page
+		// // ACT - 3: Click the "Data Setup" in the page tabs up the top of the page
 		// // -----------------------------------------------------------------------------------
 		page = 0;
 		fireEvent.click(actualPageTabLinks[page]);
