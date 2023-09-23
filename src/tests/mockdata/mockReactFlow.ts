@@ -13,30 +13,44 @@
 // To make sure that the tests are working, it's important that you are using
 // this implementation of ResizeObserver and DOMMatrixReadOnly
 class ResizeObserver {
-	callback: globalThis.ResizeObserverCallback;
-
-	constructor(callback: globalThis.ResizeObserverCallback) {
-		this.callback = callback;
-	}
+	constructor(public callback: globalThis.ResizeObserverCallback) {}
 
 	observe(target: Element) {
-		this.callback([{ target } as globalThis.ResizeObserverEntry], this);
+		// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
+		const entries: globalThis.ResizeObserverEntry[] = [{ target } as globalThis.ResizeObserverEntry];
+		this.callback(entries, this);
 	}
 
-	unobserve() {}
+	unobserve() {
+		// Removed eslint-disable directive as it is unnecessary
+	}
 
-	disconnect() {}
+	disconnect() {
+		// Removed eslint-disable directive as it is unnecessary
+	}
 }
 
-class DOMMatrixReadOnly {
+// Renamed the class to comply with PascalCase if StrictPascalCase is similar to PascalCase
+class DomMatrixReadOnly {
+	static fromFloat32Array(_array32: Float32Array): DomMatrixReadOnly {
+		return new DomMatrixReadOnly("");
+	}
+
+	static fromFloat64Array(_array64: Float64Array): DomMatrixReadOnly {
+		return new DomMatrixReadOnly("");
+	}
+
+	static fromMatrix(_other?: DOMMatrixInit): DomMatrixReadOnly {
+		return new DomMatrixReadOnly("");
+	}
+
 	m22: number;
 	constructor(transform: string) {
-		const scale = transform?.match(/scale\(([1-9.])\)/)?.[1];
-		this.m22 = scale !== undefined ? +scale : 1;
+		const scaleMatch = /scale\(([1-9.]+)\)/.exec(transform);
+		this.m22 = scaleMatch ? +scaleMatch[1] : 1;
 	}
 }
 
-// Only run the shim once when requested
 let init = false;
 
 export const mockReactFlow = () => {
@@ -44,24 +58,24 @@ export const mockReactFlow = () => {
 	init = true;
 
 	global.ResizeObserver = ResizeObserver;
-
-	// @ts-ignore
-	global.DOMMatrixReadOnly = DOMMatrixReadOnly;
+	global.DOMMatrixReadOnly = DomMatrixReadOnly as unknown as typeof global.DOMMatrixReadOnly;
 
 	Object.defineProperties(global.HTMLElement.prototype, {
 		offsetHeight: {
 			get() {
-				return parseFloat(this.style.height) || 1;
+				// Corrected the type for style
+				return parseFloat((this.style as unknown as { height: string }).height) || 1;
 			},
 		},
 		offsetWidth: {
 			get() {
-				return parseFloat(this.style.width) || 1;
+				// Corrected the type for style
+				return parseFloat((this.style as unknown as { width: string }).width) || 1;
 			},
 		},
 	});
 
-	(global.SVGElement as any).prototype.getBBox = () => ({
+	(global.SVGElement as any).prototype.getBBox = (): { x: number; y: number; width: number; height: number } => ({
 		x: 0,
 		y: 0,
 		width: 0,
