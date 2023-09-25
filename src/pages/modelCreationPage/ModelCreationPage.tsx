@@ -48,7 +48,7 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 		projectSlug && (
 			<>
 				<Header headerTitle={`${projectName || "Undefined Project"} > Model Creation > ${heading}`} />
-				<div className={`body-content-container-no-header-btns ModelCreation_bodyContainer`}>
+				<div className={`body-content-container-no-header-btns-with-footer ModelCreation_bodyContainer`}>
 					<div className={"ModelCreation_bodyRow1"}>
 						<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
 					</div>

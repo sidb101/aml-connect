@@ -24,7 +24,7 @@ const SendToHardwareView = (props: SendToHardwareViewT) => {
 	return (
 		<>
 			<Header headerTitle={`${props.title}`} />
-			<div className={`body-content-container`}>
+			<div className={`body-content-container-no-header-btns-with-footer`}>
 				<div className={`SendToHardwareView_container`}>
 					<DisplayCard displayCard={sentToHardwareCard} />
 				</div>
