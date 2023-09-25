@@ -47,7 +47,6 @@ Common Classes
 	$bottom-offset: global.$footer-height + 2 * global.$panel-padding; /* This is the height of the footer with padding */
 
 	.body-content-container {
-		//background-color: green;
 		position: absolute; /* Absolute positioning will allow content to move underneath the header and sidebar */
 		margin-top: $top-offset; /* This should be the same as the height of the header */
 		margin-left: $left-offset; /* This should be the same as the width of the sidebar */
@@ -58,7 +57,6 @@ Common Classes
 		padding-right: global.$content-padding;
 	}
 
-	// Example: Landing Page
 	.body-content-container-with-header-btns-no-footer {
 		@extend .body-content-container;
 		$top-offset: global.$header-height + 2 * global.$content-padding; /* This is the height of the header with top padding */
@@ -67,7 +65,6 @@ Common Classes
 		height: calc(100% - #{$top-offset}); /* Subtract header height */
 	}
 
-	// Example: Overview Page
 	.body-content-container-no-header-btns-with-footer {
 		@extend .body-content-container;
 		$top-offset: global.$header-height + 1 * global.$content-padding; /* This is the height of the header with top padding */
@@ -82,6 +79,10 @@ Common Classes
 
 	.body-content-container-with-header-btns-with-footer {
 		@extend .body-content-container;
+		$top-offset: global.$header-height + 2 * global.$content-padding; /* This is the height of the header with top padding */
+
+		margin-top: $top-offset;
+		height: calc(100% - #{$top-offset} - #{$bottom-offset}); /* Subtract header height and footer height */
 	}
 
 	.main-content-container {

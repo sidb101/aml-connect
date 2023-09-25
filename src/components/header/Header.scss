@@ -1,7 +1,6 @@
 @use "../../global";
 
 .Header_contentContainer--with-btns {
-	//background-color: blue;
 	$left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
 
 	position: fixed; /* Fixed position will make the header stick to the top */
