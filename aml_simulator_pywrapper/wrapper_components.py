@@ -1,10 +1,5 @@
-"""Importing the Simulator Interface to implement"""
-import argparse
-import json
-
+"""Implementation of Wrapped Component Classes for the Aspinity AML simulator"""
 import aspinity
-from simulator_interface import AspinitySimulatorWrapperInterFace
-
 
 class AcDiff(aspinity.AcDiff):
     """Wrapper for aspinity AcDiff"""
@@ -244,43 +239,3 @@ class SynthesizedFilter(aspinity.SynthesizedFilter):
             "terminals": {"input": self.input, "output": self.output},
             "parameters": {"coefficients": self.coefficients},
         }
-
-
-class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
-    """Wrapper class for Aspinity's Simulator"""
-
-    @classmethod
-    def get_elements(cls):
-        """Returns json representation of list of Elements"""
-        elements = [
-            AcDiff(),
-            AsymmetricIntegrator(),
-            Comparator(),
-            Filter(),
-            Filterbank(),
-            GainOpamp(),
-            LookupTable(),
-            DelayFlipFlop(),
-            Multiplier(),
-            Mux2(),
-            NeuralNet(),
-            PeakDetector(),
-            PGA(),
-            SynthesizedFilter(),
-        ]
-
-        res = {
-            element.__class__.__name__: element.as_dict() for element in elements
-        }
-        return json.dumps(res)
-
-
-if __name__ == "__main__":
-    PARSER = argparse.ArgumentParser(description="Wrapper to AML Simulator")
-
-    # option that returns all elements
-    PARSER.add_argument("--get_elements", action="store_true")
-    ARGS = PARSER.parse_args()
-
-    if ARGS.get_elements:
-        print(AspinitySimulatorWrapper.get_elements())
