@@ -48,6 +48,22 @@ class Comparator(aspinity.Comparator):
 class Filter(aspinity.Filter):
     """Wrapper for aspinity Filter"""
 
+    def __init__(self, elementJSON: str):
+        input_terminal, output_terminal = None, None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "input":
+                input_terminal = item["node_name"]
+            elif item["type_name"] == "output":
+                output_terminal = item["node_name"]
+        self.input = input_terminal
+        self.output = output_terminal
+        self.characteristic_frequency = float(elementJSON["element_type_params"]["characteristic_frequency"])
+        self.quality_factor = float(elementJSON["element_type_params"]["quality_factor"])
+        self.filter_type = elementJSON["element_type_params"]["filter_type"]
+        if self.filter_type == 'hpf2':
+            self.filter_type = aspinity.FilterType.hpf2
+        
+
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
