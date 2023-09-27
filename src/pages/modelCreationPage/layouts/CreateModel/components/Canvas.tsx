@@ -26,9 +26,6 @@ import ReactFlow, {
 
 import "reactflow/dist/style.css";
 import "./Canvas.scss";
-import CustomNode from "./CustomNode";
-import SourceNode from "./SourceNode";
-import SinkNode from "./SinkNode";
 import { initialEdges, initialNodes } from "../../../../../tests/mockdata/allNodesAndEdges";
 
 const fitViewOptions: FitViewOptions = {
@@ -37,12 +34,6 @@ const fitViewOptions: FitViewOptions = {
 
 const defaultEdgeOptions: DefaultEdgeOptions = {
 	type: "step",
-};
-
-const nodeTypes: NodeTypes = {
-	source: SourceNode,
-	custom: CustomNode,
-	sink: SinkNode,
 };
 
 export default function Canvas() {
@@ -88,7 +79,6 @@ export default function Canvas() {
 				fitView
 				fitViewOptions={fitViewOptions}
 				defaultEdgeOptions={defaultEdgeOptions}
-				nodeTypes={nodeTypes}
 				connectionLineType={ConnectionLineType.Step}
 			>
 				{/*<Panel position={`top-right`}>*/}

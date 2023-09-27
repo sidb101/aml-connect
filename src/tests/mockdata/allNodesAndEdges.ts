@@ -1,10 +1,39 @@
 import type { Edge, Node } from "reactflow";
+import { Position } from "reactflow";
 
 export const initialNodes: Node[] = [
-	{ id: "1", type: "source", position: { x: 50, y: 200 }, data: { label: "IN" } },
-	{ id: "2", type: "custom", position: { x: 250, y: 100 }, data: { label: "BPF" } },
-	{ id: "3", type: "custom", position: { x: 450, y: 200 }, data: { label: "GAIN" } },
-	{ id: "4", type: "sink", position: { x: 650, y: 200 }, data: { label: "OUT" } },
+	{
+		id: "1",
+		sourcePosition: Position.Right,
+		type: "input",
+		data: { label: "In" },
+		position: { x: 50, y: 200 },
+		className: "Canvas_input",
+	},
+	{
+		id: "2",
+		sourcePosition: Position.Right,
+		targetPosition: Position.Left,
+		data: { label: "BPF" },
+		position: { x: 250, y: 100 },
+		className: "Canvas_node",
+	},
+	{
+		id: "3",
+		sourcePosition: Position.Right,
+		targetPosition: Position.Left,
+		data: { label: "GAIN" },
+		position: { x: 450, y: 200 },
+		className: "Canvas_node",
+	},
+	{
+		id: "4",
+		sourcePosition: Position.Right,
+		targetPosition: Position.Left,
+		data: { label: "OUT" },
+		position: { x: 650, y: 200 },
+		className: "Canvas_output",
+	},
 ];
 
 export const initialEdges: Edge[] = [
