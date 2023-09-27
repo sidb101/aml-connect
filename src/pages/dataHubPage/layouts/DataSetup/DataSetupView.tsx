@@ -1,44 +1,53 @@
 import "./DataSetupView.scss";
-import React, { type ReactNode, useRef } from "react";
-import AudioFileTable from "./AudioFileTable";
-import Accordion from "../../../../components/accordion/Accordion";
-import type { InputFileDataT } from "../../../../redux/slices/DataHubSlice";
+import React, { type ReactNode, useEffect, useRef } from "react";
+import type { DataSetupWidgetHeightsT } from "./DataSetup";
 
 export type DataSetupViewProps = {
-	audioFiles?: InputFileDataT[];
-	importDataComponent: ReactNode | ReactNode[];
+	setDataSetupWidgetHeights: React.Dispatch<React.SetStateAction<DataSetupWidgetHeightsT>>;
+	importDataWidget: ReactNode | ReactNode[];
+	trainingDataWidget: ReactNode | ReactNode[];
+	testingDataWidget: ReactNode | ReactNode[];
+	validationDataWidget: ReactNode | ReactNode[];
+	labelDataWidget: ReactNode | ReactNode[];
 };
 /**
  * A view component that would load the required widgets as per the passed properties
  */
-const DataSetupView = ({ audioFiles, importDataComponent }: DataSetupViewProps) => {
+const DataSetupView = ({
+	importDataWidget,
+	trainingDataWidget,
+	testingDataWidget,
+	validationDataWidget,
+	labelDataWidget,
+	setDataSetupWidgetHeights,
+}: DataSetupViewProps) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
-	//To dynamically resize the accordions
+	//To dynamically resize the Widgets
 	const getContainerHeight = () => containerRef.current?.scrollHeight;
 	//Gives height of a single accordion, considering the fraction of height allocated for that accordion
-	const getAccHeight = (fraction: number) => `${(getContainerHeight() || 0) / fraction}px`;
+	const getWidgetHeight = (fraction: number) => `${(getContainerHeight() || 0) / fraction}px`;
 
+	//setting the heights of the widgets passed
+	useEffect(() => {
+		setDataSetupWidgetHeights({
+			dataset: getWidgetHeight(3),
+			importData: getWidgetHeight(2),
+			labelData: getWidgetHeight(2),
+		});
+	}, []);
+
+	//Rendering view with all the widgets
 	return (
 		<div className={`DataSetupView_container`} ref={containerRef}>
 			<div className={`DataSetupView_leftContainer`}>
-				<Accordion bodyMaxHeight={getAccHeight(3)} header={<>Training Dataset</>}>
-					<AudioFileTable files={audioFiles} />
-				</Accordion>
-				<Accordion bodyMaxHeight={getAccHeight(3)} defaultIsOpen={false} header={<>Validation Dataset</>}>
-					<AudioFileTable files={audioFiles ? [audioFiles[0], audioFiles[1]] : []} />
-				</Accordion>
-				<Accordion bodyMaxHeight={getAccHeight(3)} defaultIsOpen={false} header={<>Testing Dataset</>}>
-					<AudioFileTable files={audioFiles} />
-				</Accordion>
+				{trainingDataWidget}
+				{testingDataWidget}
+				{validationDataWidget}
 			</div>
 			<div className={`DataSetupView_rightContainer`}>
-				<Accordion bodyMaxHeight={getAccHeight(2)} header={<>Add or Merge Data</>}>
-					{importDataComponent}
-				</Accordion>
-				<Accordion bodyMaxHeight={getAccHeight(2)} header={<>Label Data</>} defaultIsOpen={false}>
-					<h4>Label Body</h4>
-				</Accordion>
+				{importDataWidget}
+				{labelDataWidget}
 			</div>
 		</div>
 	);

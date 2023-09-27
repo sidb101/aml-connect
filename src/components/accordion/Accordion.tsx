@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Accordion.scss";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons/faAngleDown";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,6 +8,7 @@ type AccordionProps = {
 	header: React.ReactNode;
 	bodyMaxHeight?: string;
 	className?: string;
+	onOpen?: () => void; //called when an accordion is open
 };
 
 export const accordionActiveClass = "Accordion_active";
@@ -19,12 +20,19 @@ const Accordion: React.FC<React.PropsWithChildren<AccordionProps>> = ({
 	children,
 	bodyMaxHeight,
 	className = "",
+	onOpen,
 }) => {
 	const [isActive, setIsActive] = useState(defaultIsOpen);
 
 	const onTitleClick = () => {
 		setIsActive(!isActive);
 	};
+
+	useEffect(() => {
+		if (isActive) {
+			onOpen && onOpen();
+		}
+	}, [isActive]);
 
 	const active = isActive ? accordionActiveClass : accordionInactiveClass;
 

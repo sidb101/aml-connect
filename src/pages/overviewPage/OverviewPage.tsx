@@ -47,7 +47,7 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 					onProjectTitleChange={handleProjectNameOnChange}
 					currentProjectDescription={currentProjectDescription}
 				/>
-				<Footer nextBtn={{ label: "Data Hub", route: dataSetupRoute(projectSlug) }} />
+				<Footer footerBtnGroup={{ nextBtn: { label: "Data Hub", route: dataSetupRoute(projectSlug) } }} />
 			</>
 		)
 	);
