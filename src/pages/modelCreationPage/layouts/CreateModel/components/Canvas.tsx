@@ -1,32 +1,29 @@
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useCallback, useState } from "react";
 import ReactFlow, {
 	addEdge,
-	type FitViewOptions,
-	applyNodeChanges,
 	applyEdgeChanges,
-	type Node,
-	type Edge,
-	type OnNodesChange,
-	type OnEdgesChange,
-	type OnConnect,
-	type NodeTypes,
-	type DefaultEdgeOptions,
-	type NodeChange,
-	type EdgeChange,
-	type Connection,
-	Controls,
-	MiniMap,
+	applyNodeChanges,
 	Background,
 	BackgroundVariant,
-	Panel,
+	type Connection,
 	ConnectionLineType,
-	type ReactFlowInstance,
-	ControlButton,
+	Controls,
+	type DefaultEdgeOptions,
+	type Edge,
+	type EdgeChange,
+	type FitViewOptions,
+	MiniMap,
+	type Node,
+	type NodeChange,
+	type OnConnect,
+	type OnEdgesChange,
+	type OnNodesChange,
 } from "reactflow";
 
 import "reactflow/dist/style.css";
 import "./Canvas.scss";
 import { initialEdges, initialNodes } from "../../../../../tests/mockdata/allNodesAndEdges";
+import Dropdown from "./Dropdown";
 
 const fitViewOptions: FitViewOptions = {
 	padding: 0.2,
@@ -39,6 +36,19 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 export default function Canvas() {
 	const [nodes, setNodes] = useState<Node[]>(initialNodes);
 	const [edges, setEdges] = useState<Edge[]>(initialEdges);
+
+	const [showDropdown, setShowDropdown] = useState(false);
+	const [userOption, setUserOption] = useState("");
+
+	// Define the options for the dropdown.
+	const options = ["Option 1", "Option 2", "Option 3"];
+
+	// Handle the click event of the dropdown option.
+	const handleOptionClick = (option: string) => {
+		console.log("Selected:", option);
+		setUserOption(option);
+		setShowDropdown(false); // close the dropdown when an option is clicked
+	};
 
 	const onNodesChange: OnNodesChange = useCallback((changes: NodeChange[]) => {
 		setNodes((nodes: Node[]) => applyNodeChanges(changes, nodes));
@@ -81,14 +91,33 @@ export default function Canvas() {
 				defaultEdgeOptions={defaultEdgeOptions}
 				connectionLineType={ConnectionLineType.Step}
 			>
-				{/*<Panel position={`top-right`}>*/}
-				{/*	<button onClick={onAdd}>add node</button>*/}
-				{/*</Panel>*/}
-				<Controls className={`Canvas_controls`}>
-					<ControlButton className={`Canvas_controlButton`} onClick={onAdd}>
-						<div title={"My Tooltip"}>1</div>
-					</ControlButton>
-				</Controls>
+				<div className={`Canvas_allMenuContainer`}>
+					<div className={`Canvas_sideMenuContainer`}>
+						<div className={`Canvas_sideMenuBtnContainer`}>
+							<button
+								onClick={() => {
+									setShowDropdown((s) => !s);
+								}}
+							>
+								+
+							</button>
+						</div>
+					</div>
+					<div className={`Canvas_sideMenuContainer`}>
+						<div className={`Canvas_sideMenuNodeMenuContainer`}>
+							{showDropdown && (
+								<Dropdown
+									options={options}
+									onOptionClick={handleOptionClick}
+									onClose={() => {
+										setShowDropdown(false);
+									}}
+								/>
+							)}
+						</div>
+					</div>
+				</div>
+				<Controls className={`Canvas_controls`} />
 				<MiniMap />
 				<Background variant={BackgroundVariant.Dots} gap={12} size={1} />
 			</ReactFlow>

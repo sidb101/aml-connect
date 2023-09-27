@@ -1,0 +1,14 @@
+@use "../../../../../global";
+
+.Dropdown_container {
+	display: flex;
+	flex-direction: column;
+	background-color: global.$color-white;
+}
+
+.Dropdown_option {
+	padding: global.$panel-padding;
+	border: 1px solid black;
+	cursor: default;
+	user-select: none;
+}

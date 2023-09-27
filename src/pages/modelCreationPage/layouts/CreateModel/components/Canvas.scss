@@ -1,35 +1,57 @@
 @use "../../../../../global";
 
 .Canvas_container {
-	width: 100%;
 	height: 100%;
+	width: 100%;
 	box-sizing: border-box;
 	border: 2px solid black;
 }
 
-.Canvas_controls {
-	position: relative;
-	left: 50%;
-	top: 50%;
-	display: inline-block;
-	transform: translate(-50%, -50%); // Centering it by shifting half of its height and width
+.Canvas_allMenuContainer {
+	height: 100%;
+	width: 100%;
+	display: flex;
+}
 
-	button,
-	.Canvas_controlButton {
+.Canvas_sideMenuContainer {
+	width: fit-content;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 0.5px;
+}
+
+.Canvas_sideMenuBtnContainer {
+	//position: absolute;
+	z-index: 6; // 1 more than the canvas controls
+
+	button {
+		user-select: none;
+		height: 50px;
+		width: 50px;
 		background-color: global.$color-dark-blue;
+		color: global.$color-white;
+		border: none;
 
 		&:hover {
 			background-color: global.$color-dark-green;
 		}
 
-		svg {
-			fill: global.$color-white;
+		&:first-child {
+			border-top-left-radius: global.$border-radius;
+			border-top-right-radius: global.$border-radius;
 		}
 
-		div {
-			color: global.$color-white;
+		&:last-child {
+			border-bottom-left-radius: global.$border-radius;
+			border-bottom-right-radius: global.$border-radius;
 		}
 	}
+}
+
+.Canvas_sideMenuNodeMenuContainer {
+	z-index: 6; // 1 more than the canvas controls
 }
 
 .Canvas_input {
