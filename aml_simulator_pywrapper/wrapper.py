@@ -1,9 +1,28 @@
 """Implementation of the Simulator Wrapper Interface"""
 import argparse
 import json
+import os
 
 import aspinity
-from simulator_interface import AspinitySimulatorWrapperInterFace
+from wrapper_interface import AspinitySimulatorWrapperInterFace
+from wrapper_network import Network, WavFileManager
+from wrapper_components import (
+    AcDiff,
+    AsymmetricIntegrator,
+    Comparator,
+    Filter,
+    Filterbank,
+    GainOpamp,
+    LookupTable,
+    DelayFlipFlop,
+    Multiplier,
+    Mux2,
+    NeuralNet,
+    PeakDetector,
+    PGA,
+    SynthesizedFilter,
+)
+
 
 class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
     """Wrapper class for Aspinity's Simulator"""
@@ -34,13 +53,26 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
         return json.dumps(res)
 
     @classmethod
-    def simulate_network(cls, network_json: str, audio_files_json: str) -> dict:
-        """Returns a simulated network's output dict as-is"""
-        network = __parse_network_json(network_json)
-        times, sample = __parse_audio_files(audio_files_json)
+    def simulate_network(cls, network_json_path: str, audio_file_path: str) -> dict:
+        """Returns a simulated network's output dict"""
+        
+        # check network_json_path exists
+        if not os.path.exists(network_json_path):
+            raise FileNotFoundError(
+                f"Network JSON file not found at {network_json_path}"
+            )
 
-        res = aspinity.simulate_network(network, audio_files)
-        return res
+        # check audio_file_path exists
+        if not os.pathj.exists(audio_file_path):
+            raise FileNotFoundError(f"Audio file not found at {audio_file_path}")
+
+        with open(network_json_path, "r") as network_json_file:
+            network_json = json.load(network_json_file)
+            network = Network(network_json)
+            times, samples = WavFileManager.load_wav(audio_file_path)
+            result = aspinity.simulate(network, times, samples)
+            return result["out"]
+
 
 if __name__ == "__main__":
     PARSER = argparse.ArgumentParser(description="Wrapper to AML Simulator")

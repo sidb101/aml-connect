@@ -1,4 +1,6 @@
 """Implementation of Wrapped Component Classes for the Aspinity AML simulator"""
+import json
+
 import aspinity
 
 class AcDiff(aspinity.AcDiff):
@@ -51,7 +53,8 @@ class Comparator(aspinity.Comparator):
 class Filter(aspinity.Filter):
     """Wrapper for aspinity Filter"""
 
-    def __init__(self, elementJSON: dict):
+    def __init__(self, elementJSON: str):
+        elementJSON = json.loads(elementJSON)
         input_terminal, output_terminal = None, None
         for item in elementJSON["terminals"]:
             if item["type_name"] == "input":
@@ -60,20 +63,23 @@ class Filter(aspinity.Filter):
                 output_terminal = item["node_name"]
         self.input = input_terminal
         self.output = output_terminal
-        self.characteristic_frequency = float(elementJSON["element_type_params"]["characteristic_frequency"])
-        self.quality_factor = float(elementJSON["element_type_params"]["quality_factor"])
-        self.filter_type = elementJSON["element_type_params"]["filter_type"]
-        if self.filter_type == 'hpf2':
+        self.characteristic_frequency = float(
+            elementJSON["element_type_params"]["Filter"]["characteristic_frequency"])
+        self.quality_factor = float(
+            elementJSON["element_type_params"]["Filter"]["quality_factor"])
+        filter_type_str = elementJSON["element_type_params"]["Filter"]["filter_type"]
+        if filter_type_str == 'hpf2':
             self.filter_type = aspinity.FilterType.hpf2
-        elif self.filter_type == 'hpf1':
+        elif filter_type_str == 'hpf1':
             self.filter_type = aspinity.FilterType.hpf1
-        elif self.filter_type == 'lpf1':
+        elif filter_type_str == 'lpf1':
             self.filter_type = aspinity.FilterType.lpf1
-        elif self.filter_type == 'lpf2':
+        elif filter_type_str == 'lpf2':
             self.filter_type = aspinity.FilterType.lpf2
-        elif self.filter_type == 'bpf2':
+        elif filter_type_str == 'bpf2':
             self.filter_type = aspinity.FilterType.bpf2
-        
+        else:
+            self.filter_type = aspinity.FilterType.hpf1
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -278,11 +284,13 @@ class SynthesizedFilter(aspinity.SynthesizedFilter):
             "parameters": {"coefficients": self.coefficients},
         }
 
+
 class Terminal(aspinity.Terminal):
     """Wrapper for aspinity Terminal"""
-    
-    def __init__(self, elementJSON: dict):
+
+    def __init__(self, elementJSON: str):
         """constructs a Terminal object from a JSON"""
+        elementJSON = json.loads(elementJSON)
         for item in elementJSON["terminals"]:
             if item["type_name"] == "net":
                 self.net = item["node_name"]
@@ -298,10 +306,10 @@ class Terminal(aspinity.Terminal):
             "element_type": "Terminal",
             "terminals": {"net": self.net},
             "parameters": {
-                "is_input": self.is_input, 
+                "is_input": self.is_input,
                 "is_output": self.is_output,
-                "hardware_pin": self.hardware_pin, 
+                "hardware_pin": self.hardware_pin,
                 "is_ac_coupled": self.is_ac_coupled,
-                "is_extern": self.is_extern, 
+                "is_extern": self.is_extern,
             },
         }
