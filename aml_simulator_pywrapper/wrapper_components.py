@@ -7,6 +7,7 @@ class AcDiff(aspinity.AcDiff):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "AcDiff",
             "terminals": {"pos": self.pos, "neg": self.neg, "output": self.output},
             "parameters": {"bias": self.bias, "gain": self.gain},
         }
@@ -18,6 +19,7 @@ class AsymmetricIntegrator(aspinity.AsymmetricIntegrator):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "AsymmetricIntegrator",
             "terminals": {"input": self.input, "output": self.output},
             "parameters": {
                 "down": self.down,
@@ -33,6 +35,7 @@ class Comparator(aspinity.Comparator):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "Comparator",
             "terminals": {
                 "positive": self.positive,
                 "negative": self.negative,
@@ -48,7 +51,7 @@ class Comparator(aspinity.Comparator):
 class Filter(aspinity.Filter):
     """Wrapper for aspinity Filter"""
 
-    def __init__(self, elementJSON: str):
+    def __init__(self, elementJSON: dict):
         input_terminal, output_terminal = None, None
         for item in elementJSON["terminals"]:
             if item["type_name"] == "input":
@@ -62,11 +65,20 @@ class Filter(aspinity.Filter):
         self.filter_type = elementJSON["element_type_params"]["filter_type"]
         if self.filter_type == 'hpf2':
             self.filter_type = aspinity.FilterType.hpf2
+        elif self.filter_type == 'hpf1':
+            self.filter_type = aspinity.FilterType.hpf1
+        elif self.filter_type == 'lpf1':
+            self.filter_type = aspinity.FilterType.lpf1
+        elif self.filter_type == 'lpf2':
+            self.filter_type = aspinity.FilterType.lpf2
+        elif self.filter_type == 'bpf2':
+            self.filter_type = aspinity.FilterType.bpf2
         
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "Filter",
             "terminals": {"input": self.input, "output": self.output},
             "parameters": {
                 "characteristic_frequency": self.characteristic_frequency,
@@ -82,6 +94,7 @@ class Filterbank(aspinity.Filterbank):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "Filterbank",
             "terminals": {
                 "input": self.input,
                 "out_0": self.out_0,
@@ -108,6 +121,7 @@ class GainOpamp(aspinity.GainOpamp):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "GainOpamp",
             "terminals": {"input": self.input, "output": self.output},
             "parameters": {
                 "feedback_cap_count": self.feedback_cap_count,
@@ -122,6 +136,7 @@ class LookupTable(aspinity.LookupTable):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "LookupTable",
             "terminals": {"A": self.A, "B": self.B, "C": self.C, "output": self.output},
             "parameters": {"expression": self.expression},
         }
@@ -133,6 +148,7 @@ class DelayFlipFlop(aspinity.DelayFlipFlop):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "DelayFlipFlop",
             "terminals": {
                 "input": self.input,
                 "clock": self.clock,
@@ -148,6 +164,7 @@ class Multiplier(aspinity.Multiplier):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "Multiplier",
             "terminals": {
                 "x_pos": self.x_pos,
                 "x_neg": self.x_neg,
@@ -165,6 +182,7 @@ class Mux2(aspinity.Mux2):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "Mux2",
             "terminals": {
                 "in0": self.in0,
                 "in1": self.in1,
@@ -180,6 +198,7 @@ class NeuralNet(aspinity.NeuralNet):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "NeuralNet",
             "terminals": {
                 "pos_0": self.pos_0,
                 "pos_1": self.pos_1,
@@ -220,6 +239,7 @@ class PeakDetector(aspinity.PeakDetector):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "PeakDetector",
             "terminals": {"input": self.input, "output": self.output},
             "parameters": {
                 "atk": self.atk,
@@ -235,6 +255,7 @@ class PGA(aspinity.PGA):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "PGA",
             "terminals": {
                 "pos1": self.pos1,
                 "neg1": self.neg1,
@@ -252,6 +273,35 @@ class SynthesizedFilter(aspinity.SynthesizedFilter):
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
+            "element_type": "SynthesizedFilter",
             "terminals": {"input": self.input, "output": self.output},
             "parameters": {"coefficients": self.coefficients},
+        }
+
+class Terminal(aspinity.Terminal):
+    """Wrapper for aspinity Terminal"""
+    
+    def __init__(self, elementJSON: dict):
+        """constructs a Terminal object from a JSON"""
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "net":
+                self.net = item["node_name"]
+        self.is_input = elementJSON["element_type_params"]["Terminal"]["is_input"]
+        self.is_output = elementJSON["element_type_params"]["Terminal"]["is_output"]
+        self.hardware_pin = elementJSON["element_type_params"]["Terminal"]["hardware_pin"]
+        self.is_ac_coupled = elementJSON["element_type_params"]["Terminal"]["is_ac_coupled"]
+        self.is_extern = elementJSON["element_type_params"]["Terminal"]["is_extern"]
+
+    def as_dict(self):
+        """returns the wrapped object in JSON serializable format"""
+        return {
+            "element_type": "Terminal",
+            "terminals": {"net": self.net},
+            "parameters": {
+                "is_input": self.is_input, 
+                "is_output": self.is_output,
+                "hardware_pin": self.hardware_pin, 
+                "is_ac_coupled": self.is_ac_coupled,
+                "is_extern": self.is_extern, 
+            },
         }
