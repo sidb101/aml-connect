@@ -9,7 +9,7 @@ use std::str::FromStr;
 pub fn get_input_files(req: &GetFilesRequest, db_conn: &mut DbConn) -> GetFilesResponseResult {
     if req.proj_slug.is_empty() {
         log::error!("Project slug is empty");
-        return Err(Error::msg("Project slug is empty"));
+        return Err(FileUploadError::ProjectNotFound("Project slug is empty".to_string()));
     }
 
     if !project_exists(&req.proj_slug, db_conn)? {

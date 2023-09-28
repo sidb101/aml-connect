@@ -115,7 +115,7 @@ pub struct GetFilesResponse {
     pub files: Vec<FileMetadata>,
 }
 
-pub type GetFilesResponseResult = Result<GetFilesResponse>;
+pub type GetFilesResponseResult = Result<GetFilesResponse, FileUploadError>;
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
