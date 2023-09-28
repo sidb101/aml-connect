@@ -1,15 +1,13 @@
 import ImportLocalDataView from "./ImportLocalDataView";
 import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
+import { dataHubActions, DataSetT } from "../../../../../redux/slices/DataHubSlice";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
 import {
 	generalActions,
 	selectCurrentAudioPath,
 	selectCurrentProjectSlug,
 } from "../../../../../redux/slices/GeneralSlice";
-import { useState } from "react";
 import remoteService from "../../../../../service/RemoteService/RemoteService";
-import { dataHubActions, DataSetT } from "../../../../../redux/slices/DataHubSlice";
-import storageClient from "../../../../../service/StorageService/client/TauriFSClient";
 import storageService from "../../../../../service/StorageService/StorageService";
 
 export type ImportLocalDataT = {
@@ -36,7 +34,7 @@ const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 			await storageService.sendFilesToStorage(files, audioPath);
 
 			//Send the metadata to the server
-			const inputFiles = await remoteService.sendFilesMetaData(projectSlug, files);
+			const inputFiles = await remoteService.sendFilesMetaData(projectSlug, files, DataSetT.TRAINING);
 
 			//add the successfully uploaded files in the redux state
 			if (inputFiles.length > 0) {

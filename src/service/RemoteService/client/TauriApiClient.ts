@@ -9,17 +9,17 @@ import type { GetFilesRequest } from "./bindings/GetFilesRequest";
 import type { FilesUploadResponse } from "./bindings/FilesUploadResponse";
 import type { GetFilesResponse } from "./bindings/GetFilesResponse";
 
-class TauriAPIClient implements RemoteClient {
+class TauriApiClient implements RemoteClient {
 	/**
 	 * This method would send the files information to the backend
 	 * @param filesUploadRequest: Request containing required information about files to be uploaded
 	 */
-	async uploadInputFiles(filesUploadRequest: FilesUploadRequest) {
+	async uploadInputFiles(filesUploadRequest: FilesUploadRequest): Promise<FilesUploadResponse> {
 		try {
-			return (await invoke("put_files", { input: filesUploadRequest })) as FilesUploadResponse;
+			return await invoke("put_files", { input: filesUploadRequest });
 		} catch (e) {
 			console.error("Couldn't upload the files to backend.", e);
-			return Promise.reject("Error in uploading the files.");
+			return Promise.reject(e);
 		}
 	}
 
@@ -27,15 +27,15 @@ class TauriAPIClient implements RemoteClient {
 	 * This method would get the files metadata from the tauri backend.
 	 * @param getFilesRequest: Request having the project slug and data type
 	 */
-	async getInputFiles(getFilesRequest: GetFilesRequest) {
+	async getInputFiles(getFilesRequest: GetFilesRequest): Promise<GetFilesResponse> {
 		try {
-			return (await invoke("get_files", { input: getFilesRequest })) as GetFilesResponse;
+			return await invoke("get_files", { input: getFilesRequest });
 		} catch (e) {
 			console.error("Couldn't get the files from backend.", e);
-			return Promise.reject("Error in getting the files.");
+			return Promise.reject(e);
 		}
 	}
 }
 
-const remoteClient: RemoteClient = new TauriAPIClient();
+const remoteClient: RemoteClient = new TauriApiClient();
 export default remoteClient;

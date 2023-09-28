@@ -3,6 +3,7 @@
 import { BaseDirectory, readBinaryFile, writeBinaryFile } from "@tauri-apps/api/fs";
 import type { StorageClient } from "./StorageClient";
 import type { InputFileDataT, InputFileMetaDataT } from "../../../redux/slices/DataHubSlice";
+import { audioFiles } from "../../../tests/mockdata/allAudioFiles";
 
 class TauriFsClient implements StorageClient {
 	/**
@@ -14,14 +15,10 @@ class TauriFsClient implements StorageClient {
 		//TODO: create a directory for the project if it doesn't exist
 
 		console.log("Writing file: ", fileData.metadata.name);
-		try {
-			const fileBinary = await dataUrlToArrayBuffer(fileData.dataUrl);
-			await writeBinaryFile(path + fileData.metadata.name, fileBinary, { dir: BaseDirectory.AppLocalData });
-			console.log("File Written: ", fileData.metadata.name);
-			return fileData;
-		} catch (e) {
-			return Promise.reject("Couldn't write the file: " + fileData.metadata.name + ". Error: " + e);
-		}
+		const fileBinary = await dataUrlToArrayBuffer(fileData.dataUrl);
+		await writeBinaryFile(path + fileData.metadata.name, fileBinary, { dir: BaseDirectory.AppLocalData });
+		console.log("File Written: ", fileData.metadata.name);
+		return fileData;
 	}
 
 	/**
@@ -31,15 +28,10 @@ class TauriFsClient implements StorageClient {
 	 */
 	async readInputFileFromStorage(fileMetaData: InputFileMetaDataT, path: string): Promise<InputFileDataT> {
 		console.log("Reading file: ", path + fileMetaData.name);
-
-		try {
-			const fileData = await readBinaryFile(path + fileMetaData.name, { dir: BaseDirectory.AppLocalData });
-			const dataUrl = uInt8ArrayToDataUrl(fileData, fileMetaData.mediaType);
-			console.log("Read file: ", fileMetaData.name);
-			return { metadata: fileMetaData, dataUrl };
-		} catch (e) {
-			return Promise.reject("Couldn't read the file: " + fileMetaData.name + ". Error: " + e);
-		}
+		const fileData = await readBinaryFile(path + fileMetaData.name, { dir: BaseDirectory.AppLocalData });
+		const dataUrl = uInt8ArrayToDataUrl(fileData, fileMetaData.mediaType);
+		console.log("Read file: ", fileMetaData.name);
+		return { metadata: fileMetaData, dataUrl };
 	}
 }
 
@@ -48,9 +40,9 @@ class TauriFsClient implements StorageClient {
  * Array buffer format is used by Tauri APIs to write the binary
  * @param dataUrl: Audio file content in dataUrl format
  */
-async function dataUrlToArrayBuffer(dataUrl: string) {
+async function dataUrlToArrayBuffer(dataUrl: string): Promise<ArrayBuffer> {
 	const blob = await (await fetch(dataUrl)).blob();
-	return await blob.arrayBuffer();
+	return blob.arrayBuffer();
 }
 
 /**
@@ -59,7 +51,7 @@ async function dataUrlToArrayBuffer(dataUrl: string) {
  * @param mediaType: Representing the string in form: audio/wav, audio/mp3, image/jpeg, text/html, etc.
  * UInt8Array format used when reading the file using Tauri APIs.
  */
-function uInt8ArrayToDataUrl(u8a: Uint8Array, mediaType: string) {
+function uInt8ArrayToDataUrl(u8a: Uint8Array, mediaType: string): string {
 	const dataRaw = uint8ArrayToString(u8a);
 	// return dataRaw;
 	const b64 = btoa(dataRaw);
@@ -71,11 +63,12 @@ function uInt8ArrayToDataUrl(u8a: Uint8Array, mediaType: string) {
  * https://stackoverflow.com/questions/12710001/how-to-convert-uint8-array-to-base64-encoded-string
  * @param u8a: Input array to convert
  */
-function uint8ArrayToString(u8a: Uint8Array) {
-	const CHUNK_SZ = 0x8000;
-	let c: string[] = [];
-	for (let i = 0; i < u8a.length; i += CHUNK_SZ) {
-		c.push(String.fromCharCode.apply(null, Array.from<number>(u8a.subarray(i, i + CHUNK_SZ))));
+function uint8ArrayToString(u8a: Uint8Array): string {
+	const chunkSize = 0x8000;
+
+	const c: string[] = [];
+	for (let i = 0; i < u8a.length; i += chunkSize) {
+		c.push(String.fromCharCode.apply(null, Array.from<number>(u8a.subarray(i, i + chunkSize))));
 	}
 	return c.join("");
 }

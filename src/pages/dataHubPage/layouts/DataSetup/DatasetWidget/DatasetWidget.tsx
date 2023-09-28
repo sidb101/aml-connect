@@ -2,7 +2,6 @@ import "./DatasetWidget.scss";
 import AudioFileTable from "../AudioFileTable";
 import Accordion from "../../../../../components/accordion/Accordion";
 import { type ReactNode, useState } from "react";
-import { audioFiles } from "../../../../../tests/mockdata/allAudioFiles";
 import { dataHubActions, DataSetT, selectInputFiles } from "../../../../../redux/slices/DataHubSlice";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
 import {
@@ -35,8 +34,10 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 	//Handle when accordion is opened
 	const handleAccordionOpen = () => {
 		//If the input files are not present in the redux state, then fetch it from backend when accordion is open
-		if (projectSlug != "" && importedInputFiles.length == 0) {
-			getInputFiles(datasetType).catch((e) => console.error(e));
+		if (projectSlug !== "" && importedInputFiles.length === 0) {
+			getInputFiles(datasetType).catch((e) => {
+				console.error(e);
+			});
 		}
 	};
 
@@ -78,7 +79,7 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 				}}
 				defaultIsOpen={defaultIsOpen}
 			>
-				<AudioFileTable files={audioFiles} />
+				<AudioFileTable files={importedInputFiles} />
 			</Accordion>
 		)
 	);

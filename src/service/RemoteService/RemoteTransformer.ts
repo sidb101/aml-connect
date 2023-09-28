@@ -4,6 +4,7 @@ import type { FilesUploadRequest } from "./client/bindings/FilesUploadRequest";
 import type { FilesUploadResponse } from "./client/bindings/FilesUploadResponse";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import type { GetFilesResponse } from "./client/bindings/GetFilesResponse";
+/* eslint-disable  @typescript-eslint/naming-convention */
 
 /***
  * This object would convert the UI objects to Data Transfer Objects (DTO) that can be used to communicate with the
@@ -26,7 +27,7 @@ const remoteTransformer = {
 	): InputFileDataT[] {
 		const successfulUploads = filesUploadResponse.upload_success_files;
 		return inputFiles.filter((inputFile) =>
-			successfulUploads.find((successFile) => successFile.file_name == inputFile.metadata.name)
+			successfulUploads.find((successFile) => successFile.file_name === inputFile.metadata.name)
 		);
 	},
 
@@ -38,7 +39,7 @@ const remoteTransformer = {
 	},
 
 	parseFilesGetResponse(filesGetResponse: GetFilesResponse): InputFileMetaDataT[] {
-		const files = filesGetResponse.files;
+		const { files } = filesGetResponse;
 
 		//read the content of all the files in the
 		return files.map((file) => {
@@ -57,6 +58,7 @@ const remoteTransformer = {
 			//means the extension is not present
 			throw new Error("File needs a valid extension.");
 		}
+
 		return tokens[tokens.length - 1];
 	},
 };

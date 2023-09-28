@@ -1,3 +1,5 @@
+/* eslint-disable   @typescript-eslint/consistent-type-definitions */
+
 /**
  * This module would serve as interface with the Backend system. This can be any kind of server that performs processing
  * for app, like Web Server (HTTP), Rust Server (IPC), etc.

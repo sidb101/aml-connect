@@ -1,16 +1,16 @@
-import storageClient from "./client/TauriFSClient";
 import type { InputFileDataT, InputFileMetaDataT } from "../../redux/slices/DataHubSlice";
+import storageClient from "./client/TauriFsClient";
 
 const storageService = {
-	sendFilesToStorage: async (files: InputFileDataT[], path: string) => {
+	sendFilesToStorage: async (files: InputFileDataT[], path: string): Promise<InputFileDataT[]> => {
 		//wait for all the files to get written
-		return await Promise.all(files.map(async (file) => await storageClient.writeInputFileToStorage(file, path)));
+		return Promise.all(files.map(async (file) => storageClient.writeInputFileToStorage(file, path)));
 	},
 
-	readFilesFromStorage: async (filesMetaData: InputFileMetaDataT[], path: string) => {
+	readFilesFromStorage: async (filesMetaData: InputFileMetaDataT[], path: string): Promise<InputFileDataT[]> => {
 		//get the files data along with content from the given metadata
-		return await Promise.all(
-			filesMetaData.map(async (fileMetaData) => await storageClient.readInputFileFromStorage(fileMetaData, path))
+		return Promise.all(
+			filesMetaData.map(async (fileMetaData) => storageClient.readInputFileFromStorage(fileMetaData, path))
 		);
 	},
 };

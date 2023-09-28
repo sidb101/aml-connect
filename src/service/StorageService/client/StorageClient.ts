@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/consistent-type-definitions */
+
 /**
  * This module would serve as interface with the FileSystem. This can be any kind of storage reserved for app,
  * like Local File System, S3 buckets, etc.

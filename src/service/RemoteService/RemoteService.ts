@@ -1,8 +1,8 @@
-import remoteClient from "./client/TauriAPIClient";
+import remoteClient from "./client/TauriApiClient";
 import type { InputFileDataT, InputFileMetaDataT } from "../../redux/slices/DataHubSlice";
+import { DataSetT } from "../../redux/slices/DataHubSlice";
 import type { FilesUploadRequest } from "./client/bindings/FilesUploadRequest";
 import remoteTransformer from "./RemoteTransformer";
-import { DataSetT } from "../../redux/slices/DataHubSlice";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 
 /**
@@ -14,11 +14,15 @@ const remoteService = {
 	/**
 	 * Sends the given files metadata to the backend for given project slugs
 	 */
-	sendFilesMetaData: async (projectSlug: string, files: InputFileDataT[]) => {
+	sendFilesMetaData: async (
+		projectSlug: string,
+		files: InputFileDataT[],
+		dataSet: DataSetT
+	): Promise<InputFileDataT[]> => {
 		const filesUploadRequest: FilesUploadRequest = remoteTransformer.createFilesUploadRequest(
 			projectSlug,
 			files,
-			DataSetT.TRAINING
+			dataSet
 		);
 
 		//send it to the backend
@@ -34,7 +38,7 @@ const remoteService = {
 		return remoteTransformer.parseSuccessFilesUploadResponse(filesUploadResponse, files);
 	},
 
-	getFilesMetaData: async (projectSlug: string, dataSet: DataSetT) => {
+	getFilesMetaData: async (projectSlug: string, dataSet: DataSetT): Promise<InputFileMetaDataT[]> => {
 		//get the files information
 		const filesGetRequest: GetFilesRequest = remoteTransformer.createFilesGetRequest(projectSlug, dataSet);
 		console.log("Request", filesGetRequest);
