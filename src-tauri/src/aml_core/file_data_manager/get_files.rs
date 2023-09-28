@@ -2,7 +2,6 @@ use super::*;
 use crate::aml_core::db_adapter::schema::{input_data, projects};
 use crate::aml_core::db_adapter::{models::InputData, DbConn};
 use crate::aml_core::file_data_manager::FileUploadError;
-use anyhow::Error;
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 use std::str::FromStr;
 

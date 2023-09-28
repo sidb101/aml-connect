@@ -13,7 +13,7 @@ pub struct AmlSimulatorSidecar {
 
 #[derive(Error, Debug, Serialize, Deserialize, TS, PartialEq, Clone)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum SimulatorError {
     #[error("Failed to Build sidecar command")]
     CommandBuildError(String),
