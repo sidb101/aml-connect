@@ -31,6 +31,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             uicontroller::get_elements,
             uicontroller::put_files,
+            uicontroller::get_files,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
