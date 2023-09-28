@@ -29,6 +29,18 @@
             ]
           }
         ]
+      },
+      "fs": {
+        "scope": ["$APPLOCALDATA/**"],
+        "readFile": true,
+        "writeFile": true,
+        "readDir": true,
+        "createDir": true,
+        "renameFile": true,
+        "exists": true
+      },
+      "path": {
+        "all": true
       }
     },
     "bundle": {

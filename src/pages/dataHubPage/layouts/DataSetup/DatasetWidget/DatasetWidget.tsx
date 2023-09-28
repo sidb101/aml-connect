@@ -62,7 +62,7 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 
 			console.log("Set input files in the redux state");
 		} catch (e) {
-			console.error(e);
+			console.error("Error in getting files");
 		}
 
 		dispatch(generalActions.markLoading(false));

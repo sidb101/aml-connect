@@ -29,7 +29,7 @@ class TauriApiClient implements RemoteClient {
 	 */
 	async getInputFiles(getFilesRequest: GetFilesRequest): Promise<GetFilesResponse> {
 		try {
-			return await invoke("get_files", { input: getFilesRequest });
+			return await invoke("get_files", { req: getFilesRequest });
 		} catch (e) {
 			console.error("Couldn't get the files from backend.", e);
 			return Promise.reject(e);
