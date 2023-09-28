@@ -99,9 +99,47 @@ pub struct Terminal{
 #[ts(export)]
 #[ts(export_to = "../src/clients/api/bindings/")]
 pub enum Parameters {
+    AcDiff(AcDiff),
+    AsymmetricIntegrator(AsymmetricIntegrator),
+    Comparator(Comparator),
     Filter(Filter),
     FilterBank(FilterBank),
-    Terminal(TerminalParams),
+    GainOpAmp(GainOpAmp),
+    LookupTable(LookupTable),
+    DelayFlipFlop, //has no params
+    Multiplier(Multiplier),
+    Mux2, //has no params
+    NeuralNet(NeuralNet),
+    PeakDetector(PeakDetector),
+    PGA(PGA),
+    SynthesizedFilter(SynthesizedFilter),
+    Terminal(TerminalParams), //renamed to TerminalParams(to avoid dup struct)
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub struct AcDiff{
+    pub gain: f64,
+    pub bias: f64,
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub struct AsymmetricIntegrator{
+    pub up: f64,
+    pub down: f64,
+    pub up_down_type: UpDownType,
+    pub comparator_enable: bool,
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub struct Comparator{
+    pub threshold: f64,
+    pub hysteresis_voltage: Option<f64>,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -126,6 +164,63 @@ pub struct FilterBank{
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/clients/api/bindings/")]
+pub struct GainOpAmp{
+    pub gain_mode: GainOpampMode,
+    pub opamp_implementation: OpampType,
+    pub feedback_cap_count: f64,
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub struct LookupTable{
+    pub expression: String
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub struct Multiplier{
+    pub slope: f64,
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub struct NeuralNet{
+    pub weights: Vec<f64>,
+    pub biases: Vec<f64>,
+    pub activation_function: Vec<ActivationFunction>,
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub struct PeakDetector{
+    pub atk: f64,
+    pub dec: f64,
+    pub model_version: ModelVersion,
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub struct PGA{
+    pub Av1: f64,
+    pub Av2: f64,
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub struct SynthesizedFilter{
+    pub coefficients: Vec<Vec<f64>>
+}
+
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
 pub struct TerminalParams{
     pub hardware_pin: Option<String>,
     pub is_input: bool,
@@ -138,11 +233,57 @@ pub struct TerminalParams{
 #[ts(export)]
 #[ts(export_to = "../src/clients/api/bindings/")]
 pub enum FilterType{
-    Lpf1,
-    Lpf2,
-    Bpf2,
-    Hpf1,
-    Hpf2
+    lpf1,
+    lpf2,
+    bpf2,
+    hpf1,
+    hpf2
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub enum GainOpampMode{
+    Noninverting1x,
+    Noninverting11x,
+    Inverting2x,
+    Inverting4x,
+    Inverting10x,
+    Inverting20x,
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub enum OpampType{
+    StageZero,
+    Pin,
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub enum ModelVersion{
+    FirstOrder,
+    SecondOrder,
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub enum UpDownType{
+    Rate,
+    Hang
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/clients/api/bindings/")]
+pub enum ActivationFunction{
+    Tanh,
+    Sigmoid,
+    ReLU,
+    Linear
 }
 
 impl AmlSimulatorSidecar {
@@ -226,7 +367,7 @@ impl AmlSimulator {
             "element_type_params": {
                 "characteristic_frequency": 10,
                 "quality_factor": 1,
-                "filter_type": "Hpf2"
+                "filter_type": "hpf2"
             },
             "positions": {
                 "x": 100,
@@ -294,7 +435,7 @@ impl AmlSimulator {
                 Filter {
                     characteristic_frequency: 1e3,
                     quality_factor: 1.0,
-                    filter_type: FilterType::Hpf2,
+                    filter_type: FilterType::hpf2,
                 }
             ),
             terminals: vec![terminal2, terminal3],
