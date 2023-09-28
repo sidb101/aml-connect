@@ -6,12 +6,13 @@ import { mockProjects } from "../tests/mockdata/allProjects";
 import React, { useEffect, useState } from "react";
 import type { SideRegionT } from "../components/sideBar/sideRegion/SideRegion";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { generalActions, ProjectStatus, selectCurrentProjectName } from "../redux/slices/GeneralSlice";
+import { generalActions, ProjectStatus, selectCurrentProjectName, selectLoading } from "../redux/slices/GeneralSlice";
 import { getOpenProjectNavLinks } from "../components/sideBar/navRegion/appNavLinks";
 import { testIds } from "../tests/test-utils";
 import "./Root.scss";
 import type { NavLinkT } from "../components/sideBar/navRegion/navLink/NavLink";
 import { isNavLinkSelected } from "../components/sideBar/navRegion/navLink/NavLink";
+import Spinner from "../components/spinner/Spinner";
 
 export type RootT = {
 	data?: string;
@@ -28,6 +29,7 @@ const Root = (props: RootT) => {
 	// getting the required data from the state
 	const { projectStatus, projectSlug, allProjects } = useAppSelector((state) => state.general);
 	const projectName = useAppSelector(selectCurrentProjectName);
+	const isLoading = useAppSelector(selectLoading);
 
 	const [openProjectNavLinks, setOpenProjectNavLinks] = useState<NavLinkT[]>([]);
 
@@ -68,6 +70,7 @@ const Root = (props: RootT) => {
 
 	return (
 		<div className={`Root_container`}>
+			{isLoading && <Spinner />}
 			<div className={`Root_sidebarContainer`}>
 				<Sidebar logo="AnalogML Connect" sideRegion={[getSideRegion()]} />
 			</div>

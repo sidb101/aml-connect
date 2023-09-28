@@ -1,7 +1,11 @@
 import ImportLocalDataView from "./ImportLocalDataView";
 import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
-import { selectCurrentAudioPath, selectCurrentProjectSlug } from "../../../../../redux/slices/GeneralSlice";
+import {
+	generalActions,
+	selectCurrentAudioPath,
+	selectCurrentProjectSlug,
+} from "../../../../../redux/slices/GeneralSlice";
 import { useState } from "react";
 import remoteService from "../../../../../service/RemoteService/RemoteService";
 import { dataHubActions, DataSetT } from "../../../../../redux/slices/DataHubSlice";
@@ -22,12 +26,11 @@ const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 
 	const dispatch = useAppDispatch();
 
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-
 	/**
 	 * Actions to do when user uploads the files
 	 */
 	const onFilesImport = async (files: InputFileDataT[]) => {
+		dispatch(generalActions.markLoading(true));
 		try {
 			//Write the files
 			await storageService.sendFilesToStorage(files, audioPath);
@@ -44,7 +47,7 @@ const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 			console.error(e);
 		}
 
-		setIsLoading(false);
+		dispatch(generalActions.markLoading(false));
 	};
 
 	return (

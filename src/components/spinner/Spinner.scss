@@ -1,0 +1,41 @@
+@use "../../global";
+
+.Spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  .Spinner_iconBackground {
+    background-color: global.$color-grey-1;
+    height: 150px;
+    width: 150px;
+    padding: 27px;
+    border-radius: 25px;
+  }
+
+  img {
+    //position: fixed;
+    //left: calc(50vw);
+    //top: calc(50vh - 100px);
+    animation: spin 1500ms linear infinite;
+    height: 150px;
+    width: 150px;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,12 +1,15 @@
 import "./DatasetWidget.scss";
 import AudioFileTable from "../AudioFileTable";
 import Accordion from "../../../../../components/accordion/Accordion";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { audioFiles } from "../../../../../tests/mockdata/allAudioFiles";
-import { dataHubActions, DataSetT } from "../../../../../redux/slices/DataHubSlice";
+import { dataHubActions, DataSetT, selectInputFiles } from "../../../../../redux/slices/DataHubSlice";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
-import { selectCurrentAudioPath, selectCurrentProjectSlug } from "../../../../../redux/slices/GeneralSlice";
-import { selectInputFiles } from "../../../../../redux/slices/DataHubSlice";
+import {
+	generalActions,
+	selectCurrentAudioPath,
+	selectCurrentProjectSlug,
+} from "../../../../../redux/slices/GeneralSlice";
 import remoteService from "../../../../../service/RemoteService/RemoteService";
 import storageService from "../../../../../service/StorageService/StorageService";
 
@@ -28,14 +31,14 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 	const audioPath = useAppSelector(selectCurrentAudioPath);
 
 	const importedInputFiles = useAppSelector((state) => selectInputFiles(state, datasetType));
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	//Load the input files of required type from the backend, if not present in the state
-	useEffect(() => {
+	//Handle when accordion is opened
+	const handleAccordionOpen = () => {
+		//If the input files are not present in the redux state, then fetch it from backend when accordion is open
 		if (projectSlug != "" && importedInputFiles.length == 0) {
 			getInputFiles(datasetType).catch((e) => console.error(e));
 		}
-	}, [projectSlug]);
+	};
 
 	/**
 	 * Will get the input files metadata from the server, and then read the corresponding file binaries from the
@@ -44,7 +47,7 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 	 */
 	const getInputFiles = async (dataSet: DataSetT) => {
 		try {
-			setIsLoading(true);
+			dispatch(generalActions.markLoading(true));
 
 			//get the metadata from the server
 			const inputFilesMetaData = await remoteService.getFilesMetaData(projectSlug, dataSet);
@@ -56,11 +59,12 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 			//update it in the redux state
 			dispatch(dataHubActions.setInputFiles({ dataSet, inputFiles }));
 
-			setIsLoading(false);
 			console.log("Set input files in the redux state");
 		} catch (e) {
 			console.error(e);
 		}
+
+		dispatch(generalActions.markLoading(false));
 	};
 
 	return (
@@ -69,6 +73,7 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 				bodyMaxHeight={widgetHeight}
 				header={header}
 				onOpen={() => {
+					handleAccordionOpen();
 					console.log(datasetType + " Opened");
 				}}
 				defaultIsOpen={defaultIsOpen}

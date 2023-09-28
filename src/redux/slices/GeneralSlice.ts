@@ -13,6 +13,7 @@ type GeneralState = {
 	projectStatus: ProjectStatus;
 	projectSlug: string;
 	allProjects: BasicProjectDataT[];
+	isLoading: boolean; //To show spinner when app has to wait for any kind of call
 };
 
 // Status of the app in terms of whether a project is opened,  closed, or new project to be created
@@ -32,6 +33,7 @@ const initialState: GeneralState = {
 	projectStatus: ProjectStatus.NOT_OPEN,
 	projectSlug: "",
 	allProjects: [],
+	isLoading: false,
 };
 
 /**
@@ -78,6 +80,15 @@ export const generalSlice = createSlice({
 		setAllProjects: (state, action: PayloadAction<BasicProjectDataT[]>) => {
 			state.allProjects = action.payload;
 		},
+
+		/**
+		 * To set the loading/unloading status for the whole application
+		 * @param state: General State
+		 * @param action: Boolean specifying whether the app has to be marked as loading or not
+		 */
+		markLoading: (state, action: PayloadAction<boolean>) => {
+			state.isLoading = action.payload;
+		},
 	},
 });
 
@@ -106,6 +117,11 @@ export const selectCurrentProjectSlug = createSelector(
 export const selectCurrentAudioPath = createSelector(
 	(state: RootState) => state.general,
 	({ projectSlug }) => `${projectSlug}/${AUDIO_DIR}`
+);
+
+export const selectLoading = createSelector(
+	(state: RootState) => state.general,
+	({ isLoading }) => isLoading
 );
 
 export const { name: generalSliceKey, reducer: generalReducer, actions: generalActions } = generalSlice;
