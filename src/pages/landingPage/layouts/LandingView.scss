@@ -1,8 +1,8 @@
 @use "../../../global";
 
 .LandingView_container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: global.$content-padding;
-  padding: global.$content-padding;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: global.$content-padding;
+	padding: global.$content-padding;
 }

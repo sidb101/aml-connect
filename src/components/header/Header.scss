@@ -1,27 +1,27 @@
 @use "../../global";
 
 .Header_contentContainer {
-  $left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
+	$left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
 
-  position: fixed; /* Fixed position will make the header stick to the top */
-  top: 0;
-  left: $left-offset; /* This should be the same as the width of the sidebar */
-  height: global.$header-height; /* Adjust this value to fit your design */
-  width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
-  padding: global.$content-padding global.$content-padding 0;
-  z-index: 1;
+	position: fixed; /* Fixed position will make the header stick to the top */
+	top: 0;
+	left: $left-offset; /* This should be the same as the width of the sidebar */
+	height: global.$header-height; /* Adjust this value to fit your design */
+	width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
+	padding: global.$content-padding global.$content-padding 0;
+	z-index: 1;
 
-  display: grid;
-  grid-template-rows: 1fr 1fr;
+	display: grid;
+	grid-template-rows: 1fr 1fr;
 }
 
 .Header_gridRow1 {
-  grid-row: 1;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+	grid-row: 1;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
 }
 
 .Header_gridRow2 {
-  grid-row: 2;
+	grid-row: 2;
 }

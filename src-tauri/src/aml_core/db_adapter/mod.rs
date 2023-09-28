@@ -1,6 +1,6 @@
 use anyhow::{Context, Error, Result};
 use diesel::migration::MigrationConnection;
-use diesel::r2d2::{ConnectionManager, Pool};
+use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use diesel::{Connection, SqliteConnection};
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
 use directories::ProjectDirs;
@@ -14,7 +14,9 @@ pub mod models;
 pub mod schema;
 
 pub type SqlitePool = Pool<ConnectionManager<SqliteConnection>>;
-const DB_NAME: &'static str = "aml_connect.db";
+pub type DbConn = PooledConnection<ConnectionManager<SqliteConnection>>;
+
+pub const DB_NAME: &'static str = "aml_connect.db";
 pub const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
 
 pub fn establish_connection() -> Result<SqlitePool> {
