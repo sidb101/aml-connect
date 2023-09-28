@@ -103,7 +103,7 @@ export const selectCurrentProjectSlug = createSelector(
 	({ projectSlug }) => projectSlug
 );
 
-export const selectCurrentProjectAudioDir = createSelector(
+export const selectCurrentAudioPath = createSelector(
 	(state: RootState) => state.general,
 	({ projectSlug }) => `${projectSlug}/${AUDIO_DIR}`
 );

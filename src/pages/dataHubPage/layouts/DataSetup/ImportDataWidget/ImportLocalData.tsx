@@ -1,8 +1,12 @@
 import ImportLocalDataView from "./ImportLocalDataView";
 import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
-import { selectCurrentProjectAudioDir, selectCurrentProjectSlug } from "../../../../../redux/slices/GeneralSlice";
+import { selectCurrentAudioPath, selectCurrentProjectSlug } from "../../../../../redux/slices/GeneralSlice";
 import { useState } from "react";
+import remoteService from "../../../../../service/RemoteService/RemoteService";
+import { dataHubActions, DataSetT } from "../../../../../redux/slices/DataHubSlice";
+import storageClient from "../../../../../service/StorageService/client/TauriFSClient";
+import storageService from "../../../../../service/StorageService/StorageService";
 
 export type ImportLocalDataT = {
 	onClose: () => void;
@@ -14,19 +18,33 @@ export type ImportLocalDataT = {
  */
 const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 	const projectSlug = useAppSelector(selectCurrentProjectSlug);
-	const audioProjectDir = useAppSelector(selectCurrentProjectAudioDir);
+	const audioPath = useAppSelector(selectCurrentAudioPath);
 
 	const dispatch = useAppDispatch();
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
+	/**
+	 * Actions to do when user uploads the files
+	 */
 	const onFilesImport = async (files: InputFileDataT[]) => {
-		//TODO: Write logic to write the files
-		await sendFilesMetaData(files);
-	};
+		try {
+			//Write the files
+			await storageService.sendFilesToStorage(files, audioPath);
 
-	const sendFilesMetaData = async (files: InputFileDataT[]) => {
-		//TODO: Write logic to send files meta data to server
+			//Send the metadata to the server
+			const inputFiles = await remoteService.sendFilesMetaData(projectSlug, files);
+
+			//add the successfully uploaded files in the redux state
+			if (inputFiles.length > 0) {
+				dispatch(dataHubActions.addInputFiles({ dataSet: DataSetT.TRAINING, inputFiles: inputFiles }));
+				// console.log("Updated The redux state.");
+			}
+		} catch (e) {
+			console.error(e);
+		}
+
+		setIsLoading(false);
 	};
 
 	return (
