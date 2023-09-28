@@ -3,6 +3,14 @@ import json
 
 import aspinity
 
+
+def coalesce(*args):
+    for arg in args:
+        if arg is not None:
+            return arg
+    return None
+
+
 class AcDiff(aspinity.AcDiff):
     """Wrapper for aspinity AcDiff"""
 
@@ -53,33 +61,46 @@ class Comparator(aspinity.Comparator):
 class Filter(aspinity.Filter):
     """Wrapper for aspinity Filter"""
 
-    def __init__(self, elementJSON: str):
+    def __new__(cls, elementJSON: str):
         elementJSON = json.loads(elementJSON)
+        ret = super().__new__(cls)
+
         input_terminal, output_terminal = None, None
         for item in elementJSON["terminals"]:
             if item["type_name"] == "input":
                 input_terminal = item["node_name"]
             elif item["type_name"] == "output":
                 output_terminal = item["node_name"]
-        self.input = input_terminal
-        self.output = output_terminal
-        self.characteristic_frequency = float(
-            elementJSON["element_type_params"]["Filter"]["characteristic_frequency"])
-        self.quality_factor = float(
-            elementJSON["element_type_params"]["Filter"]["quality_factor"])
+        ret.input = input_terminal
+        ret.output = output_terminal
+        ret.characteristic_frequency = float(
+            coalesce(
+                elementJSON["element_type_params"]["Filter"]["characteristic_frequency"],
+                0.0
+            )
+        )
+        ret.quality_factor = float(
+            coalesce(
+                elementJSON["element_type_params"]["Filter"]["quality_factor"],
+                0.0
+            )
+        )
+
         filter_type_str = elementJSON["element_type_params"]["Filter"]["filter_type"]
         if filter_type_str == 'hpf2':
-            self.filter_type = aspinity.FilterType.hpf2
+            ret.filter_type = aspinity.FilterType.hpf2
         elif filter_type_str == 'hpf1':
-            self.filter_type = aspinity.FilterType.hpf1
+            ret.filter_type = aspinity.FilterType.hpf1
         elif filter_type_str == 'lpf1':
-            self.filter_type = aspinity.FilterType.lpf1
+            ret.filter_type = aspinity.FilterType.lpf1
         elif filter_type_str == 'lpf2':
-            self.filter_type = aspinity.FilterType.lpf2
+            ret.filter_type = aspinity.FilterType.lpf2
         elif filter_type_str == 'bpf2':
-            self.filter_type = aspinity.FilterType.bpf2
+            ret.filter_type = aspinity.FilterType.bpf2
         else:
-            self.filter_type = aspinity.FilterType.hpf1
+            ret.filter_type = aspinity.FilterType.hpf1
+        
+        return ret
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -288,17 +309,24 @@ class SynthesizedFilter(aspinity.SynthesizedFilter):
 class Terminal(aspinity.Terminal):
     """Wrapper for aspinity Terminal"""
 
-    def __init__(self, elementJSON: str):
+    def __new__(cls, elementJSON: str):
         """constructs a Terminal object from a JSON"""
         elementJSON = json.loads(elementJSON)
+        ret = super().__new__(cls)
         for item in elementJSON["terminals"]:
             if item["type_name"] == "net":
-                self.net = item["node_name"]
-        self.is_input = elementJSON["element_type_params"]["Terminal"]["is_input"]
-        self.is_output = elementJSON["element_type_params"]["Terminal"]["is_output"]
-        self.hardware_pin = elementJSON["element_type_params"]["Terminal"]["hardware_pin"]
-        self.is_ac_coupled = elementJSON["element_type_params"]["Terminal"]["is_ac_coupled"]
-        self.is_extern = elementJSON["element_type_params"]["Terminal"]["is_extern"]
+                ret.net = item["node_name"]
+        ret.is_input = coalesce(
+            elementJSON["element_type_params"]["Terminal"]["is_input"], False)
+        ret.is_output = coalesce(
+            elementJSON["element_type_params"]["Terminal"]["is_output"], False)
+        ret.hardware_pin = coalesce(
+            elementJSON["element_type_params"]["Terminal"]["hardware_pin"], "")
+        ret.is_ac_coupled = coalesce(
+            elementJSON["element_type_params"]["Terminal"]["is_ac_coupled"], False)
+        ret.is_extern = coalesce(
+            elementJSON["element_type_params"]["Terminal"]["is_extern"], False)
+        return ret
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
