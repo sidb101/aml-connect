@@ -11,8 +11,11 @@ def coalesce(*args):
     return None
 
 
-class AcDiff(aspinity.AcDiff):
+class AcDiff():
     """Wrapper for aspinity AcDiff"""
+
+    def __init__(self):
+        self.orig_element = aspinity.AcDiff()
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -23,8 +26,11 @@ class AcDiff(aspinity.AcDiff):
         }
 
 
-class AsymmetricIntegrator(aspinity.AsymmetricIntegrator):
+class AsymmetricIntegrator():
     """Wrapper for aspinity AsymmetricIntergrator"""
+
+    def __init__(self):
+        self.orig_element = aspinity.AsymmetricIntegrator()
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -58,12 +64,11 @@ class Comparator(aspinity.Comparator):
         }
 
 
-class Filter(aspinity.Filter):
+class Filter():
     """Wrapper for aspinity Filter"""
 
-    def __new__(cls, elementJSON: str):
-        elementJSON = json.loads(elementJSON)
-        ret = super().__new__(cls)
+    def __init__(self, elementJSON: dict):
+        self.orig_element = aspinity.Filter()
 
         input_terminal, output_terminal = None, None
         for item in elementJSON["terminals"]:
@@ -71,15 +76,15 @@ class Filter(aspinity.Filter):
                 input_terminal = item["node_name"]
             elif item["type_name"] == "output":
                 output_terminal = item["node_name"]
-        ret.input = input_terminal
-        ret.output = output_terminal
-        ret.characteristic_frequency = float(
+        self.orig_element.input = input_terminal
+        self.orig_element.output = output_terminal
+        self.orig_element.characteristic_frequency = float(
             coalesce(
                 elementJSON["element_type_params"]["Filter"]["characteristic_frequency"],
                 0.0
             )
         )
-        ret.quality_factor = float(
+        self.orig_element.quality_factor = float(
             coalesce(
                 elementJSON["element_type_params"]["Filter"]["quality_factor"],
                 0.0
@@ -88,29 +93,27 @@ class Filter(aspinity.Filter):
 
         filter_type_str = elementJSON["element_type_params"]["Filter"]["filter_type"]
         if filter_type_str == 'hpf2':
-            ret.filter_type = aspinity.FilterType.hpf2
+            self.orig_element.filter_type = aspinity.FilterType.hpf2
         elif filter_type_str == 'hpf1':
-            ret.filter_type = aspinity.FilterType.hpf1
+            self.orig_element.filter_type = aspinity.FilterType.hpf1
         elif filter_type_str == 'lpf1':
-            ret.filter_type = aspinity.FilterType.lpf1
+            self.orig_element.filter_type = aspinity.FilterType.lpf1
         elif filter_type_str == 'lpf2':
-            ret.filter_type = aspinity.FilterType.lpf2
+            self.orig_element.filter_type = aspinity.FilterType.lpf2
         elif filter_type_str == 'bpf2':
-            ret.filter_type = aspinity.FilterType.bpf2
+            self.orig_element.filter_type = aspinity.FilterType.bpf2
         else:
-            ret.filter_type = aspinity.FilterType.hpf1
-        
-        return ret
+            self.orig_element.filter_type = aspinity.FilterType.hpf1
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "Filter",
-            "terminals": {"input": self.input, "output": self.output},
+            "terminals": {"input": self.orig_element.input, "output": self.orig_element.output},
             "parameters": {
-                "characteristic_frequency": self.characteristic_frequency,
-                "quality_factor": self.quality_factor,
-                "filter_type": str(self.filter_type),
+                "characteristic_frequency": self.orig_element.characteristic_frequency,
+                "quality_factor": self.orig_element.quality_factor,
+                "filter_type": str(self.orig_element.filter_type),
             },
         }
 
@@ -306,38 +309,36 @@ class SynthesizedFilter(aspinity.SynthesizedFilter):
         }
 
 
-class Terminal(aspinity.Terminal):
+class Terminal():
     """Wrapper for aspinity Terminal"""
 
-    def __new__(cls, elementJSON: str):
+    def __init__(self, elementJSON: dict):
         """constructs a Terminal object from a JSON"""
-        elementJSON = json.loads(elementJSON)
-        ret = super().__new__(cls)
+        self.orig_element = aspinity.Terminal()
         for item in elementJSON["terminals"]:
             if item["type_name"] == "net":
-                ret.net = item["node_name"]
-        ret.is_input = coalesce(
+                self.orig_element.net = item["node_name"]
+        self.orig_element.is_input = coalesce(
             elementJSON["element_type_params"]["Terminal"]["is_input"], False)
-        ret.is_output = coalesce(
+        self.orig_element.is_output = coalesce(
             elementJSON["element_type_params"]["Terminal"]["is_output"], False)
-        ret.hardware_pin = coalesce(
+        self.orig_element.hardware_pin = coalesce(
             elementJSON["element_type_params"]["Terminal"]["hardware_pin"], "")
-        ret.is_ac_coupled = coalesce(
+        self.orig_element.is_ac_coupled = coalesce(
             elementJSON["element_type_params"]["Terminal"]["is_ac_coupled"], False)
-        ret.is_extern = coalesce(
+        self.orig_element.is_extern = coalesce(
             elementJSON["element_type_params"]["Terminal"]["is_extern"], False)
-        return ret
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "Terminal",
-            "terminals": {"net": self.net},
+            "terminals": {"net": self.orig_element.net},
             "parameters": {
-                "is_input": self.is_input,
-                "is_output": self.is_output,
-                "hardware_pin": self.hardware_pin,
-                "is_ac_coupled": self.is_ac_coupled,
-                "is_extern": self.is_extern,
+                "is_input": self.orig_element.is_input,
+                "is_output": self.orig_element.is_output,
+                "hardware_pin": self.orig_element.hardware_pin,
+                "is_ac_coupled": self.orig_element.is_ac_coupled,
+                "is_extern": self.orig_element.is_extern,
             },
         }

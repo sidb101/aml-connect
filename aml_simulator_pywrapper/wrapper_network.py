@@ -43,13 +43,12 @@ class Network(aspinity.Network):
         element_class = getattr(
             importlib.import_module("wrapper_components"), element_json["type_name"]
         )
-        element = element_class(json.dumps(element_json))
+        element = element_class(element_json)
         return element
 
-    def __new__(cls, network_json: str):
-        network_json = json.loads(network_json)
+    def __new__(cls, network_json: dict):
         ret = super().__new__(cls)
         for element_json in network_json["elements"]:
             element = cls.__load_element(element_json)
-            ret.add(element)
+            ret.add(element.orig_element)
         return ret
