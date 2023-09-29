@@ -10,8 +10,8 @@ type LandingPageViewProps = {
 const LandingView = ({ projectCards }: LandingPageViewProps) => {
 	return (
 		<>
-			<Header headerTitle={"Projects"} element={<LandingPageHeader />} />
-			<div className={`body-content-container-no-footer`}>
+			<Header headerTitle={"Projects"}>{<LandingPageHeader />}</Header>
+			<div className={`body-content-container-with-header-btns-no-footer`}>
 				<div className={`main-content-container`}>
 					<div className={`LandingView_container`}>
 						{projectCards?.map((projectCard: DisplayCardT, index: number) => (

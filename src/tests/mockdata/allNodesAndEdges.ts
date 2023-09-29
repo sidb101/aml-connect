@@ -6,7 +6,7 @@ export const initialNodes: Node[] = [
 		id: "1",
 		sourcePosition: Position.Right,
 		type: "input",
-		data: { label: "In" },
+		data: { label: "IN" },
 		position: { x: 50, y: 200 },
 		className: "Canvas_input",
 	},
@@ -28,8 +28,8 @@ export const initialNodes: Node[] = [
 	},
 	{
 		id: "4",
-		sourcePosition: Position.Right,
 		targetPosition: Position.Left,
+		type: "output",
 		data: { label: "OUT" },
 		position: { x: 650, y: 200 },
 		className: "Canvas_output",

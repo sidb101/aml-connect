@@ -89,3 +89,17 @@
 	align-items: center;
 	justify-content: center;
 }
+
+.Canvas_controls {
+	button {
+		background-color: global.$color-dark-blue;
+
+		&:hover {
+			background-color: global.$color-dark-green;
+		}
+
+		svg {
+			fill: global.$color-white;
+		}
+	}
+}

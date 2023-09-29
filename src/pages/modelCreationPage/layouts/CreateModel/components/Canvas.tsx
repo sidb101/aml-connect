@@ -7,6 +7,7 @@ import ReactFlow, {
 	BackgroundVariant,
 	type Connection,
 	ConnectionLineType,
+	ControlButton,
 	Controls,
 	type DefaultEdgeOptions,
 	type Edge,
@@ -18,6 +19,7 @@ import ReactFlow, {
 	type OnConnect,
 	type OnEdgesChange,
 	type OnNodesChange,
+	Position,
 } from "reactflow";
 
 import "reactflow/dist/style.css";
@@ -41,11 +43,12 @@ export default function Canvas() {
 	const [userOption, setUserOption] = useState("");
 
 	// Define the options for the dropdown.
-	const options = ["Option 1", "Option 2", "Option 3"];
+	const options = ["IN", "BPF", "GAIN", "LPF", "OUT"];
 
 	// Handle the click event of the dropdown option.
 	const handleOptionClick = (option: string) => {
 		console.log("Selected:", option);
+		onAdd(option);
 		setUserOption(option);
 		setShowDropdown(false); // close the dropdown when an option is clicked
 	};
@@ -62,21 +65,52 @@ export default function Canvas() {
 		setEdges((edges: Edge[]) => addEdge(connection, edges));
 	}, []);
 
-	const onAdd = useCallback(() => {
-		const newNode = (nodes: Node[]) => {
-			return {
-				id: String(nodes.length + 1),
-				type: "custom",
-				position: {
-					x: nodes[nodes.length - 1].position.x - 25,
-					y: nodes[nodes.length - 1].position.y + 25,
-				},
-				data: { label: "Added node" },
-			};
-		};
+	const onAdd = useCallback(
+		(label: string) => {
+			let newNode: Node;
 
-		setNodes((nodes: Node[]) => nodes.concat(newNode(nodes)));
-	}, []);
+			if (label === "IN") {
+				newNode = {
+					id: String(nodes.length + 1),
+					sourcePosition: Position.Right,
+					type: "input",
+					data: { label: label },
+					position: {
+						x: nodes[nodes.length - 1].position.x - 25,
+						y: nodes[nodes.length - 1].position.y + 25,
+					},
+					className: "Canvas_input",
+				};
+			} else if (label === "OUT") {
+				newNode = {
+					id: String(nodes.length + 1),
+					targetPosition: Position.Left,
+					type: "output",
+					data: { label: label },
+					position: {
+						x: nodes[nodes.length - 1].position.x - 25,
+						y: nodes[nodes.length - 1].position.y + 25,
+					},
+					className: "Canvas_output",
+				};
+			} else {
+				newNode = {
+					id: String(nodes.length + 1),
+					sourcePosition: Position.Right,
+					targetPosition: Position.Left,
+					data: { label: label },
+					position: {
+						x: nodes[nodes.length - 1].position.x - 25,
+						y: nodes[nodes.length - 1].position.y + 25,
+					},
+					className: "Canvas_node",
+				};
+			}
+
+			setNodes((nodes: Node[]) => nodes.concat(newNode));
+		},
+		[nodes]
+	);
 
 	return (
 		<div className={`Canvas_container`}>
@@ -117,7 +151,7 @@ export default function Canvas() {
 						</div>
 					</div>
 				</div>
-				<Controls className={`Canvas_controls`} />
+				<Controls className={`Canvas_controls`}></Controls>
 				<MiniMap />
 				<Background variant={BackgroundVariant.Dots} gap={12} size={1} />
 			</ReactFlow>

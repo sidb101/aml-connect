@@ -10,7 +10,8 @@
     "tauri": "tauri",
     "test": "jest",
     "lint": "eslint --ignore-path .gitignore --ext .ts,.tsx ./src",
-    "lint-fix": "eslint --ignore-path .gitignore --ext .ts,.tsx --fix ./src"
+    "lint-fix": "eslint --ignore-path .gitignore --ext .ts,.tsx --fix ./src",
+    "format": "prettier --write \"src/**/*{.ts,.tsx,.js,.jsx,.css,.scss,.json}\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
