@@ -14,52 +14,61 @@ def coalesce(*args):
 class AcDiff():
     """Wrapper for aspinity AcDiff"""
 
-    def __init__(self):
+    def __init__(self, elementJSON: dict = None):
         self.orig_element = aspinity.AcDiff()
+        if elementJSON is None:
+            return
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "AcDiff",
-            "terminals": {"pos": self.pos, "neg": self.neg, "output": self.output},
-            "parameters": {"bias": self.bias, "gain": self.gain},
+            "terminals": {"pos": self.orig_element.pos, "neg": self.orig_element.neg, "output": self.orig_element.output},
+            "parameters": {"bias": self.orig_element.bias, "gain": self.orig_element.gain},
         }
 
 
 class AsymmetricIntegrator():
     """Wrapper for aspinity AsymmetricIntergrator"""
 
-    def __init__(self):
+    def __init__(self, elementJSON: dict = None):
         self.orig_element = aspinity.AsymmetricIntegrator()
+        if elementJSON is None:
+            return
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "AsymmetricIntegrator",
-            "terminals": {"input": self.input, "output": self.output},
+            "terminals": {"input": self.orig_element.input, "output": self.orig_element.output},
             "parameters": {
-                "down": self.down,
-                "up": self.up,
-                "up_down_type": str(self.up_down_type),
+                "down": self.orig_element.down,
+                "up": self.orig_element.up,
+                "up_down_type": str(self.orig_element.up_down_type),
             },
         }
 
 
-class Comparator(aspinity.Comparator):
+class Comparator():
     """Wrapper for aspinity Comparator"""
+
+    def __init__(self, elementJSON: dict = None):
+        self.orig_element = aspinity.Comparator()
+        if elementJSON is None:
+            return
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "Comparator",
             "terminals": {
-                "positive": self.positive,
-                "negative": self.negative,
-                "vdd": self.vdd,
-                "output": self.output,
+                "positive": self.orig_element.positive,
+                "negative": self.orig_element.negative,
+                "vdd": self.orig_element.vdd,
+                "output": self.orig_element.output,
             },
             "parameters": {
-                "threshold": self.threshold,
+                "threshold": self.orig_element.threshold,
             },
         }
 
@@ -67,8 +76,10 @@ class Comparator(aspinity.Comparator):
 class Filter():
     """Wrapper for aspinity Filter"""
 
-    def __init__(self, elementJSON: dict):
+    def __init__(self, elementJSON: dict = None):
         self.orig_element = aspinity.Filter()
+        if elementJSON is None:
+            return
 
         input_terminal, output_terminal = None, None
         for item in elementJSON["terminals"]:
@@ -113,199 +124,249 @@ class Filter():
             "parameters": {
                 "characteristic_frequency": self.orig_element.characteristic_frequency,
                 "quality_factor": self.orig_element.quality_factor,
-                "filter_type": str(self.orig_element.filter_type),
+                "filter_type": self.orig_element.filter_type,
             },
         }
 
 
-class Filterbank(aspinity.Filterbank):
+class Filterbank():
     """Wrapper for aspinity Filterbank"""
+
+    def __init__(self, elementJSON: dict = None):
+        self.orig_element = aspinity.Filterbank()
+        if elementJSON is None:
+            return
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "Filterbank",
             "terminals": {
-                "input": self.input,
-                "out_0": self.out_0,
-                "out_1": self.out_1,
-                "out_2": self.out_2,
-                "out_3": self.out_3,
-                "out_4": self.out_4,
-                "out_5": self.out_5,
-                "out_6": self.out_6,
-                "out_7": self.out_7,
+                "input": self.orig_element.input,
+                "out_0": self.orig_element.out_0,
+                "out_1": self.orig_element.out_1,
+                "out_2": self.orig_element.out_2,
+                "out_3": self.orig_element.out_3,
+                "out_4": self.orig_element.out_4,
+                "out_5": self.orig_element.out_5,
+                "out_6": self.orig_element.out_6,
+                "out_7": self.orig_element.out_7,
             },
             "parameters": {
-                "band_frequencies": self.band_frequencies,
-                "quality_factor": self.quality_factor,
-                "attack_rates": self.attack_rates,
-                "decay_rates": self.decay_rates,
+                "band_frequencies": self.orig_element.band_frequencies,
+                "quality_factor": self.orig_element.quality_factor,
+                "attack_rates": self.orig_element.attack_rates,
+                "decay_rates": self.orig_element.decay_rates,
             },
         }
 
 
-class GainOpamp(aspinity.GainOpamp):
+class GainOpamp():
     """Wrapper for aspinity GainOpamp"""
+
+    def __init__(self, elementJSON: dict = None):
+        self.orig_element = aspinity.GainOpamp()
+        if elementJSON is None:
+            return
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "GainOpamp",
-            "terminals": {"input": self.input, "output": self.output},
+            "terminals": {"input": self.orig_element.input, "output": self.orig_element.output},
             "parameters": {
-                "feedback_cap_count": self.feedback_cap_count,
-                "gain_mode": str(self.gain_mode),
+                "feedback_cap_count": self.orig_element.feedback_cap_count,
+                "gain_mode": str(self.orig_element.gain_mode),
             },
         }
 
 
-class LookupTable(aspinity.LookupTable):
+class LookupTable():
     """Wrapper for aspinity LookupTable"""
+
+    def __init__(self, elementJSON: dict = None):
+        self.orig_element = aspinity.LookupTable()
+        if elementJSON is None:
+            return
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "LookupTable",
-            "terminals": {"A": self.A, "B": self.B, "C": self.C, "output": self.output},
-            "parameters": {"expression": self.expression},
+            "terminals": {"A": self.orig_element.A, "B": self.orig_element.B, "C": self.orig_element.C, "output": self.orig_element.output},
+            "parameters": {"expression": self.orig_element.expression},
         }
 
 
-class DelayFlipFlop(aspinity.DelayFlipFlop):
+class DelayFlipFlop():
     """Wrapper for aspinity LookupTable"""
+
+    def __init__(self, elementJSON: dict = None):
+        self.orig_element = aspinity.DelayFlipFlop()
+        if elementJSON is None:
+            return
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "DelayFlipFlop",
             "terminals": {
-                "input": self.input,
-                "clock": self.clock,
-                "reset": self.reset,
-                "output": self.output,
+                "input": self.orig_element.input,
+                "clock": self.orig_element.clock,
+                "reset": self.orig_element.reset,
+                "output": self.orig_element.output,
             },
         }
 
 
-class Multiplier(aspinity.Multiplier):
+class Multiplier():
     """Wrapper for aspinity Multiplier"""
+
+    def __init__(self, elementJSON: dict = None):
+        self.orig_element = aspinity.Multiplier()
+        if elementJSON is None:
+            return
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "Multiplier",
             "terminals": {
-                "x_pos": self.x_pos,
-                "x_neg": self.x_neg,
-                "y_pos": self.y_pos,
-                "y_neg": self.y_neg,
-                "output": self.output,
+                "x_pos": self.orig_element.x_pos,
+                "x_neg": self.orig_element.x_neg,
+                "y_pos": self.orig_element.y_pos,
+                "y_neg": self.orig_element.y_neg,
+                "output": self.orig_element.output,
             },
-            "parameters": {"slope": self.slope},
+            "parameters": {"slope": self.orig_element.slope},
         }
 
 
-class Mux2(aspinity.Mux2):
+class Mux2():
     """Wrapper for aspinity Mux2"""
+
+    def __init__(self, elementJSON: dict = None):
+        self.orig_element = aspinity.Mux2()
+        if elementJSON is None:
+            return
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "Mux2",
             "terminals": {
-                "in0": self.in0,
-                "in1": self.in1,
-                "select": self.select,
-                "output": self.output,
+                "in0": self.orig_element.in0,
+                "in1": self.orig_element.in1,
+                "select": self.orig_element.select,
+                "output": self.orig_element.output,
             },
         }
 
 
-class NeuralNet(aspinity.NeuralNet):
+class NeuralNet():
     """Wrapper for aspinity NeuralNet"""
+
+    def __init__(self, elementJSON: dict = None):
+        self.orig_element = aspinity.NeuralNet()
+        if elementJSON is None:
+            return
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "NeuralNet",
             "terminals": {
-                "pos_0": self.pos_0,
-                "pos_1": self.pos_1,
-                "pos_2": self.pos_2,
-                "pos_3": self.pos_3,
-                "pos_4": self.pos_4,
-                "pos_5": self.pos_5,
-                "pos_6": self.pos_6,
-                "pos_7": self.pos_7,
-                "neg_0": self.neg_0,
-                "neg_1": self.neg_1,
-                "neg_2": self.neg_2,
-                "neg_3": self.neg_3,
-                "neg_4": self.neg_4,
-                "neg_5": self.neg_5,
-                "neg_6": self.neg_6,
-                "neg_7": self.neg_7,
-                "out_0": self.out_0,
-                "out_1": self.out_1,
-                "out_2": self.out_2,
-                "out_3": self.out_3,
-                "out_4": self.out_4,
-                "out_5": self.out_5,
-                "out_6": self.out_6,
-                "out_7": self.out_7,
+                "pos_0": self.orig_element.pos_0,
+                "pos_1": self.orig_element.pos_1,
+                "pos_2": self.orig_element.pos_2,
+                "pos_3": self.orig_element.pos_3,
+                "pos_4": self.orig_element.pos_4,
+                "pos_5": self.orig_element.pos_5,
+                "pos_6": self.orig_element.pos_6,
+                "pos_7": self.orig_element.pos_7,
+                "neg_0": self.orig_element.neg_0,
+                "neg_1": self.orig_element.neg_1,
+                "neg_2": self.orig_element.neg_2,
+                "neg_3": self.orig_element.neg_3,
+                "neg_4": self.orig_element.neg_4,
+                "neg_5": self.orig_element.neg_5,
+                "neg_6": self.orig_element.neg_6,
+                "neg_7": self.orig_element.neg_7,
+                "out_0": self.orig_element.out_0,
+                "out_1": self.orig_element.out_1,
+                "out_2": self.orig_element.out_2,
+                "out_3": self.orig_element.out_3,
+                "out_4": self.orig_element.out_4,
+                "out_5": self.orig_element.out_5,
+                "out_6": self.orig_element.out_6,
+                "out_7": self.orig_element.out_7,
             },
             "parameters": {
-                "weights": self.weights,
-                "biases": self.biases,
-                "activation_function": self.activation_function,
+                "weights": self.orig_element.weights,
+                "biases": self.orig_element.biases,
+                "activation_function": self.orig_element.activation_function,
             },
         }
 
 
-class PeakDetector(aspinity.PeakDetector):
+class PeakDetector():
     """Wrapper for aspinity PeakDetector"""
+
+    def __init__(self, elementJSON: dict = None):
+        self.orig_element = aspinity.PeakDetector()
+        if elementJSON is None:
+            return
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "PeakDetector",
-            "terminals": {"input": self.input, "output": self.output},
+            "terminals": {"input": self.orig_element.input, "output": self.orig_element.output},
             "parameters": {
-                "atk": self.atk,
-                "dec": self.dec,
-                "model_version": str(self.model_version),
+                "atk": self.orig_element.atk,
+                "dec": self.orig_element.dec,
+                "model_version": str(self.orig_element.model_version),
             },
         }
 
 
-class PGA(aspinity.PGA):
+class PGA():
     """Wrapper for aspinity PGA"""
+
+    def __init__(self, elementJSON: dict = None):
+        self.orig_element = aspinity.PGA()
+        if elementJSON is None:
+            return
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "PGA",
             "terminals": {
-                "pos1": self.pos1,
-                "neg1": self.neg1,
-                "pos2": self.pos2,
-                "reference": self.reference,
-                "output": self.output,
+                "pos1": self.orig_element.pos1,
+                "neg1": self.orig_element.neg1,
+                "pos2": self.orig_element.pos2,
+                "reference": self.orig_element.reference,
+                "output": self.orig_element.output,
             },
-            "parameters": {"Av1": self.Av1, "Av2": self.Av2},
+            "parameters": {"Av1": self.orig_element.Av1, "Av2": self.orig_element.Av2},
         }
 
 
 class SynthesizedFilter(aspinity.SynthesizedFilter):
     """Wrapper for aspinity SynthesizedFilter"""
 
+    def __init__(self, elementJSON: dict = None):
+        self.orig_element = aspinity.SynthesizedFilter()
+        if elementJSON is None:
+            return
+
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
         return {
             "element_type": "SynthesizedFilter",
-            "terminals": {"input": self.input, "output": self.output},
-            "parameters": {"coefficients": self.coefficients},
+            "terminals": {"input": self.orig_element.input, "output": self.orig_element.output},
+            "parameters": {"coefficients": self.orig_element.coefficients},
         }
 
 
@@ -315,6 +376,10 @@ class Terminal():
     def __init__(self, elementJSON: dict):
         """constructs a Terminal object from a JSON"""
         self.orig_element = aspinity.Terminal()
+
+        if elementJSON is None:
+            return
+
         for item in elementJSON["terminals"]:
             if item["type_name"] == "net":
                 self.orig_element.net = item["node_name"]

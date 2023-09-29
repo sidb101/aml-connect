@@ -1,4 +1,4 @@
-import simulator_wrapper
+import wrapper
 import json
 
 def test_all_library_types_exist():
@@ -20,7 +20,7 @@ def test_all_library_types_exist():
     check = lambda x: x in lookup
 
     # act
-    elements = json.loads(simulator_wrapper.AspinitySimulatorWrapper.get_elements())
+    elements = json.loads(wrapper.AspinitySimulatorWrapper.get_elements())
 
     # assert
     assert all(map(check, elements.keys()))
