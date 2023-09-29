@@ -75,7 +75,7 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
         with open(network_json_path, "r") as network_json_file:
             network_json = json.load(network_json_file)
             network = Network(network_json)
-            network.export_sourcecode()
+            network.export_sourcecode(audio_file_path)
             times, samples = WavFileManager.load_wav(audio_file_path)
             result = aspinity.simulate(network.orig_network, times, samples)
             return result

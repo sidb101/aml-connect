@@ -61,7 +61,7 @@ class Network():
     def export_context(self) -> dict:
         return self.context
 
-    def export_sourcecode(self):
+    def export_sourcecode(self, wavfile_path):
         def get_type(var):
             return type(var).__name__
 
@@ -71,8 +71,9 @@ class Network():
         env = Environment(loader=FileSystemLoader("templates"))
         env.filters["get_type"] = get_type
         env.filters["get_items"] = get_items
-
+        self.context['wav_file_path'] = wavfile_path
         template = env.get_template("network_template.py.j2")
         with open('output.py', 'w') as f:
             f.write(template.render(self.context))
+        del self.context['wav_file_path']
         return template.render(self.context)

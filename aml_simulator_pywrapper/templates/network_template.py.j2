@@ -13,7 +13,7 @@ from aspinity import (
 )
 
 def load_wav():
-    samples, sample_rate = sf.read({{ wav_file_path }})
+    samples, sample_rate = sf.read("{{ wav_file_path }}")
     times = np.arange(len(samples)) / sample_rate
     return times, samples
 
