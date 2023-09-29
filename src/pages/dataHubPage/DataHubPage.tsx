@@ -51,7 +51,7 @@ const DataHubPage = (props: DataSetupPageT) => {
 		projectSlug && (
 			<>
 				<Header headerTitle={`${projectName || "Undefined Project"} > Data Hub > ${heading}`} />
-				<div className={`body-content-container-no-header-btns DataHub_bodyContainer`}>
+				<div className={`body-content-container-no-header-btns-with-footer DataHub_bodyContainer`}>
 					<div className={"DataHub_bodyRow1"}>
 						<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
 					</div>

@@ -1,10 +1,10 @@
 import "./Footer.scss";
-import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons/faChevronLeft";
 import { testIds } from "../../tests/test-utils";
+import type { ReactNode } from "react";
 
 export type FooterBtnT = {
 	label: string;

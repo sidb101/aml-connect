@@ -1,7 +1,1 @@
 @use "../../../global";
-
-.OverviewView_container {
-	display: grid;
-	grid-template-columns: 1fr; // Just 1 column for Release 1 (Overview only), add another 1fr for Release 2
-	gap: global.$content-padding;
-}
