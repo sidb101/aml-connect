@@ -20,9 +20,6 @@ Following are the motivations behind the change in this architecture:
 <img src="structurizr-1-Component-002.svg" alt="Current UI Architecture"/>
 <img src="structurizr-1-Component-002-key.svg" alt="Legend" width=70%/>
 
-<!-- ![Current UI Architecture](structurizr-1-Component-002.svg)
-![Legend](structurizr-1-Component-002-key.svg) -->
-
 
 ## Decision
 
@@ -31,9 +28,6 @@ As a result of above motivations, here is the proposal of new architecture with 
 
 <img src="structurizr-1-Component-003.svg" alt="Propsed UI Architecture"/>
 <img src="structurizr-1-Component-003-key.svg" alt="Legend" width=70%/>
-<!-- 
-![Proposed UI Architecture](structurizr-1-Component-003.svg)
-![Legend](structurizr-1-Component-003-key.svg) -->
 
 
 Here is the flow of this architecture:

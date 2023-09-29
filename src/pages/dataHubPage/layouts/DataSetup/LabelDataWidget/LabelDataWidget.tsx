@@ -2,11 +2,11 @@ import "./LabelDataWidget.scss";
 import Accordion from "../../../../../components/accordion/Accordion";
 import React from "react";
 
-export type LabelDataWidgetT = {
+type LabelDataWidgetProps = {
 	widgetHeight?: string;
 };
 
-const LabelDataWidget = ({ widgetHeight }: LabelDataWidgetT) => {
+const LabelDataWidget = ({ widgetHeight }: LabelDataWidgetProps) => {
 	return (
 		widgetHeight && (
 			<Accordion bodyMaxHeight={widgetHeight} header={<>Label Data</>} defaultIsOpen={false}>

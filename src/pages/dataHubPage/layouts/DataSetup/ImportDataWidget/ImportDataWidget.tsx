@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { DataSetT } from "../../../../../redux/slices/DataHubSlice";
 import Accordion from "../../../../../components/accordion/Accordion";
 
-export type ImportDataWidgetT = {
+type ImportDataWidgetProps = {
 	widgetHeight?: string;
 };
 
@@ -20,7 +20,7 @@ enum DataSourceT {
  * Module to handle all the functionalities regarding importing the data from various sources,
  * and rendering components for that.
  */
-const ImportDataWidget = ({ widgetHeight }: ImportDataWidgetT) => {
+const ImportDataWidget = ({ widgetHeight }: ImportDataWidgetProps) => {
 	//To choose the right data source component to render
 	const [dataSource, setDataSource] = useState<DataSourceT>(DataSourceT.NONE);
 	const [dataType, setDataType] = useState<DataSetT>(DataSetT.TRAINING);
