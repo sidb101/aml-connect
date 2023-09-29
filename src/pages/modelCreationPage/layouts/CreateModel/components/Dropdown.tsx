@@ -1,9 +1,10 @@
 import "./Dropdown.scss";
 import React from "react";
+import ReactFlow, { type Node } from "reactflow";
 
 type DropdownProps = {
-	options: string[];
-	onOptionClick: (option: string) => void;
+	options: Node[];
+	onOptionClick: (option: Node) => void;
 	onClose: () => void;
 };
 
@@ -16,13 +17,13 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onOptionClick, onClose }) 
 		>
 			{options.map((option) => (
 				<div
-					className={`Dropdown_option`}
-					key={option}
+					className={`regular-text Dropdown_option`}
+					key={option.data.label}
 					onClick={() => {
 						onOptionClick(option);
 					}}
 				>
-					{option}
+					{option.data.menuLabel}
 				</div>
 			))}
 		</div>

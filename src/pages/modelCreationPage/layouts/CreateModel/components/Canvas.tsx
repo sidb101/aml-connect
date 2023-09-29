@@ -40,16 +40,16 @@ export default function Canvas() {
 	const [edges, setEdges] = useState<Edge[]>(initialEdges);
 
 	const [showDropdown, setShowDropdown] = useState(false);
-	const [userOption, setUserOption] = useState("");
 
 	// Define the options for the dropdown.
-	const options = ["IN", "BPF", "GAIN", "LPF", "OUT"];
+	// const options = ["IN", "BPF", "GAIN", "LPF", "OUT"];
+	// const options = initialNodes.map((node) => node.data.menuLabel);
+	const options = initialNodes;
 
 	// Handle the click event of the dropdown option.
-	const handleOptionClick = (option: string) => {
-		console.log("Selected:", option);
-		onAdd(option);
-		setUserOption(option);
+	const handleOptionClick = (option: Node) => {
+		console.log("Selected:", option.data.menuLabel);
+		onAdd(option.data.label);
 		setShowDropdown(false); // close the dropdown when an option is clicked
 	};
 
@@ -124,6 +124,9 @@ export default function Canvas() {
 				fitViewOptions={fitViewOptions}
 				defaultEdgeOptions={defaultEdgeOptions}
 				connectionLineType={ConnectionLineType.Step}
+				onPaneClick={() => {
+					setShowDropdown(false);
+				}}
 			>
 				<div className={`Canvas_allMenuContainer`}>
 					<div className={`Canvas_sideMenuContainer`}>

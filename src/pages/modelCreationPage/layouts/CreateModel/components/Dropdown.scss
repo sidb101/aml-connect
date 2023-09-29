@@ -7,8 +7,12 @@
 }
 
 .Dropdown_option {
-	padding: global.$panel-padding;
-	border: 1px solid black;
+	padding: global.$general-padding;
 	cursor: default;
 	user-select: none;
+
+	&:hover {
+		color: global.$color-white;
+		background-color: global.$color-dark-green;
+	}
 }
