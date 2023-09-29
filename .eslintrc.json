@@ -25,7 +25,7 @@
         "prettier"
     ],
     "ignorePatterns" : [
-        "src/clients/api/bindings/*.ts"
+        "src/service/RemoteService/client/bindings/*.ts"
     ],
     "rules": {
         /**

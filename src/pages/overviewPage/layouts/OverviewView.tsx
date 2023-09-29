@@ -11,7 +11,7 @@ type OverviewViewProps = {
 const OverviewView = ({ currentProjectName, onProjectTitleChange, currentProjectDescription }: OverviewViewProps) => {
 	return (
 		<>
-			<div className={`body-content-container-no-header-btns OverviewView_container`}>
+			<div className={`body-content-container-no-header-btns-with-footer`}>
 				<DisplayPanel heading={`Overview`}>
 					<OverviewForm
 						currentProjectName={currentProjectName}

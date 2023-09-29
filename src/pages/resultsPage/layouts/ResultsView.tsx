@@ -14,7 +14,7 @@ const ResultsView = (props: ResultsViewT) => {
 	return (
 		<>
 			<Header headerTitle={`${props.title}`} />
-			<div className={`body-content-container`}></div>
+			<div className={`body-content-container-no-header-btns-with-footer`}></div>
 			<Footer
 				footerBtnGroup={{
 					prevBtn: { label: "Neural Networks", route: neuralNetworkRoute(props.projectSlug) },

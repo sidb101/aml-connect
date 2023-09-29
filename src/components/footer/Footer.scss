@@ -6,7 +6,7 @@
 	position: fixed; /* Fixed position will make the footer stick to the bottom */
 	bottom: 0;
 	left: $left-offset; /* This should be the same as the width of the sidebar */
-	min-height: global.$footer-height; /* Adjust this value to fit your design */
+	height: global.$footer-height; /* Adjust this value to fit your design */
 	width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
 	padding: global.$panel-padding global.$content-padding; // (Top & Bottom) (Left & Right)
 	z-index: 0;
