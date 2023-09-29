@@ -24,7 +24,7 @@ import ReactFlow, {
 
 import "reactflow/dist/style.css";
 import "./Canvas.scss";
-import { initialEdges, initialNodes } from "../../../../../tests/mockdata/allNodesAndEdges";
+import { initialEdges, initialNodes, nodeOptions, type OptionT } from "../../../../../tests/mockdata/allNodesAndEdges";
 import Dropdown from "./Dropdown";
 
 const fitViewOptions: FitViewOptions = {
@@ -42,14 +42,11 @@ export default function Canvas() {
 	const [showDropdown, setShowDropdown] = useState(false);
 
 	// Define the options for the dropdown.
-	// const options = ["IN", "BPF", "GAIN", "LPF", "OUT"];
-	// const options = initialNodes.map((node) => node.data.menuLabel);
-	const options = initialNodes;
+	const options = nodeOptions;
 
 	// Handle the click event of the dropdown option.
-	const handleOptionClick = (option: Node) => {
-		console.log("Selected:", option.data.menuLabel);
-		onAdd(option.data.label);
+	const handleOptionClick = (option: OptionT) => {
+		onAdd(option.label);
 		setShowDropdown(false); // close the dropdown when an option is clicked
 	};
 

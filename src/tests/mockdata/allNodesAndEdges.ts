@@ -1,6 +1,30 @@
 import type { Edge, Node } from "reactflow";
 import { Position } from "reactflow";
 
+export type OptionT = {
+	label: string;
+	menuLabel: string;
+};
+
+export const nodeOptions: OptionT[] = [
+	{
+		label: "IN",
+		menuLabel: "Input",
+	},
+	{
+		label: "BPF",
+		menuLabel: "Band Pass Filter",
+	},
+	{
+		label: "GAIN",
+		menuLabel: "Gain",
+	},
+	{
+		label: "OUT",
+		menuLabel: "Output",
+	},
+];
+
 export const initialNodes: Node[] = [
 	{
 		id: "1",
@@ -8,7 +32,6 @@ export const initialNodes: Node[] = [
 		type: "input",
 		data: {
 			label: "IN",
-			menuLabel: "Input",
 		},
 		position: { x: 50, y: 200 },
 		className: "Canvas_input",
@@ -19,7 +42,6 @@ export const initialNodes: Node[] = [
 		targetPosition: Position.Left,
 		data: {
 			label: "BPF",
-			menuLabel: "Band Pass Filter",
 		},
 		position: { x: 250, y: 100 },
 		className: "Canvas_node",
@@ -30,7 +52,6 @@ export const initialNodes: Node[] = [
 		targetPosition: Position.Left,
 		data: {
 			label: "GAIN",
-			menuLabel: "Gain",
 		},
 		position: { x: 450, y: 200 },
 		className: "Canvas_node",
@@ -41,7 +62,6 @@ export const initialNodes: Node[] = [
 		type: "output",
 		data: {
 			label: "OUT",
-			menuLabel: "Output",
 		},
 		position: { x: 650, y: 200 },
 		className: "Canvas_output",
