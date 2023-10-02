@@ -25,7 +25,7 @@ describe("Testing the Sidebar of the App", () => {
 		"Overview",
 		"Data Hub > Data Setup",
 		"Model Creation > Create Model",
-		"Results",
+		"Results > Results Analysis",
 		"Send to Hardware",
 	];
 
