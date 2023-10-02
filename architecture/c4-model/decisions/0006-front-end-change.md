@@ -26,7 +26,7 @@ Following are the motivations behind the change in this architecture:
 As a result of above motivations, here is the proposal of new architecture with respect to how UI would interact with backend:
 
 
-<img src="structurizr-1-Component-003.svg" alt="Current UI Architecture"/>
+<img src="structurizr-1-Component-003.svg" alt="Propsed UI Architecture"/>
 <img src="structurizr-1-Component-003-key.svg" alt="Legend" width=70%/>
 
 

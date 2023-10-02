@@ -4,7 +4,10 @@ workspace {
         customer = person "Chip Programmer" "Aspinity's customer"
         engineer = person "Aspinity Engineer" "usually Nick"
         developer = person "System Developer" "Team ChipMonks"
+        
         filemanager = softwareSystem "File System" "The user's local file system"
+        # aspinitySimulator = softwareSystem "AML 100 Simulator"
+        
         astrl = softwareSystem "Aspinity Development Platform" {
             
             group Clients {
@@ -55,6 +58,8 @@ workspace {
 
             }
 
+            # Can we have some other name for this, confusing with Aspinity AML 100 Simulator
+
             appserver = container "Application Layer" {
                 datasetup = component "DataManager"
                 projectmanager = component "ProjectManager"
@@ -64,7 +69,7 @@ workspace {
                 UIController = component "UI Controller"
                 CLIController = component "CLI Controller"
                 amlConnectCore = component "AML Connect Core"
-                chipsimulator = component "AML 100 Simulator"
+                chipsimulator = component "AML 100 Simulator" 
                 dbmanager = component "DBManager"
                 audiomanager = component "AudioManager"
                 mlinterpretormod = component "MLInterpretor"
@@ -77,7 +82,7 @@ workspace {
                 amlConnectCore -> audiomanager
                 networkmanager -> resultgenerator
                 networkmanager -> filtermanager
-                networkmanager -> simulatorInterface
+                networkmanager -> chipsimulator
                 networkmanager -> dbmanager
                 networkmanager -> featurengineer
                 networkmanager -> mlinterpretormod
@@ -87,12 +92,8 @@ workspace {
             }
 
             app_db = container "Application Database" {
-                description "Responsible for storing application data that does not pertain directly to the network. Details TBD"
+                description "Responsible for storing application data"
                 tags "DB"
-            }
-
-            cache = container "Cache" {
-                description "focused on caching network files for fast retrieval. Details TBD."
             }
 
             ml_interepretor = container "Machine Learning Interpretor" {
@@ -110,12 +111,12 @@ workspace {
             UIController -> amlConnectCore 
             CLIController -> amlConnectCore
 
-            dbmanager -> app_db "saves and retreives data" "TBD"
-            
-            dbmanager -> cache "retrieves cached network config" "TBD"
-            cache -> app_db "retrieves data" "TBD"
-
+            dbmanager -> app_db "saves and retreives data"
         }
+
+
+        ## Why are we calling this crate, isn't it a python component??
+        ## We need to separate out the aspinity_simulator from here, so that it can be added in the context diagram, without other things
         simulator_crate = softwareSystem "Simulator Crate" {
             python_binary = container "Compiled Python Interpretor"
             aspinity_simulator = container "Aspinity AML100 Simulator"
@@ -128,7 +129,8 @@ workspace {
         chipSimulator -> simulator_crate "Spawns new sidecar"
         chipsimulator -> python_app "async call" "bash commands"
         python_app -> chipsimulator "results" 
-        
+
+
         simulator = deploymentEnvironment "Simulator" {
             deploymentNode "User Laptop" {
                 containerInstance uiLayer
@@ -175,6 +177,11 @@ workspace {
             autoLayout
         }
 
+        container simulator_crate {
+            include *
+            autoLayout lr
+        }
+
         deployment * simulator {
             include *
             autoLayout lr
@@ -183,9 +190,9 @@ workspace {
         dynamic appserver {
             title "[Extensibility] Rust Simulator Swap"
 
-            networkmanager -> simulatorInterface "passes user-defined network & audio data"
-            networkmanager -> simulatorInterface "calls simulate_network()"
-            simulatorInterface -> chipsimulator "calls chipSimulator implementation"
+            networkmanager -> chipSimulator "passes user-defined network & audio data"
+            networkmanager -> chipSimulator "calls simulate_network()"
+            chipsimulator -> simulatorInterface "implements"
             chipsimulator -> simulator_crate "translates data to simulator input data"
             simulator_crate -> chipsimulator "sends back audio result"
 
@@ -201,6 +208,21 @@ workspace {
             reactComponent -> slice "user defined network is updated with the additional network element"
             reactComponent -> customer "new network element is displayed on canvas"
             
+            autoLayout lr
+        }
+
+        dynamic appserver {
+            title "Network Simulation From UI"
+
+
+            reactComponent -> remoteService "Network JSON generated at UI"
+            remoteService -> tauriApiClient "Transformed JSON that backend needs"
+            tauriApiClient -> UIController "Network JSON"
+            UIController -> amlConnectCore "Network JSON"
+            amlConnectCore -> networkmanager "Network JSON for validation"
+            networkmanager -> chipSimulator "Valid Network JSON"
+            chipSimulator -> simulator_crate "Translated Data for Simulator"
+
             autoLayout lr
         }
 
