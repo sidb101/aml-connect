@@ -1,7 +1,7 @@
 import "./Dropdown.scss";
 import React from "react";
 import ReactFlow, { type Node } from "reactflow";
-import type { OptionT } from "../../../../../tests/mockdata/allNodesAndEdges";
+import type { OptionT } from "../../tests/mockdata/allNodesAndEdges";
 
 type DropdownProps = {
 	options: OptionT[];

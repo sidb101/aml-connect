@@ -25,7 +25,7 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 import "./Canvas.scss";
 import { initialEdges, initialNodes, nodeOptions, type OptionT } from "../../../../../tests/mockdata/allNodesAndEdges";
-import Dropdown from "./Dropdown";
+import Dropdown from "../../../../../components/dropdown/Dropdown";
 
 const fitViewOptions: FitViewOptions = {
 	padding: 0.2,
