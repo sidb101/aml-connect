@@ -100,7 +100,10 @@ jobs:
 
       # Run frontend tests
       - name: run jest
-        run: npm run test
+        run: |
+          COVERAGE=$(npm run test | grep "All files" | awk '{print $4}' | cut -d '%' -f 1)
+          echo "Code coverage is $COVERAGE%"
+          if (( $(echo "$COVERAGE < 99" | bc -l) )); then exit 1; fi
       
       # Runs a single command using the runners shell
       - name: Run Rust backend unit tests
