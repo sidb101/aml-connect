@@ -28,13 +28,6 @@ const remoteService = {
 		//send it to the backend
 		const filesUploadResponse = await remoteClient.uploadInputFiles(filesUploadRequest);
 		console.log(filesUploadResponse);
-
-		//parse the response
-		// if (filesUploadResponse.upload_failed_files.length > 0) {
-		// 	console.log("Some files failed to upload", filesUploadResponse.upload_failed_files);
-		// } else {
-		// 	console.log("All the files uploaded successfully", filesUploadResponse.upload_success_files);
-		// }
 		return remoteTransformer.parseSuccessFilesUploadResponse(filesUploadResponse, files);
 	},
 
