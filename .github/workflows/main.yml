@@ -100,7 +100,7 @@ jobs:
 
       # Run frontend tests
       - name: run jest
-        run: jest
+        run: npm run test
       
       # Runs a single command using the runners shell
       - name: Run Rust backend unit tests
