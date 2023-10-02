@@ -12,6 +12,8 @@ import {
 	OVERVIEW_ROUTE,
 	RESULTS_ROUTE,
 	SEND_TO_HARDWARE_ROUTE,
+	RESULTS_ANALYSIS_ROUTE,
+	RESULTS_COMPARISON_ROUTE,
 } from "./routes";
 import Root from "./pages/Root";
 import LandingPage from "./pages/landingPage/LandingPage";
@@ -25,6 +27,8 @@ import DataSetup from "./pages/dataHubPage/layouts/DataSetup/DataSetup";
 import DataViz from "./pages/dataHubPage/layouts/DataViz/DataViz";
 import CreateModel from "./pages/modelCreationPage/layouts/CreateModel/CreateModel";
 import NeuralNetworks from "./pages/modelCreationPage/layouts/NeuralNetworks/NeuralNetworks";
+import ResultsAnalysis from "./pages/resultsPage/layouts/ResultsAnalysis/ResultsAnalysis";
+import ResultsComparison from "./pages/resultsPage/layouts/ResultsComparison/ResultsComparison";
 
 const App = () => <RouterProvider router={router} />;
 
@@ -43,7 +47,10 @@ export const routes = createRoutesFromElements(
 			<Route path={CREATE_MODEL_ROUTE} element={<CreateModel />} />
 			<Route path={NEURAL_NETWORK_ROUTE} element={<NeuralNetworks />} />
 		</Route>
-		<Route path={RESULTS_ROUTE} element={<ResultsPage />} />
+		<Route path={RESULTS_ROUTE} element={<ResultsPage />}>
+			<Route path={RESULTS_ANALYSIS_ROUTE} element={<ResultsAnalysis />} />
+			<Route path={RESULTS_COMPARISON_ROUTE} element={<ResultsComparison />} />
+		</Route>
 		<Route path={SEND_TO_HARDWARE_ROUTE} element={<SendToHardwarePage />} />
 	</Route>
 );
