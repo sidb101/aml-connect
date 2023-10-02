@@ -12,11 +12,14 @@ import { getOpenProjectNavLinks } from "../../components/sideBar/navRegion/appNa
 import { linkSelectedClass } from "../../components/sideBar/navRegion/navLink/NavLink";
 import { mockReactFlow } from "../mockdata/mockReactFlow";
 
+beforeEach(() => {
+	mockReactFlow();
+});
+
 /**
  * Performing test on basic Navigation Functionality
  */
 describe("Testing the Sidebar of the App", () => {
-	mockReactFlow();
 	//mock the invoke method of backend module
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 

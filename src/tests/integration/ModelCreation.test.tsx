@@ -56,8 +56,11 @@ const verifyFooterButtons = (expectedPrevBtnText: string, actualPrevBtn: HTMLEle
 	expect(actualPrevBtn).toHaveTextContent(expectedPrevBtnText);
 };
 
-describe("Testing the Model Creation navigation", () => {
+beforeEach(() => {
 	mockReactFlow();
+});
+
+describe("Testing the Model Creation navigation", () => {
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 	const routes = appRoutes;
 

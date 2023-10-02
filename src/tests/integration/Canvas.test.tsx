@@ -5,9 +5,11 @@ import Canvas from "../../pages/modelCreationPage/layouts/CreateModel/components
 import { mockReactFlow } from "../mockdata/mockReactFlow";
 import { nodeOptions } from "../mockdata/allNodesAndEdges";
 
-describe("<Canvas />", () => {
+beforeEach(() => {
 	mockReactFlow();
+});
 
+describe("<Canvas />", () => {
 	test("it should add a new input node to the canvas when dropdown option is clicked", async () => {
 		render(<Canvas />);
 
