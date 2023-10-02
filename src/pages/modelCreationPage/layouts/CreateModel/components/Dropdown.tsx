@@ -15,6 +15,7 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onOptionClick, onClose }) 
 			className={`Dropdown_container`}
 			onBlur={onClose} // close dropdown when it loses focus
 			tabIndex={0}
+			role="listbox"
 		>
 			{options.map((option, index) => (
 				<div
