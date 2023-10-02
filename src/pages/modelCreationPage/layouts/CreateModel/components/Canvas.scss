@@ -1,0 +1,104 @@
+@use "../../../../../global";
+
+.Canvas_container {
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	border: 2px solid black;
+}
+
+.Canvas_allMenuContainer {
+	height: 100%;
+	width: 100%;
+	display: flex;
+}
+
+.Canvas_sideMenuContainer {
+	width: fit-content;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 0.5px;
+}
+
+.Canvas_sideMenuBtnContainer {
+	z-index: 6; // 1 more than the canvas controls
+
+	button {
+		user-select: none;
+		height: 50px;
+		width: 50px;
+		background-color: global.$color-dark-blue;
+		color: global.$color-white;
+		border: none;
+
+		&:hover {
+			background-color: global.$color-dark-green;
+		}
+
+		&:first-child {
+			border-top-left-radius: global.$border-radius;
+			border-top-right-radius: global.$border-radius;
+		}
+
+		&:last-child {
+			border-bottom-left-radius: global.$border-radius;
+			border-bottom-right-radius: global.$border-radius;
+		}
+	}
+}
+
+.Canvas_sideMenuNodeMenuContainer {
+	z-index: 6; // 1 more than the canvas controls
+}
+
+.Canvas_input {
+	color: white;
+	background: global.$color-grey-5;
+	border: 1px solid black;
+	border-radius: 100%;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.Canvas_node {
+	background: global.$color-grey-3;
+	border: 1px solid black;
+	border-radius: 4px;
+	width: 70px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+}
+
+.Canvas_output {
+	color: white;
+	background: global.$color-grey-5;
+	border: 1px solid black;
+	border-radius: 100%;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.Canvas_controls {
+	button {
+		background-color: global.$color-dark-blue;
+
+		&:hover {
+			background-color: global.$color-dark-green;
+		}
+
+		svg {
+			fill: global.$color-white;
+		}
+	}
+}

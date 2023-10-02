@@ -6,11 +6,11 @@ import { invoke } from "@tauri-apps/api/tauri";
 import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 import { renderWithProviders, testIds } from "../test-utils";
 import { routes as appRoutes } from "../../App";
-import { BASE_ROUTE, dataSetupRoute, dataVizRoute } from "../../routes";
+import { BASE_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjects";
 import React from "react";
-import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
 import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageTabs";
+import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
 
 const getPageElements = () => {
 	const actualPageHeading = screen.getByTestId(testIds.contentHeading);

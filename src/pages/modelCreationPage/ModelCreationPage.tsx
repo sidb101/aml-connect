@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
 import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
-import { dataVizRoute, neuralNetworkRoute } from "../../routes";
 import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import "./ModelCreationPage.scss";
 import Header from "../../components/header/Header";

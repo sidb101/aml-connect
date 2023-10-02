@@ -1,15 +1,16 @@
 import "./CreateModelView.scss";
 import React from "react";
+import Canvas from "./components/Canvas";
 
-export type ModelCreationViewT = {
+export type CreateModelViewProps = {
 	data?: string;
 };
 
-const CreateModelView = (props: ModelCreationViewT) => {
+const CreateModelView = (props: CreateModelViewProps) => {
 	return (
-		<>
-			<h2>ModelCreationView</h2>
-		</>
+		<div className={`CreateModelView_canvas`}>
+			<Canvas />
+		</div>
 	);
 };
 
