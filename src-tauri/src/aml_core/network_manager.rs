@@ -16,7 +16,7 @@ pub struct AmlSimulatorSidecar {
 
 #[derive(Error, Debug, Serialize, Deserialize, TS, PartialEq, Clone)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum SimulatorError {
     #[error("Failed to Build sidecar command")]
     CommandBuildError(String),
@@ -28,7 +28,7 @@ pub enum SimulatorError {
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to =  "../src/service/RemoteService/client/bindings/")]
 pub struct SimulateNetworkRequest {
     pub network: Network,
     pub input_file_path: String
@@ -36,14 +36,14 @@ pub struct SimulateNetworkRequest {
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct SimulateNetworkResponse {
     pub response: HashMap<String, Vec<f64>>
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Node {
     pub id: u64,
     pub name: String,
@@ -53,7 +53,7 @@ pub struct Node {
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Network {
     pub id: u64,
     pub name: String,
@@ -65,7 +65,7 @@ pub struct Network {
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Element{
     pub id: u64,
     pub parent_network_id: u64,
@@ -79,7 +79,7 @@ pub struct Element{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Position {
     pub x: i64,
     pub y: i64,
@@ -87,7 +87,7 @@ pub struct Position {
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Terminal{
     pub id: u64,
     pub parent_element_id: u64,
@@ -97,7 +97,7 @@ pub struct Terminal{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum Parameters {
     AcDiff(AcDiff),
     AsymmetricIntegrator(AsymmetricIntegrator),
@@ -118,7 +118,7 @@ pub enum Parameters {
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct AcDiff{
     pub gain: f64,
     pub bias: f64,
@@ -126,7 +126,7 @@ pub struct AcDiff{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct AsymmetricIntegrator{
     pub up: f64,
     pub down: f64,
@@ -136,7 +136,7 @@ pub struct AsymmetricIntegrator{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Comparator{
     pub threshold: f64,
     pub hysteresis_voltage: Option<f64>,
@@ -144,7 +144,7 @@ pub struct Comparator{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Filter{
     pub characteristic_frequency: f64,
     pub quality_factor: f64,
@@ -153,7 +153,7 @@ pub struct Filter{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct FilterBank{
     pub band_frequencies: Vec<u64>,
     pub quality_factor: Vec<f64>,
@@ -163,7 +163,7 @@ pub struct FilterBank{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct GainOpAmp{
     pub gain_mode: GainOpampMode,
     pub opamp_implementation: OpampType,
@@ -172,21 +172,21 @@ pub struct GainOpAmp{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct LookupTable{
     pub expression: String
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Multiplier{
     pub slope: f64,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct NeuralNet{
     pub weights: Vec<f64>,
     pub biases: Vec<f64>,
@@ -195,7 +195,7 @@ pub struct NeuralNet{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct PeakDetector{
     pub atk: f64,
     pub dec: f64,
@@ -204,7 +204,7 @@ pub struct PeakDetector{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct PGA{
     pub Av1: f64,
     pub Av2: f64,
@@ -212,7 +212,7 @@ pub struct PGA{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct SynthesizedFilter{
     pub coefficients: Vec<Vec<f64>>
 }
@@ -220,7 +220,7 @@ pub struct SynthesizedFilter{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct TerminalParams{
     pub hardware_pin: Option<String>,
     pub is_input: bool,
@@ -231,7 +231,7 @@ pub struct TerminalParams{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum FilterType{
     lpf1,
     lpf2,
@@ -242,7 +242,7 @@ pub enum FilterType{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum GainOpampMode{
     Noninverting1x,
     Noninverting11x,
@@ -254,7 +254,7 @@ pub enum GainOpampMode{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum OpampType{
     StageZero,
     Pin,
@@ -262,7 +262,7 @@ pub enum OpampType{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum ModelVersion{
     FirstOrder,
     SecondOrder,
@@ -270,7 +270,7 @@ pub enum ModelVersion{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum UpDownType{
     Rate,
     Hang
@@ -278,7 +278,7 @@ pub enum UpDownType{
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
-#[ts(export_to = "../src/clients/api/bindings/")]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum ActivationFunction{
     Tanh,
     Sigmoid,
