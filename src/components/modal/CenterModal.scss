@@ -1,0 +1,37 @@
+@use "../../global";
+
+.CenterModal_container {
+	position: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 100;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+
+	.CenterModal_panel {
+		min-width: 400px;
+		display: grid;
+		grid-template-rows: global.$panel-header-height;
+
+		.CenterModal_headerContainer {
+			display: flex;
+			flex-direction: row;
+			border-bottom: solid 2px global.$color-grey-2;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 global.$panel-padding;
+		}
+
+		.CenterModal_closeBtn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: global.$text-large;
+			color: global.$color-light-green;
+			cursor: pointer;
+		}
+	}
+}

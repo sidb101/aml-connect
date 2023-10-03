@@ -1,18 +1,18 @@
 @use "../global";
 
 .Root_sidebarContainer {
-  position: fixed; /* Fixed position will make the sidebar stick to the left */
-  top: 0;
-  left: 0;
-  height: 100%; /* Full height */
-  width: global.$sidebar-width + 2 * global.$nav-padding;
-  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+	position: fixed; /* Fixed position will make the sidebar stick to the left */
+	top: 0;
+	left: 0;
+	height: 100%; /* Full height */
+	width: global.$sidebar-width + 2 * global.$nav-padding;
+	overflow-y: auto; /* Enable vertical scrolling if content overflows */
 }
 
 .Root_container {
-  display: flex;
-  height: 100vh;
-  overflow: hidden; /* This will prevent the entire page from scrolling */
-  font-family: global.$font-primary;
-  color: global.$color-dark-blue;
+	display: flex;
+	height: 100vh;
+	overflow: hidden; /* This will prevent the entire page from scrolling */
+	font-family: global.$font-primary;
+	color: global.$color-dark-blue;
 }

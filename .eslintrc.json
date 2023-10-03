@@ -24,6 +24,9 @@
         "react",
         "prettier"
     ],
+    "ignorePatterns" : [
+        "src/service/RemoteService/client/bindings/*.ts"
+    ],
     "rules": {
         /**
           "off" or 0 - turn the rule off
@@ -40,7 +43,8 @@
         "object-shorthand": "off",
         "@typescript-eslint/prefer-nullish-coalescing": "off",
         "spaced-comment": "off",
-        "no-implicit-coercion": "off"
+        "no-implicit-coercion": "off",
+        "@typescript-eslint/padding-line-between-statements": "off"
     }
 }
 

@@ -10,7 +10,15 @@ import { BASE_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjects";
 import { getOpenProjectNavLinks } from "../../components/sideBar/navRegion/appNavLinks";
 import { linkSelectedClass } from "../../components/sideBar/navRegion/navLink/NavLink";
+import { mockReactFlow } from "../mockdata/mockReactFlow";
 
+beforeEach(() => {
+	mockReactFlow();
+});
+
+/**
+ * Performing test on basic Navigation Functionality
+ */
 describe("Testing the Sidebar of the App", () => {
 	//mock the invoke method of backend module
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
@@ -18,12 +26,18 @@ describe("Testing the Sidebar of the App", () => {
 	//define the routing for given test suite
 	const routes = appRoutes;
 
-	const contentHeadings = ["OverviewPage", "DataSetupView", "ModelCreationPage", "ResultsPage", "SendToHardwarePage"];
+	const contentHeadings = [
+		"Overview",
+		"Data Hub > Data Setup",
+		"Model Creation > Create Model",
+		"Results > Results Analysis",
+		"Send to Hardware",
+	];
 
 	test(
 		"that 1) sidebar shows all the projects in the app, when app starts. " +
 			"2) when visited on any one project, it changes the nav-links accordingly. " +
-			"3) When visited on those links, appropriate PageTabs loaded",
+			"3) When visited on those links, appropriate Headings are loaded",
 		async () => {
 			//ARRANGE
 			//should start with empty store
@@ -43,19 +57,21 @@ describe("Testing the Sidebar of the App", () => {
 			});
 
 			//ASSERT - 1
-			//the sidebar should have both the projects shown.
+			//the sidebar should have all the projects shown.
 			const sideBarLinks = screen.getAllByTestId(testIds.projectLinks);
-			expect(sideBarLinks[0]).toHaveTextContent(getExactText(projects[0].name));
-			expect(sideBarLinks[1]).toHaveTextContent(getExactText(projects[1].name));
+			sideBarLinks.forEach((sideBarLink, index) => {
+				expect(sideBarLink).toHaveTextContent(getExactText(projects[index].name));
+			});
 
 			//ACT - 2
 			//click on the first project
 			fireEvent.click(sideBarLinks[0]);
 
 			//ASSERT - 2
-			//Valid Heading
-			const navHeading = await screen.findByTestId(testIds.navHeading);
-			expect(navHeading).toHaveTextContent(projects[0].name);
+			//Valid Sidebar heading Heading
+			const sideHeading = await screen.findByTestId(testIds.navHeading);
+			expect(sideHeading).toHaveTextContent(projects[0].name);
+
 			//Valid Links Labels
 			const expectedNavLinks = getOpenProjectNavLinks(projects[0].slug);
 			let navLinks = await screen.findAllByTestId(testIds.navLinks);
@@ -67,18 +83,23 @@ describe("Testing the Sidebar of the App", () => {
 					fail("Empty Label Found in NavLink.");
 				}
 			});
+
 			//Valid Default Link
 			expect(within(navLinks[0]).getByTestId(testIds.navLinkLabels)).toHaveClass(linkSelectedClass);
-			expect(within(screen.getByTestId(testIds.contentHeading)).getByText("OverviewPage")).toBeInTheDocument();
+			expect(
+				within(screen.getByTestId(testIds.contentHeading)).getByText(
+					projects[0].name + " > " + contentHeadings[0]
+				)
+			).toBeInTheDocument();
 
 			//ACT, ASSERT - 3
-			//click on various navigation links, every component should be loaded accordingly
+			//click on various navigation links, every component should be loaded accordingly with proper heading
 			for (let i = 0; i < navLinks.length; i++) {
 				fireEvent.click(navLinks[i]);
 
 				//eslint-disable-next-line no-await-in-loop
 				const contentHeading = await within(screen.getByTestId(testIds.contentHeading)).findByText(
-					contentHeadings[i]
+					projects[0].name + " > " + contentHeadings[i]
 				);
 				//valid page rendered
 				expect(contentHeading).toBeInTheDocument();
