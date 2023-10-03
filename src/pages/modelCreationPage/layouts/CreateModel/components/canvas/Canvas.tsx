@@ -7,7 +7,6 @@ import ReactFlow, {
 	BackgroundVariant,
 	type Connection,
 	ConnectionLineType,
-	ControlButton,
 	Controls,
 	type DefaultEdgeOptions,
 	type Edge,
@@ -24,9 +23,9 @@ import ReactFlow, {
 
 import "reactflow/dist/style.css";
 import "./Canvas.scss";
-import { initialEdges, initialNodes, nodeOptions, type OptionT } from "../../../../../tests/mockdata/allNodesAndEdges";
-import Dropdown from "../../../../../components/dropdown/Dropdown";
-import { getElements } from "../../../../../tests/mockdata/getElementsMockData";
+import { initialEdges, initialNodes } from "../../../../../../tests/mockdata/allNodesAndEdges";
+import Dropdown from "../dropdown/Dropdown";
+import { type ElementT, getElements } from "../../../../../../tests/mockdata/getElementsMockData";
 
 const fitViewOptions: FitViewOptions = {
 	padding: 0.2,
@@ -43,12 +42,11 @@ export default function Canvas() {
 	const [showDropdown, setShowDropdown] = useState(false);
 
 	// Define the options for the dropdown.
-	// const options = nodeOptions;
+	const options: ElementT[] = getElements;
 
 	// Handle the click event of the dropdown option.
-	const handleOptionClick = (option: string) => {
+	const handleOptionClick = (option: ElementT) => {
 		onAdd(option);
-		// onAdd(option.label);
 		setShowDropdown(false); // close the dropdown when an option is clicked
 	};
 
@@ -65,57 +63,26 @@ export default function Canvas() {
 	}, []);
 
 	const onAdd = useCallback(
-		(label: string) => {
+		(element: ElementT) => {
 			let newNode: Node;
 
-			if (label === "IN") {
-				newNode = {
-					id: String(nodes.length + 1),
-					sourcePosition: Position.Right,
-					type: "input",
-					data: { label: label },
-					position: {
-						x: nodes[nodes.length - 1].position.x - 25,
-						y: nodes[nodes.length - 1].position.y + 25,
-					},
-					className: "Canvas_input",
-				};
-			} else if (label === "OUT") {
-				newNode = {
-					id: String(nodes.length + 1),
-					targetPosition: Position.Left,
-					type: "output",
-					data: { label: label },
-					position: {
-						x: nodes[nodes.length - 1].position.x - 25,
-						y: nodes[nodes.length - 1].position.y + 25,
-					},
-					className: "Canvas_output",
-				};
-			} else {
-				newNode = {
-					id: String(nodes.length + 1),
-					sourcePosition: Position.Right,
-					targetPosition: Position.Left,
-					data: { label: label },
-					position: {
-						x: nodes[nodes.length - 1].position.x - 25,
-						y: nodes[nodes.length - 1].position.y + 25,
-					},
-					className: "Canvas_node",
-				};
-			}
+			newNode = {
+				id: String(nodes.length + 1),
+				targetPosition: Position.Left,
+				sourcePosition: Position.Right,
+				// type: "input",
+				data: { label: element.element_type },
+				position: {
+					x: nodes[nodes.length - 1].position.x - 25,
+					y: nodes[nodes.length - 1].position.y + 25,
+				},
+				className: "Canvas_node",
+			};
 
 			setNodes((nodes: Node[]) => nodes.concat(newNode));
 		},
 		[nodes]
 	);
-
-	const options: string[] = [];
-	Object.values(getElements).forEach((element) => {
-		options.push(element.element_type);
-		console.log(element);
-	});
 
 	return (
 		<div className={`Canvas_container`}>

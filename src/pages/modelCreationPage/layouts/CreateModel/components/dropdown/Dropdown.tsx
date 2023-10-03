@@ -1,12 +1,12 @@
 import "./Dropdown.scss";
 import React from "react";
 import ReactFlow, { type Node } from "reactflow";
-import type { OptionT } from "../../tests/mockdata/allNodesAndEdges";
+import type { OptionT } from "../../../../../../tests/mockdata/allNodesAndEdges";
+import type { ElementT } from "../../../../../../tests/mockdata/getElementsMockData";
 
 type DropdownProps = {
-	options: string[];
-	// options: OptionT[];
-	onOptionClick: (option: string) => void;
+	options: ElementT[];
+	onOptionClick: (option: ElementT) => void;
 	onClose: () => void;
 };
 
@@ -21,14 +21,12 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onOptionClick, onClose }) 
 			{options.map((option, index) => (
 				<div
 					className={`regular-text Dropdown_option`}
-					key={option}
-					// key={option.label}
+					key={option.element_type}
 					onClick={() => {
 						onOptionClick(option);
 					}}
 				>
-					{option}
-					{/*{option.menuLabel}*/}
+					{option.short_description}
 				</div>
 			))}
 		</div>

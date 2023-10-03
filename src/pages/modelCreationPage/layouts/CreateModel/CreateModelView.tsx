@@ -1,6 +1,6 @@
 import "./CreateModelView.scss";
 import React from "react";
-import Canvas from "./components/Canvas";
+import Canvas from "./components/canvas/Canvas";
 
 export type CreateModelViewProps = {
 	data?: string;

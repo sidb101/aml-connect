@@ -1,5 +1,23 @@
-export const getElements = {
+type TerminalT = {
+	[key: string]: string | null;
+};
+
+type ParametersT = {
+	[key: string]: string | number | (number | number[])[] | null;
+};
+
+export type ElementT = {
+	short_description: string;
+	long_description: string;
+	element_type: string;
+	terminals: TerminalT;
+	parameters?: ParametersT;
+};
+
+const backendElements = {
 	AcDiff: {
+		short_description: "Ac Diff",
+		long_description: "I am an AC diff...",
 		element_type: "AcDiff",
 		terminals: {
 			pos: "mid",
@@ -12,6 +30,8 @@ export const getElements = {
 		},
 	},
 	AsymmetricIntegrator: {
+		short_description: "Asymmetric Integrator",
+		long_description: "I am an asymmetric integrator",
 		element_type: "AsymmetricIntegrator",
 		terminals: {
 			input: null,
@@ -24,6 +44,8 @@ export const getElements = {
 		},
 	},
 	Comparator: {
+		short_description: "Comparator",
+		long_description: "I am a Comparator...",
 		element_type: "Comparator",
 		terminals: {
 			positive: "mid",
@@ -36,6 +58,8 @@ export const getElements = {
 		},
 	},
 	Filter: {
+		short_description: "Filter",
+		long_description: "I am a filter",
 		element_type: "Filter",
 		terminals: {
 			input: "mid",
@@ -48,6 +72,8 @@ export const getElements = {
 		},
 	},
 	Filterbank: {
+		short_description: "Filter Bank",
+		long_description: "I am a Filter Bank...",
 		element_type: "Filterbank",
 		terminals: {
 			input: "mid",
@@ -68,6 +94,8 @@ export const getElements = {
 		},
 	},
 	GainOpamp: {
+		short_description: "Gain OpAmp",
+		long_description: "I am a gain operational amplifier...",
 		element_type: "GainOpamp",
 		terminals: {
 			input: null,
@@ -79,6 +107,8 @@ export const getElements = {
 		},
 	},
 	LookupTable: {
+		short_description: "Look-up Table",
+		long_description: "I am a Look-up Table...",
 		element_type: "LookupTable",
 		terminals: {
 			A: "Gnd",
@@ -91,6 +121,8 @@ export const getElements = {
 		},
 	},
 	DelayFlipFlop: {
+		short_description: "Delay Flip Flop",
+		long_description: "I am a Delay Flip Flop",
 		element_type: "DelayFlipFlop",
 		terminals: {
 			input: "vdd",
@@ -100,6 +132,8 @@ export const getElements = {
 		},
 	},
 	Multiplier: {
+		short_description: "Multiplier",
+		long_description: "I am a multiplier",
 		element_type: "Multiplier",
 		terminals: {
 			x_pos: "mid",
@@ -113,6 +147,8 @@ export const getElements = {
 		},
 	},
 	Mux2: {
+		short_description: "Multiplexer",
+		long_description: "I am a multiplexer...",
 		element_type: "Mux2",
 		terminals: {
 			in0: "mid",
@@ -122,6 +158,8 @@ export const getElements = {
 		},
 	},
 	NeuralNet: {
+		short_description: "Neural Network",
+		long_description: "I am a Neural Network...",
 		element_type: "NeuralNet",
 		terminals: {
 			pos_0: null,
@@ -156,6 +194,8 @@ export const getElements = {
 		},
 	},
 	PeakDetector: {
+		short_description: "Peak Detector",
+		long_description: "I am a peak detector...",
 		element_type: "PeakDetector",
 		terminals: {
 			input: "mid",
@@ -168,6 +208,8 @@ export const getElements = {
 		},
 	},
 	PGA: {
+		short_description: "Programmable Gate Array",
+		long_description: "I am a programmable gate array...",
 		element_type: "PGA",
 		terminals: {
 			pos1: "mid",
@@ -182,6 +224,8 @@ export const getElements = {
 		},
 	},
 	SynthesizedFilter: {
+		short_description: "Synthesized Filter",
+		long_description: "I am a synthesized filter...",
 		element_type: "SynthesizedFilter",
 		terminals: {
 			input: "mid",
@@ -195,3 +239,5 @@ export const getElements = {
 		},
 	},
 };
+
+export const getElements: ElementT[] = Object.values(backendElements);
