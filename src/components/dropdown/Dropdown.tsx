@@ -4,8 +4,9 @@ import ReactFlow, { type Node } from "reactflow";
 import type { OptionT } from "../../tests/mockdata/allNodesAndEdges";
 
 type DropdownProps = {
-	options: OptionT[];
-	onOptionClick: (option: OptionT) => void;
+	options: string[];
+	// options: OptionT[];
+	onOptionClick: (option: string) => void;
 	onClose: () => void;
 };
 
@@ -20,12 +21,14 @@ const Dropdown: React.FC<DropdownProps> = ({ options, onOptionClick, onClose }) 
 			{options.map((option, index) => (
 				<div
 					className={`regular-text Dropdown_option`}
-					key={option.label}
+					key={option}
+					// key={option.label}
 					onClick={() => {
 						onOptionClick(option);
 					}}
 				>
-					{option.menuLabel}
+					{option}
+					{/*{option.menuLabel}*/}
 				</div>
 			))}
 		</div>
