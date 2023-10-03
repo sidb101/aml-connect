@@ -2,4 +2,4 @@
 import type { GainOpampMode } from "./GainOpampMode";
 import type { OpampType } from "./OpampType";
 
-export interface GainOpAmp { gain_mode: GainOpampMode, opamp_implementation: OpampType, feedback_cap_count: number, }
+export type GainOpAmp = { gain_mode: GainOpampMode, opamp_implementation: OpampType, feedback_cap_count: number, }

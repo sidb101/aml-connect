@@ -1,4 +1,6 @@
 
+use std::collections::HashMap;
+
 use anyhow::Result;
 use mockall::{automock, predicate::*};
 use tauri::api::process::Command;

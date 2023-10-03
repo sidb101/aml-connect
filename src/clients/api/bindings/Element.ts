@@ -3,4 +3,4 @@ import type { Parameters } from "./Parameters";
 import type { Position } from "./Position";
 import type { Terminal } from "./Terminal";
 
-export interface Element { id: bigint, parent_network_id: bigint, type_name: string, element_type_params: Parameters, terminals: Array<Terminal>, position: Position, }
+export type Element = { id: bigint, parent_network_id: bigint, type_name: string, element_type_params: Parameters, terminals: Terminal[], position: Position, }
