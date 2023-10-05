@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import ReactFlow, {
 	addEdge,
 	applyEdgeChanges,
@@ -35,11 +35,15 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 	type: "step",
 };
 
-export default function Canvas() {
+type CanvasProps = {
+	setShowSideMenu: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+export default function Canvas({ setShowSideMenu }: CanvasProps) {
 	const [nodes, setNodes] = useState<Node[]>(initialNodes);
 	const [edges, setEdges] = useState<Edge[]>(initialEdges);
 
-	const [showDropdown, setShowDropdown] = useState(false);
+	const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
 	// Define the options for the dropdown.
 	const options: ElementT[] = getElements;
@@ -96,6 +100,9 @@ export default function Canvas() {
 				connectionLineType={ConnectionLineType.Step}
 				onPaneClick={() => {
 					setShowDropdown(false);
+				}}
+				onNodeDoubleClick={() => {
+					setShowSideMenu((s) => !s);
 				}}
 			>
 				<div className={`Canvas_allMenuContainer`}>
