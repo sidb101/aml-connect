@@ -64,9 +64,7 @@ export default function Canvas() {
 
 	const onAdd = useCallback(
 		(element: ElementT) => {
-			let newNode: Node;
-
-			newNode = {
+			const newNode = {
 				id: String(nodes.length + 1),
 				targetPosition: Position.Left,
 				sourcePosition: Position.Right,
