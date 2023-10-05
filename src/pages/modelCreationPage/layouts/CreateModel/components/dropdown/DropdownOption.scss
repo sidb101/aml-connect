@@ -1,0 +1,36 @@
+@use "../../../../../../global";
+
+.DropdownOption_option {
+	position: relative;
+	padding: global.$general-padding;
+	cursor: default;
+	user-select: none;
+
+	&:hover {
+		color: global.$color-white;
+		background-color: global.$color-dark-green;
+	}
+}
+
+.DropdownOption_hoverDescription {
+	max-height: 225px;
+	position: absolute;
+	top: 50%;
+	left: calc(100% + 20px);
+	padding: global.$panel-padding;
+	width: 100%;
+	background-color: global.$color-white;
+	transform: translateY(-50%);
+
+	overflow-y: auto;
+}
+
+.DropdownOption_hoverDescriptionTriangle {
+	position: absolute;
+	top: 50%;
+	left: 100%;
+	transform: translateY(-50%);
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-right: 20px solid global.$color-white;
+}

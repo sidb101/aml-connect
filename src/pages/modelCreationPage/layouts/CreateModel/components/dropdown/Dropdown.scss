@@ -5,14 +5,3 @@
 	flex-direction: column;
 	background-color: global.$color-white;
 }
-
-.Dropdown_option {
-	padding: global.$general-padding;
-	cursor: default;
-	user-select: none;
-
-	&:hover {
-		color: global.$color-white;
-		background-color: global.$color-dark-green;
-	}
-}
