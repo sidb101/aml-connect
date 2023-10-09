@@ -2,13 +2,24 @@
 import json
 
 import aspinity
-
+from aspinity import ActivationFunction
 
 def coalesce(*args):
     for arg in args:
         if arg is not None:
             return arg
     return None
+
+def map_activation_function_str_to_enum(enum_str):
+    if enum_str == "Tanh":
+        return ActivationFunction.Tanh
+    elif enum_str == "Sigmoid":
+        return ActivationFunction.Sigmoid
+    elif enum_str == "ReLU":
+        return ActivationFunction.ReLU
+    elif enum_str == "Linear":
+        return ActivationFunction.Linear
+    
 
 
 class AcDiff():
@@ -18,6 +29,34 @@ class AcDiff():
         self.orig_element = aspinity.AcDiff()
         if elementJSON is None:
             return
+        
+        #terminals
+        pos_terminal, neg_terminal, out_terminal = None, None, None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "pos":
+                pos_terminal = item["node_name"]
+            elif item["type_name"] == "neg":
+                neg_terminal = item["node_name"]
+            elif item["type_name"] == "output":
+                out_terminal = item["node_name"]
+
+        self.orig_element.pos = pos_terminal
+        self.orig_element.neg = neg_terminal
+        self.orig_element.out = out_terminal
+
+        #params
+        self.orig_element.gain = float(
+            coalesce(
+                elementJSON["element_type_params"]["AcDiff"]["gain"],
+                9.0
+            )
+        )
+        self.orig_element.bias = float(
+            coalesce(
+                elementJSON["element_type_params"]["AcDiff"]["bias"],
+                0.0
+            )
+        )
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -35,6 +74,44 @@ class AsymmetricIntegrator():
         self.orig_element = aspinity.AsymmetricIntegrator()
         if elementJSON is None:
             return
+
+        #terminals
+        in_terminal, out_terminal = None, None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "input":
+                in_terminal = item["node_name"]
+            elif item["type_name"] == "output":
+                out_terminal = item["node_name"]
+
+        self.orig_element.input = in_terminal
+        self.orig_element.output = out_terminal
+
+        #params
+        self.orig_element.down = float(
+            coalesce(
+                elementJSON["element_type_params"]["AsymmetricIntegrator"]["down"],
+                9.0
+            )
+        )
+        self.orig_element.up = float(
+            coalesce(
+                elementJSON["element_type_params"]["AsymmetricIntegrator"]["up"],
+                0.0
+            )
+        )
+        self.orig_element.up = bool(
+            coalesce(
+                elementJSON["element_type_params"]["AsymmetricIntegrator"]["comparator_enable"],
+                False
+            )
+        )
+        up_down_type_str = elementJSON["element_type_params"]["AsymmetricIntegrator"]["up_down_type"]
+        if up_down_type_str == 'Rate':
+            self.orig_element.up_down_type = aspinity.UpDownType.Rate
+        elif up_down_type_str == 'Hang':
+            self.orig_element.up_down_type = aspinity.UpDownType.Hang
+        else:
+            self.orig_element.up_down_type = aspinity.UpDownType.Rate #default value
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -56,6 +133,31 @@ class Comparator():
         self.orig_element = aspinity.Comparator()
         if elementJSON is None:
             return
+        
+        #terminals
+        pos_terminal, neg_terminal, vdd_terminal, out_terminal = None, None, None, None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "positive":
+                pos_terminal = item["node_name"]
+            elif item["type_name"] == "negative":
+                neg_terminal = item["node_name"]
+            elif item["type_name"] == "vdd":
+                vdd_terminal = item["node_name"]
+            elif item["type_name"] == "output":
+                out_terminal = item["node_name"]
+
+        self.orig_element.positive = pos_terminal
+        self.orig_element.negative = neg_terminal
+        self.orig_element.vdd = vdd_terminal
+        self.orig_element.output = out_terminal
+
+        #params
+        self.orig_element.threshold = float(
+            coalesce(
+                elementJSON["element_type_params"]["Comparator"]["threshold"],
+                0.0
+            )
+        )
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -81,6 +183,7 @@ class Filter():
         if elementJSON is None:
             return
 
+        #terminals
         input_terminal, output_terminal = None, None
         for item in elementJSON["terminals"]:
             if item["type_name"] == "input":
@@ -89,6 +192,8 @@ class Filter():
                 output_terminal = item["node_name"]
         self.orig_element.input = input_terminal
         self.orig_element.output = output_terminal
+
+        #params
         self.orig_element.characteristic_frequency = float(
             coalesce(
                 elementJSON["element_type_params"]["Filter"]["characteristic_frequency"],
@@ -114,7 +219,7 @@ class Filter():
         elif filter_type_str == 'bpf2':
             self.orig_element.filter_type = aspinity.FilterType.bpf2
         else:
-            self.orig_element.filter_type = aspinity.FilterType.hpf1
+            self.orig_element.filter_type = aspinity.FilterType.bpf2 #default value
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -136,6 +241,59 @@ class Filterbank():
         self.orig_element = aspinity.Filterbank()
         if elementJSON is None:
             return
+        
+        #terminals
+        in_terminal = None
+        out0_terminal = None
+        out1_terminal = None
+        out2_terminal = None
+        out3_terminal = None
+        out4_terminal = None
+        out5_terminal = None
+        out6_terminal = None
+        out7_terminal = None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "input":
+                in_terminal = item["node_name"]
+            elif item["type_name"] == "out_0":
+                out0_terminal = item["node_name"]
+            elif item["type_name"] == "out_1":
+                out1_terminal = item["node_name"]
+            elif item["type_name"] == "out_2":
+                out2_terminal = item["node_name"]
+            elif item["type_name"] == "out_3":
+                out3_terminal = item["node_name"]
+            elif item["type_name"] == "out_4":
+                out4_terminal = item["node_name"]
+            elif item["type_name"] == "out_5":
+                out5_terminal = item["node_name"]
+            elif item["type_name"] == "out_6":
+                out6_terminal = item["node_name"]
+            elif item["type_name"] == "out_7":
+                out7_terminal = item["node_name"]
+
+        self.orig_element.input = in_terminal
+        self.orig_element.out_0 = out0_terminal
+        self.orig_element.out_1 = out1_terminal
+        self.orig_element.out_2 = out2_terminal
+        self.orig_element.out_3 = out3_terminal
+        self.orig_element.out_4 = out4_terminal
+        self.orig_element.out_5 = out5_terminal
+        self.orig_element.out_6 = out6_terminal
+        self.orig_element.out_7 = out7_terminal
+
+        #params (TODO: check with Sid)
+        band_freq_vals = elementJSON["element_type_params"]["Filterbank"]["band_frequencies"]
+        self.orig_element.band_frequencies = [float(x) for x in band_freq_vals] if band_freq_vals is not None else [1000, 5000]
+
+        quality_factor_vals = elementJSON["element_type_params"]["Filterbank"]["quality_factor"]
+        self.orig_element.quality_factor = [float(x) for x in quality_factor_vals] if quality_factor_vals is not None else [1, 1]
+
+        attack_rates_vals = elementJSON["element_type_params"]["Filterbank"]["attack_rates"]
+        self.orig_element.attack_rates = [float(x) for x in attack_rates_vals] if attack_rates_vals is not None else []
+
+        decay_rates_vals = elementJSON["element_type_params"]["Filterbank"]["decay_rates"]
+        self.orig_element.decay_rates = [float(x) for x in decay_rates_vals] if decay_rates_vals is not None else []
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -168,6 +326,52 @@ class GainOpamp():
         self.orig_element = aspinity.GainOpamp()
         if elementJSON is None:
             return
+        
+        #terminals
+        in_terminal, ref_terminal, out_terminal = None, None, None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "input":
+                in_terminal = item["node_name"]
+            elif item["type_name"] == "reference":
+                ref_terminal = item["node_name"]
+            elif item["type_name"] == "output":
+                out_terminal = item["node_name"]
+
+        self.orig_element.input = in_terminal
+        self.orig_element.reference = ref_terminal
+        self.orig_element.output = out_terminal
+
+        #params
+        gain_mode_str = elementJSON["element_type_params"]["GainOpamp"]["gain_mode"]
+        if gain_mode_str == 'Noninverting1x':
+            self.orig_element.gain_mode = aspinity.GainOpampMode.Noninverting1x
+        elif gain_mode_str == 'Noninverting11x':
+            self.orig_element.gain_mode = aspinity.GainOpampMode.Noninverting11x
+        elif gain_mode_str == 'Inverting2x':
+            self.orig_element.gain_mode = aspinity.GainOpampMode.Inverting2x
+        elif gain_mode_str == 'Inverting4x':
+            self.orig_element.gain_mode = aspinity.GainOpampMode.Inverting4x
+        elif gain_mode_str == 'Inverting10x':
+            self.orig_element.gain_mode = aspinity.GainOpampMode.Inverting10x
+        elif gain_mode_str == 'Inverting20x':
+            self.orig_element.gain_mode = aspinity.GainOpampMode.Inverting20x
+        else:
+            self.orig_element.gain_mode = aspinity.GainOpampMode.Inverting10x #default value
+
+        opamp_implementation_str = elementJSON["element_type_params"]["GainOpamp"]["opamp_implementation"]
+        if opamp_implementation_str == 'Pin':
+            self.orig_element.opamp_implementation = aspinity.OpampType.Pin
+        elif opamp_implementation_str == 'StageZero':
+            self.orig_element.opamp_implementation = aspinity.OpampType.StageZero
+        else:
+            self.orig_element.opamp_implementation = aspinity.OpampType.StageZero #default value
+        
+        self.orig_element.feedback_cap_count = float(
+            coalesce(
+                elementJSON["element_type_params"]["GainOpamp"]["feedback_cap_count"],
+                0.0
+            )
+        )
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -188,6 +392,31 @@ class LookupTable():
         self.orig_element = aspinity.LookupTable()
         if elementJSON is None:
             return
+        
+        #terminals
+        a_terminal, b_terminal, c_terminal, out_terminal = None, None, None, None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "A":
+                a_terminal = item["node_name"]
+            if item["type_name"] == "B":
+                b_terminal = item["node_name"]
+            elif item["type_name"] == "C":
+                c_terminal = item["node_name"]
+            elif item["type_name"] == "output":
+                out_terminal = item["node_name"]
+
+        self.orig_element.A = a_terminal
+        self.orig_element.B = b_terminal
+        self.orig_element.C = c_terminal
+        self.orig_element.output = out_terminal
+
+        #params
+        self.orig_element.expression = str(
+            coalesce(
+                elementJSON["element_type_params"]["LookupTable"]["expression"],
+                1
+            )
+        )
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -205,6 +434,23 @@ class DelayFlipFlop():
         self.orig_element = aspinity.DelayFlipFlop()
         if elementJSON is None:
             return
+        
+        #terminals
+        in_terminal, reset_terminal, clock_terminal, out_terminal = None, None, None, None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "input":
+                in_terminal = item["node_name"]
+            if item["type_name"] == "reset":
+                reset_terminal = item["node_name"]
+            elif item["type_name"] == "clock":
+                clock_terminal = item["node_name"]
+            elif item["type_name"] == "output":
+                out_terminal = item["node_name"]
+
+        self.orig_element.input = in_terminal
+        self.orig_element.reset = reset_terminal
+        self.orig_element.clock = clock_terminal
+        self.orig_element.output = out_terminal
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -226,6 +472,34 @@ class Multiplier():
         self.orig_element = aspinity.Multiplier()
         if elementJSON is None:
             return
+        
+        #terminals
+        x_pos_terminal, x_neg_terminal, y_pos_terminal, y_neg_terminal, out_terminal = None, None, None, None, None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "x_pos":
+                x_pos_terminal = item["node_name"]
+            elif item["type_name"] == "x_neg":
+                x_neg_terminal = item["node_name"]
+            elif item["type_name"] == "y_pos":
+                y_pos_terminal = item["node_name"]
+            elif item["type_name"] == "y_neg":
+                y_neg_terminal = item["node_name"]
+            elif item["type_name"] == "output":
+                out_terminal = item["node_name"]
+
+        self.orig_element.x_pos = x_pos_terminal
+        self.orig_element.x_neg = x_neg_terminal
+        self.orig_element.y_pos = y_pos_terminal
+        self.orig_element.y_neg = y_neg_terminal
+        self.orig_element.output = out_terminal
+
+        #params
+        self.orig_element.slope = float(
+            coalesce(
+                elementJSON["element_type_params"]["Multiplier"]["slope"],
+                1.0
+            )
+        )
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -249,6 +523,23 @@ class Mux2():
         self.orig_element = aspinity.Mux2()
         if elementJSON is None:
             return
+        
+        #terminals
+        in0_terminal, in1_terminal, sel_terminal, out_terminal = None, None, None, None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "in0":
+                in0_terminal = item["node_name"]
+            elif item["type_name"] == "in1":
+                in1_terminal = item["node_name"]
+            elif item["type_name"] == "select":
+                sel_terminal = item["node_name"]
+            elif item["type_name"] == "output":
+                out_terminal = item["node_name"]
+
+        self.orig_element.in0 = in0_terminal
+        self.orig_element.in1 = in1_terminal
+        self.orig_element.select = sel_terminal
+        self.orig_element.output = out_terminal
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -270,6 +561,98 @@ class NeuralNet():
         self.orig_element = aspinity.NeuralNet()
         if elementJSON is None:
             return
+        
+        #terminals
+        pos0_terminal, pos1_terminal, pos2_terminal, pos3_terminal, pos4_terminal, pos5_terminal, pos6_terminal, pos7_terminal = None, None, None, None, None, None, None, None
+        neg0_terminal, neg1_terminal, neg2_terminal, neg3_terminal, neg4_terminal, neg5_terminal, neg6_terminal, neg7_terminal = None, None, None, None, None, None, None, None
+        out0_terminal, out1_terminal, out2_terminal, out3_terminal, out4_terminal, out5_terminal, out6_terminal, out7_terminal = None, None, None, None, None, None, None, None
+
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "pos_0":
+                pos0_terminal = item["node_name"]
+            elif item["type_name"] == "pos_1":
+                pos1_terminal = item["node_name"]
+            elif item["type_name"] == "pos_2":
+                pos2_terminal = item["node_name"]
+            elif item["type_name"] == "pos_3":
+                pos3_terminal = item["node_name"]
+            elif item["type_name"] == "pos_4":
+                pos4_terminal = item["node_name"]
+            elif item["type_name"] == "pos_5":
+                pos5_terminal = item["node_name"]
+            elif item["type_name"] == "pos_6":
+                pos6_terminal = item["node_name"]
+            elif item["type_name"] == "pos_7":
+                pos7_terminal = item["node_name"]
+            elif item["type_name"] == "neg_0":
+                neg0_terminal = item["node_name"]
+            elif item["type_name"] == "neg_1":
+                neg1_terminal = item["node_name"]
+            elif item["type_name"] == "neg_2":
+                neg2_terminal = item["node_name"]
+            elif item["type_name"] == "neg_3":
+                neg3_terminal = item["node_name"]
+            elif item["type_name"] == "neg_4":
+                neg4_terminal = item["node_name"]
+            elif item["type_name"] == "neg_5":
+                neg5_terminal = item["node_name"]
+            elif item["type_name"] == "neg_6":
+                neg6_terminal = item["node_name"]
+            elif item["type_name"] == "neg_7":
+                neg7_terminal = item["node_name"]
+            elif item["type_name"] == "out_0":
+                out0_terminal = item["node_name"]
+            elif item["type_name"] == "out_1":
+                out1_terminal = item["node_name"]
+            elif item["type_name"] == "out_2":
+                out2_terminal = item["node_name"]
+            elif item["type_name"] == "out_3":
+                out3_terminal = item["node_name"]
+            elif item["type_name"] == "out_4":
+                out4_terminal = item["node_name"]
+            elif item["type_name"] == "out_5":
+                out5_terminal = item["node_name"]
+            elif item["type_name"] == "out_6":
+                out6_terminal = item["node_name"]
+            elif item["type_name"] == "out_7":
+                out7_terminal = item["node_name"]
+
+        self.orig_element.pos_0 = pos0_terminal
+        self.orig_element.pos_1 = pos1_terminal
+        self.orig_element.pos_2 = pos2_terminal
+        self.orig_element.pos_3 = pos3_terminal
+        self.orig_element.pos_4 = pos4_terminal
+        self.orig_element.pos_5 = pos5_terminal
+        self.orig_element.pos_6 = pos6_terminal
+        self.orig_element.pos_7 = pos7_terminal
+        self.orig_element.neg_0 = neg0_terminal
+        self.orig_element.neg_1 = neg1_terminal
+        self.orig_element.neg_2 = neg2_terminal
+        self.orig_element.neg_3 = neg3_terminal
+        self.orig_element.neg_4 = neg4_terminal
+        self.orig_element.neg_5 = neg5_terminal
+        self.orig_element.neg_6 = neg6_terminal
+        self.orig_element.neg_7 = neg7_terminal
+        self.orig_element.out_0 = out0_terminal
+        self.orig_element.out_1 = out1_terminal
+        self.orig_element.out_2 = out2_terminal
+        self.orig_element.out_3 = out3_terminal
+        self.orig_element.out_4 = out4_terminal
+        self.orig_element.out_5 = out5_terminal
+        self.orig_element.out_6 = out6_terminal
+        self.orig_element.out_7 = out7_terminal
+
+        #params 
+        weight_vals = elementJSON["element_type_params"]["NeuralNet"]["weights"]
+        self.orig_element.weights = [float(x) for x in weight_vals] if weight_vals is not None else []
+
+        biases_vals = elementJSON["element_type_params"]["NeuralNet"]["biases"]
+        self.orig_element.biases = [float(x) for x in biases_vals] if biases_vals is not None else []
+
+        #(TODO: check with Sid)
+        activation_function_vals = elementJSON["element_type_params"]["NeuralNet"]["activation_function"]
+        self.orig_element.activation_function = [map_activation_function_str_to_enum(x) for x in activation_function_vals] if activation_function_vals is not None else []
+
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -316,6 +699,38 @@ class PeakDetector():
         self.orig_element = aspinity.PeakDetector()
         if elementJSON is None:
             return
+        
+        #terminals
+        input_terminal, output_terminal = None, None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "input":
+                input_terminal = item["node_name"]
+            elif item["type_name"] == "output":
+                output_terminal = item["node_name"]
+        self.orig_element.input = input_terminal
+        self.orig_element.output = output_terminal
+
+        #params
+        self.orig_element.atk = float(
+            coalesce(
+                elementJSON["element_type_params"]["PeakDetector"]["atk"],
+                0.0
+            )
+        )
+        self.orig_element.dec = float(
+            coalesce(
+                elementJSON["element_type_params"]["PeakDetector"]["dec"],
+                0.0
+            )
+        )
+
+        model_version_str = elementJSON["element_type_params"]["PeakDetector"]["model_version"]
+        if model_version_str == 'FirstOrder':
+            self.orig_element.model_version = aspinity.ModelVersion.FirstOrder
+        elif model_version_str == 'SecondOrder':
+            self.orig_element.model_version = aspinity.ModelVersion.SecondOrder
+        else:
+            self.orig_element.model_version = aspinity.ModelVersion.SecondOrder #default value
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -337,6 +752,39 @@ class PGA():
         self.orig_element = aspinity.PGA()
         if elementJSON is None:
             return
+        
+        #terminals
+        pos1_terminal, neg1_terminal, pos2_terminal, ref_terminal, output_terminal = None, None, None, None, None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "pos1":
+                pos1_terminal = item["node_name"]
+            elif item["type_name"] == "neg1":
+                neg1_terminal = item["node_name"]
+            elif item["type_name"] == "pos2":
+                pos2_terminal = item["node_name"]
+            elif item["type_name"] == "reference":
+                ref_terminal = item["node_name"]
+            elif item["type_name"] == "output":
+                output_terminal = item["node_name"]
+        self.orig_element.pos1 = pos1_terminal
+        self.orig_element.neg1 = neg1_terminal
+        self.orig_element.pos2 = pos2_terminal
+        self.orig_element.reference = ref_terminal
+        self.orig_element.output = output_terminal
+
+        #params
+        self.orig_element.Av1 = float(
+            coalesce(
+                elementJSON["element_type_params"]["PGA"]["Av1"],
+                1.0
+            )
+        )
+        self.orig_element.Av2 = float(
+            coalesce(
+                elementJSON["element_type_params"]["PGA"]["Av2"],
+                0.5
+            )
+        )
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -360,6 +808,20 @@ class SynthesizedFilter(aspinity.SynthesizedFilter):
         self.orig_element = aspinity.SynthesizedFilter()
         if elementJSON is None:
             return
+
+        #terminals
+        input_terminal, output_terminal = None, None
+        for item in elementJSON["terminals"]:
+            if item["type_name"] == "input":
+                input_terminal = item["node_name"]
+            elif item["type_name"] == "output":
+                output_terminal = item["node_name"]
+        self.orig_element.input = input_terminal
+        self.orig_element.output = output_terminal
+
+        #params (TODO: check with Sid)
+        coefficient_vals = elementJSON["element_type_params"]["SynthesizedFilter"]["coefficients"]
+        self.orig_element.coefficients = [float(x) for x in coefficient_vals] if coefficient_vals is not None else []
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
