@@ -81,7 +81,7 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
             return result
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     PARSER = argparse.ArgumentParser(description="Wrapper to AML Simulator")
 
     # Option that returns all elements

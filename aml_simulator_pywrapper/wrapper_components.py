@@ -42,7 +42,7 @@ class AcDiff():
 
         self.orig_element.pos = pos_terminal
         self.orig_element.neg = neg_terminal
-        self.orig_element.out = out_terminal
+        self.orig_element.output = out_terminal
 
         #params
         self.orig_element.gain = float(
@@ -358,15 +358,15 @@ class GainOpamp():
         else:
             self.orig_element.gain_mode = aspinity.GainOpampMode.Inverting10x #default value
 
-        opamp_implementation_str = elementJSON["element_type_params"]["GainOpamp"]["opamp_implementation"]
-        if opamp_implementation_str == 'Pin':
-            self.orig_element.opamp_implementation = aspinity.OpampType.Pin
-        elif opamp_implementation_str == 'StageZero':
-            self.orig_element.opamp_implementation = aspinity.OpampType.StageZero
-        else:
-            self.orig_element.opamp_implementation = aspinity.OpampType.StageZero #default value
+        # opamp_implementation_str = elementJSON["element_type_params"]["GainOpamp"]["opamp_implementation"]
+        # if opamp_implementation_str == 'Pin':
+        #     self.orig_element.opamp_implementation = aspinity.OpampType.Pin
+        # elif opamp_implementation_str == 'StageZero':
+        #     self.orig_element.opamp_implementation = aspinity.OpampType.StageZero
+        # else:
+        #     self.orig_element.opamp_implementation = aspinity.OpampType.StageZero #default value
         
-        self.orig_element.feedback_cap_count = float(
+        self.orig_element.feedback_cap_count = int(
             coalesce(
                 elementJSON["element_type_params"]["GainOpamp"]["feedback_cap_count"],
                 0.0
@@ -801,7 +801,7 @@ class PGA():
         }
 
 
-class SynthesizedFilter(aspinity.SynthesizedFilter):
+class SynthesizedFilter():
     """Wrapper for aspinity SynthesizedFilter"""
 
     def __init__(self, elementJSON: dict = None):
@@ -816,6 +816,7 @@ class SynthesizedFilter(aspinity.SynthesizedFilter):
                 input_terminal = item["node_name"]
             elif item["type_name"] == "output":
                 output_terminal = item["node_name"]
+        print(type(input_terminal))
         self.orig_element.input = input_terminal
         self.orig_element.output = output_terminal
 

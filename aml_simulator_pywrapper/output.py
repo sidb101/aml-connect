@@ -11,7 +11,7 @@ from aspinity import (
 )
 
 def load_wav():
-    samples, sample_rate = sf.read("/home/sbhatna2/Music/rising-chirp.wav")
+    samples, sample_rate = sf.read("/home/sbhatna2/workspace/aml-connect/src-tauri/tests/rising-chirp.wav")
     times = np.arange(len(samples)) / sample_rate
     return times, samples
 
