@@ -3,7 +3,7 @@ import { Sidebar } from "../components/sideBar/Sidebar";
 import { NavRegion } from "../components/sideBar/navRegion/NavRegion";
 import { ProjectsRegion } from "../components/sideBar/projectRegion/ProjectsRegion";
 import { mockProjects } from "../tests/mockdata/allProjects";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import type { SideRegionT } from "../components/sideBar/sideRegion/SideRegion";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { generalActions, ProjectStatus, selectCurrentProjectName, selectLoading } from "../redux/slices/GeneralSlice";
@@ -75,7 +75,9 @@ const Root = (props: RootT) => {
 				<Sidebar logo="AnalogML Connect" sideRegion={[getSideRegion()]} />
 			</div>
 			<div className={"xlight-panel content-container"} data-testid={testIds.contentHeading}>
-				<Outlet />
+				<Suspense fallback={<Spinner />}>
+					<Outlet />
+				</Suspense>
 			</div>
 		</div>
 	);

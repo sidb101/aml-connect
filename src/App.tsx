@@ -1,6 +1,6 @@
 import "./App.scss";
-import React from "react";
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
+import React, { lazy } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
 	BASE_ROUTE,
 	DATA_HUB_ROUTE,
@@ -16,45 +16,89 @@ import {
 	RESULTS_COMPARISON_ROUTE,
 } from "./routes";
 import Root from "./pages/Root";
+import ErrorPage from "./pages/errorPage/ErrorPage";
 import LandingPage from "./pages/landingPage/LandingPage";
 import OverviewPage from "./pages/overviewPage/OverviewPage";
 import DataHubPage from "./pages/dataHubPage/DataHubPage";
-import ModelCreationPage from "./pages/modelCreationPage/ModelCreationPage";
-import ResultsPage from "./pages/resultsPage/ResultsPage";
-import SendToHardwarePage from "./pages/sendToHardwarePage/SendToHardwarePage";
-import ErrorPage from "./pages/errorPage/ErrorPage";
 import DataSetup from "./pages/dataHubPage/layouts/DataSetup/DataSetup";
 import DataViz from "./pages/dataHubPage/layouts/DataViz/DataViz";
+import ModelCreationPage from "./pages/modelCreationPage/ModelCreationPage";
 import CreateModel from "./pages/modelCreationPage/layouts/CreateModel/CreateModel";
 import NeuralNetworks from "./pages/modelCreationPage/layouts/NeuralNetworks/NeuralNetworks";
+import ResultsPage from "./pages/resultsPage/ResultsPage";
 import ResultsAnalysis from "./pages/resultsPage/layouts/ResultsAnalysis/ResultsAnalysis";
 import ResultsComparison from "./pages/resultsPage/layouts/ResultsComparison/ResultsComparison";
+import SendToHardwarePage from "./pages/sendToHardwarePage/SendToHardwarePage";
 
-const App = () => <RouterProvider router={router} />;
-
-/** Exporting the routes to use them in testing as well **/
-export const routes = createRoutesFromElements(
-	<Route path={BASE_ROUTE} element={<Root />} errorElement={<ErrorPage />}>
-		{/* TODO: Have Error Element for just the Outlet, not whole Root component */}
-
-		<Route index={true} element={<LandingPage />} />
-		<Route path={OVERVIEW_ROUTE} element={<OverviewPage />} />
-		<Route path={DATA_HUB_ROUTE} element={<DataHubPage />}>
-			<Route path={DATA_SETUP_ROUTE} element={<DataSetup />} />
-			<Route path={DATA_VIZ_ROUTE} element={<DataViz />} />
-		</Route>
-		<Route path={MODEL_CREATION_ROUTE} element={<ModelCreationPage />}>
-			<Route path={CREATE_MODEL_ROUTE} element={<CreateModel />} />
-			<Route path={NEURAL_NETWORK_ROUTE} element={<NeuralNetworks />} />
-		</Route>
-		<Route path={RESULTS_ROUTE} element={<ResultsPage />}>
-			<Route path={RESULTS_ANALYSIS_ROUTE} element={<ResultsAnalysis />} />
-			<Route path={RESULTS_COMPARISON_ROUTE} element={<ResultsComparison />} />
-		</Route>
-		<Route path={SEND_TO_HARDWARE_ROUTE} element={<SendToHardwarePage />} />
-	</Route>
-);
+//TODO: Have Error Element for just the Outlet, not whole Root component
+export const routes = [
+	{
+		element: <Root />,
+		errorElement: <ErrorPage />,
+		children: [
+			{
+				path: BASE_ROUTE,
+				element: <LandingPage />,
+				index: true,
+			},
+			{
+				path: OVERVIEW_ROUTE,
+				element: <OverviewPage />,
+			},
+			{
+				path: DATA_HUB_ROUTE,
+				element: <DataHubPage />,
+				children: [
+					{
+						path: DATA_SETUP_ROUTE,
+						element: <DataSetup />,
+					},
+					{
+						path: DATA_VIZ_ROUTE,
+						element: <DataViz />,
+					},
+				],
+			},
+			{
+				path: MODEL_CREATION_ROUTE,
+				element: <ModelCreationPage />,
+				children: [
+					{
+						path: CREATE_MODEL_ROUTE,
+						element: <CreateModel />,
+					},
+					{
+						path: NEURAL_NETWORK_ROUTE,
+						element: <NeuralNetworks />,
+					},
+				],
+			},
+			{
+				path: RESULTS_ROUTE,
+				element: <ResultsPage />,
+				children: [
+					{
+						path: RESULTS_ANALYSIS_ROUTE,
+						element: <ResultsAnalysis />,
+					},
+					{
+						path: RESULTS_COMPARISON_ROUTE,
+						element: <ResultsComparison />,
+					},
+				],
+			},
+			{
+				path: SEND_TO_HARDWARE_ROUTE,
+				element: <SendToHardwarePage />,
+			},
+		],
+	},
+];
 
 const router = createBrowserRouter(routes);
+
+function App() {
+	return <RouterProvider router={router} />;
+}
 
 export default App;
