@@ -17,7 +17,7 @@ import {
 } from "./routes";
 import Root from "./pages/Root";
 import ErrorPage from "./pages/errorPage/ErrorPage";
-import LandingPage from "./pages/landingPage/LandingPage";
+import LandingPage, { landingPageLoader } from "./pages/landingPage/LandingPage";
 import OverviewPage from "./pages/overviewPage/OverviewPage";
 import DataHubPage from "./pages/dataHubPage/DataHubPage";
 import DataSetup from "./pages/dataHubPage/layouts/DataSetup/DataSetup";
@@ -40,6 +40,8 @@ export const routes = [
 				path: BASE_ROUTE,
 				element: <LandingPage />,
 				index: true,
+				loader: landingPageLoader,
+				errorElement: <ErrorPage />,
 			},
 			{
 				path: OVERVIEW_ROUTE,

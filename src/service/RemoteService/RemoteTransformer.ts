@@ -4,6 +4,10 @@ import type { FilesUploadRequest } from "./client/bindings/FilesUploadRequest";
 import type { FilesUploadResponse } from "./client/bindings/FilesUploadResponse";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import type { GetFilesResponse } from "./client/bindings/GetFilesResponse";
+import type { ListProjectsRequest } from "./client/bindings/ListProjectsRequest";
+import type { ListProjectsResponse } from "./client/bindings/ListProjectsResponse";
+import type { ProjectT } from "../../redux/slices/ProjectSlice";
+import type { ProjectDetails } from "./client/bindings/ProjectDetails";
 /* eslint-disable  @typescript-eslint/naming-convention */
 
 /***
@@ -60,6 +64,19 @@ const remoteTransformer = {
 		}
 
 		return tokens[tokens.length - 1];
+	},
+
+	createGetProjectsRequest(limit: bigint, offset: bigint): ListProjectsRequest {
+		return {
+			limit,
+			offset,
+		};
+	},
+
+	parseGetProjectsResponse(getProjectsResponse: ListProjectsResponse): ProjectDetails[] {
+		const { projects } = getProjectsResponse;
+
+		return projects;
 	},
 };
 

@@ -10,6 +10,8 @@ import type { FilesUploadRequest } from "./bindings/FilesUploadRequest";
 import type { FilesUploadResponse } from "./bindings/FilesUploadResponse";
 import type { GetFilesRequest } from "./bindings/GetFilesRequest";
 import type { GetFilesResponse } from "./bindings/GetFilesResponse";
+import type { ListProjectsRequest } from "./bindings/ListProjectsRequest";
+import type { ListProjectsResponse } from "./bindings/ListProjectsResponse";
 
 export interface RemoteClient {
 	/**
@@ -24,4 +26,10 @@ export interface RemoteClient {
 	 * @param getFilesRequest: Request containing required data to get the files.
 	 */
 	getInputFiles(getFilesRequest: GetFilesRequest): Promise<GetFilesResponse>;
+
+	/**
+	 * This method would get the projects from the backend.
+	 * @param getProjectsRequest Request containing the projects.
+	 */
+	getProjects(getProjectsRequest: ListProjectsRequest): Promise<ListProjectsResponse>;
 }

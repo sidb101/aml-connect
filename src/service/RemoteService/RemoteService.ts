@@ -4,6 +4,10 @@ import { DataSetT } from "../../redux/slices/DataHubSlice";
 import type { FilesUploadRequest } from "./client/bindings/FilesUploadRequest";
 import remoteTransformer from "./RemoteTransformer";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
+import type { ListProjectsRequest } from "./client/bindings/ListProjectsRequest";
+import type { ListProjectsResponse } from "./client/bindings/ListProjectsResponse";
+import type { ProjectT } from "../../redux/slices/ProjectSlice";
+import type { ProjectDetails } from "./client/bindings/ProjectDetails";
 
 /**
  * Object responsible for Transforming the UI Data to required Backend DTOs and then call the Backend using
@@ -43,6 +47,22 @@ const remoteService = {
 		console.log("Transformed: ", inputFilesMetaData);
 
 		return inputFilesMetaData;
+	},
+
+	getProjects: async (): Promise<ProjectDetails[]> => {
+		const getProjectsRequest: ListProjectsRequest = remoteTransformer.createGetProjectsRequest(
+			BigInt(100),
+			BigInt(0)
+		);
+		console.log("Request", getProjectsRequest);
+
+		const getProjectsResponse: ListProjectsResponse = await remoteClient.getProjects(getProjectsRequest);
+		console.log(getProjectsResponse);
+
+		const projects = remoteTransformer.parseGetProjectsResponse(getProjectsResponse);
+		console.log("Transformed: ", projects);
+
+		return projects;
 	},
 };
 
