@@ -1,16 +1,11 @@
 import { useCallback, useState } from "react";
 import ReactFlow, {
-	addEdge,
-	applyEdgeChanges,
-	applyNodeChanges,
 	Background,
 	BackgroundVariant,
 	type Connection,
 	ConnectionLineType,
-	ControlButton,
 	Controls,
 	type DefaultEdgeOptions,
-	type Edge,
 	type EdgeChange,
 	type FitViewOptions,
 	MiniMap,
@@ -24,8 +19,14 @@ import ReactFlow, {
 
 import "reactflow/dist/style.css";
 import "./Canvas.scss";
-import { initialEdges, initialNodes, nodeOptions, type OptionT } from "../../../../../tests/mockdata/allNodesAndEdges";
+import { nodeOptions, type OptionT } from "../../../../../tests/mockdata/allNodesAndEdges";
 import Dropdown from "../../../../../components/dropdown/Dropdown";
+import { useAppDispatch, useAppSelector } from "../../../../../hooks";
+import {
+	modelCreationActions,
+	type NodeDataT,
+	selectCurrentNetwork,
+} from "../../../../../redux/slices/ModelCreationSlice";
 
 const fitViewOptions: FitViewOptions = {
 	padding: 0.2,
@@ -36,13 +37,13 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 };
 
 export default function Canvas() {
-	const [nodes, setNodes] = useState<Node[]>(initialNodes);
-	const [edges, setEdges] = useState<Edge[]>(initialEdges);
-
 	const [showDropdown, setShowDropdown] = useState(false);
 
 	// Define the options for the dropdown.
 	const options = nodeOptions;
+
+	const dispatch = useAppDispatch();
+	const currentNetwork = useAppSelector(selectCurrentNetwork);
 
 	// Handle the click event of the dropdown option.
 	const handleOptionClick = (option: OptionT) => {
@@ -51,69 +52,70 @@ export default function Canvas() {
 	};
 
 	const onNodesChange: OnNodesChange = useCallback((changes: NodeChange[]) => {
-		setNodes((nodes: Node[]) => applyNodeChanges(changes, nodes));
+		dispatch(modelCreationActions.updateNodes({ nodeChanges: changes }));
 	}, []);
 
 	const onEdgesChange: OnEdgesChange = useCallback((changes: EdgeChange[]) => {
-		setEdges((edges: Edge[]) => applyEdgeChanges(changes, edges));
+		dispatch(modelCreationActions.updateEdges({ edgeChanges: changes }));
 	}, []);
 
 	const onConnect: OnConnect = useCallback((connection: Connection) => {
-		setEdges((edges: Edge[]) => addEdge(connection, edges));
+		dispatch(modelCreationActions.connectNodes({ connection: connection }));
 	}, []);
 
 	const onAdd = useCallback(
 		(label: string) => {
-			let newNode: Node;
+			const currentNodes: Node<NodeDataT>[] = currentNetwork.nodes;
+			let newNode: Node<NodeDataT>;
 
 			if (label === "IN") {
 				newNode = {
-					id: String(nodes.length + 1),
+					id: String(currentNodes.length + 1),
 					sourcePosition: Position.Right,
 					type: "input",
-					data: { label: label },
+					data: { label: label, elementType: "in" },
 					position: {
-						x: nodes[nodes.length - 1].position.x - 25,
-						y: nodes[nodes.length - 1].position.y + 25,
+						x: currentNodes[currentNodes.length - 1].position.x - 25,
+						y: currentNodes[currentNodes.length - 1].position.y + 25,
 					},
 					className: "Canvas_input",
 				};
 			} else if (label === "OUT") {
 				newNode = {
-					id: String(nodes.length + 1),
+					id: String(currentNodes.length + 1),
 					targetPosition: Position.Left,
 					type: "output",
-					data: { label: label },
+					data: { label: label, elementType: "out" },
 					position: {
-						x: nodes[nodes.length - 1].position.x - 25,
-						y: nodes[nodes.length - 1].position.y + 25,
+						x: currentNodes[currentNodes.length - 1].position.x - 25,
+						y: currentNodes[currentNodes.length - 1].position.y + 25,
 					},
 					className: "Canvas_output",
 				};
 			} else {
 				newNode = {
-					id: String(nodes.length + 1),
+					id: String(currentNodes.length + 1),
 					sourcePosition: Position.Right,
 					targetPosition: Position.Left,
-					data: { label: label },
+					data: { label: label, elementType: label.toLowerCase() },
 					position: {
-						x: nodes[nodes.length - 1].position.x - 25,
-						y: nodes[nodes.length - 1].position.y + 25,
+						x: currentNodes[currentNodes.length - 1].position.x - 25,
+						y: currentNodes[currentNodes.length - 1].position.y + 25,
 					},
 					className: "Canvas_node",
 				};
 			}
 
-			setNodes((nodes: Node[]) => nodes.concat(newNode));
+			dispatch(modelCreationActions.addNode({ node: newNode }));
 		},
-		[nodes]
+		[currentNetwork.nodes]
 	);
 
 	return (
 		<div className={`Canvas_container`}>
 			<ReactFlow
-				nodes={nodes}
-				edges={edges}
+				nodes={currentNetwork.nodes}
+				edges={currentNetwork.edges}
 				onNodesChange={onNodesChange}
 				onEdgesChange={onEdgesChange}
 				onConnect={onConnect}
@@ -152,7 +154,7 @@ export default function Canvas() {
 					</div>
 				</div>
 				<Controls className={`Canvas_controls`}></Controls>
-				<MiniMap />
+				{/* <MiniMap /> */}
 				<Background variant={BackgroundVariant.Dots} gap={12} size={1} />
 			</ReactFlow>
 		</div>

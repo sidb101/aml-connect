@@ -4,6 +4,10 @@ import type { FilesUploadRequest } from "./client/bindings/FilesUploadRequest";
 import type { FilesUploadResponse } from "./client/bindings/FilesUploadResponse";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import type { GetFilesResponse } from "./client/bindings/GetFilesResponse";
+import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
+import type { NetworkT } from "../../redux/slices/ModelCreationSlice";
+import type { Network } from "./client/bindings/Network";
+import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
 /* eslint-disable  @typescript-eslint/naming-convention */
 
 /***
@@ -50,6 +54,40 @@ const remoteTransformer = {
 				mediaType: `audio/${extension}`, //TODO: Maybe think about if we want to store various mediaTypes, or somehow deduce it from the file data itself.
 			};
 		});
+	},
+
+	createSimulateRequest(network: NetworkT, inputFile: InputFileMetaDataT): SimulateNetworkRequest {
+		const networkToSimulate: Network = {
+			id: network.metaData.id,
+			creator_id: 1n,
+			name: network.metaData.name,
+			elements: network.nodes.map((node) => ({
+				id: node.id,
+				parent_network_id: network.metaData.id,
+				type_name: node.data.elementType,
+				element_type_params: network.params[node.id],
+				terminals: [],
+				position: {
+					x: node.position.x,
+					y: node.position.y,
+				},
+			})),
+			nodes: network.edges.map((edge) => ({
+				id: edge.id,
+				name: "",
+				parent_network_id: network.metaData.id,
+				terminal_ids: [],
+			})),
+		};
+
+		return {
+			network: networkToSimulate,
+			input_file_path: inputFile.name,
+		};
+	},
+
+	parseSimulationResponse(simulateNetworkResponse: SimulateNetworkResponse): Record<string, number[]> {
+		return simulateNetworkResponse.response;
 	},
 
 	getFileExtension(fileName: string): string {

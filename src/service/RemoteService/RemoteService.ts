@@ -4,6 +4,8 @@ import { DataSetT } from "../../redux/slices/DataHubSlice";
 import type { FilesUploadRequest } from "./client/bindings/FilesUploadRequest";
 import remoteTransformer from "./RemoteTransformer";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
+import { type NetworkT } from "../../redux/slices/ModelCreationSlice";
+import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
 
 /**
  * Object responsible for Transforming the UI Data to required Backend DTOs and then call the Backend using
@@ -43,6 +45,16 @@ const remoteService = {
 		console.log("Transformed: ", inputFilesMetaData);
 
 		return inputFilesMetaData;
+	},
+
+	simulateNetwork: async (network: NetworkT, inputFile: InputFileMetaDataT): Promise<Record<string, number[]>> => {
+		const simulationRequest: SimulateNetworkRequest = remoteTransformer.createSimulateRequest(network, inputFile);
+		console.log("Request:", simulationRequest);
+
+		const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);
+		console.log(simulationResponse);
+
+		return remoteTransformer.parseSimulationResponse(simulationResponse);
 	},
 };
 

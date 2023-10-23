@@ -8,6 +8,8 @@ import { invoke } from "@tauri-apps/api/tauri";
 import type { GetFilesRequest } from "./bindings/GetFilesRequest";
 import type { FilesUploadResponse } from "./bindings/FilesUploadResponse";
 import type { GetFilesResponse } from "./bindings/GetFilesResponse";
+import type { SimulateNetworkRequest } from "./bindings/SimulateNetworkRequest";
+import type { SimulateNetworkResponse } from "./bindings/SimulateNetworkResponse";
 
 class TauriApiClient implements RemoteClient {
 	/**
@@ -32,6 +34,15 @@ class TauriApiClient implements RemoteClient {
 			return await invoke("get_files", { req: getFilesRequest });
 		} catch (e) {
 			console.error("Couldn't get the files from backend.", e);
+			return Promise.reject(e);
+		}
+	}
+
+	async simulateNetwork(simulateNetworkRequest: SimulateNetworkRequest): Promise<SimulateNetworkResponse> {
+		try {
+			return await invoke("simulate_network", { req: simulateNetworkRequest });
+		} catch (e) {
+			console.error("Couldn't simulate the network", e);
 			return Promise.reject(e);
 		}
 	}
