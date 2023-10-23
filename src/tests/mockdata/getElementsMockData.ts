@@ -1,5 +1,3 @@
-import type { Parameters } from "../../service/RemoteService/client/bindings/Parameters";
-
 /*
  TODO: Should be coming from backend contract of getElements()
  */

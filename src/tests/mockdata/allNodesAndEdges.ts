@@ -7,7 +7,7 @@ export type OptionT = {
 	menuLabel: string;
 };
 export const testNetworkMetaData: NetworkMetaDataT = {
-	id: 1,
+	id: 1n,
 	name: "Test Network",
 };
 
@@ -30,7 +30,7 @@ export const nodeOptions: OptionT[] = [
 	},
 ];
 
-export const testNodes: Node<NodeDataT>[] = [
+export const testNodes: Array<Node<NodeDataT>> = [
 	{
 		id: "1",
 		sourcePosition: Position.Right,
@@ -77,7 +77,7 @@ export const testNodes: Node<NodeDataT>[] = [
 	},
 ];
 
-export const testEdges: Edge<EdgeDataT>[] = [
+export const testEdges: Array<Edge<EdgeDataT>> = [
 	{ id: "e1-2", source: "1", target: "2" },
 	{ id: "e2-3", source: "2", target: "3" },
 	{ id: "e3-4", source: "3", target: "4" },

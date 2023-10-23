@@ -25,7 +25,8 @@
         "prettier"
     ],
     "ignorePatterns" : [
-        "src/service/RemoteService/client/bindings/*.ts"
+        "src/service/RemoteService/client/bindings/*.ts",
+        "src/tests/mockdata/getElementsMockData.ts"
     ],
     "rules": {
         /**

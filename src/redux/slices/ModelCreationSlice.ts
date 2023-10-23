@@ -28,9 +28,7 @@ import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
 
 export type ModelCreationState = {
 	allNetworks: NetworkMetaDataT[]; //Used to show all available networks of user to choose from
-	allElements: {
-		[elementType: string]: ElementMetaDataT;
-	};
+	allElements: Record<string, ElementMetaDataT>;
 	selectedNetwork: NetworkT;
 	//TODO: Add parameters information
 };
@@ -59,11 +57,9 @@ export type ElementMetaDataT = {
  */
 export type NetworkT = {
 	metaData: NetworkMetaDataT;
-	nodes: Node<NodeDataT>[];
-	edges: Edge<EdgeDataT>[];
-	params: {
-		[nodeId: string]: Parameters; //Store the parameter values for every Node of the Graph
-	};
+	nodes: Array<Node<NodeDataT>>;
+	edges: Array<Edge<EdgeDataT>>;
+	params: Record<string, Parameters>; //Store the parameter values for every Node of the Graph
 };
 
 /**
@@ -77,7 +73,9 @@ export type NodeDataT = {
 /**
  * Type to describe data to be stored for a particular edge
  */
-export type EdgeDataT = {};
+export type EdgeDataT = {
+	data?: string;
+};
 
 const initialState: ModelCreationState = {
 	allNetworks: [testNetworkMetaData],

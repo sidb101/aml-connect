@@ -65,7 +65,7 @@ export default function Canvas() {
 
 	const onAdd = useCallback(
 		(label: string) => {
-			const currentNodes: Node<NodeDataT>[] = currentNetwork.nodes;
+			const currentNodes: Array<Node<NodeDataT>> = currentNetwork.nodes;
 			let newNode: Node<NodeDataT>;
 
 			if (label === "IN") {
