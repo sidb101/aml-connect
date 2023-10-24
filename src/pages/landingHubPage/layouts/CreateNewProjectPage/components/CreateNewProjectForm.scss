@@ -1,0 +1,27 @@
+@use "../../../../../global";
+
+.CreateNewProjectForm_container {
+	display: flex;
+	flex-direction: column;
+	gap: global.$panel-padding;
+
+	button {
+		width: 20%;
+	}
+}
+
+.CreateNewProjectForm_formElementContainer {
+	display: flex;
+	flex-direction: column;
+	gap: global.$general-padding;
+
+	input {
+		height: 3rem;
+		font-size: 2rem;
+	}
+
+	textarea {
+		height: 12rem;
+		font-size: 2rem;
+	}
+}

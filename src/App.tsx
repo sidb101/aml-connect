@@ -29,9 +29,9 @@ import ResultsPage from "./pages/resultsPage/ResultsPage";
 import ResultsAnalysis from "./pages/resultsPage/layouts/ResultsAnalysis/ResultsAnalysis";
 import ResultsComparison from "./pages/resultsPage/layouts/ResultsComparison/ResultsComparison";
 import SendToHardwarePage from "./pages/sendToHardwarePage/SendToHardwarePage";
-import { createNewProjectAction } from "./pages/landingHubPage/layouts/CreateNewProjectPage/CreateNewProject";
 import CreateNewProject from "./pages/landingHubPage/layouts/CreateNewProjectPage/CreateNewProject";
 import LandingHubPage from "./pages/landingHubPage/LandingHubPage";
+import { createNewProjectFormAction } from "./pages/landingHubPage/layouts/CreateNewProjectPage/components/CreateNewProjectForm";
 
 export const routes = [
 	{
@@ -51,7 +51,7 @@ export const routes = [
 					{
 						path: "new",
 						element: <CreateNewProject />,
-						action: createNewProjectAction,
+						action: createNewProjectFormAction,
 					},
 				],
 			},
