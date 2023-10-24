@@ -97,7 +97,7 @@ describe("Testing the Data Setup Functionality", () => {
 
 			//ACT - 1
 			//go to first project
-			const sideBarLinks = screen.getAllByTestId(testIds.projectLinks);
+			const sideBarLinks = await screen.findAllByTestId(testIds.projectLinks);
 			fireEvent.click(sideBarLinks[0]);
 
 			//go to the data hub page

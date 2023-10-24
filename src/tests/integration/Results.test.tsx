@@ -59,7 +59,7 @@ describe("Testing the Result Page navigation", () => {
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 	const routes = appRoutes;
 
-	test("Results: Test 1: Testing the result pages exist, and the page tabs exist on the result pages", () => {
+	test("Results: Test 1: Testing the result pages exist, and the page tabs exist on the result pages", async () => {
 		// ARRANGE (from where to start the test)
 
 		// -> should start with empty store
@@ -78,7 +78,7 @@ describe("Testing the Result Page navigation", () => {
 		// -> Get all the project links in the sidebar with a given test ID
 		// NOTE: getAllByTestId() does not need the await keyword
 		// NOTE: DO NOT WRITE testIDs everywhere, only where needed
-		const sideBarLinks = screen.getAllByTestId(testIds.projectLinks);
+		const sideBarLinks = await screen.findAllByTestId(testIds.projectLinks);
 
 		// -> Click the first sidebar link
 		fireEvent.click(sideBarLinks[0]);

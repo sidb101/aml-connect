@@ -58,7 +58,7 @@ describe("Testing the Sidebar of the App", () => {
 
 			//ASSERT - 1
 			//the sidebar should have all the projects shown.
-			const sideBarLinks = screen.getAllByTestId(testIds.projectLinks);
+			const sideBarLinks = await screen.findAllByTestId(testIds.projectLinks);
 			sideBarLinks.forEach((sideBarLink, index) => {
 				expect(sideBarLink).toHaveTextContent(getExactText(projects[index].name));
 			});
