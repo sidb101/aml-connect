@@ -1,9 +1,9 @@
 import { LandingPageHeader } from "./components/LandingPageHeader";
 import "./LandingView.scss";
-import Header from "../../../components/header/Header";
-import DisplayCard, { type DisplayCardT } from "../../../components/displayCard/DisplayCard";
-import type { ProjectDetails } from "../../../service/RemoteService/client/bindings/ProjectDetails";
-import { projectOverviewRoute } from "../../../routes";
+import Header from "../../../../../components/header/Header";
+import DisplayCard, { type DisplayCardT } from "../../../../../components/displayCard/DisplayCard";
+import type { ProjectDetails } from "../../../../../service/RemoteService/client/bindings/ProjectDetails";
+import { projectOverviewRoute } from "../../../../../routes";
 
 type LandingPageViewProps = {
 	projects?: ProjectDetails[];
@@ -19,6 +19,7 @@ const LandingView = ({ projects }: LandingPageViewProps) => {
 						{projects?.map((project: ProjectDetails) => {
 							const displayCard: DisplayCardT = {
 								title: project.name,
+								labels: ["AnalogML Connect"],
 								description: project.description || "",
 								buttonText: "Open Project",
 								route: projectOverviewRoute(project.slug),

@@ -1,5 +1,5 @@
 import "./App.scss";
-import React, { lazy } from "react";
+import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
 	BASE_ROUTE,
@@ -17,7 +17,7 @@ import {
 } from "./routes";
 import Root from "./pages/Root";
 import ErrorPage from "./pages/errorPage/ErrorPage";
-import LandingPage, { landingPageLoader } from "./pages/landingPage/LandingPage";
+import LandingPage, { landingPageLoader } from "./pages/landingHubPage/layouts/LandingPage/LandingPage";
 import OverviewPage from "./pages/overviewPage/OverviewPage";
 import DataHubPage from "./pages/dataHubPage/DataHubPage";
 import DataSetup from "./pages/dataHubPage/layouts/DataSetup/DataSetup";
@@ -29,8 +29,10 @@ import ResultsPage from "./pages/resultsPage/ResultsPage";
 import ResultsAnalysis from "./pages/resultsPage/layouts/ResultsAnalysis/ResultsAnalysis";
 import ResultsComparison from "./pages/resultsPage/layouts/ResultsComparison/ResultsComparison";
 import SendToHardwarePage from "./pages/sendToHardwarePage/SendToHardwarePage";
+import { createNewProjectAction } from "./pages/landingHubPage/layouts/CreateNewProjectPage/CreateNewProject";
+import CreateNewProject from "./pages/landingHubPage/layouts/CreateNewProjectPage/CreateNewProject";
+import LandingHubPage from "./pages/landingHubPage/LandingHubPage";
 
-//TODO: Have Error Element for just the Outlet, not whole Root component
 export const routes = [
 	{
 		element: <Root />,
@@ -38,10 +40,20 @@ export const routes = [
 		children: [
 			{
 				path: BASE_ROUTE,
-				element: <LandingPage />,
-				index: true,
-				loader: landingPageLoader,
-				errorElement: <ErrorPage />,
+				element: <LandingHubPage />,
+				children: [
+					{
+						path: "",
+						element: <LandingPage />,
+						loader: landingPageLoader,
+						errorElement: <ErrorPage />,
+					},
+					{
+						path: "new",
+						element: <CreateNewProject />,
+						action: createNewProjectAction,
+					},
+				],
 			},
 			{
 				path: OVERVIEW_ROUTE,

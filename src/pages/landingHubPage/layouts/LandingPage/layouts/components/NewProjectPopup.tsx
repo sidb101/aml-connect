@@ -1,4 +1,5 @@
 import "./NewProjectPopup.scss";
+import { Link } from "react-router-dom";
 
 export const NewProjectPopup = () => {
 	return (
@@ -11,9 +12,9 @@ export const NewProjectPopup = () => {
 				</div>
 			</button>
 			<div className={`section-subheading-text grey-text NewProjectPopup_heading`}>OR</div>
-			<button className={`btn btn-outline NewProjectPopup_btn`}>
+			<Link to={"/new"} className={`btn btn-outline NewProjectPopup_btn`}>
 				<div className={`regular-text`}>Create from scratch</div>
-			</button>
+			</Link>
 		</div>
 	);
 };

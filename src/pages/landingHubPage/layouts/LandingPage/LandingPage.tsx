@@ -1,18 +1,18 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { generalActions, ProjectStatus } from "../../redux/slices/GeneralSlice";
-import LandingPageView from "./layouts/LandingView";
-import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
+import { useAppDispatch, useAppSelector } from "../../../../hooks";
+import { generalActions, ProjectStatus } from "../../../../redux/slices/GeneralSlice";
+import LandingView from "./layouts/LandingView";
+import { type ProjectDetails } from "../../../../service/RemoteService/client/bindings/ProjectDetails";
+import remoteService from "../../../../service/RemoteService/RemoteService";
+import { projectCards } from "../../../../tests/mockdata/allProjectCards";
 import { useLoaderData } from "react-router-dom";
-import { projectCards } from "../../tests/mockdata/allProjectCards";
-import remoteService from "../../service/RemoteService/RemoteService";
 
 type LandingPageProps = {
 	data?: string;
 };
 
 const LandingPage = (props: LandingPageProps) => {
-	const projects: ProjectDetails[] = useLoaderData() as ProjectDetails[];
+	const projects = useLoaderData() as ProjectDetails[];
 
 	const dispatch = useAppDispatch();
 	const projectStatus = useAppSelector((state) => state.general.projectStatus);
@@ -22,7 +22,7 @@ const LandingPage = (props: LandingPageProps) => {
 		projectStatus !== ProjectStatus.NOT_OPEN && dispatch(generalActions.closeProject());
 	}, [projectStatus]);
 
-	return <LandingPageView projects={projects} />;
+	return <LandingView projects={projects} />;
 };
 
 export async function landingPageLoader(): Promise<ProjectDetails[]> {
