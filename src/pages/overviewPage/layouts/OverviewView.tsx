@@ -1,6 +1,7 @@
 import "./OverviewView.scss";
 import OverviewForm from "./components/OverviewForm";
 import DisplayPanel from "../../../components/displayPanel/DisplayPanel";
+import ProjectForm from "../../../components/projectForm/ProjectForm";
 
 type OverviewViewProps = {
 	currentProjectName: string;
@@ -12,6 +13,7 @@ const OverviewView = ({ currentProjectName, onProjectTitleChange, currentProject
 	return (
 		<>
 			<div className={`body-content-container-no-header-btns-with-footer`}>
+				<ProjectForm heading={`Overview`} />
 				<DisplayPanel heading={`Overview`}>
 					<OverviewForm
 						currentProjectName={currentProjectName}

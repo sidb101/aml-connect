@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { useLocation, useParams } from "react-router-dom";
+import { redirect, useLocation, useParams } from "react-router-dom";
 import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
-import { dataSetupRoute, NEW_PROJECT_ROUTE } from "../../routes";
+import { BASE_ROUTE, dataSetupRoute, NEW_PROJECT_ROUTE } from "../../routes";
 import OverviewView from "./layouts/OverviewView";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
+import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
 
 export type OverviewT = {
 	data?: string;
@@ -52,5 +53,29 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 		)
 	);
 };
+
+type UpdateProjectFormT = {
+	name: string;
+	description: string;
+};
+
+export async function overviewPageAction({ request }: { request: Request }) {
+	const formData = await request.formData();
+	const data = Object.fromEntries(formData) as UpdateProjectFormT;
+
+	console.log(data);
+
+	const project: ProjectDetails = {
+		id: 0,
+		slug: "update-dummy-project",
+		name: data.name,
+		description: data.description,
+	};
+
+	//const updatedProject = await updateProjectDetails(project);
+
+	//return redirect(`/project/${updatedProject.slug}/overview`);
+	return redirect(`${BASE_ROUTE}`);
+}
 
 export default OverviewPage;

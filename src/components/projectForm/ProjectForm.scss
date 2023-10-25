@@ -1,6 +1,7 @@
-@use "../../../../../global";
+@use "../../global";
 
-.CreateNewProjectForm_container {
+.ProjectForm_container {
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: global.$panel-padding;
@@ -10,7 +11,14 @@
 	}
 }
 
-.CreateNewProjectForm_formElementContainer {
+.ProjectForm_grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	flex-grow: 1;
+	gap: global.$panel-padding;
+}
+
+.ProjectForm_formElementContainer {
 	display: flex;
 	flex-direction: column;
 	gap: global.$general-padding;
@@ -21,6 +29,7 @@
 	}
 
 	textarea {
+		flex-grow: 1;
 		height: 12rem;
 		font-size: 2rem;
 	}

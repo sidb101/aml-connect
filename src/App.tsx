@@ -18,7 +18,7 @@ import {
 import Root from "./pages/Root";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import LandingPage, { landingPageLoader } from "./pages/landingHubPage/layouts/LandingPage/LandingPage";
-import OverviewPage from "./pages/overviewPage/OverviewPage";
+import OverviewPage, { overviewPageAction } from "./pages/overviewPage/OverviewPage";
 import DataHubPage from "./pages/dataHubPage/DataHubPage";
 import DataSetup from "./pages/dataHubPage/layouts/DataSetup/DataSetup";
 import DataViz from "./pages/dataHubPage/layouts/DataViz/DataViz";
@@ -29,9 +29,10 @@ import ResultsPage from "./pages/resultsPage/ResultsPage";
 import ResultsAnalysis from "./pages/resultsPage/layouts/ResultsAnalysis/ResultsAnalysis";
 import ResultsComparison from "./pages/resultsPage/layouts/ResultsComparison/ResultsComparison";
 import SendToHardwarePage from "./pages/sendToHardwarePage/SendToHardwarePage";
-import CreateNewProject from "./pages/landingHubPage/layouts/CreateNewProjectPage/CreateNewProject";
+import CreateNewProject, {
+	createNewProjectAction,
+} from "./pages/landingHubPage/layouts/CreateNewProjectPage/CreateNewProject";
 import LandingHubPage from "./pages/landingHubPage/LandingHubPage";
-import { createNewProjectFormAction } from "./pages/landingHubPage/layouts/CreateNewProjectPage/components/CreateNewProjectForm";
 
 export const routes = [
 	{
@@ -51,13 +52,15 @@ export const routes = [
 					{
 						path: "new",
 						element: <CreateNewProject />,
-						action: createNewProjectFormAction,
+						action: createNewProjectAction,
+						errorElement: <ErrorPage />,
 					},
 				],
 			},
 			{
 				path: OVERVIEW_ROUTE,
 				element: <OverviewPage />,
+				action: overviewPageAction,
 			},
 			{
 				path: DATA_HUB_ROUTE,
