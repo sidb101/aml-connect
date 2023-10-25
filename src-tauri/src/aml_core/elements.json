@@ -1,0 +1,100 @@
+{
+    "AcDiff": {
+        "short_description": "ac-coupled difference amplifier",
+        "long_description": "Amplifies the ac difference between the input terminals. Specifically, the response is: output = gain(hpf(pos) - hpf(neg)) where hpf is a low-frequency (i.e. sub-Hz) highpass filter. AcDiff is often used to interface with external signals for which the dc operating point is unknown.",
+        "type_name": "AcDiff",
+        "terminals": {
+            "pos": {
+                "description": "Noninverting input",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "Out range/gain"
+            },
+            "neg": {
+                "description": "Inverting input",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "Out range/gain"
+            },
+            "output": {
+                "description": "output",
+                "direction": "output",
+                "default": null,
+                "dc_range": "mid-centered",
+                "ac_range": "+/-0.6V"
+            }
+        },
+        "parameters": {
+            "gain": {
+                "parameter_type": "number",
+                "description": "single-ended gain",
+                "default": 9.0,
+                "range_type": "discrete",
+                "range": [0.111, 0.4285, 2.333, 9],
+                "unit": "V",
+                "ui-component": "dropdown"
+            }
+        }
+    },
+    "AsymmetricIntegrator": {
+        "short_description": "Asymmetric integrator",
+        "long_description": "An integrator in measurement and control applications is an element whose output signal is the time integral of its input signal. It accumulates the input quantity over a defined time to produce a representative output. The integrator produces a voltage output proportional to the product of the input voltage and time. The asymmetric integrator can integrate the rise and fall of the input signal at different rates (different slopes used to integrate the rise and fall of the input). These are generally used as part of decision making in an application. For example, asymmetric integrators can be used to reject spurious triggers (triggers that are either too long or too short that we don't want to catch).",
+        "type_name": "AsymmetricIntegrator",
+        "terminals": {
+            "input": {
+                "description": "input",
+                "direction": "input",
+                "default": null,
+                "dc_range": "rail-to-rail",
+                "ac_range": null
+            },
+            "output": {
+                "description": "output",
+                "direction": "output",
+                "default": null,
+                "dc_range": null,
+                "ac_range": null
+            }
+        },
+        "parameters": {
+            "up": {
+                "parameter_type": "number",
+                "description": "Rate of upward slope",
+                "default": 100,
+                "range_type": "interval",
+                "range": [null, null],
+                "unit": null,
+                "ui-component": "textbox"
+            },
+            "down": {
+                "parameter_type": "number",
+                "description": "Rate of downward slope",
+                "default": 10,
+                "range_type": "interval",
+                "range": [null, null],
+                "unit": null,
+                "ui-component": "textbox"
+            },
+            "up_down_type": {
+                "parameter_type": "enum",
+                "description": "slope type",
+                "default": "UpDownType.Rate",
+                "range_type": "discrete",
+                "range": ["UpDownType.Rate", "UpDownType.Hand"],
+                "unit": null,
+                "ui-component": "dropdown"
+            },
+            "comparator_enable": {
+                "parameter_type": "boolean",
+                "description": "Pass output through comparator",
+                "default": false,
+                "range_type": "discrete",
+                "range": [true, false],
+                "unit": null,
+                "ui-component": "dropdown"
+            }
+        }
+    }
+}
