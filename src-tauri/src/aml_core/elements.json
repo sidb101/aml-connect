@@ -30,11 +30,11 @@
             "gain": {
                 "parameter_type": "number",
                 "description": "single-ended gain",
-                "default": 9.0,
+                "default": "9.0",
                 "range_type": "discrete",
-                "range": [0.111, 0.4285, 2.333, 9],
+                "range": ["0.111", "0.4285", "2.333", "9"],
                 "unit": "V",
-                "ui-component": "dropdown"
+                "ui_component": "dropdown"
             }
         }
     },
@@ -62,20 +62,20 @@
             "up": {
                 "parameter_type": "number",
                 "description": "Rate of upward slope",
-                "default": 100,
+                "default": "100",
                 "range_type": "interval",
                 "range": [null, null],
                 "unit": null,
-                "ui-component": "textbox"
+                "ui_component": "textbox"
             },
             "down": {
                 "parameter_type": "number",
                 "description": "Rate of downward slope",
-                "default": 10,
+                "default": "10",
                 "range_type": "interval",
                 "range": [null, null],
                 "unit": null,
-                "ui-component": "textbox"
+                "ui_component": "textbox"
             },
             "up_down_type": {
                 "parameter_type": "enum",
@@ -84,16 +84,16 @@
                 "range_type": "discrete",
                 "range": ["UpDownType.Rate", "UpDownType.Hand"],
                 "unit": null,
-                "ui-component": "dropdown"
+                "ui_component": "dropdown"
             },
             "comparator_enable": {
                 "parameter_type": "boolean",
                 "description": "Pass output through comparator",
                 "default": false,
                 "range_type": "discrete",
-                "range": [true, false],
+                "range": ["true", "false"],
                 "unit": null,
-                "ui-component": "dropdown"
+                "ui_component": "checkbox"
             }
         }
     }
