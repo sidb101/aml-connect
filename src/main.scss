@@ -84,12 +84,6 @@ Common Classes
 		margin-top: $top-offset;
 		height: calc(100% - #{$top-offset} - #{$bottom-offset}); /* Subtract header height and footer height */
 	}
-
-	.main-content-container {
-		position: absolute;
-		width: calc(100% - 2 * #{global.$content-padding});
-		z-index: 0;
-	}
 }
 
 /* -- Various kinds of texts -- */

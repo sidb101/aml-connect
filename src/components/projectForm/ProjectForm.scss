@@ -1,14 +1,10 @@
 @use "../../global";
 
 .ProjectForm_container {
-	height: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: global.$panel-padding;
-
-	button {
-		width: 20%;
-	}
+	height: 100%;
 }
 
 .ProjectForm_grid {
@@ -24,13 +20,16 @@
 	gap: global.$general-padding;
 
 	input {
-		height: 3rem;
-		font-size: 2rem;
+		padding: global.$panel-padding;
 	}
 
 	textarea {
-		flex-grow: 1;
-		height: 12rem;
-		font-size: 2rem;
+		height: 100%;
+		padding: global.$panel-padding;
 	}
+}
+
+.ProjectForm_btn {
+	display: flex;
+	justify-content: flex-end;
 }

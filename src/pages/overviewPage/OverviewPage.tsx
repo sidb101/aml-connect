@@ -20,7 +20,6 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 
 	const reduxProjectName = useAppSelector(selectCurrentProjectName) || "";
 	const [currentProjectName, setCurrentProjectName] = useState<string>(reduxProjectName);
-	const [currentProjectDescription, setCurrentProjectDescription] = useState<string>("");
 
 	function handleProjectNameOnChange(newProjectName: string): void {
 		setCurrentProjectName(newProjectName);
@@ -43,11 +42,7 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 		projectSlug && (
 			<>
 				<Header headerTitle={`${currentProjectName} > Overview`} />
-				<OverviewView
-					currentProjectName={currentProjectName}
-					onProjectTitleChange={handleProjectNameOnChange}
-					currentProjectDescription={currentProjectDescription}
-				/>
+				<OverviewView currentProjectName={currentProjectName} />
 				<Footer footerBtnGroup={{ nextBtn: { label: "Data Hub", route: dataSetupRoute(projectSlug) } }} />
 			</>
 		)

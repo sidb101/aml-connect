@@ -1,20 +1,10 @@
-import { redirect, useNavigation } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { BASE_ROUTE } from "../../../../routes";
-import ProjectForm from "../../../../components/projectForm/ProjectForm";
-import Header from "../../../../components/header/Header";
 import { type ProjectDetails } from "../../../../service/RemoteService/client/bindings/ProjectDetails";
+import CreateNewProjectView from "./layouts/CreateNewProjectView";
 
-function CreateNewProject() {
-	return (
-		<>
-			<Header headerTitle={`New Project > Create New Project`} />
-			<div className={`body-content-container-with-header-btns-no-footer`}>
-				<div className={`main-content-container`}>
-					<ProjectForm heading={`Create New Project`} />
-				</div>
-			</div>
-		</>
-	);
+function CreateNewProjectPage() {
+	return <CreateNewProjectView />;
 }
 
 type CreateNewProjectFormT = {
@@ -22,7 +12,7 @@ type CreateNewProjectFormT = {
 	description: string;
 };
 
-export async function createNewProjectAction({ request }: { request: Request }) {
+export async function createNewProjectPageAction({ request }: { request: Request }) {
 	const formData = await request.formData();
 	const data = Object.fromEntries(formData) as CreateNewProjectFormT;
 
@@ -41,4 +31,4 @@ export async function createNewProjectAction({ request }: { request: Request }) 
 	return redirect(`${BASE_ROUTE}`);
 }
 
-export default CreateNewProject;
+export default CreateNewProjectPage;
