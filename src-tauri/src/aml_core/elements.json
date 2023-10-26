@@ -96,5 +96,379 @@
                 "ui_component": "checkbox"
             }
         }
+    },
+    "Comparator": {
+        "short_description": "Comparator",
+        "long_description": "The comparator compares one analog voltage level with another analog voltage level (or some preset reference voltage), and produces an output signal based on this voltage comparison. In other words, the voltage comparator compares the magnitudes of two voltage inputs and determines which is the largest of the two.",
+        "type_name": "Comparator",
+        "terminals": {
+            "positive": {
+                "description": "Noninverting input",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": null
+            },
+            "negative": {
+                "description": "Inverting input",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "mid-centered",
+                "ac_range": null
+            },
+            "vdd": {
+                "description": "Supply voltage input",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail",
+                "ac_range": null
+            },
+            "output": {
+                "description": "Output",
+                "direction": "output",
+                "default": "mid",
+                "dc_range": "mid-centered",
+                "ac_range": "0 to vdd"
+            }
+        },
+        "parameters": {
+            "threshold": {
+                "parameter_type": "number",
+                "description": "Comparison threshold",
+                "default": "0",
+                "range_type": "interval",
+                "range": [null, null],
+                "unit": null,
+                "ui_component": "textbox"
+            }
+        }
+    },
+    "Filter": {
+        "short_description": "Filter",
+        "long_description": "A filter is a circuit capable of passing (or amplifying) certain frequencies while attenuating other frequencies.",
+        "type_name": "Filter",
+        "terminals": {
+            "input": {
+                "description": "Input",
+                "direction": "input",
+                "default": null,
+                "dc_range": "rail-to-rail",
+                "ac_range": null
+            },
+            "output": {
+                "description": "Output",
+                "direction": "output",
+                "default": null,
+                "dc_range": "mid-centered",
+                "ac_range": "+/- 0.1V"
+            }
+        },
+        "parameters": {
+            "characteristic_frequency": {
+                "parameter_type": "number",
+                "description": "Comparison threshold",
+                "default": "1000",
+                "range_type": "interval",
+                "range": [
+                    "1",
+                    "200000"
+                ],
+                "unit": "Hz",
+                "ui_component": "textbox"
+            },
+            "quality_factor": {
+                "parameter_type": "number",
+                "description": "Comparison threshold",
+                "default": "2",
+                "range_type": "interval",
+                "range": [
+                    "0.3",
+                    "4.5"
+                ],
+                "unit": null,
+                "ui_component": "textbox"
+            },
+            "filter_type": {
+                "parameter_type": "string",
+                "description": "Comparison threshold",
+                "default": "FilterType.bpf2",
+                "range_type": "discrete",
+                "range": [
+                    "FilterType.bpf2",
+                    "FilterType.lpf2",
+                    "FilterType.hpf2",
+                    "FilterType.lpf1"
+                ],
+                "unit": null,
+                "ui_component": "dropdown"
+            }
+        }
+    },
+    "Filterbank": {
+        "short_description": "Filterbank",
+        "long_description": "A filterbank is an array of bandpass filters that separates the input signal into multiple components, each one carrying a single frequency subband of the original signal.",
+        "type_name": "Filterbank",
+        "terminals": {
+            "input": {
+                "description": "Input",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "+/- 0.1V"
+            },
+            "out_0": {
+                "description": "Output",
+                "direction": "output",
+                "default": "out_0",
+                "dc_range": "mid-to-(mid+0.1)",
+                "ac_range": null
+            },
+            "out_1": {
+                "description": "Output",
+                "direction": "output",
+                "default": "out_1",
+                "dc_range": "mid-to-(mid+0.1)",
+                "ac_range": null
+            },
+            "out_2": {
+                "description": "Output",
+                "direction": "output",
+                "default": "out_2",
+                "dc_range": "mid-to-(mid+0.1)",
+                "ac_range": null
+            },
+            "out_3": {
+                "description": "Output",
+                "direction": "output",
+                "default": "out_3",
+                "dc_range": "mid-to-(mid+0.1)",
+                "ac_range": null
+            },
+            "out_4": {
+                "description": "Output",
+                "direction": "output",
+                "default": "out_4",
+                "dc_range": "mid-to-(mid+0.1)",
+                "ac_range": null
+            },
+            "out_5": {
+                "description": "Output",
+                "direction": "output",
+                "default": "out_5",
+                "dc_range": "mid-to-(mid+0.1)",
+                "ac_range": null
+            },
+            "out_6": {
+                "description": "Output",
+                "direction": "output",
+                "default": "out_6",
+                "dc_range": "mid-to-(mid+0.1)",
+                "ac_range": null
+            },
+            "out_7": {
+                "description": "Output",
+                "direction": "output",
+                "default": "out_7",
+                "dc_range": "mid-to-(mid+0.1)",
+                "ac_range": null
+            }
+        },
+        "parameters": {
+            "band_frequencies": {
+                "parameter_type": "string",
+                "description": "List of Center frequencies for the subband components",
+                "default": "[1000, 5000]",
+                "range_type": "interval",
+                "range": [
+                    "1",
+                    "200000"
+                ],
+                "unit": "Hz",
+                "ui_component": "textbox"
+            },
+            "quality_factor": {
+                "parameter_type": "string",
+                "description": "List of individual filter quality factors",
+                "default": "[1,1]",
+                "range_type": "interval",
+                "range": [
+                    "0.3",
+                    "4.5"
+                ],
+                "unit": null,
+                "ui_component": "textbox"
+            },
+            "attack_rates": {
+                "parameter_type": "string",
+                "description": "List of attack rates for the subband components",
+                "default": null,
+                "range_type": "interval",
+                "range": [null,null],
+                "unit": null,
+                "ui_component": "textbox"
+            },
+            "decay_rates": {
+                "parameter_type": "string",
+                "description": "List of decay rates for the subband components",
+                "default": null,
+                "range_type": "interval",
+                "range": [null,null],
+                "unit": null,
+                "ui_component": "textbox"
+            }
+        }
+    },
+    "GainOpamp": {
+        "short_description": "GainOpAmp",
+        "long_description": "`GainOpamp` is one of several ways to amplify signals. ",
+        "type_name": "GainOpAmp",
+        "terminals": {
+            "input": {
+                "description": "Input",
+                "direction": "input",
+                "default": null,
+                "dc_range": "`reference`-centered",
+                "ac_range": "Out range / gain"
+            },
+            "reference": {
+                "description": "\"Virtual ground\" if used ",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "Out range / gain (but normally dc)"
+            },
+            "output": {
+                "description": "Output",
+                "direction": "output",
+                "default": null,
+                "dc_range": "rail-to-rail",
+                "ac_range": "+/- 1.2V"
+            }
+        },
+        "parameters": {
+            "gain_mode": {
+                "parameter_type": "string",
+                "description": "Gain",
+                "default": "GainOpampMode.Inverting10x",
+                "range_type": "discrete",
+                "range": [
+                    "GainOpampMode.Noninverting1x", "GainOpampMode.Noninverting11x", "GainOpampMode.Inverting2x", "GainOpampMode.Inverting4x", "GainOpampMode.Inverting10x", "GainOpampMode.Inverting20x"
+                ],
+                "unit": null,
+                "ui_component": "dropdown"
+            },
+            "opamp_implementation": {
+                "parameter_type": "string",
+                "description": "Opamp to use",
+                "default": "OpampType.StageZero",
+                "range_type": "discrete",
+                "range": [
+                    "OpampType.StageZero", "OpampType.Pin"
+                ],
+                "unit": null,
+                "ui_component": "dropdown"
+            },
+            "feedback_cap_count": {
+                "parameter_type": "string",
+                "description": "Incremental (4.7pF) capacitance",
+                "default": "0",
+                "range_type": "interval",
+                "range": ["0","7"],
+                "unit": null,
+                "ui_component": "textbox"
+            }
+        }
+    },
+    "LookupTable":  {
+        "short_description": "LookupTable",
+        "long_description": "`LookupTable` implements arbitrary 3-input logic functions.",
+        "type_name": "LookupTable",
+        "terminals": {
+            "A": {
+                "description": "Input A",
+                "direction": "input",
+                "default": "gnd",
+                "dc_range": "logic levels",
+                "ac_range": "logic levels"
+            },
+            "B": {
+                "description": "Input B",
+                "direction": "input",
+                "default": "gnd",
+                "dc_range": "logic levels",
+                "ac_range": "logic levels"
+            },
+            "C": {
+                "description": "Input C",
+                "direction": "input",
+                "default": "gnd",
+                "dc_range": "logic levels",
+                "ac_range": "logic levels"
+            },
+            "output": {
+                "description": "Output",
+                "direction": "output",
+                "default": null,
+                "dc_range": "logic levels",
+                "ac_range": "logic levels"
+            }
+        },
+        "parameters": {
+            "expression": {
+                "parameter_type": "string",
+                "description": "Python format lookup table logic expression",
+                "default": "1",
+                "range_type": "interval",
+                "range": [null, null],
+                "unit": null,
+                "ui_component": "textbox"
+            }
+        }
+    },
+    "DelayFlipFlop":  {
+        "short_description": "DelayFlipFlop",
+        "long_description": "DelayFlipFlop implements a standard delay flip-flop.",
+        "type_name": "DelayFlipFlop",
+        "terminals": {
+            "input": {
+                "description": "Delay input",
+                "direction": "input",
+                "default": "vdd",
+                "dc_range": "logic levels",
+                "ac_range": "logic levels"
+            },
+            "reset": {
+                "description": "Reset",
+                "direction": "input",
+                "default": "gnd",
+                "dc_range": "logic levels",
+                "ac_range": "logic levels"
+            },
+            "clock": {
+                "description": "Clock",
+                "direction": "input",
+                "default": "gnd",
+                "dc_range": "logic levels",
+                "ac_range": "logic levels"
+            },
+            "output": {
+                "description": "Output",
+                "direction": "output",
+                "default": null,
+                "dc_range": "logic levels",
+                "ac_range": "logic levels"
+            }
+        },
+        "parameters": {
+            "expression": {
+                "parameter_type": "string",
+                "description": "Python format lookup table logic expression",
+                "default": "1",
+                "range_type": "interval",
+                "range": [null, null],
+                "unit": null,
+                "ui_component": "textbox"
+            }
+        }
     }
 }
