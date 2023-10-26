@@ -25,18 +25,19 @@ const LandingPage = (props: LandingPageProps) => {
 	return <LandingView projects={projects} />;
 };
 
-export async function landingPageLoader(): Promise<ProjectDetails[]> {
-	try {
-		return await remoteService.getProjects();
-	} catch (e) {
-		console.error("Couldn't get the projects from the backend.", e);
-		return Promise.resolve(projectCards);
-	}
+type DeleteProjectT = {
+	slug: string;
+};
 
-	// console.log("Before");
-	// const projects = await remoteService.getProjects();
-	// console.log("After");
-	// return projects;
+export async function landingPageAction({ request }: { request: Request }) {
+	const formData = await request.formData();
+	const data = Object.fromEntries(formData) as DeleteProjectT;
+
+	console.log(data);
+}
+
+export async function landingPageLoader(): Promise<ProjectDetails[]> {
+	return await remoteService.getProjects();
 }
 
 export default LandingPage;

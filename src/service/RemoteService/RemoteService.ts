@@ -8,6 +8,7 @@ import type { ListProjectsRequest } from "./client/bindings/ListProjectsRequest"
 import type { ListProjectsResponse } from "./client/bindings/ListProjectsResponse";
 import type { ProjectT } from "../../redux/slices/ProjectSlice";
 import type { ProjectDetails } from "./client/bindings/ProjectDetails";
+import { projectCards } from "../../tests/mockdata/allProjectCards";
 
 /**
  * Object responsible for Transforming the UI Data to required Backend DTOs and then call the Backend using
@@ -56,8 +57,15 @@ const remoteService = {
 		);
 		console.log("Request", getProjectsRequest);
 
-		const getProjectsResponse: ListProjectsResponse = await remoteClient.getProjects(getProjectsRequest);
-		console.log(getProjectsResponse);
+		let getProjectsResponse: ListProjectsResponse;
+
+		try {
+			getProjectsResponse = await remoteClient.getProjects(getProjectsRequest);
+			console.log(getProjectsResponse);
+		} catch (e) {
+			console.error("Couldn't get the projects from the backend.", e);
+			return Promise.resolve(projectCards); // TODO: Delete this line once backend is implemented
+		}
 
 		const projects = remoteTransformer.parseGetProjectsResponse(getProjectsResponse);
 		console.log("Transformed: ", projects);
