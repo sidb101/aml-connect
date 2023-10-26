@@ -1,11 +1,10 @@
 import { combineReducers, configureStore, type PreloadedState } from "@reduxjs/toolkit";
-import { useDispatch } from "react-redux";
-import { generalReducer } from "./slices/GeneralSlice";
+import projectsReducer from "./slices/ProjectsSlice";
 import { dataHubReducer } from "./slices/DataHubSlice";
 
 // Create the root reducer separately so we can extract the RootState type
 const rootReducer = combineReducers({
-	general: generalReducer,
+	projects: projectsReducer,
 	dataHub: dataHubReducer,
 });
 
@@ -15,15 +14,17 @@ const rootReducer = combineReducers({
 
  * @param preloadedState: The state you want to populate in the store when the application starts
  */
-export const setupStore = (preloadedState?: PreloadedState<RootState>) =>
+export const store = (preloadedState?: PreloadedState<RootState>) =>
 	configureStore({
 		reducer: rootReducer,
 		preloadedState,
 	});
 
-export const appStore = setupStore();
+//export const appStore = setupStore();
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type AppStore = ReturnType<typeof setupStore>;
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppDispatch = AppStore["dispatch"];
+//export type AppDispatch = AppStore["dispatch"];
+//export type AppStore = ReturnType<typeof setupStore>;
+
+export default store;

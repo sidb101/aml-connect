@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { dataSetupRoute, createModelRoute } from "../../../../routes";
 import { useLocation } from "react-router-dom";
 import { useAppSelector } from "../../../../hooks";
-import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
+import { selectCurrentProjectSlug } from "../../../../redux/slices/ProjectsSlice";
 
 export type DataVizT = {
 	data?: string;

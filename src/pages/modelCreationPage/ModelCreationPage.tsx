@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
+import { generalActions, selectCurrentProjectName } from "../../redux/slices/ProjectsSlice";
 import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
 import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import "./ModelCreationPage.scss";

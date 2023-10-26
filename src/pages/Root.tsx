@@ -1,47 +1,36 @@
-import { Outlet, useLocation, useMatches } from "react-router-dom";
+import { Outlet, useLoaderData, useLocation } from "react-router-dom";
 import { Sidebar } from "../components/sideBar/Sidebar";
 import { NavRegion } from "../components/sideBar/navRegion/NavRegion";
 import { ProjectsRegion } from "../components/sideBar/projectRegion/ProjectsRegion";
-import { mockProjects } from "../tests/mockdata/allProjects";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useState } from "react";
 import type { SideRegionT } from "../components/sideBar/sideRegion/SideRegion";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { generalActions, ProjectStatus, selectCurrentProjectName, selectLoading } from "../redux/slices/GeneralSlice";
-import { getOpenProjectNavLinks } from "../components/sideBar/navRegion/appNavLinks";
+import { projectActions, ProjectStatus } from "../redux/slices/ProjectsSlice";
 import { testIds } from "../tests/test-utils";
 import "./Root.scss";
 import type { NavLinkT } from "../components/sideBar/navRegion/navLink/NavLink";
 import { isNavLinkSelected } from "../components/sideBar/navRegion/navLink/NavLink";
 import Spinner from "../components/spinner/Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../redux/store";
+import type { ProjectDetails } from "../service/RemoteService/client/bindings/ProjectDetails";
+import remoteService from "../service/RemoteService/RemoteService";
 
 export type RootT = {
 	data?: string;
 };
 
-export type RootOutletContextT = {
-	setProjectStatus: React.Dispatch<React.SetStateAction<ProjectStatus>>;
-};
-
 const Root = (props: RootT) => {
-	const dispatch = useAppDispatch();
-	const { pathname } = useLocation();
-
-	// getting the required data from the state
-	const { projectStatus, projectSlug, allProjects } = useAppSelector((state) => state.general);
-	const projectName = useAppSelector(selectCurrentProjectName);
-	const isLoading = useAppSelector(selectLoading);
-
 	const [openProjectNavLinks, setOpenProjectNavLinks] = useState<NavLinkT[]>([]);
 
-	useEffect(() => {
-		// get all the projects of the application and set them in the state
-		dispatch(generalActions.setAllProjects(mockProjects));
-	}, []);
+	const dispatch = useDispatch();
+	const { projectStatus, allProjects, isLoading } = useSelector((store: RootState) => store.projects);
 
-	//get the proper links based on given project
-	useEffect(() => {
-		setOpenProjectNavLinks(getOpenProjectNavLinks(projectSlug));
-	}, [projectSlug]);
+	const projects = useLoaderData() as ProjectDetails[];
+	dispatch(projectActions.setAllProjects(projects));
+
+	const { pathname } = useLocation();
+
+	const projectName = undefined;
 
 	const getSideRegion = (): SideRegionT =>
 		projectStatus === ProjectStatus.OPEN
@@ -82,5 +71,10 @@ const Root = (props: RootT) => {
 		</div>
 	);
 };
+
+export async function rootLoader(): Promise<ProjectDetails[]> {
+	const projects = await remoteService.getProjects();
+	return projects;
+}
 
 export default Root;

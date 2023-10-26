@@ -4,7 +4,7 @@ import type { DataHubContextT } from "../../DataHubPage";
 import { useDataHubContext } from "../../DataHubPage";
 import { dataVizRoute, projectOverviewRoute } from "../../../../routes";
 import { useAppSelector } from "../../../../hooks";
-import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
+import { selectCurrentProjectSlug } from "../../../../redux/slices/ProjectsSlice";
 import { DataSetT } from "../../../../redux/slices/DataHubSlice";
 import DatasetWidget from "./DatasetWidget/DatasetWidget";
 import LabelDataWidget from "./LabelDataWidget/LabelDataWidget";

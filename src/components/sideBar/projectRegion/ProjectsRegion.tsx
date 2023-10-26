@@ -2,7 +2,7 @@ import "./ProjectsRegion.scss";
 import { Link } from "react-router-dom";
 import { projectOverviewRoute } from "../../../routes";
 import React from "react";
-import type { BasicProjectDataT } from "../../../redux/slices/GeneralSlice";
+import type { BasicProjectDataT } from "../../../redux/slices/ProjectsSlice";
 import { testIds } from "../../../tests/test-utils";
 
 export type ProjectsRegionT = {

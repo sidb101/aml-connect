@@ -11,6 +11,8 @@ import type { GetFilesResponse } from "./bindings/GetFilesResponse";
 import type { ListProjectsRequest } from "./bindings/ListProjectsRequest";
 import type { ListProjectsResponse } from "./bindings/ListProjectsResponse";
 import { Exception } from "sass";
+import { type CreateProjectRequest } from "./bindings/CreateProjectRequest";
+import { type CreateProjectResponse } from "./bindings/CreateProjectResponse";
 
 class TauriApiClient implements RemoteClient {
 	/**
@@ -35,6 +37,15 @@ class TauriApiClient implements RemoteClient {
 			return await invoke("get_files", { req: getFilesRequest });
 		} catch (e) {
 			console.error("Couldn't get the files from backend.", e);
+			return Promise.reject(e);
+		}
+	}
+
+	async createProject(createProjectRequest: CreateProjectRequest): Promise<CreateProjectResponse> {
+		try {
+			return await invoke("create_project", { req: createProjectRequest });
+		} catch (e) {
+			console.error("Couldn't create the new project on the backend.", e);
 			return Promise.reject(e);
 		}
 	}

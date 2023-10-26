@@ -1,26 +1,19 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../../hooks";
-import { generalActions, ProjectStatus } from "../../../../redux/slices/GeneralSlice";
+//import { useAppDispatch, useAppSelector } from "../../../../hooks";
+import { ProjectStatus } from "../../../../redux/slices/ProjectsSlice";
 import LandingView from "./layouts/LandingView";
 import { type ProjectDetails } from "../../../../service/RemoteService/client/bindings/ProjectDetails";
 import remoteService from "../../../../service/RemoteService/RemoteService";
-import { projectCards } from "../../../../tests/mockdata/allProjectCards";
 import { useLoaderData } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState } from "../../../../redux/store";
 
 type LandingPageProps = {
 	data?: string;
 };
 
 const LandingPage = (props: LandingPageProps) => {
-	const projects = useLoaderData() as ProjectDetails[];
-
-	const dispatch = useAppDispatch();
-	const projectStatus = useAppSelector((state) => state.general.projectStatus);
-
-	useEffect(() => {
-		// dispatch action only if the status is NOT_OPEN
-		projectStatus !== ProjectStatus.NOT_OPEN && dispatch(generalActions.closeProject());
-	}, [projectStatus]);
+	const projects = useSelector((store: RootState) => store.projects.allProjects);
 
 	return <LandingView projects={projects} />;
 };
@@ -34,10 +27,6 @@ export async function landingPageAction({ request }: { request: Request }) {
 	const data = Object.fromEntries(formData) as DeleteProjectT;
 
 	console.log(data);
-}
-
-export async function landingPageLoader(): Promise<ProjectDetails[]> {
-	return await remoteService.getProjects();
 }
 
 export default LandingPage;

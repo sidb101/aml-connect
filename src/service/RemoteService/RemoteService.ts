@@ -6,9 +6,9 @@ import remoteTransformer from "./RemoteTransformer";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import type { ListProjectsRequest } from "./client/bindings/ListProjectsRequest";
 import type { ListProjectsResponse } from "./client/bindings/ListProjectsResponse";
-import type { ProjectT } from "../../redux/slices/ProjectSlice";
 import type { ProjectDetails } from "./client/bindings/ProjectDetails";
 import { projectCards } from "../../tests/mockdata/allProjectCards";
+import type { CreateProjectRequest } from "./client/bindings/CreateProjectRequest";
 
 /**
  * Object responsible for Transforming the UI Data to required Backend DTOs and then call the Backend using
@@ -48,6 +48,40 @@ const remoteService = {
 		console.log("Transformed: ", inputFilesMetaData);
 
 		return inputFilesMetaData;
+	},
+
+	createProject: async (projectName: string, projectDescription: string): Promise<ProjectDetails[]> => {
+		const createProjectRequest: CreateProjectRequest = remoteTransformer.createTheCreateProjectRequest(
+			projectName,
+			projectDescription
+		);
+		console.log("Request", createProjectRequest);
+
+		let createProjectResponse;
+
+		try {
+			createProjectResponse = await remoteClient.createProject(createProjectRequest);
+			console.log(createProjectResponse);
+		} catch (e) {
+			console.error("Couldn't create a new project on the backend.", e);
+
+			// TODO: Delete everything below once backend is implemented
+			const newProject: ProjectDetails = {
+				id: projectCards.length + 1,
+				slug: `dummy_project_${projectCards.length + 1}`,
+				name: projectName,
+				description: projectDescription,
+			};
+
+			//projectCards.push(newProject);
+
+			return Promise.resolve(projectCards);
+		}
+
+		const projects = remoteTransformer.parseCreateProjectResponse(createProjectResponse);
+		console.log("Transformed: ", projects);
+
+		return projects;
 	},
 
 	getProjects: async (): Promise<ProjectDetails[]> => {

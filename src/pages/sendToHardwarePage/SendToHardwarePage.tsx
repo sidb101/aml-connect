@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useParams } from "react-router-dom";
-import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
+import { generalActions, selectCurrentProjectName } from "../../redux/slices/ProjectsSlice";
 import SendToHardwareView from "./layouts/SendToHardwareView";
 
 export type SendToHardwarePageT = {

@@ -2,6 +2,7 @@ import { redirect } from "react-router-dom";
 import { BASE_ROUTE } from "../../../../routes";
 import { type ProjectDetails } from "../../../../service/RemoteService/client/bindings/ProjectDetails";
 import CreateNewProjectView from "./layouts/CreateNewProjectView";
+import remoteService from "../../../../service/RemoteService/RemoteService";
 
 function CreateNewProjectPage() {
 	return <CreateNewProjectView />;
@@ -18,17 +19,11 @@ export async function createNewProjectPageAction({ request }: { request: Request
 
 	console.log(data);
 
-	const project: ProjectDetails = {
-		id: 0,
-		slug: "new-dummy-project",
-		name: data.name,
-		description: data.description,
-	};
+	const projectsWithNewProject = await remoteService.createProject(data.name, data.description);
 
-	//const newProject = await createNewProject(project);
+	const newProject = projectsWithNewProject[projectsWithNewProject.length - 1];
 
-	//return redirect(`/project/${newProject.slug}/overview`);
-	return redirect(`${BASE_ROUTE}`);
+	return redirect(`/project/${newProject.slug}/overview`);
 }
 
 export default CreateNewProjectPage;

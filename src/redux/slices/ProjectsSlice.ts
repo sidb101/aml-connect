@@ -8,11 +8,13 @@
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { AUDIO_DIR } from "../../constants";
+import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
 
-type GeneralState = {
+type ProjectsState = {
 	projectStatus: ProjectStatus;
+	projectId: number;
 	projectSlug: string;
-	allProjects: BasicProjectDataT[];
+	allProjects: ProjectDetails[];
 	isLoading: boolean; //To show spinner when app has to wait for any kind of call
 };
 
@@ -23,23 +25,18 @@ export enum ProjectStatus {
 	NOT_OPEN, // When no project is open (mostly at the homepage of the app)
 }
 
-// Minimum project data to needed for all the projects for that application
-export type BasicProjectDataT = {
-	slug: string;
-	name: string;
-};
-
-const initialState: GeneralState = {
+const initialState: ProjectsState = {
 	projectStatus: ProjectStatus.NOT_OPEN,
+	projectId: -1,
 	projectSlug: "",
 	allProjects: [],
-	isLoading: false,
+	isLoading: true,
 };
 
 /**
  * The slice of the state that would define all the actions and reducers for this state
  */
-export const generalSlice = createSlice({
+const projectsSlice = createSlice({
 	name: "general",
 	initialState, // the type of this slice of the state would be inferred from the type of initial state
 	reducers: {
@@ -50,9 +47,19 @@ export const generalSlice = createSlice({
 		 * @param state: General state
 		 * @param action: The action have slug in the request
 		 */
-		openProject: (state, action: PayloadAction<string>) => {
-			state.projectStatus = ProjectStatus.OPEN;
-			state.projectSlug = action.payload;
+		openProject: {
+			prepare(id: number, slug: string) {
+				return {
+					payload: { id, slug },
+				};
+			},
+
+			reducer(state, action: PayloadAction<{ id: number; slug: string }>) {
+				state.projectStatus = ProjectStatus.OPEN;
+				state.projectId = action.payload.id;
+				state.projectSlug = action.payload.slug;
+				state.isLoading = false;
+			},
 		},
 
 		/**
@@ -77,8 +84,9 @@ export const generalSlice = createSlice({
 		 * @param state: General state
 		 * @param action: Array of ProjectData objects having basic project data for each project
 		 */
-		setAllProjects: (state, action: PayloadAction<BasicProjectDataT[]>) => {
+		setAllProjects: (state, action: PayloadAction<ProjectDetails[]>) => {
 			state.allProjects = action.payload;
+			state.isLoading = false;
 		},
 
 		/**
@@ -101,27 +109,31 @@ export const generalSlice = createSlice({
  * @return ProjectName if the slug is present in the state, else null
  * @param state: the Root app state
  */
-export const selectCurrentProjectName = createSelector(
-	(state: RootState) => state.general,
-	({ allProjects, projectSlug }) => {
-		const project = allProjects.find((project) => project.slug === projectSlug);
-		return project ? project.name : undefined;
-	}
-);
+// export const selectCurrentProjectName = createSelector(
+// 	(state: RootState) => state.general,
+// 	({ allProjects, projectSlug }) => {
+// 		const project = allProjects.find((project) => project.slug === projectSlug);
+// 		return project ? project.name : undefined;
+// 	}
+// );
+//
+// export const selectCurrentProjectSlug = createSelector(
+// 	(state: RootState) => state.general,
+// 	({ projectSlug }) => projectSlug
+// );
+//
+// export const selectCurrentAudioPath = createSelector(
+// 	(state: RootState) => state.general,
+// 	({ projectSlug }) => `${projectSlug}/${AUDIO_DIR}`
+// );
+//
+// export const selectLoading = createSelector(
+// 	(state: RootState) => state.general,
+// 	({ isLoading }) => isLoading
+// );
 
-export const selectCurrentProjectSlug = createSelector(
-	(state: RootState) => state.general,
-	({ projectSlug }) => projectSlug
-);
+//export const { name: generalSliceKey, reducer: generalReducer, actions: generalActions } = projectsSlice;
 
-export const selectCurrentAudioPath = createSelector(
-	(state: RootState) => state.general,
-	({ projectSlug }) => `${projectSlug}/${AUDIO_DIR}`
-);
+export const { actions: projectActions } = projectsSlice;
 
-export const selectLoading = createSelector(
-	(state: RootState) => state.general,
-	({ isLoading }) => isLoading
-);
-
-export const { name: generalSliceKey, reducer: generalReducer, actions: generalActions } = generalSlice;
+export default projectsSlice.reducer;

@@ -8,7 +8,7 @@ import {
 	generalActions,
 	selectCurrentAudioPath,
 	selectCurrentProjectSlug,
-} from "../../../../../redux/slices/GeneralSlice";
+} from "../../../../../redux/slices/ProjectsSlice";
 import remoteService from "../../../../../service/RemoteService/RemoteService";
 import storageService from "../../../../../service/StorageService/StorageService";
 

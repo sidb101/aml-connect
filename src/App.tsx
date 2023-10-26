@@ -15,9 +15,9 @@ import {
 	RESULTS_ANALYSIS_ROUTE,
 	RESULTS_COMPARISON_ROUTE,
 } from "./routes";
-import Root from "./pages/Root";
+import Root, { rootLoader } from "./pages/Root";
 import ErrorPage from "./pages/errorPage/ErrorPage";
-import LandingPage, { landingPageLoader } from "./pages/landingHubPage/layouts/LandingPage/LandingPage";
+import LandingPage from "./pages/landingHubPage/layouts/LandingPage/LandingPage";
 import OverviewPage, { overviewPageAction } from "./pages/overviewPage/OverviewPage";
 import DataHubPage from "./pages/dataHubPage/DataHubPage";
 import DataSetup from "./pages/dataHubPage/layouts/DataSetup/DataSetup";
@@ -37,6 +37,7 @@ import LandingHubPage from "./pages/landingHubPage/LandingHubPage";
 export const routes = [
 	{
 		element: <Root />,
+		loader: rootLoader,
 		errorElement: <ErrorPage />,
 		children: [
 			{
@@ -46,7 +47,6 @@ export const routes = [
 					{
 						path: "",
 						element: <LandingPage />,
-						loader: landingPageLoader,
 						errorElement: <ErrorPage />,
 					},
 					{
