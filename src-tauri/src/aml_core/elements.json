@@ -89,7 +89,7 @@
             "comparator_enable": {
                 "parameter_type": "boolean",
                 "description": "Pass output through comparator",
-                "default": false,
+                "default": "false",
                 "range_type": "discrete",
                 "range": ["true", "false"],
                 "unit": null,
@@ -585,7 +585,7 @@
                 "parameter_type": "number",
                 "description": "attack rate",
                 "default": "10000",
-                "range_type": "number",
+                "range_type": "interval",
                 "range": ["3", null],
                 "unit": null,
                 "ui_component": "textbox"
@@ -594,7 +594,7 @@
                 "parameter_type": "number",
                 "description": "decay rate",
                 "default": "50",
-                "range_type": "number",
+                "range_type": "interval",
                 "range": ["3", null],
                 "unit": null,
                 "ui_component": "textbox"
