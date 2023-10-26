@@ -3,8 +3,8 @@ import type { AcDiff } from "./AcDiff";
 import type { AsymmetricIntegrator } from "./AsymmetricIntegrator";
 import type { Comparator } from "./Comparator";
 import type { Filter } from "./Filter";
-import type { FilterBank } from "./FilterBank";
-import type { GainOpAmp } from "./GainOpAmp";
+import type { Filterbank } from "./Filterbank";
+import type { GainOpamp } from "./GainOpamp";
 import type { LookupTable } from "./LookupTable";
 import type { Multiplier } from "./Multiplier";
 import type { NeuralNet } from "./NeuralNet";
@@ -13,4 +13,4 @@ import type { PeakDetector } from "./PeakDetector";
 import type { SynthesizedFilter } from "./SynthesizedFilter";
 import type { TerminalParams } from "./TerminalParams";
 
-export type Parameters = { AcDiff: AcDiff } | { AsymmetricIntegrator: AsymmetricIntegrator } | { Comparator: Comparator } | { Filter: Filter } | { FilterBank: FilterBank } | { GainOpAmp: GainOpAmp } | { LookupTable: LookupTable } | "DelayFlipFlop" | { Multiplier: Multiplier } | "Mux2" | { NeuralNet: NeuralNet } | { PeakDetector: PeakDetector } | { PGA: PGA } | { SynthesizedFilter: SynthesizedFilter } | { Terminal: TerminalParams };
+export type Parameters = { AcDiff: AcDiff } | { AsymmetricIntegrator: AsymmetricIntegrator } | { Comparator: Comparator } | { Filter: Filter } | { Filterbank: Filterbank } | { GainOpamp: GainOpamp } | { LookupTable: LookupTable } | "DelayFlipFlop" | { Multiplier: Multiplier } | "Mux2" | { NeuralNet: NeuralNet } | { PeakDetector: PeakDetector } | { PGA: PGA } | { SynthesizedFilter: SynthesizedFilter } | { Terminal: TerminalParams };

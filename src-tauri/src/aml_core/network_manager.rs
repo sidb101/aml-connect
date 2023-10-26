@@ -31,7 +31,7 @@ pub enum SimulatorError {
 #[ts(export_to =  "../src/service/RemoteService/client/bindings/")]
 pub struct SimulateNetworkRequest {
     pub network: Network,
-    pub input_file_path: String
+    pub audio_file_path: String
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -45,7 +45,7 @@ pub struct SimulateNetworkResponse {
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Node {
-    pub id: u64,
+    pub id: String,
     pub name: String,
     pub parent_network_id: u64,
     pub terminal_ids: Vec<u64>,
@@ -67,7 +67,7 @@ pub struct Network {
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Element{
-    pub id: u64,
+    pub id: String,
     pub parent_network_id: u64,
 
     pub type_name: String,
@@ -81,8 +81,8 @@ pub struct Element{
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Position {
-    pub x: i64,
-    pub y: i64,
+    pub x: i32,
+    pub y: i32,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -103,8 +103,8 @@ pub enum Parameters {
     AsymmetricIntegrator(AsymmetricIntegrator),
     Comparator(Comparator),
     Filter(Filter),
-    FilterBank(FilterBank),
-    GainOpAmp(GainOpAmp),
+    Filterbank(Filterbank),
+    GainOpamp(GainOpamp),
     LookupTable(LookupTable),
     DelayFlipFlop, //has no params
     Multiplier(Multiplier),
@@ -121,7 +121,7 @@ pub enum Parameters {
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct AcDiff{
     pub gain: f64,
-    pub bias: f64,
+    pub bias: Option<f64>,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -132,6 +132,10 @@ pub struct AsymmetricIntegrator{
     pub down: f64,
     pub up_down_type: UpDownType,
     pub comparator_enable: bool,
+    pub buffer_gm: Option<f64>,
+    pub capacitor_configuration: Option<CapacitorConfiguration>,
+    pub parasitic_capacitance: Option<f64>,
+    pub unit_capacitance: Option<f64>,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -154,7 +158,7 @@ pub struct Filter{
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct FilterBank{
+pub struct Filterbank{
     pub band_frequencies: Vec<u64>,
     pub quality_factor: Vec<f64>,
     pub attack_rates: Vec<f64>,
@@ -164,9 +168,9 @@ pub struct FilterBank{
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct GainOpAmp{
+pub struct GainOpamp{
     pub gain_mode: GainOpampMode,
-    pub opamp_implementation: OpampType,
+    //pub opamp_implementation: OpampType,  //not supported as it is not exposed
     pub feedback_cap_count: f64,
 }
 
@@ -191,6 +195,9 @@ pub struct NeuralNet{
     pub weights: Vec<f64>,
     pub biases: Vec<f64>,
     pub activation_function: Vec<ActivationFunction>,
+    pub activation_scale: Option<f64>,
+    pub input_compress_scale: Option<f64>,
+    pub input_compression_type: Option<ActivationFunction>,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -200,6 +207,8 @@ pub struct PeakDetector{
     pub atk: f64,
     pub dec: f64,
     pub model_version: ModelVersion,
+    pub buff: Option<f64>,
+    pub parasitic_ratio: Option<f64>,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -208,6 +217,7 @@ pub struct PeakDetector{
 pub struct PGA{
     pub Av1: f64,
     pub Av2: f64,
+    pub den: Option<f64>,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -227,6 +237,20 @@ pub struct TerminalParams{
     pub is_output: bool,
     pub is_ac_coupled: Option<bool>,
     pub is_extern: Option<bool>
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+pub enum CapacitorConfiguration{
+    Internal,
+    Internal2x,
+    Internal3x,
+    Internal4x,
+    Internal4x_2xS4_S3,
+    Internal4x_2xS4_S3_S2,
+    Internal4x_S4,
+    ParasiticOnly,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -347,8 +371,6 @@ impl AmlSimulator {
                     }
                 }
                 
-
-                
                 Ok(())
             }
             Err(err) => {
@@ -397,7 +419,7 @@ impl AmlSimulator {
             node_name: "in".to_string()
         };
         let element1 = Element {
-            id: 100, //element ID
+            id: "100".to_string(), //element ID
             parent_network_id: 5000,
             type_name: "Terminal".to_string(),
             element_type_params: Parameters::Terminal(
@@ -428,7 +450,7 @@ impl AmlSimulator {
             node_name: "filter_out".to_string()
         };
         let element2 = Element {
-            id: 101, //element ID
+            id: "101".to_string(), //element ID
             parent_network_id: 5000,
             type_name: "Filter".to_string(),
             element_type_params: Parameters::Filter(
@@ -445,14 +467,14 @@ impl AmlSimulator {
             }
         };
 
-        let node1 = Node {
-            id: 2300,
+        let node1: Node = Node {
+            id: "2300".to_string(),
             name: "in".to_string(),
             parent_network_id: 5000,
             terminal_ids: vec![1, 2],
         };
         let node2 = Node {
-            id: 2301,
+            id: "2301".to_string(),
             name: "filter_out".to_string(),
             parent_network_id: 5000,
             terminal_ids: vec![2,3],
@@ -469,12 +491,11 @@ impl AmlSimulator {
         };
 
         let json_string = serde_json::to_string_pretty(&network).unwrap();
-        //println!("{}", json_string);
+        println!("{}", json_string);
         Ok(json_string)
     }
 
 }
-
 #[cfg(test)]
 mod tests {
     use crate::aml_core::network_manager::*;
