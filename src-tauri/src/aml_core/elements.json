@@ -78,7 +78,7 @@
                 "ui_component": "textbox"
             },
             "up_down_type": {
-                "parameter_type": "enum",
+                "parameter_type": "text",
                 "description": "slope type",
                 "default": "UpDownType.Rate",
                 "range_type": "discrete",
@@ -94,6 +94,239 @@
                 "range": ["true", "false"],
                 "unit": null,
                 "ui_component": "checkbox"
+            }
+        }
+    },
+    "Multiplier": {
+        "short_description": "Multiplier",
+        "long_description": "Multiplier can multiply two signals. The two signal inputs are differential, so it can simultaneously perform subtraction.",
+        "type_name": "Multiplier",
+        "terminals": {
+            "x_pos": {
+                "description": "Noninverting input x",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "x_neg+/-0.1V"
+            },
+            "x_neg": {
+                "description": "inverting input x",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "x_pos+/-0.1V"
+            },
+            "y_pos": {
+                "description": "Noninverting input y",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "y_neg+/-0.1V"
+            },
+            "y_neg": {
+                "description": "inverting input y",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "y_pos+/-0.1V"
+            },
+            "output": {
+                "description": "output",
+                "direction": "output",
+                "default": null,
+                "dc_range": "mid-centered",
+                "ac_range": "mid+/-0.1V"
+            }
+        },
+        "parameters": {
+            "slope": {
+                "parameter_type": "number",
+                "description": "gain for x and y inputs",
+                "default": "1",
+                "range_type": "interval",
+                "range": ["0.1", "5"],
+                "unit": null,
+                "ui_component": "textbox"
+            }
+        }
+    },
+    "Mux2": {
+        "short_description": "two input analog multiplexer",
+        "long_description": "Mux2 allows selecting between two signals",
+        "type_name": "Mux2",
+        "terminals": {
+            "in0": {
+                "description": "Normally connected input",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "rail-to-rail"
+            },
+            "in1": {
+                "description": "Normally open input",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "rail-to-rail"
+            },
+            "select": {
+                "description": "Select in1 when high",
+                "direction": "input",
+                "default": "gnd",
+                "dc_range": "logic levels",
+                "ac_range": "logic levels"
+            },
+            "output": {
+                "description": "output connected to one of in0/in1",
+                "direction": "output",
+                "default": null,
+                "dc_range": "rail-to-rail",
+                "ac_range": "rail-to-rail"
+            }
+        },
+        "parameters": {}
+    },
+    "PeakDetector": {
+        "short_description": "Energy detector to track the input envelope",
+        "long_description": "A peak detector is also called an energy detector or an envelope detector. It tracks the envelope of the input signal. The peak detector can be set to track the envelope at different rates. Higher rates can be used to track the peaks of the envelope, and lower rates can be used to track the baseline. RMS tracking, demodulation and baseline tracking are a few examples where the peak detector can be used.",
+        "type_name": "PeakDetector",
+        "terminals": {
+            "input": {
+                "description": "input",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": null
+            },
+            "output": {
+                "description": "output",
+                "direction": "output",
+                "default": null,
+                "dc_range": "mid-to-(mid+0.1)",
+                "ac_range": null
+            }
+        },
+        "parameters": {
+            "atk": {
+                "parameter_type": "number",
+                "description": "attack rate",
+                "default": "10000",
+                "range_type": "number",
+                "range": ["3", null],
+                "unit": null,
+                "ui_component": "textbox"
+            },
+            "dec": {
+                "parameter_type": "number",
+                "description": "decay rate",
+                "default": "50",
+                "range_type": "number",
+                "range": ["3", null],
+                "unit": null,
+                "ui_component": "textbox"
+            },
+            "model_version": {
+                "parameter_type": "string",
+                "description": "Version of simulation model",
+                "default": "ModelVersion.SecondOrder",
+                "range_type": "discrete",
+                "range": ["ModelVersion.FirstOrder", "ModelVersion.SecondOrder"],
+                "unit": null,
+                "ui_component": "dropdown"
+            }
+        }
+    },
+    "PGA": {
+        "short_description": "Multi-input programmable gain amplifier",
+        "long_description": "PGA performs the operation A_v1 * (V_pos - V_neg) + A_v2 * V_2, making it useful for liear functino synthesis to add, subtract, and scale signals.",
+        "type_name": "PGA",
+        "terminals": {
+            "pos1": {
+                "description": "Noninverting input w/ gain Av1",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "+/-0.1V"
+            },
+            "neg1": {
+                "description": "Inverting input w/ gain Av1",
+                "direction": "output",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "+/-0.1V"
+            },
+            "pos2": {
+                "description": "Noninverting input w/ gain Av2",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "mid-centered",
+                "ac_range": "+/-0.1V"
+            },
+            "reference": {
+                "description": "unity-gain reference point",
+                "direction": "output",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "+/-0.1V"
+            },
+            "output": {
+                "description": "output",
+                "direction": "output",
+                "default": null,
+                "dc_range": "ref +/-0.1V",
+                "ac_range": "ref +/-0.1V"
+            }
+        },
+        "parameters": {
+            "Av1": {
+                "parameter_type": "number",
+                "description": "Gain for pos1 & neg1 inputs",
+                "default": "1",
+                "range_type": "interval",
+                "range": ["0.1", "5"],
+                "unit": "V",
+                "ui_component": "textbox"
+            },
+            "Av2": {
+                "parameter_type": "number",
+                "description": "Gain for pos2",
+                "default": "0.5",
+                "range_type": "interval",
+                "range": ["0.1", "5"],
+                "unit": "V",
+                "ui_component": "textbox"
+            }
+        }
+    },
+    "SynthesizedFilter": {
+        "short_description": "Synthesize different types of higher order filters",
+        "long_description": "This component is used to synthesize higher order filters from a set of coefficients. Higher order and other complex filters of different types like Butterwoth, Chebyshev, Bessel etc can be designed and synthesized.",
+        "type_name": "SynthesizedFilter",
+        "terminals": {
+            "input": {
+                "description": "input",
+                "direction": "input",
+                "default": "mid",
+                "dc_range": "rail-to-rail",
+                "ac_range": "+/-0.1V"
+            },
+            "output": {
+                "description": "output",
+                "direction": "output",
+                "default": null,
+                "dc_range": "mid-centered",
+                "ac_range": null
+            }
+        },
+        "parameters": {
+            "coefficients": {
+                "parameter_type": "string",
+                "description": "List of second order section coefficients",
+                "default": null,
+                "range_type": "string",
+                "range": null,
+                "unit": null,
+                "ui_component": "textbox"
             }
         }
     }
