@@ -1,6 +1,8 @@
 import "./DisplayCard.scss";
 import { Link } from "react-router-dom";
 import DisplayPanel from "../displayPanel/DisplayPanel";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-regular-svg-icons/faCircleXmark";
 
 export type DisplayCardT = {
 	title: string;
@@ -8,6 +10,7 @@ export type DisplayCardT = {
 	description: string;
 	buttonText: string;
 	route: string;
+	showCross?: boolean;
 };
 
 type DisplayCardProps = {
@@ -15,10 +18,17 @@ type DisplayCardProps = {
 };
 
 export default function DisplayCard({ displayCard }: DisplayCardProps) {
+	const { showCross = false } = displayCard;
+
 	return (
 		<DisplayPanel>
 			<div className={`DisplayCard_container`}>
-				<div className={`section-heading-text`}>{displayCard.title}</div>
+				<div className={`DisplayCard_headingContainer`}>
+					<div className={`section-heading-text`}>{displayCard.title}</div>
+					<i className={`green-text section-heading-text`}>
+						{showCross && <FontAwesomeIcon icon={faCircleXmark} />}
+					</i>
+				</div>
 				<div className={`DisplayCard_labels`}>
 					{displayCard.labels?.map((label: string, index: number) => (
 						<label key={index} className={`DisplayCard_label`}>

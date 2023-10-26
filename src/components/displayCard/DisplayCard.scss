@@ -8,6 +8,12 @@
 	gap: global.$panel-padding;
 }
 
+.DisplayCard_headingContainer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
 .DisplayCard_labels {
 	display: flex;
 	gap: global.$general-padding;
