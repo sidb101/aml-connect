@@ -2,4 +2,4 @@
 import type { Element } from "./Element";
 import type { Node } from "./Node";
 
-export interface Network { id: bigint, name: string, elements: Array<Element>, nodes: Array<Node>, creator_id: bigint, }
+export interface Network { id: bigint | null, name: string, elements: Array<Element>, nodes: Array<Node>, creator_id: bigint, }

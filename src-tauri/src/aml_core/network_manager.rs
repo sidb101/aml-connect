@@ -55,7 +55,10 @@ pub struct Node {
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Network {
-    pub id: u64,
+    //id is optional so that frontend doesn't need to send an id to backend
+    //if backend notices id is null, this means backend needs to generate an
+    //id for this network
+    pub id: Option<u64>, 
     pub name: String,
     pub elements: Vec<Element>,
     pub nodes: Vec<Node>,
@@ -69,6 +72,7 @@ pub struct Network {
 pub struct Element{
     pub id: String,
     pub parent_network_id: u64,
+    pub name: String,
 
     pub type_name: String,
     pub element_type_params: Parameters,
@@ -89,7 +93,7 @@ pub struct Position {
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Terminal{
-    pub id: u64,
+    pub id: String,
     pub parent_element_id: u64,
     pub type_name: String,
     pub node_name: String,
@@ -413,7 +417,7 @@ impl AmlSimulator {
 
     pub fn from_obj_to_json_string() -> Result<String> {
         let terminal1: Terminal = Terminal {
-            id: 1,
+            id: "1".to_string(),
             parent_element_id: 100,
             type_name: "input".to_string(),
             node_name: "in".to_string()
@@ -421,6 +425,7 @@ impl AmlSimulator {
         let element1 = Element {
             id: "100".to_string(), //element ID
             parent_network_id: 5000,
+            name: "Terminal100".to_string(),
             type_name: "Terminal".to_string(),
             element_type_params: Parameters::Terminal(
                 TerminalParams { 
@@ -438,13 +443,13 @@ impl AmlSimulator {
             }
         };
         let terminal2 = Terminal {
-            id: 2,
+            id: "2".to_string(),
             parent_element_id: 101,
             type_name: "input".to_string(),
             node_name: "in".to_string()
         };
         let terminal3 = Terminal {
-            id: 3,
+            id: "3".to_string(),
             parent_element_id: 101,
             type_name: "output".to_string(),
             node_name: "filter_out".to_string()
@@ -452,6 +457,7 @@ impl AmlSimulator {
         let element2 = Element {
             id: "101".to_string(), //element ID
             parent_network_id: 5000,
+            name: "Filter101".to_string(),
             type_name: "Filter".to_string(),
             element_type_params: Parameters::Filter(
                 Filter {
@@ -482,7 +488,7 @@ impl AmlSimulator {
 
     
         let network = Network {
-            id: 5000,
+            id: Some(5000),
             name: "sample_network".to_string(),
             elements: vec![element1, element2],
             nodes: vec![node1, node2],
