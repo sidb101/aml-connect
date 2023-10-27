@@ -4,7 +4,6 @@ import OverviewView from "./layouts/OverviewView";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
-import { mockProjects } from "../../tests/mockdata/allProjects";
 import remoteService from "../../service/RemoteService/RemoteService";
 
 const OverviewPage = () => {
@@ -25,8 +24,7 @@ const OverviewPage = () => {
 
 export async function overviewPageLoader({ params }: { params: Params }): Promise<ProjectDetails> {
 	const projectSlug = params.projectSlug as string;
-	//const currentProject = await remoteService.getProject(projectSlug);
-	const currentProject = mockProjects[0];
+	const currentProject = await remoteService.getProject(projectSlug);
 	return currentProject;
 }
 
@@ -35,20 +33,15 @@ type UpdateProjectFormT = {
 	description: string;
 };
 
-export async function overviewPageAction({ request }: { request: Request }) {
+export async function overviewPageAction({ request, params }: { request: Request; params: Params }) {
 	const formData = await request.formData();
 	const data = Object.fromEntries(formData) as UpdateProjectFormT;
-
 	console.log(data);
 
-	const project: ProjectDetails = {
-		id: 0,
-		slug: "update-dummy-project",
-		name: data.name,
-		description: data.description,
-	};
+	const projectSlug = params.projectSlug as string;
+	console.log(projectSlug);
 
-	//const updatedProject = await updateProjectDetails(project);
+	const updatedProject = await remoteService.updateProject(projectSlug, data.name, data.description);
 
 	//return redirect(`/project/${updatedProject.slug}/overview`);
 	return redirect(`${BASE_ROUTE}`);

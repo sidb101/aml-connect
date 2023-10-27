@@ -5,6 +5,7 @@ import CreateNewProjectView from "./layouts/CreateNewProjectView";
 import remoteService from "../../../../service/RemoteService/RemoteService";
 import { useDispatch } from "react-redux";
 import { projectsActions } from "../../../../redux/slices/ProjectsSlice";
+import { mockProjects } from "../../../../tests/mockdata/allProjects";
 
 function CreateNewProjectPage() {
 	const dispatch = useDispatch();
@@ -25,9 +26,9 @@ export async function createNewProjectPageAction({ request }: { request: Request
 
 	console.log(data);
 
-	const projectsWithNewProject = await remoteService.createProject(data.name, data.description);
+	const newProject = await remoteService.createProject(mockProjects.length, data.name, data.description);
 
-	const newProject = projectsWithNewProject[projectsWithNewProject.length - 1];
+	//const newProject = projectsWithNewProject[projectsWithNewProject.length - 1];
 
 	return redirect(`/project/${newProject.slug}/overview`);
 }

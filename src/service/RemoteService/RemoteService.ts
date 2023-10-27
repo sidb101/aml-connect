@@ -50,39 +50,45 @@ const remoteService = {
 		return inputFilesMetaData;
 	},
 
-	createProject: async (projectName: string, projectDescription: string): Promise<ProjectDetails[]> => {
-		const createProjectRequest: CreateProjectRequest = remoteTransformer.createTheCreateProjectRequest(
-			projectName,
-			projectDescription
-		);
-		console.log("Request", createProjectRequest);
+	createProject: async (length: number, projectName: string, projectDescription: string): Promise<ProjectDetails> => {
+		const newProject: ProjectDetails = {
+			id: length + 1,
+			slug: `dummy_project_${length + 1}`,
+			name: projectName,
+			description: projectDescription,
+		};
 
-		let createProjectResponse;
+		return Promise.resolve(newProject);
 
-		try {
-			createProjectResponse = await remoteClient.createProject(createProjectRequest);
-			console.log(createProjectResponse);
-		} catch (e) {
-			console.error("Couldn't create a new project on the backend.", e);
+		// const createProjectRequest: CreateProjectRequest = remoteTransformer.createTheCreateProjectRequest(
+		// 	projectName,
+		// 	projectDescription
+		// );
+		// console.log("Request", createProjectRequest);
 
-			// TODO: Delete everything below once backend is implemented
-			const projectCards: ProjectDetails[] = [];
-			const newProject: ProjectDetails = {
-				id: projectCards.length + 1,
-				slug: `dummy_project_${projectCards.length + 1}`,
-				name: projectName,
-				description: projectDescription,
-			};
+		// try {
+		// 	const createProjectResponse = await remoteClient.createProject(createProjectRequest);
+		// 	console.log(createProjectResponse);
+		// } catch (e) {
+		// 	console.error("Couldn't create a new project on the backend.", e);
+		//
+		// 	// TODO: Delete everything below once backend is implemented
+		// 	const newProject: ProjectDetails = {
+		// 		id: projectCards.length + 1,
+		// 		slug: `dummy_project_${projectCards.length + 1}`,
+		// 		name: projectName,
+		// 		description: projectDescription,
+		// 	};
 
-			//projectCards.push(newProject);
+		//projectCards.push(newProject);
 
-			return Promise.resolve(projectCards);
-		}
-
-		const projects = remoteTransformer.parseCreateProjectResponse(createProjectResponse);
-		console.log("Transformed: ", projects);
-
-		return projects;
+		//return Promise.resolve(projectCards);
+		// }
+		//
+		// const projects = remoteTransformer.parseCreateProjectResponse(createProjectResponse);
+		// console.log("Transformed: ", projects);
+		//
+		// return projects;
 	},
 
 	getProjects: async (): Promise<ProjectDetails[]> => {
@@ -108,7 +114,36 @@ const remoteService = {
 		return projects;
 	},
 
-	//getProject: async (): Promise<>
+	getProject: async (projectSlug: string): Promise<ProjectDetails> => {
+		let project = mockProjects.find((project) => project.slug === projectSlug);
+
+		if (!project) {
+			project = mockProjects[0];
+		}
+
+		return Promise.resolve(project);
+	},
+
+	updateProject: async (
+		projectSlug: string,
+		projectName: string,
+		projectDescription: string
+	): Promise<ProjectDetails> => {
+		let project = mockProjects.find((project) => project.slug === projectSlug);
+
+		if (!project) {
+			project = mockProjects[0];
+		}
+
+		const updatedProject: ProjectDetails = {
+			id: project.id,
+			slug: project.slug,
+			name: projectName,
+			description: projectDescription,
+		};
+
+		return Promise.resolve(updatedProject);
+	},
 };
 
 export default remoteService;
