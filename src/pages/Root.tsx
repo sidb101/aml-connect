@@ -1,61 +1,79 @@
 import { Outlet, useLoaderData, useLocation } from "react-router-dom";
-import { Sidebar } from "../components/sideBar/Sidebar";
 import { NavRegion } from "../components/sideBar/navRegion/NavRegion";
-import { ProjectsRegion } from "../components/sideBar/projectRegion/ProjectsRegion";
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import type { SideRegionT } from "../components/sideBar/sideRegion/SideRegion";
-import { projectActions, ProjectStatus } from "../redux/slices/ProjectsSlice";
+import { projectsActions, ProjectStatus } from "../redux/slices/ProjectsSlice";
 import { testIds } from "../tests/test-utils";
 import "./Root.scss";
 import type { NavLinkT } from "../components/sideBar/navRegion/navLink/NavLink";
 import { isNavLinkSelected } from "../components/sideBar/navRegion/navLink/NavLink";
 import Spinner from "../components/spinner/Spinner";
 import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../redux/store";
+import type { RootState } from "../redux/setupStore";
 import type { ProjectDetails } from "../service/RemoteService/client/bindings/ProjectDetails";
 import remoteService from "../service/RemoteService/RemoteService";
+import Sidebar from "../components/sideBar/Sidebar";
+import ProjectsRegion from "../components/sideBar/projectRegion/ProjectsRegion";
+import { getOpenProjectNavLinks } from "../components/sideBar/navRegion/appNavLinks";
 
-export type RootT = {
-	data?: string;
-};
-
-const Root = (props: RootT) => {
+function Root() {
 	const [openProjectNavLinks, setOpenProjectNavLinks] = useState<NavLinkT[]>([]);
 
 	const dispatch = useDispatch();
-	const { projectStatus, allProjects, isLoading } = useSelector((store: RootState) => store.projects);
+	const { projectStatus, currentProject, allProjects } = useSelector((store: RootState) => store.projects);
+	const isLoading = useSelector((store: RootState) => store.general.isLoading);
 
 	const projects = useLoaderData() as ProjectDetails[];
-	dispatch(projectActions.setAllProjects(projects));
+
+	useEffect(() => {
+		dispatch(projectsActions.setAllProjects(projects));
+	}, [projects]);
+
+	useEffect(() => {
+		if (currentProject) {
+			setOpenProjectNavLinks(getOpenProjectNavLinks(currentProject.slug));
+		}
+	}, [currentProject]);
 
 	const { pathname } = useLocation();
 
-	const projectName = undefined;
+	function handleSideRegionClick(project: ProjectDetails) {
+		dispatch(projectsActions.openProject(project));
+	}
 
-	const getSideRegion = (): SideRegionT =>
-		projectStatus === ProjectStatus.OPEN
-			? {
-					heading: "Project",
-					region: (
-						<NavRegion
-							heading={projectName || "Undefined Project"}
-							navLinks={openProjectNavLinks.map((navLink) => ({
-								...navLink,
-								// setting the selected attribute for the appropriate link
-								isSelected: isNavLinkSelected(navLink, pathname),
-							}))}
-						/>
-					),
-			  }
-			: projectStatus === ProjectStatus.NEW
-			? {
-					heading: "Project",
-					region: <NavRegion heading={"New Project"} />,
-			  }
-			: {
-					heading: "Projects",
-					region: <ProjectsRegion projects={allProjects} />,
-			  };
+	const getSideRegion = (): SideRegionT => {
+		if (projectStatus === ProjectStatus.OPEN) {
+			return {
+				heading: "Project",
+				region: (
+					<NavRegion
+						heading={currentProject?.name || "Undefined Project"}
+						navLinks={openProjectNavLinks.map((navLink) => ({
+							...navLink,
+							// setting the selected attribute for the appropriate link
+							isSelected: isNavLinkSelected(navLink, pathname),
+						}))}
+					/>
+				),
+			};
+		}
+
+		if (projectStatus === ProjectStatus.NEW) {
+			return {
+				heading: "Project",
+				region: <NavRegion heading={"New Project"} />,
+			};
+		}
+
+		if (projectStatus === ProjectStatus.NOT_OPEN) {
+			return {
+				heading: "Projects",
+				region: <ProjectsRegion projects={allProjects} onClick={handleSideRegionClick} />,
+			};
+		}
+
+		throw new Error("Unknown project status.");
+	};
 
 	return (
 		<div className={`Root_container`}>
@@ -70,7 +88,7 @@ const Root = (props: RootT) => {
 			</div>
 		</div>
 	);
-};
+}
 
 export async function rootLoader(): Promise<ProjectDetails[]> {
 	const projects = await remoteService.getProjects();

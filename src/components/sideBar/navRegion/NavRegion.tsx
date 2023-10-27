@@ -2,11 +2,11 @@ import "./NavRegion.scss";
 import { NavLink, type NavLinkT } from "./navLink/NavLink";
 import { testIds } from "../../../tests/test-utils";
 
-export type NavRegionT = {
+type NavRegionProps = {
 	heading?: string;
 	navLinks?: NavLinkT[];
 };
-export const NavRegion = ({ heading, navLinks, ...props }: NavRegionT) => (
+export const NavRegion = ({ heading, navLinks }: NavRegionProps) => (
 	<div className={"NavRegion_container"}>
 		<div className={"dark-grey-panel NavRegion_content"}>
 			{heading && (

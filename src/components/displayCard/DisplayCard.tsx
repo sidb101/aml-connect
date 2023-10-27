@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import DisplayPanel from "../displayPanel/DisplayPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons/faCircleXmark";
+import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
 
 export type DisplayCardT = {
 	title: string;
@@ -11,6 +12,8 @@ export type DisplayCardT = {
 	buttonText: string;
 	route: string;
 	showCross?: boolean;
+	project?: ProjectDetails;
+	onClick?: () => void;
 };
 
 type DisplayCardProps = {
@@ -18,7 +21,7 @@ type DisplayCardProps = {
 };
 
 export default function DisplayCard({ displayCard }: DisplayCardProps) {
-	const { showCross = false } = displayCard;
+	const { showCross = false, onClick } = displayCard;
 
 	return (
 		<DisplayPanel>
@@ -38,7 +41,7 @@ export default function DisplayCard({ displayCard }: DisplayCardProps) {
 				</div>
 				<div className={`regular-text grey-text`}>{displayCard.description}</div>
 				<div className={`DisplayCard_buttonContainer`}>
-					<Link to={displayCard.route} className={`DisplayCard_link`}>
+					<Link onClick={onClick} to={displayCard.route} className={`DisplayCard_link`}>
 						<button className={`btn btn-outline DisplayCard_button`}>{displayCard.buttonText}</button>
 					</Link>
 				</div>

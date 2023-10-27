@@ -9,6 +9,7 @@ import type { ReactNode } from "react";
 export type FooterBtnT = {
 	label: string;
 	route: string;
+	onClick?: () => void;
 };
 
 export type FooterBtnGroupT = {
@@ -34,7 +35,7 @@ function Footer({ footerBtnGroup, element, className }: FooterProps) {
 			{element || (
 				<div className={`Footer_contentContainer ${footerClass}`}>
 					{prevBtn && (
-						<Link to={prevBtn.route}>
+						<Link onClick={prevBtn.onClick} to={prevBtn.route}>
 							<button className={`btn btn-solid Footer_btn`} data-testid={testIds.prevBtn}>
 								<FontAwesomeIcon className={`Footer_iconLeft`} icon={faChevronLeft} />
 								{prevBtn.label}
@@ -42,7 +43,7 @@ function Footer({ footerBtnGroup, element, className }: FooterProps) {
 						</Link>
 					)}
 					{nextBtn && (
-						<Link to={nextBtn.route}>
+						<Link onClick={nextBtn.onClick} to={nextBtn.route}>
 							<button className={`btn btn-solid Footer_btn`} data-testid={testIds.nextBtn}>
 								{nextBtn.label}
 								<FontAwesomeIcon className={`Footer_iconRight`} icon={faChevronRight} />

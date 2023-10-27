@@ -1,14 +1,12 @@
 import ImportLocalDataView from "./ImportLocalDataView";
 import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
 import { dataHubActions, DataSetT } from "../../../../../redux/slices/DataHubSlice";
-import { useAppDispatch, useAppSelector } from "../../../../../hooks";
-import {
-	generalActions,
-	selectCurrentAudioPath,
-	selectCurrentProjectSlug,
-} from "../../../../../redux/slices/ProjectsSlice";
 import remoteService from "../../../../../service/RemoteService/RemoteService";
 import storageService from "../../../../../service/StorageService/StorageService";
+import { useDispatch, useSelector } from "react-redux";
+import { AUDIO_DIR } from "../../../../../constants";
+import type { RootState } from "../../../../../redux/setupStore";
+import { generalActions } from "../../../../../redux/slices/GeneralSlice";
 
 export type ImportLocalDataT = {
 	onClose: () => void;
@@ -19,22 +17,26 @@ export type ImportLocalDataT = {
  * @param onClose: Method called when this component needs to be unmounted
  */
 const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
-	const projectSlug = useAppSelector(selectCurrentProjectSlug);
-	const audioPath = useAppSelector(selectCurrentAudioPath);
+	const dispatch = useDispatch();
 
-	const dispatch = useAppDispatch();
+	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
+	const audioPath = `${currentProject?.slug || ""}/${AUDIO_DIR}`;
 
 	/**
 	 * Actions to do when user uploads the files
 	 */
 	const onFilesImport = async (files: InputFileDataT[]) => {
-		dispatch(generalActions.markLoading(true));
+		dispatch(generalActions.setLoading());
 		try {
 			//Write the files
 			await storageService.sendFilesToStorage(files, audioPath);
 
 			//Send the metadata to the server
-			const inputFiles = await remoteService.sendFilesMetaData(projectSlug, files, DataSetT.TRAINING);
+			const inputFiles = await remoteService.sendFilesMetaData(
+				currentProject?.slug || "",
+				files,
+				DataSetT.TRAINING
+			);
 
 			//add the successfully uploaded files in the redux state
 			if (inputFiles.length > 0) {
@@ -45,7 +47,7 @@ const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 			console.error(e);
 		}
 
-		dispatch(generalActions.markLoading(false));
+		dispatch(generalActions.unsetLoading());
 	};
 
 	return (

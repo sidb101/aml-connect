@@ -1,68 +1,49 @@
 import "./ResultsPage.scss";
 import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
-import { generalActions, selectCurrentProjectName } from "../../redux/slices/ProjectsSlice";
-import ResultsView from "./layouts/ResultsView";
+import { Outlet, useLocation, useOutletContext } from "react-router-dom";
 import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
-import { getResultsPageTabs } from "./resultsPageTabs";
+import { getResultsPageFooters, getResultsPageHeadings, getResultsPageTabs } from "./resultsPageTabs";
 import Header from "../../components/header/Header";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/setupStore";
 
-type ResultsPageProps = {
-	data?: string;
-};
-
-export type ResultsPageContextT = {
-	setHeading: React.Dispatch<React.SetStateAction<string>>;
-	setFooter: React.Dispatch<React.SetStateAction<FooterBtnGroupT>>;
-};
-
-const ResultsPage = (props: ResultsPageProps) => {
-	const dispatch = useAppDispatch();
-	const { projectSlug } = useParams();
-	const projectName = useAppSelector(selectCurrentProjectName) || "";
-	const { pathname } = useLocation();
-
+const ResultsPage = () => {
 	const [heading, setHeading] = useState<string>("");
 	const [pageTabs, setPageTabs] = useState<PageTabT[]>([]);
 	const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 	const [footer, setFooter] = useState<FooterBtnGroupT>({});
 
-	//tasks to be done for the whole model creation page
-	useEffect(() => {
-		if (projectSlug) {
-			//Update the global state
-			dispatch(generalActions.openProject(projectSlug));
-			setPageTabs(getResultsPageTabs(projectSlug));
-		} else {
-			console.error("projectSlug not present in the URL.");
-		}
-	}, [projectSlug]);
+	const { pathname } = useLocation();
+	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
 
 	useEffect(() => {
 		setSelectedTabIndex(getSelectedTabIndex(pageTabs, pathname));
 	}, [pageTabs, pathname]);
 
-	// return projectSlug && <ResultsView title={`${projectName} > Results`} projectSlug={projectSlug} />;
+	useEffect(() => {
+		if (currentProject) {
+			setHeading(getResultsPageHeadings()[selectedTabIndex]);
+			setFooter(getResultsPageFooters(currentProject.slug)[selectedTabIndex]);
+		}
+	}, [selectedTabIndex, currentProject]);
+
+	useEffect(() => {
+		if (currentProject) {
+			setPageTabs(getResultsPageTabs(currentProject.slug));
+		}
+	}, [currentProject]);
+
 	return (
-		projectSlug && (
+		currentProject && (
 			<>
-				<Header headerTitle={`${projectName || "Undefined Project"} > Results > ${heading}`} />
+				<Header headerTitle={`${currentProject.name || "Undefined Project"} > Results > ${heading}`} />
 				<div className={`body-content-container-no-header-btns-with-footer Results_bodyContainer`}>
 					<div className={"Results_bodyRow1"}>
 						<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
 					</div>
 					<div className={"Results_bodyRow2"}>
-						{/* The outlet would render with given context from the parent */}
-						<Outlet
-							context={
-								{
-									setHeading,
-									setFooter,
-								} satisfies ResultsPageContextT
-							}
-						/>
+						<Outlet />
 					</div>
 				</div>
 				<Footer footerBtnGroup={footer} />
@@ -70,12 +51,5 @@ const ResultsPage = (props: ResultsPageProps) => {
 		)
 	);
 };
-
-/**
- * Hook to use the data hub context passed to the Outlets.
- */
-export function useResultsContext() {
-	return useOutletContext<ResultsPageContextT>();
-}
 
 export default ResultsPage;

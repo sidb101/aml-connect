@@ -1,25 +1,19 @@
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { useParams } from "react-router-dom";
-import { generalActions, selectCurrentProjectName } from "../../redux/slices/ProjectsSlice";
 import SendToHardwareView from "./layouts/SendToHardwareView";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/setupStore";
 
 export type SendToHardwarePageT = {
 	data?: string;
 };
 
 const SendToHardwarePage = (props: SendToHardwarePageT) => {
-	const dispatch = useAppDispatch();
-	const { projectSlug } = useParams();
-	const projectName = useAppSelector(selectCurrentProjectName) || "";
+	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
 
-	useEffect(() => {
-		projectSlug
-			? dispatch(generalActions.openProject(projectSlug))
-			: console.error("projectSlug not present in the URL.");
-	}, [projectSlug]);
-
-	return projectSlug && <SendToHardwareView title={`${projectName} > Send to Hardware`} projectSlug={projectSlug} />;
+	return (
+		currentProject && (
+			<SendToHardwareView title={`${currentProject.name} > Send to Hardware`} projectSlug={currentProject.slug} />
+		)
+	);
 };
 
 export default SendToHardwarePage;

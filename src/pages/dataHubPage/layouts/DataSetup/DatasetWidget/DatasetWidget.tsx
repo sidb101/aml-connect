@@ -1,16 +1,19 @@
 import "./DatasetWidget.scss";
 import AudioFileTable from "../AudioFileTable";
 import Accordion from "../../../../../components/accordion/Accordion";
-import { type ReactNode, useState } from "react";
-import { dataHubActions, DataSetT, selectInputFiles } from "../../../../../redux/slices/DataHubSlice";
-import { useAppDispatch, useAppSelector } from "../../../../../hooks";
+import { type ReactNode } from "react";
 import {
-	generalActions,
-	selectCurrentAudioPath,
-	selectCurrentProjectSlug,
-} from "../../../../../redux/slices/ProjectsSlice";
+	dataHubActions,
+	DataSetT,
+	type InputFileDataT,
+	selectInputFiles,
+} from "../../../../../redux/slices/DataHubSlice";
 import remoteService from "../../../../../service/RemoteService/RemoteService";
 import storageService from "../../../../../service/StorageService/StorageService";
+import { useDispatch, useSelector } from "react-redux";
+import { generalActions } from "../../../../../redux/slices/GeneralSlice";
+import type { RootState } from "../../../../../redux/setupStore";
+import { AUDIO_DIR } from "../../../../../constants";
 
 export type DatasetWidgetProps = {
 	widgetHeight?: string;
@@ -24,17 +27,19 @@ export type DatasetWidgetProps = {
  * the server, else just use the values in the redux state.
  */
 const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: DatasetWidgetProps) => {
-	const dispatch = useAppDispatch();
+	const dispatch = useDispatch();
 
-	const projectSlug = useAppSelector(selectCurrentProjectSlug);
-	const audioPath = useAppSelector(selectCurrentAudioPath);
+	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
+	const audioPath = `${currentProject?.slug || ""}/${AUDIO_DIR}`;
 
-	const importedInputFiles = useAppSelector((state) => selectInputFiles(state, datasetType));
+	const importedInputFiles: InputFileDataT[] = useSelector((state: RootState) =>
+		selectInputFiles(state, datasetType)
+	);
 
 	//Handle when accordion is opened
 	const handleAccordionOpen = () => {
 		//If the input files are not present in the redux state, then fetch it from backend when accordion is open
-		if (projectSlug !== "" && importedInputFiles.length === 0) {
+		if (currentProject && importedInputFiles.length === 0) {
 			getInputFiles(datasetType).catch((e) => {
 				console.error(e);
 			});
@@ -48,10 +53,10 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 	 */
 	const getInputFiles = async (dataSet: DataSetT) => {
 		try {
-			dispatch(generalActions.markLoading(true));
+			dispatch(generalActions.setLoading());
 
 			//get the metadata from the server
-			const inputFilesMetaData = await remoteService.getFilesMetaData(projectSlug, dataSet);
+			const inputFilesMetaData = await remoteService.getFilesMetaData(currentProject?.slug || "", dataSet);
 
 			//get the files data along with content from the given metadata
 			const inputFiles = await storageService.readFilesFromStorage(inputFilesMetaData, audioPath);
@@ -65,7 +70,7 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 			console.error("Error in getting files");
 		}
 
-		dispatch(generalActions.markLoading(false));
+		dispatch(generalActions.unsetLoading());
 	};
 
 	return (

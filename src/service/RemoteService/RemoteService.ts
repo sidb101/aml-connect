@@ -7,8 +7,8 @@ import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import type { ListProjectsRequest } from "./client/bindings/ListProjectsRequest";
 import type { ListProjectsResponse } from "./client/bindings/ListProjectsResponse";
 import type { ProjectDetails } from "./client/bindings/ProjectDetails";
-import { projectCards } from "../../tests/mockdata/allProjectCards";
 import type { CreateProjectRequest } from "./client/bindings/CreateProjectRequest";
+import { mockProjects } from "../../tests/mockdata/allProjects";
 
 /**
  * Object responsible for Transforming the UI Data to required Backend DTOs and then call the Backend using
@@ -66,6 +66,7 @@ const remoteService = {
 			console.error("Couldn't create a new project on the backend.", e);
 
 			// TODO: Delete everything below once backend is implemented
+			const projectCards: ProjectDetails[] = [];
 			const newProject: ProjectDetails = {
 				id: projectCards.length + 1,
 				slug: `dummy_project_${projectCards.length + 1}`,
@@ -98,7 +99,7 @@ const remoteService = {
 			console.log(getProjectsResponse);
 		} catch (e) {
 			console.error("Couldn't get the projects from the backend.", e);
-			return Promise.resolve(projectCards); // TODO: Delete this line once backend is implemented
+			return Promise.resolve(mockProjects); // TODO: Delete this line once backend is implemented
 		}
 
 		const projects = remoteTransformer.parseGetProjectsResponse(getProjectsResponse);

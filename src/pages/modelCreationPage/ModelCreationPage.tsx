@@ -1,66 +1,53 @@
 import React, { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { generalActions, selectCurrentProjectName } from "../../redux/slices/ProjectsSlice";
-import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import "./ModelCreationPage.scss";
 import Header from "../../components/header/Header";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
-import { getModelCreationPageTabs } from "./modelCreationPageTabs";
+import {
+	getModelCreationPageFooters,
+	getModelCreationPageHeadings,
+	getModelCreationPageTabs,
+} from "./modelCreationPageTabs";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/setupStore";
 
-export type ModelCreationPageT = {
-	data?: string;
-};
-
-export type ModelCreationPageContextT = {
-	setHeading: React.Dispatch<React.SetStateAction<string>>;
-	setFooter: React.Dispatch<React.SetStateAction<FooterBtnGroupT>>;
-};
-
-const ModelCreationPage = (props: ModelCreationPageT) => {
-	const dispatch = useAppDispatch();
-	const { projectSlug = "" } = useParams();
-	const projectName = useAppSelector(selectCurrentProjectName);
-	const { pathname } = useLocation();
-
+const ModelCreationPage = () => {
 	const [heading, setHeading] = useState<string>("");
 	const [pageTabs, setPageTabs] = useState<PageTabT[]>([]);
 	const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 	const [footer, setFooter] = useState<FooterBtnGroupT>({});
 
-	//tasks to be done for the whole model creation page
-	useEffect(() => {
-		if (projectSlug) {
-			//Update the global state
-			dispatch(generalActions.openProject(projectSlug));
-			setPageTabs(getModelCreationPageTabs(projectSlug));
-		} else {
-			console.error("projectSlug not present in the URL.");
-		}
-	}, [projectSlug]);
+	const { pathname } = useLocation();
+	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
 
 	useEffect(() => {
 		setSelectedTabIndex(getSelectedTabIndex(pageTabs, pathname));
 	}, [pageTabs, pathname]);
 
+	useEffect(() => {
+		if (currentProject) {
+			setHeading(getModelCreationPageHeadings()[selectedTabIndex]);
+			setFooter(getModelCreationPageFooters(currentProject.slug)[selectedTabIndex]);
+		}
+	}, [selectedTabIndex]);
+
+	useEffect(() => {
+		if (currentProject) {
+			setPageTabs(getModelCreationPageTabs(currentProject.slug));
+		}
+	}, [currentProject]);
+
 	return (
-		projectSlug && (
+		currentProject && (
 			<>
-				<Header headerTitle={`${projectName || "Undefined Project"} > Model Creation > ${heading}`} />
+				<Header headerTitle={`${currentProject.name || "Undefined Project"} > Model Creation > ${heading}`} />
 				<div className={`body-content-container-no-header-btns-with-footer ModelCreation_bodyContainer`}>
 					<div className={"ModelCreation_bodyRow1"}>
 						<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
 					</div>
 					<div className={"ModelCreation_bodyRow2"}>
-						{/* The outlet would render with given context from the parent */}
-						<Outlet
-							context={
-								{
-									setHeading,
-									setFooter,
-								} satisfies ModelCreationPageContextT
-							}
-						/>
+						<Outlet />
 					</div>
 				</div>
 				<Footer footerBtnGroup={footer} />
@@ -68,12 +55,5 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 		)
 	);
 };
-
-/**
- * Hook to use the data hub context passed to the Outlets.
- */
-export function useModelCreationContext() {
-	return useOutletContext<ModelCreationPageContextT>();
-}
 
 export default ModelCreationPage;

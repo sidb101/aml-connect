@@ -67,7 +67,7 @@ const remoteTransformer = {
 		return tokens[tokens.length - 1];
 	},
 
-	createTheCreateProjectRequest(name: string, description: string | null): CreateProjectRequest {
+	createTheCreateProjectRequest(name: string, description: string): CreateProjectRequest {
 		return {
 			name,
 			description,

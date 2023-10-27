@@ -4,12 +4,20 @@ import Header from "../../../../../components/header/Header";
 import DisplayCard, { type DisplayCardT } from "../../../../../components/displayCard/DisplayCard";
 import type { ProjectDetails } from "../../../../../service/RemoteService/client/bindings/ProjectDetails";
 import { projectOverviewRoute } from "../../../../../routes";
+import { projectsActions } from "../../../../../redux/slices/ProjectsSlice";
+import { useDispatch } from "react-redux";
 
 type LandingPageViewProps = {
 	projects?: ProjectDetails[];
 };
 
 const LandingView = ({ projects }: LandingPageViewProps) => {
+	const dispatch = useDispatch();
+
+	const handleOpenProject = (project: ProjectDetails) => {
+		dispatch(projectsActions.openProject(project));
+	};
+
 	return (
 		<>
 			<Header headerTitle={"Projects"}>{<LandingPageHeader />}</Header>
@@ -23,6 +31,9 @@ const LandingView = ({ projects }: LandingPageViewProps) => {
 							buttonText: "Open Project",
 							route: projectOverviewRoute(project.slug),
 							showCross: true,
+							onClick: () => {
+								handleOpenProject(project);
+							},
 						};
 
 						return <DisplayCard key={project.id} displayCard={displayCard} />;

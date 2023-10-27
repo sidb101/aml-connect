@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./AudioFileTable.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock } from "@fortawesome/free-regular-svg-icons/faClock";
 import { faCirclePlay } from "@fortawesome/free-regular-svg-icons/faCirclePlay";
 import { faCircleStop } from "@fortawesome/free-regular-svg-icons/faCircleStop";
 import ReactPlayer from "react-player";

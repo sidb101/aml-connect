@@ -1,5 +1,4 @@
 import "./App.scss";
-import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
 	BASE_ROUTE,
@@ -45,6 +44,7 @@ export const routes = [
 				element: <LandingHubPage />,
 				children: [
 					{
+						index: true,
 						path: "",
 						element: <LandingPage />,
 						errorElement: <ErrorPage />,
