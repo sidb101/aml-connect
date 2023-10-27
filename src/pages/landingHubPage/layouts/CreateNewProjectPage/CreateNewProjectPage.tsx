@@ -3,8 +3,14 @@ import { BASE_ROUTE } from "../../../../routes";
 import { type ProjectDetails } from "../../../../service/RemoteService/client/bindings/ProjectDetails";
 import CreateNewProjectView from "./layouts/CreateNewProjectView";
 import remoteService from "../../../../service/RemoteService/RemoteService";
+import { useDispatch } from "react-redux";
+import { projectsActions } from "../../../../redux/slices/ProjectsSlice";
 
 function CreateNewProjectPage() {
+	const dispatch = useDispatch();
+
+	dispatch(projectsActions.newProject());
+
 	return <CreateNewProjectView />;
 }
 

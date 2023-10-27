@@ -17,7 +17,7 @@ import {
 import Root, { rootLoader } from "./pages/Root";
 import ErrorPage from "./pages/errorPage/ErrorPage";
 import LandingPage from "./pages/landingHubPage/layouts/LandingPage/LandingPage";
-import OverviewPage, { overviewPageAction } from "./pages/overviewPage/OverviewPage";
+import OverviewPage, { overviewPageAction, overviewPageLoader } from "./pages/overviewPage/OverviewPage";
 import DataHubPage from "./pages/dataHubPage/DataHubPage";
 import DataSetup from "./pages/dataHubPage/layouts/DataSetup/DataSetup";
 import DataViz from "./pages/dataHubPage/layouts/DataViz/DataViz";
@@ -60,7 +60,9 @@ export const routes = [
 			{
 				path: OVERVIEW_ROUTE,
 				element: <OverviewPage />,
+				loader: overviewPageLoader,
 				action: overviewPageAction,
+				errorElement: <ErrorPage />,
 			},
 			{
 				path: DATA_HUB_ROUTE,

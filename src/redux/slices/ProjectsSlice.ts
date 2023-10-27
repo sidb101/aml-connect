@@ -61,6 +61,10 @@ const projectsSlice = createSlice({
 		setAllProjects: (state, action: PayloadAction<ProjectDetails[]>) => {
 			state.allProjects = action.payload;
 		},
+
+		newProject: (state) => {
+			state.projectStatus = ProjectStatus.NEW;
+		},
 	},
 });
 

@@ -13,7 +13,6 @@ export type DisplayCardT = {
 	route: string;
 	showCross?: boolean;
 	project?: ProjectDetails;
-	onClick?: () => void;
 };
 
 type DisplayCardProps = {
@@ -21,7 +20,7 @@ type DisplayCardProps = {
 };
 
 export default function DisplayCard({ displayCard }: DisplayCardProps) {
-	const { showCross = false, onClick } = displayCard;
+	const { showCross = false } = displayCard;
 
 	return (
 		<DisplayPanel>
@@ -41,7 +40,7 @@ export default function DisplayCard({ displayCard }: DisplayCardProps) {
 				</div>
 				<div className={`regular-text grey-text`}>{displayCard.description}</div>
 				<div className={`DisplayCard_buttonContainer`}>
-					<Link onClick={onClick} to={displayCard.route} className={`DisplayCard_link`}>
+					<Link to={displayCard.route} className={`DisplayCard_link`}>
 						<button className={`btn btn-outline DisplayCard_button`}>{displayCard.buttonText}</button>
 					</Link>
 				</div>

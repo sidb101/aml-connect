@@ -37,10 +37,6 @@ function Root() {
 
 	const { pathname } = useLocation();
 
-	function handleSideRegionClick(project: ProjectDetails) {
-		dispatch(projectsActions.openProject(project));
-	}
-
 	const getSideRegion = (): SideRegionT => {
 		if (projectStatus === ProjectStatus.OPEN) {
 			return {
@@ -68,7 +64,7 @@ function Root() {
 		if (projectStatus === ProjectStatus.NOT_OPEN) {
 			return {
 				heading: "Projects",
-				region: <ProjectsRegion projects={allProjects} onClick={handleSideRegionClick} />,
+				region: <ProjectsRegion projects={allProjects} />,
 			};
 		}
 

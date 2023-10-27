@@ -107,6 +107,8 @@ const remoteService = {
 
 		return projects;
 	},
+
+	//getProject: async (): Promise<>
 };
 
 export default remoteService;

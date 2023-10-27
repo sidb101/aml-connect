@@ -7,21 +7,13 @@ import type { ProjectDetails } from "../../../service/RemoteService/client/bindi
 
 export type ProjectsRegionT = {
 	projects: ProjectDetails[];
-	onClick: (project: ProjectDetails) => void;
 };
 
-function ProjectsRegion({ projects, onClick }: ProjectsRegionT) {
+function ProjectsRegion({ projects }: ProjectsRegionT) {
 	return (
 		<div className={"ProjectsRegion_container"}>
 			{projects.map((project: ProjectDetails) => (
-				<Link
-					key={project.id}
-					onClick={() => {
-						onClick(project);
-					}}
-					to={projectOverviewRoute(project.slug)}
-					data-testid={testIds.projectLinks}
-				>
+				<Link key={project.id} to={projectOverviewRoute(project.slug)} data-testid={testIds.projectLinks}>
 					<div className={"btn btn-solid ProjectsRegion_projectName"}>{project.name}</div>
 				</Link>
 			))}

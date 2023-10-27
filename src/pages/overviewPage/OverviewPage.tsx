@@ -1,20 +1,14 @@
-import { redirect } from "react-router-dom";
+import { type Params, redirect, useLoaderData } from "react-router-dom";
 import { BASE_ROUTE, dataSetupRoute } from "../../routes";
 import OverviewView from "./layouts/OverviewView";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
-import { useSelector } from "react-redux";
-import { type RootState } from "../../redux/setupStore";
-import { useEffect } from "react";
+import { mockProjects } from "../../tests/mockdata/allProjects";
+import remoteService from "../../service/RemoteService/RemoteService";
 
-export type OverviewT = {
-	data?: string;
-	isNewProject?: boolean;
-};
-
-const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
-	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
+const OverviewPage = () => {
+	const currentProject = useLoaderData() as ProjectDetails;
 
 	return (
 		currentProject && (
@@ -28,6 +22,13 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 		)
 	);
 };
+
+export async function overviewPageLoader({ params }: { params: Params }): Promise<ProjectDetails> {
+	const projectSlug = params.projectSlug as string;
+	//const currentProject = await remoteService.getProject(projectSlug);
+	const currentProject = mockProjects[0];
+	return currentProject;
+}
 
 type UpdateProjectFormT = {
 	name: string;
