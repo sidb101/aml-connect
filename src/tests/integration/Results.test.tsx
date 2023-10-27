@@ -11,6 +11,7 @@ import React from "react";
 import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
 import { getResultsPageTabs } from "../../pages/resultsPage/resultsPageTabs";
 import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
+import type { ListProjectsResponse } from "../../service/RemoteService/client/bindings/ListProjectsResponse";
 
 const getPageElements = () => {
 	const actualPageHeading = screen.getByTestId(testIds.contentHeading);
@@ -57,6 +58,13 @@ const verifyFooterButtons = (expectedPrevBtnText: string, actualPrevBtn: HTMLEle
 
 describe("Testing the Result Page navigation", () => {
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
+
+	//mock the response from backend
+	const mockResponse: ListProjectsResponse = {
+		projects: mockProjects,
+	};
+	when(mockInvoke).mockResolvedValue(mockResponse);
+
 	const routes = appRoutes;
 
 	test("Results: Test 1: Testing the result pages exist, and the page tabs exist on the result pages", async () => {
@@ -65,9 +73,6 @@ describe("Testing the Result Page navigation", () => {
 		// -> should start with empty store
 		const storeState = {};
 		const projects: ProjectDetails[] = mockProjects;
-
-		// -> mock the response from backend
-		when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
 
 		// -> Start this app with this store state and this ("/") as the current route
 		renderWithProviders(routes, {

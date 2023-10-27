@@ -12,6 +12,7 @@ import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCre
 import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
 import { mockReactFlow } from "../mockdata/mockReactFlow";
 import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
+import type { ListProjectsResponse } from "../../service/RemoteService/client/bindings/ListProjectsResponse";
 
 const getPageElements = () => {
 	const actualPageHeading = screen.getByTestId(testIds.contentHeading);
@@ -62,6 +63,13 @@ beforeEach(() => {
 
 describe("Testing the Model Creation navigation", () => {
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
+
+	//mock the response from backend
+	const mockResponse: ListProjectsResponse = {
+		projects: mockProjects,
+	};
+	when(mockInvoke).mockResolvedValue(mockResponse);
+
 	const routes = appRoutes;
 
 	test("Model Creation: Test 1: Testing the model creation page exists, and the page tabs exist on the model creation page", async () => {
@@ -70,9 +78,6 @@ describe("Testing the Model Creation navigation", () => {
 		// -> should start with empty store
 		const storeState = {};
 		const projects: ProjectDetails[] = mockProjects;
-
-		// -> mock the response from backend
-		when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
 
 		// -> Start this app with this store state and this ("/") as the current route
 		renderWithProviders(routes, {

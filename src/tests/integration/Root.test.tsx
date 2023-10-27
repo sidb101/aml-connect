@@ -11,6 +11,7 @@ import { getOpenProjectNavLinks } from "../../components/sideBar/navRegion/appNa
 import { linkSelectedClass } from "../../components/sideBar/navRegion/navLink/NavLink";
 import { mockReactFlow } from "../mockdata/mockReactFlow";
 import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
+import type { ListProjectsResponse } from "../../service/RemoteService/client/bindings/ListProjectsResponse";
 
 beforeEach(() => {
 	mockReactFlow();
@@ -22,6 +23,12 @@ beforeEach(() => {
 describe("Testing the Sidebar of the App", () => {
 	//mock the invoke method of backend module
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
+
+	//mock the response from backend
+	const mockResponse: ListProjectsResponse = {
+		projects: mockProjects,
+	};
+	when(mockInvoke).mockResolvedValue(mockResponse);
 
 	//define the routing for given test suite
 	const routes = appRoutes;
@@ -43,10 +50,6 @@ describe("Testing the Sidebar of the App", () => {
 			//should start with empty store
 			const storeState = {};
 
-			//mock the response from backend
-			const projects: ProjectDetails[] = mockProjects;
-			when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
-
 			//Need to start from the base route
 			const routeToRender = [BASE_ROUTE];
 
@@ -60,7 +63,7 @@ describe("Testing the Sidebar of the App", () => {
 			//the sidebar should have all the projects shown.
 			const sideBarLinks = await screen.findAllByTestId(testIds.projectLinks);
 			sideBarLinks.forEach((sideBarLink, index) => {
-				expect(sideBarLink).toHaveTextContent(getExactText(projects[index].name));
+				expect(sideBarLink).toHaveTextContent(getExactText(mockProjects[index].name));
 			});
 
 			//ACT - 2
@@ -70,10 +73,10 @@ describe("Testing the Sidebar of the App", () => {
 			//ASSERT - 2
 			//Valid Sidebar heading Heading
 			const sideHeading = await screen.findByTestId(testIds.navHeading);
-			expect(sideHeading).toHaveTextContent(projects[0].name);
+			expect(sideHeading).toHaveTextContent(mockProjects[0].name);
 
 			//Valid Links Labels
-			const expectedNavLinks = getOpenProjectNavLinks(projects[0].slug);
+			const expectedNavLinks = getOpenProjectNavLinks(mockProjects[0].slug);
 			let navLinks = await screen.findAllByTestId(testIds.navLinks);
 			navLinks.forEach((navLink, index) => {
 				const navLinkLabel: string = expectedNavLinks[index].label || "";
@@ -88,7 +91,7 @@ describe("Testing the Sidebar of the App", () => {
 			expect(within(navLinks[0]).getByTestId(testIds.navLinkLabels)).toHaveClass(linkSelectedClass);
 			expect(
 				within(screen.getByTestId(testIds.contentHeading)).getByText(
-					projects[0].name + " > " + contentHeadings[0]
+					mockProjects[0].name + " > " + contentHeadings[0]
 				)
 			).toBeInTheDocument();
 
@@ -99,7 +102,7 @@ describe("Testing the Sidebar of the App", () => {
 
 				//eslint-disable-next-line no-await-in-loop
 				const contentHeading = await within(screen.getByTestId(testIds.contentHeading)).findByText(
-					projects[0].name + " > " + contentHeadings[i]
+					mockProjects[0].name + " > " + contentHeadings[i]
 				);
 				//valid page rendered
 				expect(contentHeading).toBeInTheDocument();
