@@ -1,4 +1,4 @@
-import { redirect } from "react-router-dom";
+import { redirect, useActionData } from "react-router-dom";
 import { BASE_ROUTE } from "../../../../routes";
 import { type ProjectDetails } from "../../../../service/RemoteService/client/bindings/ProjectDetails";
 import CreateNewProjectView from "./layouts/CreateNewProjectView";
@@ -9,8 +9,9 @@ import { mockProjects } from "../../../../tests/mockdata/allProjects";
 
 function CreateNewProjectPage() {
 	const dispatch = useDispatch();
-
 	dispatch(projectsActions.newProject());
+
+	console.log(useActionData());
 
 	return <CreateNewProjectView />;
 }
@@ -27,8 +28,6 @@ export async function createNewProjectPageAction({ request }: { request: Request
 	console.log(data);
 
 	const newProject = await remoteService.createProject(mockProjects.length, data.name, data.description);
-
-	//const newProject = projectsWithNewProject[projectsWithNewProject.length - 1];
 
 	return redirect(`/project/${newProject.slug}/overview`);
 }

@@ -65,6 +65,15 @@ const projectsSlice = createSlice({
 		newProject: (state) => {
 			state.projectStatus = ProjectStatus.NEW;
 		},
+
+		/**
+		 * Adds a new project to the state.
+		 * @param state Projects state.
+		 * @param action The action with the new project details in it.
+		 */
+		addNewProject: (state, action: PayloadAction<ProjectDetails>) => {
+			state.allProjects.push(action.payload);
+		},
 	},
 });
 
