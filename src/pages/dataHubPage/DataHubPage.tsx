@@ -5,7 +5,7 @@ import "./DataHubPage.scss";
 import Header from "../../components/header/Header";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/setupStore";
+import type { RootState } from "../../redux/store";
 import { getDataHubPageFooters, getDataHubPageHeadings, getDataHubPageTabs } from "./dataHubPageTabs";
 
 const DataHubPage = () => {

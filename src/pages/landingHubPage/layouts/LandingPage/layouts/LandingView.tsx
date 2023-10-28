@@ -22,7 +22,10 @@ const LandingView = ({ projects }: LandingPageViewProps) => {
 							description: project.description || "",
 							buttonText: "Open Project",
 							route: projectOverviewRoute(project.slug),
-							showCross: true,
+							deletable: {
+								showCross: true,
+								projectSlug: project.slug,
+							},
 						};
 
 						return <DisplayCard key={project.id} displayCard={displayCard} />;

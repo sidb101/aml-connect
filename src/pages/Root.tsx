@@ -1,4 +1,4 @@
-import { Outlet, useLoaderData, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { NavRegion } from "../components/sideBar/navRegion/NavRegion";
 import React, { Suspense, useEffect, useState } from "react";
 import type { SideRegionT } from "../components/sideBar/sideRegion/SideRegion";
@@ -8,26 +8,21 @@ import "./Root.scss";
 import type { NavLinkT } from "../components/sideBar/navRegion/navLink/NavLink";
 import { isNavLinkSelected } from "../components/sideBar/navRegion/navLink/NavLink";
 import Spinner from "../components/spinner/Spinner";
-import { useDispatch, useSelector } from "react-redux";
-import type { RootState } from "../redux/setupStore";
-import type { ProjectDetails } from "../service/RemoteService/client/bindings/ProjectDetails";
-import remoteService from "../service/RemoteService/RemoteService";
+import { useSelector } from "react-redux";
+import type { RootState } from "../redux/store";
 import Sidebar from "../components/sideBar/Sidebar";
 import ProjectsRegion from "../components/sideBar/projectRegion/ProjectsRegion";
 import { getOpenProjectNavLinks } from "../components/sideBar/navRegion/appNavLinks";
+import { useAppDispatch } from "../hooks";
 
 function Root() {
 	const [openProjectNavLinks, setOpenProjectNavLinks] = useState<NavLinkT[]>([]);
 
-	const dispatch = useDispatch();
 	const { projectStatus, currentProject, allProjects } = useSelector((store: RootState) => store.projects);
 	const isLoading = useSelector((store: RootState) => store.general.isLoading);
 
-	const projects = useLoaderData() as ProjectDetails[];
-
-	useEffect(() => {
-		dispatch(projectsActions.setAllProjects(projects));
-	}, [projects]);
+	const dispatch = useAppDispatch();
+	dispatch(projectsActions.setAllProjects());
 
 	useEffect(() => {
 		if (currentProject) {
@@ -84,11 +79,6 @@ function Root() {
 			</div>
 		</div>
 	);
-}
-
-export async function rootLoader(): Promise<ProjectDetails[]> {
-	const projects = await remoteService.getProjects();
-	return projects;
 }
 
 export default Root;

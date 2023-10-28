@@ -3,10 +3,10 @@ import type { RenderOptions } from "@testing-library/react";
 import { render } from "@testing-library/react";
 import type { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import setupStore from "../redux/setupStore";
 import type { RouteObject } from "react-router-dom";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
-import type { RootState } from "../redux/setupStore";
+import type { AppStore, RootState } from "../redux/store";
+import { setupStore } from "../redux/store";
 
 /**
  * This module will define methods that can be used for performing testing with
@@ -18,7 +18,7 @@ import type { RootState } from "../redux/setupStore";
 //eslint-disable-next-line @typescript-eslint/consistent-type-definitions
 interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
 	preloadedState?: PreloadedState<RootState>;
-	store?: ReturnType<typeof setupStore>;
+	store?: AppStore;
 	routes?: RouteObject[];
 	initialEntries?: string[]; //routes that are needed to be in the history of the router (for testing going back etc.)
 	initialIndex?: number; //index of the entry to start with

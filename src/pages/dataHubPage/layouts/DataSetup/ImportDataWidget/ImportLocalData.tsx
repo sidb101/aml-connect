@@ -5,7 +5,7 @@ import remoteService from "../../../../../service/RemoteService/RemoteService";
 import storageService from "../../../../../service/StorageService/StorageService";
 import { useDispatch, useSelector } from "react-redux";
 import { AUDIO_DIR } from "../../../../../constants";
-import type { RootState } from "../../../../../redux/setupStore";
+import type { RootState } from "../../../../../redux/store";
 import { generalActions } from "../../../../../redux/slices/GeneralSlice";
 
 export type ImportLocalDataT = {

@@ -1,6 +1,6 @@
 import SendToHardwareView from "./layouts/SendToHardwareView";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/setupStore";
+import type { RootState } from "../../redux/store";
 
 export type SendToHardwarePageT = {
 	data?: string;

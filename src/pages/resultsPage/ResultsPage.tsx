@@ -6,7 +6,7 @@ import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/p
 import { getResultsPageFooters, getResultsPageHeadings, getResultsPageTabs } from "./resultsPageTabs";
 import Header from "../../components/header/Header";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/setupStore";
+import type { RootState } from "../../redux/store";
 
 const ResultsPage = () => {
 	const [heading, setHeading] = useState<string>("");

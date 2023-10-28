@@ -1,9 +1,12 @@
 import "./DisplayCard.scss";
-import { Link } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import DisplayPanel from "../displayPanel/DisplayPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons/faCircleXmark";
-import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
+
+export type DisplayCardFormT = {
+	projectSlug: string;
+};
 
 export type DisplayCardT = {
 	title: string;
@@ -11,8 +14,10 @@ export type DisplayCardT = {
 	description: string;
 	buttonText: string;
 	route: string;
-	showCross?: boolean;
-	project?: ProjectDetails;
+	deletable?: {
+		showCross: boolean;
+		projectSlug: string;
+	};
 };
 
 type DisplayCardProps = {
@@ -20,16 +25,19 @@ type DisplayCardProps = {
 };
 
 export default function DisplayCard({ displayCard }: DisplayCardProps) {
-	const { showCross = false } = displayCard;
-
 	return (
 		<DisplayPanel>
 			<div className={`DisplayCard_container`}>
 				<div className={`DisplayCard_headingContainer`}>
 					<div className={`section-heading-text`}>{displayCard.title}</div>
-					<i className={`green-text section-heading-text`}>
-						{showCross && <FontAwesomeIcon icon={faCircleXmark} />}
-					</i>
+					{displayCard.deletable && (
+						<Form method="DELETE">
+							<input type="hidden" name="projectSlug" value={displayCard.deletable.projectSlug} />
+							<button className={`green-text section-heading-text`}>
+								<FontAwesomeIcon icon={faCircleXmark} />
+							</button>
+						</Form>
+					)}
 				</div>
 				<div className={`DisplayCard_labels`}>
 					{displayCard.labels?.map((label: string, index: number) => (
@@ -40,8 +48,8 @@ export default function DisplayCard({ displayCard }: DisplayCardProps) {
 				</div>
 				<div className={`regular-text grey-text`}>{displayCard.description}</div>
 				<div className={`DisplayCard_buttonContainer`}>
-					<Link to={displayCard.route} className={`DisplayCard_link`}>
-						<button className={`btn btn-outline DisplayCard_button`}>{displayCard.buttonText}</button>
+					<Link to={displayCard.route} className={`btn btn-outline DisplayCard_link`}>
+						{displayCard.buttonText}
 					</Link>
 				</div>
 			</div>

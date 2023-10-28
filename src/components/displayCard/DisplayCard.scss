@@ -12,6 +12,11 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+
+	button {
+		border: none;
+		background: none;
+	}
 }
 
 .DisplayCard_labels {
@@ -34,9 +39,5 @@
 }
 
 .DisplayCard_link {
-	width: 33%;
-}
-
-.DisplayCard_button {
-	width: 100%;
+	min-height: 0;
 }

@@ -50,47 +50,19 @@ const remoteService = {
 		return inputFilesMetaData;
 	},
 
+	// TODO: Update once backend is implemented
 	createProject: async (length: number, projectName: string, projectDescription: string): Promise<ProjectDetails> => {
 		const newProject: ProjectDetails = {
 			id: length + 1,
-			slug: `dummy_project_${length + 1}`,
+			slug: `new_project_${length + 1}`,
 			name: projectName,
 			description: projectDescription,
 		};
 
 		return Promise.resolve(newProject);
-
-		// const createProjectRequest: CreateProjectRequest = remoteTransformer.createTheCreateProjectRequest(
-		// 	projectName,
-		// 	projectDescription
-		// );
-		// console.log("Request", createProjectRequest);
-
-		// try {
-		// 	const createProjectResponse = await remoteClient.createProject(createProjectRequest);
-		// 	console.log(createProjectResponse);
-		// } catch (e) {
-		// 	console.error("Couldn't create a new project on the backend.", e);
-		//
-		// 	// TODO: Delete everything below once backend is implemented
-		// 	const newProject: ProjectDetails = {
-		// 		id: projectCards.length + 1,
-		// 		slug: `dummy_project_${projectCards.length + 1}`,
-		// 		name: projectName,
-		// 		description: projectDescription,
-		// 	};
-
-		//projectCards.push(newProject);
-
-		//return Promise.resolve(projectCards);
-		// }
-		//
-		// const projects = remoteTransformer.parseCreateProjectResponse(createProjectResponse);
-		// console.log("Transformed: ", projects);
-		//
-		// return projects;
 	},
 
+	// TODO: Update once backend is implemented
 	getProjects: async (): Promise<ProjectDetails[]> => {
 		const getProjectsRequest: ListProjectsRequest = remoteTransformer.createGetProjectsRequest(
 			BigInt(100),
@@ -124,25 +96,30 @@ const remoteService = {
 		return Promise.resolve(project);
 	},
 
+	// TODO: Update once backend is implemented
 	updateProject: async (
 		projectSlug: string,
 		projectName: string,
 		projectDescription: string
 	): Promise<ProjectDetails> => {
-		let project = mockProjects.find((project) => project.slug === projectSlug);
+		//const updateProjectRequest = remoteTransformer.createUpdateProjectRequest();
 
-		if (!project) {
-			project = mockProjects[0];
-		}
+		//const project = await remoteClient.updateProject(updateProjectRequest);
 
-		const updatedProject: ProjectDetails = {
-			id: project.id,
-			slug: project.slug,
+		// TODO: Remove when backend is implemented
+		const dummyUpdatedProject: ProjectDetails = {
+			id: -1, // TODO: Use the id provided by the backend
+			slug: projectSlug,
 			name: projectName,
 			description: projectDescription,
 		};
 
-		return Promise.resolve(updatedProject);
+		return Promise.resolve(dummyUpdatedProject);
+	},
+
+	// TODO: Update once backend is implemented
+	deleteProject: async (projectSlug: string): Promise<void> => {
+		return;
 	},
 };
 

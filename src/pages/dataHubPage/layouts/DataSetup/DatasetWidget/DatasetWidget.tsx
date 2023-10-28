@@ -12,7 +12,7 @@ import remoteService from "../../../../../service/RemoteService/RemoteService";
 import storageService from "../../../../../service/StorageService/StorageService";
 import { useDispatch, useSelector } from "react-redux";
 import { generalActions } from "../../../../../redux/slices/GeneralSlice";
-import type { RootState } from "../../../../../redux/setupStore";
+import type { RootState } from "../../../../../redux/store";
 import { AUDIO_DIR } from "../../../../../constants";
 
 export type DatasetWidgetProps = {

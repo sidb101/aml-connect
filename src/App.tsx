@@ -14,10 +14,10 @@ import {
 	RESULTS_ANALYSIS_ROUTE,
 	RESULTS_COMPARISON_ROUTE,
 } from "./routes";
-import Root, { rootLoader } from "./pages/Root";
+import Root from "./pages/Root";
 import ErrorPage from "./pages/errorPage/ErrorPage";
-import LandingPage from "./pages/landingHubPage/layouts/LandingPage/LandingPage";
-import OverviewPage, { overviewPageAction, overviewPageLoader } from "./pages/overviewPage/OverviewPage";
+import LandingPage, { landingPageAction } from "./pages/landingHubPage/layouts/LandingPage/LandingPage";
+import OverviewPage, { overviewPageAction } from "./pages/overviewPage/OverviewPage";
 import DataHubPage from "./pages/dataHubPage/DataHubPage";
 import DataSetup from "./pages/dataHubPage/layouts/DataSetup/DataSetup";
 import DataViz from "./pages/dataHubPage/layouts/DataViz/DataViz";
@@ -36,7 +36,6 @@ import LandingHubPage from "./pages/landingHubPage/LandingHubPage";
 export const routes = [
 	{
 		element: <Root />,
-		loader: rootLoader,
 		errorElement: <ErrorPage />,
 		children: [
 			{
@@ -47,6 +46,7 @@ export const routes = [
 						index: true,
 						path: "",
 						element: <LandingPage />,
+						action: landingPageAction,
 						errorElement: <ErrorPage />,
 					},
 					{
@@ -60,7 +60,7 @@ export const routes = [
 			{
 				path: OVERVIEW_ROUTE,
 				element: <OverviewPage />,
-				loader: overviewPageLoader,
+				//loader: overviewPageLoader, // TODO: Use a loader once backend is complete
 				action: overviewPageAction,
 				errorElement: <ErrorPage />,
 			},

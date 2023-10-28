@@ -1,13 +1,27 @@
-import { type Params, redirect, useLoaderData } from "react-router-dom";
-import { BASE_ROUTE, dataSetupRoute } from "../../routes";
+import { type Params, redirect, useParams } from "react-router-dom";
+import { dataSetupRoute } from "../../routes";
 import OverviewView from "./layouts/OverviewView";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
 import remoteService from "../../service/RemoteService/RemoteService";
+import { useAppDispatch } from "../../hooks";
+import { projectsActions } from "../../redux/slices/ProjectsSlice";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
+import appStore from "../../redux/store";
+import { useEffect } from "react";
+import type { ProjectFormT } from "../../components/projectForm/ProjectForm";
 
 const OverviewPage = () => {
-	const currentProject = useLoaderData() as ProjectDetails;
+	//const currentProject = useLoaderData() as ProjectDetails; // TODO: Use the loader once backend complete
+
+	const { projectSlug = "" } = useParams();
+	const dispatch = useAppDispatch();
+	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
+
+	useEffect(() => {
+		dispatch(projectsActions.openProject(projectSlug));
+	}, [projectSlug]);
 
 	return (
 		currentProject && (
@@ -22,29 +36,29 @@ const OverviewPage = () => {
 	);
 };
 
-export async function overviewPageLoader({ params }: { params: Params }): Promise<ProjectDetails> {
-	const projectSlug = params.projectSlug as string;
-	const currentProject = await remoteService.getProject(projectSlug);
-	return currentProject;
-}
+// TODO: Should use a loader to load the project's full details once implemented in the backend
+// export async function overviewPageLoader({ params }: { params: Params }): Promise<ProjectDetails> {
+// 	const projectSlug = params.projectSlug!;
+// 	const currentProject = await remoteService.getProject(projectSlug);
+// 	return currentProject;
+// }
 
-type UpdateProjectFormT = {
-	name: string;
-	description: string;
-};
-
+/**
+ * Action for when a project's details are updated.
+ * @param request The post request when the update project form is submitted.
+ * @param params Contains the project slug of the project to be updated.
+ */
 export async function overviewPageAction({ request, params }: { request: Request; params: Params }) {
 	const formData = await request.formData();
-	const data = Object.fromEntries(formData) as UpdateProjectFormT;
-	console.log(data);
+	const data = Object.fromEntries(formData) as ProjectFormT;
 
-	const projectSlug = params.projectSlug as string;
-	console.log(projectSlug);
+	const projectSlug = params.projectSlug!;
 
-	const updatedProject = await remoteService.updateProject(projectSlug, data.name, data.description);
+	const updatedProject = await remoteService.updateProject(projectSlug, data.projectName, data.projectDescription);
 
-	//return redirect(`/project/${updatedProject.slug}/overview`);
-	return redirect(`${BASE_ROUTE}`);
+	appStore.dispatch(projectsActions.updateProject(updatedProject));
+
+	return redirect(`/project/${updatedProject.slug}/overview`);
 }
 
 export default OverviewPage;

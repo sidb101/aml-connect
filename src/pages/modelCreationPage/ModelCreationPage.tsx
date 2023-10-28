@@ -10,7 +10,7 @@ import {
 	getModelCreationPageTabs,
 } from "./modelCreationPageTabs";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/setupStore";
+import type { RootState } from "../../redux/store";
 
 const ModelCreationPage = () => {
 	const [heading, setHeading] = useState<string>("");

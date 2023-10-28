@@ -3,6 +3,11 @@ import React from "react";
 import { Form, useNavigation } from "react-router-dom";
 import DisplayPanel from "../displayPanel/DisplayPanel";
 
+export type ProjectFormT = {
+	projectName: string;
+	projectDescription: string;
+};
+
 type ProjectFormProps = {
 	heading: string;
 	projectNamePlaceholder?: string;
