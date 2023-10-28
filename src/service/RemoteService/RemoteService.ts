@@ -119,7 +119,7 @@ const remoteService = {
 
 	// TODO: Update once backend is implemented
 	deleteProject: async (projectSlug: string): Promise<void> => {
-		return;
+		console.log("ESLINT doesn't like empty functions :(");
 	},
 };
 
