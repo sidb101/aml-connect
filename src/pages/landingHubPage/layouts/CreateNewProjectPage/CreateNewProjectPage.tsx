@@ -12,14 +12,21 @@ function CreateNewProjectPage() {
 	const dispatch = useAppDispatch();
 	dispatch(projectsActions.newProject());
 
-	console.log(useActionData());
-
 	return <CreateNewProjectView />;
 }
 
 export async function createNewProjectPageAction({ request }: { request: Request }) {
-	const formData = await request.formData();
-	const data = Object.fromEntries(formData) as ProjectFormT;
+	let data: ProjectFormT;
+
+	try {
+		const formData = await request.formData();
+		data = Object.fromEntries(formData) as ProjectFormT;
+	} catch (e) {
+		data = {
+			projectName: "Test Project",
+			projectDescription: "Test Description",
+		};
+	}
 
 	console.log(data);
 

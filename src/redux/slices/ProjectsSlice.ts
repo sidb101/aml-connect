@@ -2,7 +2,7 @@
  * This slice would deal with the projects state.
  */
 
-import { type AnyAction, createSlice, type PayloadAction, type ThunkAction } from "@reduxjs/toolkit";
+import { type AnyAction, createSlice, current, type PayloadAction, type ThunkAction } from "@reduxjs/toolkit";
 import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
 import remoteService from "../../service/RemoteService/RemoteService";
 import type { RootState } from "../store";

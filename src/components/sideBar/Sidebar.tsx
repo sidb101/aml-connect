@@ -13,7 +13,10 @@ function Sidebar({ logo, sideRegion }: SidebarT) {
 	return (
 		<div className={"dark-panel Sidebar_container"} data-testid={testIds.sideBar}>
 			<div className={"brand-text Sidebar_logo"}>
-				<Link to={"/"}> {logo} </Link>
+				<Link data-testid={testIds.logo} to={"/"}>
+					{" "}
+					{logo}{" "}
+				</Link>
 			</div>
 			<div className={"Sidebar_regionContainer"}>
 				{sideRegion?.map(({ heading, region, isVisible }: SideRegionT, index) => (

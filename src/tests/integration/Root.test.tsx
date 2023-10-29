@@ -10,7 +10,6 @@ import { mockProjects } from "../mockdata/allProjects";
 import { getOpenProjectNavLinks } from "../../components/sideBar/navRegion/appNavLinks";
 import { linkSelectedClass } from "../../components/sideBar/navRegion/navLink/NavLink";
 import { mockReactFlow } from "../mockdata/mockReactFlow";
-import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
 import type { ListProjectsResponse } from "../../service/RemoteService/client/bindings/ListProjectsResponse";
 
 beforeEach(() => {

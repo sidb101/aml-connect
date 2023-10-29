@@ -3,6 +3,7 @@ import { Form, Link } from "react-router-dom";
 import DisplayPanel from "../displayPanel/DisplayPanel";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-regular-svg-icons/faCircleXmark";
+import { testIds } from "../../tests/test-utils";
 
 export type DisplayCardFormT = {
 	projectSlug: string;
@@ -29,7 +30,9 @@ export default function DisplayCard({ displayCard }: DisplayCardProps) {
 		<DisplayPanel>
 			<div className={`DisplayCard_container`}>
 				<div className={`DisplayCard_headingContainer`}>
-					<div className={`section-heading-text`}>{displayCard.title}</div>
+					<div className={`section-heading-text`} data-testid={testIds.displayCardLinks}>
+						{displayCard.title}
+					</div>
 					{displayCard.deletable && (
 						<Form method="DELETE">
 							<input type="hidden" name="projectSlug" value={displayCard.deletable.projectSlug} />

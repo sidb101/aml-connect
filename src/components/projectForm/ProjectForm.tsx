@@ -2,6 +2,7 @@ import "./ProjectForm.scss";
 import React from "react";
 import { Form, useNavigation } from "react-router-dom";
 import DisplayPanel from "../displayPanel/DisplayPanel";
+import { testIds } from "../../tests/test-utils";
 
 export type ProjectFormT = {
 	projectName: string;
@@ -35,28 +36,38 @@ function ProjectForm({
 			<Form method="POST" className={`ProjectForm_container`}>
 				<div className={`ProjectForm_grid`}>
 					<div className={`ProjectForm_formElementContainer`}>
-						<label className={`green-text section-heading-text`}>Project Name</label>
+						<label className={`green-text section-heading-text`} htmlFor="projectName">
+							Project Name
+						</label>
 						<input
 							type="text"
 							name="projectName"
 							placeholder={projectNamePlaceholder}
 							required
 							className={`regular-text light-grey-text light-grey-panel`}
+							data-testid={testIds.projectNameInput}
 						/>
 					</div>
 
 					<div className={`ProjectForm_formElementContainer`}>
-						<label className={`green-text section-heading-text`}>Project Description</label>
+						<label className={`green-text section-heading-text`} htmlFor="projectDescription">
+							Project Description
+						</label>
 						<textarea
 							name="projectDescription"
 							placeholder={projectDescriptionPlaceholder}
 							className={`regular-text light-grey-text light-grey-panel`}
+							data-testid={testIds.projectDescriptionInput}
 						/>
 					</div>
 				</div>
 
 				<div className={`ProjectForm_btn`}>
-					<button disabled={isSubmitting} className={`btn btn-outline`}>
+					<button
+						disabled={isSubmitting}
+						className={`btn btn-outline`}
+						data-testid={testIds.projectFormSubmitBtn}
+					>
 						{isSubmitting ? buttonText.isSubmitting : buttonText.notSubmitting}
 					</button>
 				</div>
