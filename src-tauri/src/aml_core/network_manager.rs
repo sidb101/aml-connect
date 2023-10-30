@@ -103,27 +103,27 @@ pub struct Terminal{
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum Parameters {
-    AcDiff(AcDiff),
-    AsymmetricIntegrator(AsymmetricIntegrator),
-    Comparator(Comparator),
-    Filter(Filter),
-    Filterbank(Filterbank),
-    GainOpamp(GainOpamp),
-    LookupTable(LookupTable),
+    AcDiff(AcDiffParams),
+    AsymmetricIntegrator(AsymmetricIntegratorParams),
+    Comparator(ComparatorParams),
+    Filter(FilterParams),
+    Filterbank(FilterbankParams),
+    GainOpamp(GainOpampParams),
+    LookupTable(LookupTableParams),
     DelayFlipFlop, //has no params
-    Multiplier(Multiplier),
+    Multiplier(MultiplierParams),
     Mux2, //has no params
-    NeuralNet(NeuralNet),
-    PeakDetector(PeakDetector),
-    PGA(PGA),
-    SynthesizedFilter(SynthesizedFilter),
-    Terminal(TerminalParams), //renamed to TerminalParams(to avoid dup struct)
+    NeuralNet(NeuralNetParams),
+    PeakDetector(PeakDetectorParams),
+    PGA(PGAParams),
+    SynthesizedFilter(SynthesizedFilterParams),
+    Terminal(TerminalParams),
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct AcDiff{
+pub struct AcDiffParams{
     pub gain: f64,
     pub bias: Option<f64>,
 }
@@ -131,7 +131,7 @@ pub struct AcDiff{
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct AsymmetricIntegrator{
+pub struct AsymmetricIntegratorParams{
     pub up: f64,
     pub down: f64,
     pub up_down_type: UpDownType,
@@ -145,7 +145,7 @@ pub struct AsymmetricIntegrator{
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct Comparator{
+pub struct ComparatorParams{
     pub threshold: f64,
     pub hysteresis_voltage: Option<f64>,
 }
@@ -153,7 +153,7 @@ pub struct Comparator{
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct Filter{
+pub struct FilterParams{
     pub characteristic_frequency: f64,
     pub quality_factor: f64,
     pub filter_type: FilterType,
@@ -162,7 +162,7 @@ pub struct Filter{
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct Filterbank{
+pub struct FilterbankParams{
     pub band_frequencies: Vec<u64>,
     pub quality_factor: Vec<f64>,
     pub attack_rates: Vec<f64>,
@@ -172,7 +172,7 @@ pub struct Filterbank{
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct GainOpamp{
+pub struct GainOpampParams{
     pub gain_mode: GainOpampMode,
     //pub opamp_implementation: OpampType,  //not supported as it is not exposed
     pub feedback_cap_count: f64,
@@ -181,21 +181,21 @@ pub struct GainOpamp{
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct LookupTable{
+pub struct LookupTableParams{
     pub expression: String
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct Multiplier{
+pub struct MultiplierParams{
     pub slope: f64,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct NeuralNet{
+pub struct NeuralNetParams{
     pub weights: Vec<f64>,
     pub biases: Vec<f64>,
     pub activation_function: Vec<ActivationFunction>,
@@ -207,7 +207,7 @@ pub struct NeuralNet{
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct PeakDetector{
+pub struct PeakDetectorParams{
     pub atk: f64,
     pub dec: f64,
     pub model_version: ModelVersion,
@@ -218,7 +218,7 @@ pub struct PeakDetector{
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct PGA{
+pub struct PGAParams{
     pub Av1: f64,
     pub Av2: f64,
     pub den: Option<f64>,
@@ -227,7 +227,7 @@ pub struct PGA{
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct SynthesizedFilter{
+pub struct SynthesizedFilterParams{
     pub coefficients: Vec<Vec<f64>>
 }
 
@@ -356,152 +356,6 @@ impl NetworkSimulator for AmlSimulator {
     }
 }
 
-impl AmlSimulator {
-    pub fn from_json_string_to_obj() -> Result<()>{
-        let result = AmlSimulator::from_obj_to_json_string();
-        match result {
-            Ok(json_string) => {
-                // The Result was Ok, so you have the JSON string here.
-                println!("JSON String: {}", json_string);
-                let network: Network = serde_json::from_str(&json_string)?;
-                let param = &network.elements[1].element_type_params;
-                match param {
-                    Parameters::Filter(filter) => {
-                        println!("Ele1 {:?} | Ele2 {}", filter.filter_type, network.elements[0].type_name);
-                    }
-                    _ => {
-                        // Handle other variants of Parameters here
-                        println!("Not a Filter variant.");
-                    }
-                }
-                
-                Ok(())
-            }
-            Err(err) => {
-                // The Result was an Err, handle the error here.
-                eprintln!("Error: {}", err);
-                Err(err)
-            }
-        }
-    }
-    
-    pub fn from_json_to_string() -> String {
-        let network = json!({
-            "id": 101, //element ID
-            "parent_network_id": 5000,
-            "type_name": "Filter",
-            "element_type_params": {
-                "characteristic_frequency": 10,
-                "quality_factor": 1,
-                "filter_type": "hpf2"
-            },
-            "positions": {
-                "x": 100,
-                "y": -100
-            },
-			"terminals": [{ //TODO: should this field be used for only terminal objects, and instead move this to parameters?
-                "id": 2, //terminal ID
-                "parent_element_id": 101, //is this field even necessary, considering its nested to above
-                "type_name": "input", //TODO: could be hardware_pin, input, output, and more?
-                "node_name": "in" //TODO: figure out diff between type_name, node_name
-            }, {
-                "id": 3, //terminal ID
-                "parent_element_id": 101,
-                "type_name": "output", 
-                "node_name": "filter_out"
-            }]
-        });
-        println!("{}", network.to_string());
-        return network.to_string();
-    }
-
-    pub fn from_obj_to_json_string() -> Result<String> {
-        let terminal1: Terminal = Terminal {
-            id: "1".to_string(),
-            parent_element_id: 100,
-            type_name: "input".to_string(),
-            node_name: "in".to_string()
-        };
-        let element1 = Element {
-            id: "100".to_string(), //element ID
-            parent_network_id: 5000,
-            name: "Terminal100".to_string(),
-            type_name: "Terminal".to_string(),
-            element_type_params: Parameters::Terminal(
-                TerminalParams { 
-                    hardware_pin: None,
-                    is_input: true, 
-                    is_output: false, 
-                    is_ac_coupled: None, 
-                    is_extern: None ,
-                }
-            ),
-            terminals: vec![terminal1],
-            position: Position {
-                x: 0,
-                y: 0
-            }
-        };
-        let terminal2 = Terminal {
-            id: "2".to_string(),
-            parent_element_id: 101,
-            type_name: "input".to_string(),
-            node_name: "in".to_string()
-        };
-        let terminal3 = Terminal {
-            id: "3".to_string(),
-            parent_element_id: 101,
-            type_name: "output".to_string(),
-            node_name: "filter_out".to_string()
-        };
-        let element2 = Element {
-            id: "101".to_string(), //element ID
-            parent_network_id: 5000,
-            name: "Filter101".to_string(),
-            type_name: "Filter".to_string(),
-            element_type_params: Parameters::Filter(
-                Filter {
-                    characteristic_frequency: 1e3,
-                    quality_factor: 1.0,
-                    filter_type: FilterType::hpf2,
-                }
-            ),
-            terminals: vec![terminal2, terminal3],
-            position: Position {
-                x: 100,
-                y: -100
-            }
-        };
-
-        let node1: Node = Node {
-            id: "2300".to_string(),
-            name: "in".to_string(),
-            parent_network_id: 5000,
-            terminal_ids: vec![1, 2],
-        };
-        let node2 = Node {
-            id: "2301".to_string(),
-            name: "filter_out".to_string(),
-            parent_network_id: 5000,
-            terminal_ids: vec![2,3],
-        };
-
-    
-        let network = Network {
-            id: Some(5000),
-            name: "sample_network".to_string(),
-            elements: vec![element1, element2],
-            nodes: vec![node1, node2],
-
-            creator_id: 12345,
-        };
-
-        let json_string = serde_json::to_string_pretty(&network).unwrap();
-        println!("{}", json_string);
-        Ok(json_string)
-    }
-
-}
 #[cfg(test)]
 mod tests {
     use crate::aml_core::network_manager::*;
