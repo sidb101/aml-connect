@@ -8,7 +8,7 @@ import {
 	getModelCreationPageFooters,
 	getModelCreationPageHeadings,
 	getModelCreationPageTabs,
-} from "./modelCreationPageTabs";
+} from "./modelCreationPageLabels";
 import { useAppSelector } from "../../hooks";
 import { selectCurrentProject } from "../../redux/slices/ProjectsSlice";
 

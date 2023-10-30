@@ -9,7 +9,7 @@ import { BASE_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjects";
 import React from "react";
 import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
-import { getResultsPageTabs } from "../../pages/resultsPage/resultsPageTabs";
+import { getResultsPageTabs } from "../../pages/resultsPage/resultsPageLabels";
 import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
 import type { ListProjectsResponse } from "../../service/RemoteService/client/bindings/ListProjectsResponse";
 

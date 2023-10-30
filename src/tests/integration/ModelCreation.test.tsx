@@ -8,7 +8,7 @@ import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjects";
 import React from "react";
-import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageTabs";
+import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageLabels";
 import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
 import { mockReactFlow } from "../mockdata/mockReactFlow";
 import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";

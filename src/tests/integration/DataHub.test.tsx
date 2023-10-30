@@ -8,7 +8,7 @@ import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjects";
 import React from "react";
-import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageTabs";
+import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageLabels";
 import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
 import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
 import type { ListProjectsResponse } from "../../service/RemoteService/client/bindings/ListProjectsResponse";

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useOutletContext } from "react-router-dom";
 import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
-import { getResultsPageFooters, getResultsPageHeadings, getResultsPageTabs } from "./resultsPageTabs";
+import { getResultsPageFooters, getResultsPageHeadings, getResultsPageTabs } from "./resultsPageLabels";
 import Header from "../../components/header/Header";
 import { useAppSelector } from "../../hooks";
 import { selectCurrentProject } from "../../redux/slices/ProjectsSlice";
