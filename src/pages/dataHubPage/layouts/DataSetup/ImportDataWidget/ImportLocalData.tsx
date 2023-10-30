@@ -3,10 +3,10 @@ import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
 import { dataHubActions, DataSetT } from "../../../../../redux/slices/DataHubSlice";
 import remoteService from "../../../../../service/RemoteService/RemoteService";
 import storageService from "../../../../../service/StorageService/StorageService";
-import { useDispatch, useSelector } from "react-redux";
 import { AUDIO_DIR } from "../../../../../constants";
-import type { RootState } from "../../../../../redux/store";
 import { generalActions } from "../../../../../redux/slices/GeneralSlice";
+import { useAppDispatch, useAppSelector } from "../../../../../hooks";
+import { selectCurrentProject } from "../../../../../redux/slices/ProjectsSlice";
 
 export type ImportLocalDataT = {
 	onClose: () => void;
@@ -17,9 +17,9 @@ export type ImportLocalDataT = {
  * @param onClose: Method called when this component needs to be unmounted
  */
 const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
-	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
+	const currentProject = useAppSelector(selectCurrentProject);
 	const audioPath = `${currentProject?.slug || ""}/${AUDIO_DIR}`;
 
 	/**

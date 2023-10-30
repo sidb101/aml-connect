@@ -1,13 +1,13 @@
 import SendToHardwareView from "./layouts/SendToHardwareView";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store";
+import { useAppSelector } from "../../hooks";
+import { selectCurrentProject } from "../../redux/slices/ProjectsSlice";
 
 export type SendToHardwarePageT = {
 	data?: string;
 };
 
 const SendToHardwarePage = (props: SendToHardwarePageT) => {
-	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
+	const currentProject = useAppSelector(selectCurrentProject);
 
 	return (
 		currentProject && (

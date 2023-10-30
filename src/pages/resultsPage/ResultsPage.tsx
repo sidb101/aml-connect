@@ -5,8 +5,8 @@ import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
 import { getResultsPageFooters, getResultsPageHeadings, getResultsPageTabs } from "./resultsPageTabs";
 import Header from "../../components/header/Header";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store";
+import { useAppSelector } from "../../hooks";
+import { selectCurrentProject } from "../../redux/slices/ProjectsSlice";
 
 const ResultsPage = () => {
 	const [heading, setHeading] = useState<string>("");
@@ -15,7 +15,7 @@ const ResultsPage = () => {
 	const [footer, setFooter] = useState<FooterBtnGroupT>({});
 
 	const { pathname } = useLocation();
-	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
+	const currentProject = useAppSelector(selectCurrentProject);
 
 	useEffect(() => {
 		setSelectedTabIndex(getSelectedTabIndex(pageTabs, pathname));

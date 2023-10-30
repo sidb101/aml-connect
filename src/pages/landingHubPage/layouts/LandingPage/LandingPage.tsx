@@ -1,8 +1,6 @@
 import LandingView from "./layouts/LandingView";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../../../redux/store";
-import { projectsActions } from "../../../../redux/slices/ProjectsSlice";
-import { useAppDispatch } from "../../../../hooks";
+import { projectsActions, selectAllProjects } from "../../../../redux/slices/ProjectsSlice";
+import { useAppDispatch, useAppSelector } from "../../../../hooks";
 import { type Params, redirect } from "react-router-dom";
 import { BASE_ROUTE } from "../../../../routes";
 import remoteService from "../../../../service/RemoteService/RemoteService";
@@ -14,7 +12,7 @@ type LandingPageProps = {
 };
 
 const LandingPage = (props: LandingPageProps) => {
-	const projects = useSelector((store: RootState) => store.projects.allProjects);
+	const projects = useAppSelector(selectAllProjects);
 
 	const dispatch = useAppDispatch();
 

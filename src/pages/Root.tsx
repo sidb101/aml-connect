@@ -2,24 +2,23 @@ import { Outlet, useLocation } from "react-router-dom";
 import { NavRegion } from "../components/sideBar/navRegion/NavRegion";
 import React, { Suspense, useEffect, useState } from "react";
 import type { SideRegionT } from "../components/sideBar/sideRegion/SideRegion";
-import { projectsActions, ProjectStatus } from "../redux/slices/ProjectsSlice";
+import { projectsActions, ProjectStatus, selectProjects } from "../redux/slices/ProjectsSlice";
 import { testIds } from "../tests/test-utils";
 import "./Root.scss";
 import type { NavLinkT } from "../components/sideBar/navRegion/navLink/NavLink";
 import { isNavLinkSelected } from "../components/sideBar/navRegion/navLink/NavLink";
 import Spinner from "../components/spinner/Spinner";
-import { useSelector } from "react-redux";
-import type { RootState } from "../redux/store";
 import Sidebar from "../components/sideBar/Sidebar";
 import ProjectsRegion from "../components/sideBar/projectRegion/ProjectsRegion";
 import { getOpenProjectNavLinks } from "../components/sideBar/navRegion/appNavLinks";
-import { useAppDispatch } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { selectIsLoading } from "../redux/slices/GeneralSlice";
 
 function Root() {
 	const [openProjectNavLinks, setOpenProjectNavLinks] = useState<NavLinkT[]>([]);
 
-	const { projectStatus, currentProject, allProjects } = useSelector((store: RootState) => store.projects);
-	const isLoading = useSelector((store: RootState) => store.general.isLoading);
+	const { projectStatus, currentProject, allProjects } = useAppSelector(selectProjects);
+	const isLoading = useAppSelector(selectIsLoading);
 
 	const dispatch = useAppDispatch();
 	dispatch(projectsActions.setAllProjects());
@@ -70,9 +69,10 @@ function Root() {
 		<div className={`Root_container`}>
 			{isLoading && <Spinner />}
 			<div className={`Root_sidebarContainer`}>
-				<Sidebar logo="AnalogML Connect" sideRegion={[getSideRegion()]} />
+				<Sidebar logo="AnalogML Connect" sideRegions={[getSideRegion()]} />
 			</div>
 			<div className={"xlight-panel content-container"} data-testid={testIds.contentHeading}>
+				{/*Suspense is used by React Router when loading a page or getting data using its loader*/}
 				<Suspense fallback={<Spinner />}>
 					<Outlet />
 				</Suspense>

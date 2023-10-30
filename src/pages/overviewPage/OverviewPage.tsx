@@ -4,10 +4,8 @@ import OverviewView from "./layouts/OverviewView";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
 import remoteService from "../../service/RemoteService/RemoteService";
-import { useAppDispatch } from "../../hooks";
-import { projectsActions } from "../../redux/slices/ProjectsSlice";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import { projectsActions, selectCurrentProject } from "../../redux/slices/ProjectsSlice";
 import appStore from "../../redux/store";
 import { useEffect } from "react";
 import type { ProjectFormT } from "../../components/projectForm/ProjectForm";
@@ -17,7 +15,7 @@ const OverviewPage = () => {
 
 	const { projectSlug = "" } = useParams();
 	const dispatch = useAppDispatch();
-	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
+	const currentProject = useAppSelector(selectCurrentProject);
 
 	useEffect(() => {
 		dispatch(projectsActions.openProject(projectSlug));

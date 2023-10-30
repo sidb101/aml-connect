@@ -1,4 +1,4 @@
-import { redirect, useActionData } from "react-router-dom";
+import { redirect } from "react-router-dom";
 import { BASE_ROUTE } from "../../../../routes";
 import CreateNewProjectView from "./layouts/CreateNewProjectView";
 import remoteService from "../../../../service/RemoteService/RemoteService";
@@ -18,17 +18,8 @@ function CreateNewProjectPage() {
 export async function createNewProjectPageAction({ request }: { request: Request }) {
 	let data: ProjectFormT;
 
-	try {
-		const formData = await request.formData();
-		data = Object.fromEntries(formData) as ProjectFormT;
-	} catch (e) {
-		data = {
-			projectName: "Test Project",
-			projectDescription: "Test Description",
-		};
-	}
-
-	console.log(data);
+	const formData = await request.formData();
+	data = Object.fromEntries(formData) as ProjectFormT;
 
 	const newProject = await remoteService.createProject(
 		mockProjects.length, // TODO: Not required when the backend is implemented

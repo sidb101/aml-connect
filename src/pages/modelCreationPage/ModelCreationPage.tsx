@@ -9,8 +9,8 @@ import {
 	getModelCreationPageHeadings,
 	getModelCreationPageTabs,
 } from "./modelCreationPageTabs";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store";
+import { useAppSelector } from "../../hooks";
+import { selectCurrentProject } from "../../redux/slices/ProjectsSlice";
 
 const ModelCreationPage = () => {
 	const [heading, setHeading] = useState<string>("");
@@ -19,7 +19,7 @@ const ModelCreationPage = () => {
 	const [footer, setFooter] = useState<FooterBtnGroupT>({});
 
 	const { pathname } = useLocation();
-	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
+	const currentProject = useAppSelector(selectCurrentProject);
 
 	useEffect(() => {
 		setSelectedTabIndex(getSelectedTabIndex(pageTabs, pathname));

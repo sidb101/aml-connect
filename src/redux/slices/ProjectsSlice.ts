@@ -2,7 +2,7 @@
  * This slice would deal with the projects state.
  */
 
-import { type AnyAction, createSlice, current, type PayloadAction, type ThunkAction } from "@reduxjs/toolkit";
+import { type AnyAction, createSelector, createSlice, type PayloadAction, type ThunkAction } from "@reduxjs/toolkit";
 import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
 import remoteService from "../../service/RemoteService/RemoteService";
 import type { RootState } from "../store";
@@ -119,6 +119,21 @@ function setAllProjects(): ThunkAction<void, RootState, unknown, AnyAction> {
 		}
 	};
 }
+
+export const selectProjects = createSelector(
+	(state: RootState) => state.projects,
+	(projects) => projects
+);
+
+export const selectCurrentProject = createSelector(
+	(state: RootState) => state.projects.currentProject,
+	(currentProject) => currentProject
+);
+
+export const selectAllProjects = createSelector(
+	(state: RootState) => state.projects.allProjects,
+	(allProjects) => allProjects
+);
 
 const {
 	actions: { setAllProjects: _, ...restActions },

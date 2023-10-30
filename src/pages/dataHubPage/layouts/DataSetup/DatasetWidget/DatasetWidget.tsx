@@ -10,10 +10,10 @@ import {
 } from "../../../../../redux/slices/DataHubSlice";
 import remoteService from "../../../../../service/RemoteService/RemoteService";
 import storageService from "../../../../../service/StorageService/StorageService";
-import { useDispatch, useSelector } from "react-redux";
 import { generalActions } from "../../../../../redux/slices/GeneralSlice";
-import type { RootState } from "../../../../../redux/store";
 import { AUDIO_DIR } from "../../../../../constants";
+import { useAppDispatch, useAppSelector } from "../../../../../hooks";
+import { selectCurrentProject } from "../../../../../redux/slices/ProjectsSlice";
 
 export type DatasetWidgetProps = {
 	widgetHeight?: string;
@@ -27,14 +27,12 @@ export type DatasetWidgetProps = {
  * the server, else just use the values in the redux state.
  */
 const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: DatasetWidgetProps) => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
-	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
+	const currentProject = useAppSelector(selectCurrentProject);
 	const audioPath = `${currentProject?.slug || ""}/${AUDIO_DIR}`;
 
-	const importedInputFiles: InputFileDataT[] = useSelector((state: RootState) =>
-		selectInputFiles(state, datasetType)
-	);
+	const importedInputFiles = useAppSelector((state) => selectInputFiles(state, datasetType));
 
 	//Handle when accordion is opened
 	const handleAccordionOpen = () => {

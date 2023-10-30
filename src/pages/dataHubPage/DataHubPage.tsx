@@ -4,9 +4,9 @@ import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import "./DataHubPage.scss";
 import Header from "../../components/header/Header";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
-import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store";
 import { getDataHubPageFooters, getDataHubPageHeadings, getDataHubPageTabs } from "./dataHubPageTabs";
+import { useAppSelector } from "../../hooks";
+import { selectCurrentProject } from "../../redux/slices/ProjectsSlice";
 
 const DataHubPage = () => {
 	const [heading, setHeading] = useState<string>("");
@@ -15,7 +15,7 @@ const DataHubPage = () => {
 	const [footer, setFooter] = useState<FooterBtnGroupT>({});
 
 	const { pathname } = useLocation();
-	const currentProject = useSelector((store: RootState) => store.projects.currentProject);
+	const currentProject = useAppSelector(selectCurrentProject);
 
 	useEffect(() => {
 		setSelectedTabIndex(getSelectedTabIndex(pageTabs, pathname));

@@ -10,17 +10,23 @@ export type SideRegionT = {
 };
 
 type SideRegionProps = {
-	heading: string;
-	isVisible?: boolean;
+	sideRegion: SideRegionT;
 };
 
-export const SideRegion = ({ heading, children, isVisible = true }: PropsWithChildren<SideRegionProps>) =>
-	isVisible && (
-		<div className={"SideRegion_container"}>
-			<div className={"small-text light-text SideRegion_heading"}>
-				{heading} &nbsp;
-				<FontAwesomeIcon icon={faChevronRight} />
+function SideRegion({ sideRegion }: SideRegionProps) {
+	const { heading, isVisible = true, region } = sideRegion;
+
+	return (
+		isVisible && (
+			<div className={"SideRegion_container"}>
+				<div className={"small-text light-text SideRegion_heading"}>
+					{heading} &nbsp;
+					<FontAwesomeIcon icon={faChevronRight} />
+				</div>
+				{region}
 			</div>
-			{children}
-		</div>
+		)
 	);
+}
+
+export default SideRegion;

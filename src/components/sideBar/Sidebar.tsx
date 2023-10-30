@@ -1,15 +1,15 @@
 import "./Sidebar.scss";
 import React from "react";
-import { SideRegion, type SideRegionT } from "./sideRegion/SideRegion";
+import SideRegion, { type SideRegionT } from "./sideRegion/SideRegion";
 import { Link } from "react-router-dom";
 import { testIds } from "../../tests/test-utils";
 
-export type SidebarT = {
+type SidebarProps = {
 	logo: string;
-	sideRegion?: SideRegionT[];
+	sideRegions?: SideRegionT[];
 };
 
-function Sidebar({ logo, sideRegion }: SidebarT) {
+function Sidebar({ logo, sideRegions }: SidebarProps) {
 	return (
 		<div className={"dark-panel Sidebar_container"} data-testid={testIds.sideBar}>
 			<div className={"brand-text Sidebar_logo"}>
@@ -19,12 +19,10 @@ function Sidebar({ logo, sideRegion }: SidebarT) {
 				</Link>
 			</div>
 			<div className={"Sidebar_regionContainer"}>
-				{sideRegion?.map(({ heading, region, isVisible }: SideRegionT, index) => (
+				{sideRegions?.map((sideRegion, index) => {
 					// Printing every region in the Sidebar
-					<SideRegion key={index} heading={heading} isVisible={isVisible}>
-						{region}
-					</SideRegion>
-				))}
+					return <SideRegion sideRegion={sideRegion} key={index} />;
+				})}
 			</div>
 		</div>
 	);
