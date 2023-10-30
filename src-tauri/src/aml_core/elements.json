@@ -458,17 +458,6 @@
                 "dc_range": "logic levels",
                 "ac_range": "logic levels"
             }
-        },
-        "parameters": {
-            "expression": {
-                "parameter_type": "string",
-                "description": "Python format lookup table logic expression",
-                "default": "1",
-                "range_type": "interval",
-                "range": [null, null],
-                "unit": null,
-                "ui_component": "textbox"
-            }
         }
     },
     "Multiplier": {
