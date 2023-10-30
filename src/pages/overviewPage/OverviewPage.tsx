@@ -11,8 +11,6 @@ import { useEffect } from "react";
 import type { ProjectFormT } from "../../components/projectForm/ProjectForm";
 
 const OverviewPage = () => {
-	//const currentProject = useLoaderData() as ProjectDetails; // TODO: Use the loader once backend complete
-
 	const { projectSlug = "" } = useParams();
 	const dispatch = useAppDispatch();
 	const currentProject = useAppSelector(selectCurrentProject);
@@ -33,13 +31,6 @@ const OverviewPage = () => {
 		)
 	);
 };
-
-// TODO: Should use a loader to load the project's full details once implemented in the backend
-// export async function overviewPageLoader({ params }: { params: Params }): Promise<ProjectDetails> {
-// 	const projectSlug = params.projectSlug!;
-// 	const currentProject = await remoteService.getProject(projectSlug);
-// 	return currentProject;
-// }
 
 /**
  * Action for when a project's details are updated.
