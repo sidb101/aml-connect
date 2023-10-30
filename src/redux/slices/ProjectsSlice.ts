@@ -139,7 +139,7 @@ export const selectCurrentProjectSlug = createSelector(
 
 export const selectCurrentAudioPath = createSelector(
 	(state: RootState) => state.projects.currentProject?.slug,
-	(slug) => `${slug}/${AUDIO_DIR}`
+	(slug) => slug && `${slug}/${AUDIO_DIR}`
 );
 
 export const selectAllProjects = createSelector(

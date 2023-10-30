@@ -61,7 +61,7 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 			const inputFilesMetaData = await remoteService.getFilesMetaData(projectSlug || "", dataSet);
 
 			//get the files data along with content from the given metadata
-			const inputFiles = await storageService.readFilesFromStorage(inputFilesMetaData, audioPath);
+			const inputFiles = await storageService.readFilesFromStorage(inputFilesMetaData, audioPath || "");
 			console.log("Read the files: ", inputFiles);
 
 			//update it in the redux state
