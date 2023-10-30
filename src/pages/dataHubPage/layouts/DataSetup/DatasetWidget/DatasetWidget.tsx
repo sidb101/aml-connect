@@ -13,7 +13,11 @@ import storageService from "../../../../../service/StorageService/StorageService
 import { generalActions } from "../../../../../redux/slices/GeneralSlice";
 import { AUDIO_DIR } from "../../../../../constants";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
-import { selectCurrentProject } from "../../../../../redux/slices/ProjectsSlice";
+import {
+	selectCurrentAudioPath,
+	selectCurrentProject,
+	selectCurrentProjectSlug,
+} from "../../../../../redux/slices/ProjectsSlice";
 
 export type DatasetWidgetProps = {
 	widgetHeight?: string;
@@ -29,15 +33,15 @@ export type DatasetWidgetProps = {
 const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: DatasetWidgetProps) => {
 	const dispatch = useAppDispatch();
 
-	const currentProject = useAppSelector(selectCurrentProject);
-	const audioPath = `${currentProject?.slug || ""}/${AUDIO_DIR}`;
+	const projectSlug = useAppSelector(selectCurrentProjectSlug);
+	const audioPath = useAppSelector(selectCurrentAudioPath);
 
 	const importedInputFiles = useAppSelector((state) => selectInputFiles(state, datasetType));
 
 	//Handle when accordion is opened
 	const handleAccordionOpen = () => {
 		//If the input files are not present in the redux state, then fetch it from backend when accordion is open
-		if (currentProject && importedInputFiles.length === 0) {
+		if (projectSlug && importedInputFiles.length === 0) {
 			getInputFiles(datasetType).catch((e) => {
 				console.error(e);
 			});
@@ -51,10 +55,10 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 	 */
 	const getInputFiles = async (dataSet: DataSetT) => {
 		try {
-			dispatch(generalActions.setLoading());
+			dispatch(generalActions.markLoading(true));
 
 			//get the metadata from the server
-			const inputFilesMetaData = await remoteService.getFilesMetaData(currentProject?.slug || "", dataSet);
+			const inputFilesMetaData = await remoteService.getFilesMetaData(projectSlug || "", dataSet);
 
 			//get the files data along with content from the given metadata
 			const inputFiles = await storageService.readFilesFromStorage(inputFilesMetaData, audioPath);
@@ -68,7 +72,7 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 			console.error("Error in getting files");
 		}
 
-		dispatch(generalActions.unsetLoading());
+		dispatch(generalActions.markLoading(false));
 	};
 
 	return (

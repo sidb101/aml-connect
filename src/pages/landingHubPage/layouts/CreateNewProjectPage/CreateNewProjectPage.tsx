@@ -16,10 +16,8 @@ function CreateNewProjectPage() {
 }
 
 export async function createNewProjectPageAction({ request }: { request: Request }) {
-	let data: ProjectFormT;
-
 	const formData = await request.formData();
-	data = Object.fromEntries(formData) as ProjectFormT;
+	const data = Object.fromEntries(formData) as ProjectFormT;
 
 	const newProject = await remoteService.createProject(
 		mockProjects.length, // TODO: Not required when the backend is implemented

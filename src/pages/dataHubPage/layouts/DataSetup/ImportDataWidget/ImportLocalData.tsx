@@ -26,7 +26,7 @@ const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 	 * Actions to do when user uploads the files
 	 */
 	const onFilesImport = async (files: InputFileDataT[]) => {
-		dispatch(generalActions.setLoading());
+		dispatch(generalActions.markLoading(true));
 		try {
 			//Write the files
 			await storageService.sendFilesToStorage(files, audioPath);
@@ -47,7 +47,7 @@ const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 			console.error(e);
 		}
 
-		dispatch(generalActions.unsetLoading());
+		dispatch(generalActions.markLoading(false));
 	};
 
 	return (

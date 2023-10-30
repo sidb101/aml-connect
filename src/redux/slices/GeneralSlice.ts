@@ -5,7 +5,7 @@
  * given general state
  */
 
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 
 type GeneralState = {
@@ -21,19 +21,12 @@ const generalSlice = createSlice({
 	initialState,
 	reducers: {
 		/**
-		 * To set the loading status for the whole application
-		 * @param state General state.
+		 * To set the loading/unloading status for the whole application
+		 * @param state: General State
+		 * @param action: Boolean specifying whether the app has to be marked as loading or not
 		 */
-		setLoading: (state) => {
-			state.isLoading = true;
-		},
-
-		/**
-		 * To unset the loading status for the whole application
-		 * @param state General state.
-		 */
-		unsetLoading: (state) => {
-			state.isLoading = false;
+		markLoading: (state, action: PayloadAction<boolean>) => {
+			state.isLoading = action.payload;
 		},
 	},
 });

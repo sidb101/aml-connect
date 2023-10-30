@@ -6,6 +6,8 @@ import { type AnyAction, createSelector, createSlice, type PayloadAction, type T
 import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
 import remoteService from "../../service/RemoteService/RemoteService";
 import type { RootState } from "../store";
+import { useAppSelector } from "../../hooks";
+import { AUDIO_DIR } from "../../constants";
 
 // Status of the app in terms of whether a project is opened,  closed, or new project to be created
 export enum ProjectStatus {
@@ -128,6 +130,16 @@ export const selectProjects = createSelector(
 export const selectCurrentProject = createSelector(
 	(state: RootState) => state.projects.currentProject,
 	(currentProject) => currentProject
+);
+
+export const selectCurrentProjectSlug = createSelector(
+	(state: RootState) => state.projects.currentProject?.slug,
+	(slug) => slug
+);
+
+export const selectCurrentAudioPath = createSelector(
+	(state: RootState) => state.projects.currentProject?.slug,
+	(slug) => `${slug}/${AUDIO_DIR}`
 );
 
 export const selectAllProjects = createSelector(
