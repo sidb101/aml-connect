@@ -3,14 +3,16 @@ import ProjectForm from "../../../components/projectForm/ProjectForm";
 
 type OverviewViewProps = {
 	currentProjectName: string;
+	currentProjectDescription: string | undefined;
 };
 
-const OverviewView = ({ currentProjectName }: OverviewViewProps) => {
+const OverviewView = ({ currentProjectName, currentProjectDescription }: OverviewViewProps) => {
 	return (
 		<div className={`body-content-container-no-header-btns-with-footer`}>
 			<ProjectForm
 				heading={`Overview`}
-				projectNamePlaceholder={currentProjectName}
+				projectName={currentProjectName}
+				projectDescription={currentProjectDescription}
 				buttonText={{ isSubmitting: "Saving...", notSubmitting: "Save" }}
 			/>
 		</div>

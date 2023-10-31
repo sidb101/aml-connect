@@ -41,3 +41,11 @@
 .DisplayCard_link {
 	min-height: 0;
 }
+
+.DisplayCard_cross {
+	&:hover {
+		background-color: global.$color-green;
+		color: global.$color-white;
+		border-radius: 50%;
+	}
+}

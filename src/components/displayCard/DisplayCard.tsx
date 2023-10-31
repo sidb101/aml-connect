@@ -37,7 +37,7 @@ export default function DisplayCard({ displayCard }: DisplayCardProps) {
 						<Form method="DELETE">
 							<input type="hidden" name="projectSlug" value={displayCard.deletable.projectSlug} />
 							<button className={`green-text section-heading-text`}>
-								<FontAwesomeIcon icon={faCircleXmark} />
+								<FontAwesomeIcon icon={faCircleXmark} className={`DisplayCard_cross`} />
 							</button>
 						</Form>
 					)}

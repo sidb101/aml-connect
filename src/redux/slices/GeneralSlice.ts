@@ -18,7 +18,7 @@ const initialState: GeneralState = {
 
 const generalSlice = createSlice({
 	name: "general",
-	initialState,
+	initialState, // the type of this slice of the state would be inferred from the type of initial state
 	reducers: {
 		/**
 		 * To set the loading/unloading status for the whole application

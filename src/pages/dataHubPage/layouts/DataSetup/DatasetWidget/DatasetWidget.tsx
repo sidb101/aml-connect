@@ -41,8 +41,8 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 	//Handle when accordion is opened
 	const handleAccordionOpen = () => {
 		//If the input files are not present in the redux state, then fetch it from backend when accordion is open
-		if (projectSlug && importedInputFiles.length === 0) {
-			getInputFiles(datasetType).catch((e) => {
+		if (projectSlug && audioPath && importedInputFiles.length === 0) {
+			getInputFiles(datasetType, projectSlug, audioPath).catch((e) => {
 				console.error(e);
 			});
 		}
@@ -52,16 +52,18 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 	 * Will get the input files metadata from the server, and then read the corresponding file binaries from the
 	 * filesystem
 	 * @param dataSet: The type of input files to be fetched.
+	 * @param projectSlug The project slug
+	 * @param audioPath The audio path
 	 */
-	const getInputFiles = async (dataSet: DataSetT) => {
+	const getInputFiles = async (dataSet: DataSetT, projectSlug: string, audioPath: string) => {
 		try {
 			dispatch(generalActions.markLoading(true));
 
 			//get the metadata from the server
-			const inputFilesMetaData = await remoteService.getFilesMetaData(projectSlug || "", dataSet);
+			const inputFilesMetaData = await remoteService.getFilesMetaData(projectSlug, dataSet);
 
 			//get the files data along with content from the given metadata
-			const inputFiles = await storageService.readFilesFromStorage(inputFilesMetaData, audioPath || "");
+			const inputFiles = await storageService.readFilesFromStorage(inputFilesMetaData, audioPath);
 			console.log("Read the files: ", inputFiles);
 
 			//update it in the redux state

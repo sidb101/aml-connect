@@ -23,7 +23,10 @@ const OverviewPage = () => {
 		currentProject && (
 			<>
 				<Header headerTitle={`${currentProject.name} > Overview`} />
-				<OverviewView currentProjectName={currentProject.name} />
+				<OverviewView
+					currentProjectName={currentProject.name}
+					currentProjectDescription={`${currentProject.description ? currentProject.description : undefined}`}
+				/>
 				<Footer
 					footerBtnGroup={{ nextBtn: { label: "Data Hub", route: dataSetupRoute(currentProject.slug) } }}
 				/>

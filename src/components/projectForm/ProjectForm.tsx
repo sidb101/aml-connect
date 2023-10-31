@@ -1,5 +1,5 @@
 import "./ProjectForm.scss";
-import React from "react";
+import React, { useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import DisplayPanel from "../displayPanel/DisplayPanel";
 import { testIds } from "../../tests/test-utils";
@@ -11,8 +11,8 @@ export type ProjectFormT = {
 
 type ProjectFormProps = {
 	heading: string;
-	projectNamePlaceholder?: string;
-	projectDescriptionPlaceholder?: string;
+	projectName?: string;
+	projectDescription?: string;
 	buttonText: {
 		isSubmitting: string;
 		notSubmitting: string;
@@ -22,14 +22,20 @@ type ProjectFormProps = {
 const descriptionPlaceholder =
 	"Enter the project description here.\n\n\nFor example:\n\n\tWe are developing a ...\n\tfor ...\n\n\tThis device would ...\n\tto ...\n\n\tOur goal is ...";
 
-function ProjectForm({
-	heading,
-	projectNamePlaceholder = "Enter the project name here.",
-	projectDescriptionPlaceholder = descriptionPlaceholder,
-	buttonText,
-}: ProjectFormProps) {
+function ProjectForm({ heading, projectName, projectDescription, buttonText }: ProjectFormProps) {
+	const [name, setName] = useState<string>(projectName || "");
+	const [description, setDescription] = useState<string>(projectDescription || "");
+
 	const navigation = useNavigation();
 	const isSubmitting = navigation.state === "submitting";
+
+	const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setName(event.target.value);
+	};
+
+	const handleDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setDescription(event.target.value);
+	};
 
 	return (
 		<DisplayPanel heading={`${heading}`}>
@@ -42,7 +48,9 @@ function ProjectForm({
 						<input
 							type="text"
 							name="projectName"
-							placeholder={projectNamePlaceholder}
+							placeholder="Enter the project name here."
+							value={name}
+							onChange={handleNameChange}
 							required
 							className={`regular-text light-grey-text light-grey-panel`}
 							data-testid={testIds.projectNameInput}
@@ -55,7 +63,9 @@ function ProjectForm({
 						</label>
 						<textarea
 							name="projectDescription"
-							placeholder={projectDescriptionPlaceholder}
+							placeholder={descriptionPlaceholder}
+							value={description}
+							onChange={handleDescriptionChange}
 							className={`regular-text light-grey-text light-grey-panel`}
 							data-testid={testIds.projectDescriptionInput}
 						/>

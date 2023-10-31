@@ -6,7 +6,6 @@ import { type AnyAction, createSelector, createSlice, type PayloadAction, type T
 import type { ProjectDetails } from "../../service/RemoteService/client/bindings/ProjectDetails";
 import remoteService from "../../service/RemoteService/RemoteService";
 import type { RootState } from "../store";
-import { useAppSelector } from "../../hooks";
 import { AUDIO_DIR } from "../../constants";
 
 // Status of the app in terms of whether a project is opened,  closed, or new project to be created
@@ -17,12 +16,14 @@ export enum ProjectStatus {
 }
 
 type ProjectsState = {
+	isInitialised: boolean;
 	projectStatus: ProjectStatus;
 	currentProject: ProjectDetails | undefined;
 	allProjects: ProjectDetails[];
 };
 
 const initialState: ProjectsState = {
+	isInitialised: false,
 	projectStatus: ProjectStatus.NOT_OPEN,
 	currentProject: undefined,
 	allProjects: [],
@@ -64,6 +65,7 @@ const projectsSlice = createSlice({
 		 */
 		setAllProjects: (state, action: PayloadAction<ProjectDetails[]>) => {
 			state.allProjects = action.payload;
+			state.isInitialised = true;
 		},
 
 		/**
@@ -110,7 +112,7 @@ function setAllProjects(): ThunkAction<void, RootState, unknown, AnyAction> {
 		const currentState: ProjectsState = getState().projects;
 
 		// If projects haven't already been loaded
-		if (currentState.allProjects.length === 0) {
+		if (!currentState.isInitialised) {
 			// Backend call
 			const projects = await remoteService.getProjects();
 
