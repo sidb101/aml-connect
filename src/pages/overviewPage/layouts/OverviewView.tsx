@@ -1,18 +1,18 @@
 import "./OverviewView.scss";
 import ProjectForm from "../../../components/projectForm/ProjectForm";
+import type { ProjectDetails } from "../../../service/RemoteService/client/bindings/ProjectDetails";
 
 type OverviewViewProps = {
-	currentProjectName: string;
-	currentProjectDescription: string | undefined;
+	currentProject: ProjectDetails;
 };
 
-const OverviewView = ({ currentProjectName, currentProjectDescription }: OverviewViewProps) => {
+const OverviewView = ({ currentProject }: OverviewViewProps) => {
 	return (
 		<div className={`body-content-container-no-header-btns-with-footer`}>
 			<ProjectForm
 				heading={`Overview`}
-				projectName={currentProjectName}
-				projectDescription={currentProjectDescription}
+				projectName={currentProject.name}
+				projectDescription={currentProject.description || undefined}
 				buttonText={{ isSubmitting: "Saving...", notSubmitting: "Save" }}
 			/>
 		</div>
