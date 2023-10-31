@@ -10,6 +10,7 @@ import type { FilesUploadResponse } from "./bindings/FilesUploadResponse";
 import type { GetFilesResponse } from "./bindings/GetFilesResponse";
 import type { SimulateNetworkRequest } from "./bindings/SimulateNetworkRequest";
 import type { SimulateNetworkResponse } from "./bindings/SimulateNetworkResponse";
+import type { ElementMetadata } from "./bindings/ElementMetadata";
 
 class TauriApiClient implements RemoteClient {
 	/**
@@ -34,6 +35,18 @@ class TauriApiClient implements RemoteClient {
 			return await invoke("get_files", { req: getFilesRequest });
 		} catch (e) {
 			console.error("Couldn't get the files from backend.", e);
+			return Promise.reject(e);
+		}
+	}
+
+	/**
+	 * This method would get all the elements supported by the simulator
+	 */
+	async getAllElements(): Promise<Record<string, ElementMetadata>> {
+		try {
+			return await invoke("get_elements");
+		} catch (e) {
+			console.error("Couldn't get all the elements from backend.", e);
 			return Promise.reject(e);
 		}
 	}

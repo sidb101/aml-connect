@@ -4,5 +4,5 @@ export interface Node {
 	id: string;
 	name: string;
 	parent_network_id: bigint;
-	terminal_ids: Array<bigint>;
+	terminal_ids: Array<string>;
 }

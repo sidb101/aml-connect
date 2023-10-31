@@ -5,9 +5,14 @@ import type { FilesUploadResponse } from "./client/bindings/FilesUploadResponse"
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import type { GetFilesResponse } from "./client/bindings/GetFilesResponse";
 import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
-import type { NetworkT } from "../../redux/slices/ModelCreationSlice";
+import type { EdgeDataT, ElementT, NetworkT, ParameterT, TerminalT } from "../../redux/slices/ModelCreationSlice";
 import type { Network } from "./client/bindings/Network";
 import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
+import type { ElementMetadata } from "./client/bindings/ElementMetadata";
+import { DirectionT, ParamTypeT, RangeT, UIComponentT } from "../../redux/slices/ModelCreationSlice";
+import type { Parameters } from "./client/bindings/Parameters";
+import type { Edge } from "reactflow";
+import type { Terminal } from "./client/bindings/Terminal";
 /* eslint-disable  @typescript-eslint/naming-convention */
 
 /***
@@ -47,7 +52,7 @@ const remoteTransformer = {
 
 		//read the content of all the files in the
 		return files.map((file) => {
-			const extension = this.getFileExtension(file.file_name);
+			const extension = getFileExtension(file.file_name);
 			return {
 				name: file.file_name,
 				extension,
@@ -56,30 +61,105 @@ const remoteTransformer = {
 		});
 	},
 
+	parseGetElementsResponse(getElementsResponse: Record<string, ElementMetadata>): Record<string, ElementT> {
+		const elementEntries: [string, ElementT][] = Object.entries(getElementsResponse).map(
+			([elType, elData]): [string, ElementT] => {
+				//get transformed parameter entries
+				const parameterEntries: [string, ParameterT][] | undefined = elData.parameters
+					? Object.entries(elData.parameters)
+							.map(([pName, pData]): [string, ParameterT] => {
+								try {
+									return [
+										pName,
+										{
+											parameterType: getEnumValue(ParamTypeT, pData.parameter_type) as ParamTypeT,
+											description: pData.description,
+											default: pData.default,
+											rangeType: pData.range_type
+												? (getEnumValue(RangeT, pData.range_type) as RangeT)
+												: undefined,
+											range: pData.range || undefined,
+											unit: pData.unit || undefined,
+											uiComponent: getEnumValue(UIComponentT, pData.ui_component) as UIComponentT,
+										},
+									];
+								} catch (e) {
+									console.error("ERROR: Skipping parameter..", e);
+									return ["", {} as ParameterT];
+								}
+							})
+							.filter(([pName]) => pName != "")
+					: undefined;
+
+				//get transformed terminal entries
+				const terminalEntries: [string, TerminalT][] = Object.entries(elData.terminals)
+					.map(([tName, tData]): [string, TerminalT] => {
+						try {
+							return [
+								tName,
+								{
+									description: tData.description,
+									direction: getEnumValue(DirectionT, tData.direction) as DirectionT,
+									default: tData.default,
+									dcRange: tData.dc_range || undefined,
+									acRange: tData.ac_range || undefined,
+								},
+							];
+						} catch (e) {
+							console.error("ERROR: Skipping terminal..", e);
+							return ["", {} as TerminalT];
+						}
+					})
+					.filter(([tName]) => tName !== "");
+
+				return [
+					elType,
+					{
+						typeName: elData.type_name,
+						shortDescription: elData.short_description,
+						longDescription: elData.long_description,
+						parameters: parameterEntries ? Object.fromEntries(parameterEntries) : undefined,
+						terminals: Object.fromEntries(terminalEntries),
+					},
+				];
+			}
+		);
+
+		return Object.fromEntries(elementEntries);
+	},
+
 	createSimulateRequest(network: NetworkT, inputFile: InputFileMetaDataT): SimulateNetworkRequest {
+		//TODO: Perform the validations on network
+
+		const terminalMap: Map<string, Array<Terminal>> = getTerminalMap(network.edges);
+
 		const networkToSimulate: Network = {
-			id: network.metaData.id,
+			id: network.metaData.id as unknown as bigint,
 			creator_id: 1n,
 			name: network.metaData.name,
-			elements: network.nodes.map((node) => ({
-				id: node.id,
-				parent_network_id: network.metaData.id,
-				type_name: node.data.elementType,
-				element_type_params: network.params[node.id],
-				terminals: [],
-				position: {
-					x: node.position.x,
-					y: node.position.y,
-				},
-			})),
+			elements: network.nodes.map((node) => {
+				//create the params object
+				const params: Record<string, unknown> = {};
+				params[node.data.elementType] = network.params[node.id];
+				return {
+					id: node.id,
+					parent_network_id: network.metaData.id as unknown as bigint,
+					type_name: node.data.elementType,
+					element_type_params: params as Parameters, //consider the given params object as Parameters
+					terminals: terminalMap.get(node.id) || [], //empty terminals in case the node is not connected anything
+					position: {
+						x: node.position.x,
+						y: node.position.y,
+					},
+				};
+			}),
 			nodes: network.edges.map((edge) => ({
 				id: edge.id,
-				name: "",
-				parent_network_id: network.metaData.id,
-				terminal_ids: [],
+				name: edge.id,
+				parent_network_id: network.metaData.id as unknown as bigint,
+				terminal_ids: [getTerminalId(edge.source, edge.id), getTerminalId(edge.target, edge.id)], //source and target terminal ids
 			})),
 		};
-
 		return {
 			network: networkToSimulate,
 			input_file_path: inputFile.name,
@@ -89,16 +169,75 @@ const remoteTransformer = {
 	parseSimulationResponse(simulateNetworkResponse: SimulateNetworkResponse): Record<string, number[]> {
 		return simulateNetworkResponse.response;
 	},
-
-	getFileExtension(fileName: string): string {
-		const tokens = fileName.split(".");
-		if (tokens.length < 2) {
-			//means the extension is not present
-			throw new Error("File needs a valid extension.");
-		}
-
-		return tokens[tokens.length - 1];
-	},
 };
+
+/**** Helper Functions ****/
+
+function getFileExtension(fileName: string): string {
+	const tokens = fileName.split(".");
+	if (tokens.length < 2) {
+		//means the extension is not present
+		throw new Error("File needs a valid extension.");
+	}
+
+	return tokens[tokens.length - 1];
+}
+
+/**
+ * To get Enum Key from its corresponding string value
+ * @throws Error: if can't convert to specific enum
+ */
+function getEnumValue<T extends { [index: string]: string }>(myEnum: T, value: string): string {
+	let values = Object.values(myEnum).filter((val) => val === value);
+	if (values.length > 0) {
+		return values[0];
+	} else {
+		throw new Error("Can't convert : '" + value + "'");
+	}
+}
+
+/**
+ * To get the Terminal Id for a given nodeId and edgeId
+ * @param nodeId : Node whose part is the current terminal
+ * @param edgeId: Edge emanating from the terminal
+ */
+function getTerminalId(nodeId: string, edgeId: string) {
+	return nodeId + "|" + edgeId;
+}
+
+/**
+ * Would generate a map having List of Terminals for every node.
+ * @param edges Representing connection between nodes
+ * @return Map having key as nodeId and value as list of Terminals for that nodeId
+ */
+function getTerminalMap(edges: Array<Edge<EdgeDataT>>): Map<string, Array<Terminal>> {
+	const terminalMap: Map<string, Array<Terminal>> = new Map<string, Array<Terminal>>();
+
+	edges.forEach((edge) => {
+		//Add a terminal for the source node
+		const sourceNode = edge.source;
+		const sourceTerminals: Array<Terminal> = terminalMap.get(sourceNode) || new Array<Terminal>();
+		sourceTerminals.push({
+			id: getTerminalId(sourceNode, edge.id),
+			parent_element_id: sourceNode,
+			type_name: edge.data?.sourceTerminalType || "",
+			node_name: edge.id,
+		});
+		terminalMap.set(sourceNode, sourceTerminals);
+
+		//Add a terminal for the target node
+		const targetNode = edge.target;
+		const targetTerminals: Array<Terminal> = terminalMap.get(targetNode) || new Array<Terminal>();
+		targetTerminals.push({
+			id: getTerminalId(targetNode, edge.id),
+			parent_element_id: targetNode,
+			type_name: edge.data?.targetTerminalType || "",
+			node_name: edge.id,
+		});
+		terminalMap.set(targetNode, targetTerminals);
+	});
+
+	return terminalMap;
+}
 
 export default remoteTransformer;

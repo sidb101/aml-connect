@@ -4,7 +4,7 @@ import { DataSetT } from "../../redux/slices/DataHubSlice";
 import type { FilesUploadRequest } from "./client/bindings/FilesUploadRequest";
 import remoteTransformer from "./RemoteTransformer";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
-import { type NetworkT } from "../../redux/slices/ModelCreationSlice";
+import { type ElementT, type NetworkT } from "../../redux/slices/ModelCreationSlice";
 import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
 
 /**
@@ -47,7 +47,13 @@ const remoteService = {
 		return inputFilesMetaData;
 	},
 
+	getAllElements: async (): Promise<Record<string, ElementT>> => {
+		const getElementsResponse = await remoteClient.getAllElements();
+		return remoteTransformer.parseGetElementsResponse(getElementsResponse);
+	},
+
 	simulateNetwork: async (network: NetworkT, inputFile: InputFileMetaDataT): Promise<Record<string, number[]>> => {
+		//TODO: Perform the validations on network
 		const simulationRequest: SimulateNetworkRequest = remoteTransformer.createSimulateRequest(network, inputFile);
 		console.log("Request:", simulationRequest);
 

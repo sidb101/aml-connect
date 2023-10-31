@@ -1,62 +1,23 @@
 import { describe } from "@jest/globals";
 import "@testing-library/jest-dom";
-import { fireEvent, screen, within } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import { when } from "jest-when";
 import { invoke } from "@tauri-apps/api/tauri";
 import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
-import { renderWithProviders, testIds } from "../test-utils";
+import {
+	getPageElements,
+	renderWithProviders,
+	testIds,
+	verifyFooterButtons,
+	verifyPageHeading,
+	verifyPageTabLabels,
+	verifyPageTabLinkIsActive,
+} from "../test-utils";
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjects";
 import React from "react";
 import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageTabs";
-import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
-
-const getPageElements = () => {
-	const actualPageHeading = screen.getByTestId(testIds.contentHeading);
-	const actualPageTabLinks = screen.getAllByTestId(testIds.pageTabLink);
-	const actualPageTabLabels = screen.getAllByTestId(testIds.pageTabLinkLabel);
-	const actualPrevBtn = screen.getByTestId(testIds.prevBtn);
-	const actualNextBtn = screen.getByTestId(testIds.nextBtn);
-
-	return {
-		actualPageHeading,
-		actualPageTabLinks,
-		actualPageTabLabels,
-		actualPrevBtn,
-		actualNextBtn,
-	};
-};
-
-const verifyPageHeading = (expectedPageHeading: string, actualPageHeading: HTMLElement) => {
-	const verifyPageHeading = (expectedPageHeading: string, actualPageHeading: HTMLElement) => {
-		const regExp = new RegExp(expectedPageHeading, "i"); // 'i' flag for case-insensitive matching
-		expect(within(screen.getByTestId(testIds.contentHeading)).getByText(regExp)).toBeInTheDocument();
-	};
-};
-
-const verifyPageTabLinkIsActive = (actualPageTabLinks: HTMLElement) => {
-	expect(within(actualPageTabLinks).getByTestId(testIds.pageTabLinkLabel)).toHaveClass(pageTabsActiveClass);
-};
-
-const verifyPageTabLabels = (expectedPageTabLabels: string[], actualPageTabLabels: HTMLElement[]) => {
-	if (expectedPageTabLabels.length !== actualPageTabLabels.length) {
-		fail("Mismatch in the length of expected and actual page tab labels.");
-		return;
-	}
-
-	expectedPageTabLabels.forEach((label, index) => {
-		if (actualPageTabLabels[index].textContent === "") {
-			fail(`Empty Label Found in Page Tab at index: ${index}`);
-		} else {
-			expect(actualPageTabLabels[index]).toHaveTextContent(label);
-		}
-	});
-};
-
-const verifyFooterButtons = (expectedPrevBtnText: string, actualPrevBtn: HTMLElement) => {
-	expect(actualPrevBtn).toHaveTextContent(expectedPrevBtnText);
-};
 
 describe("Testing the Data Hub navigation", () => {
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;

@@ -7,7 +7,7 @@ export type OptionT = {
 	menuLabel: string;
 };
 export const testNetworkMetaData: NetworkMetaDataT = {
-	id: 1n,
+	id: 1,
 	name: "Test Network",
 };
 

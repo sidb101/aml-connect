@@ -1,19 +1,19 @@
 import "./App.scss";
 import React from "react";
-import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
 import {
 	BASE_ROUTE,
+	CREATE_MODEL_ROUTE,
 	DATA_HUB_ROUTE,
 	DATA_SETUP_ROUTE,
 	DATA_VIZ_ROUTE,
 	MODEL_CREATION_ROUTE,
-	CREATE_MODEL_ROUTE,
 	NEURAL_NETWORK_ROUTE,
 	OVERVIEW_ROUTE,
-	RESULTS_ROUTE,
-	SEND_TO_HARDWARE_ROUTE,
 	RESULTS_ANALYSIS_ROUTE,
 	RESULTS_COMPARISON_ROUTE,
+	RESULTS_ROUTE,
+	SEND_TO_HARDWARE_ROUTE,
 } from "./routes";
 import Root from "./pages/Root";
 import LandingPage from "./pages/landingPage/LandingPage";
@@ -29,8 +29,13 @@ import CreateModel from "./pages/modelCreationPage/layouts/CreateModel/CreateMod
 import NeuralNetworks from "./pages/modelCreationPage/layouts/NeuralNetworks/NeuralNetworks";
 import ResultsAnalysis from "./pages/resultsPage/layouts/ResultsAnalysis/ResultsAnalysis";
 import ResultsComparison from "./pages/resultsPage/layouts/ResultsComparison/ResultsComparison";
+import ParameterFormDriver from "./components/storybook/ParameterForm";
 
-const App = () => <RouterProvider router={router} />;
+// const App = () => <RouterProvider router={router} />;
+
+const App = () => {
+	return <ParameterFormDriver />;
+};
 
 /** Exporting the routes to use them in testing as well **/
 export const routes = createRoutesFromElements(

@@ -1,18 +1,4 @@
 /**
- * TODO: Need to figure out if we need the parameter types dynamically from the rust simulator.
- * If yes, then the simulation request shouldn't accept the Network parameters from UI,
- * rather just accept a generic object. Also, get_elements need to describe the type of parameter every element
- * takes which would include: Human Readable label, Input Type (text, number, dropdown, radio, checkbox, etc.)
- *
- * If no, then all the information fort the elements should be coded in the UI as well, because then get_elements()
- * doesn't make sense, because addition of a new element would any how cause code changes in backend and frontend.
- *
- * In both cases, we would need to create the parameter forms as per the specification. Either dynamically generate
- * them (which would require precise specification for each and every parameter),
- * or create a different parameter form for every element, and dynamically call the respective parameter form. (using component map)
- */
-
-/**
  * This slice would deal with all the model creation related parts of the state, which are
  * network creation, network parameters, neural networks, etc.
  * The slice would give different actions that can be dispatched to update the
@@ -21,35 +7,87 @@
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { type RootState } from "../store";
 import { type Parameters } from "../../service/RemoteService/client/bindings/Parameters";
-import type { TerminalT } from "../../tests/mockdata/getElementsMockData";
-import type { Node, Edge, NodeChange, EdgeChange, Connection } from "reactflow";
-import { testEdges, testNetwork, testNetworkMetaData, testNodes } from "../../tests/mockdata/allNodesAndEdges";
+import type { Connection, Edge, EdgeChange, Node, NodeChange } from "reactflow";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
+import { testNetwork, testNetworkMetaData } from "../../tests/mockdata/allNodesAndEdges";
 
 export type ModelCreationState = {
 	allNetworks: NetworkMetaDataT[]; //Used to show all available networks of user to choose from
-	allElements: Record<string, ElementMetaDataT>;
+	allElements: Record<string, ElementT>; //information about all the elements that can be used to create the network
 	selectedNetwork: NetworkT;
-	//TODO: Add parameters information
 };
+
+/*** Types for  Possible Network Elements ***/
+
+/**
+ * Type to describe all the information about a simulator element
+ */
+export type ElementT = {
+	typeName: string; //Unique identifier for every element
+	shortDescription: string;
+	longDescription: string;
+	terminals: Record<string, TerminalT>; //Terminal type -> Terminal Info
+	parameters?: Record<string, ParameterT>; //Parameter type -> Parameter Info
+};
+
+/**
+ * Type to describe all the information about a terminal of an element
+ */
+export type TerminalT = {
+	description: string;
+	direction: DirectionT;
+	default: string | null;
+	dcRange?: string;
+	acRange?: string;
+};
+
+/**
+ * Type to describe parameter information
+ */
+export type ParameterT = {
+	parameterType: ParamTypeT;
+	description?: string;
+	default: string | null;
+	rangeType?: RangeT;
+	range?: Array<string | null>;
+	unit?: string;
+	uiComponent: UIComponentT;
+};
+
+export enum DirectionT {
+	//The String values are consistent with the backend contract
+	INPUT = "input",
+	OUTPUT = "output",
+}
+
+export enum ParamTypeT {
+	//The String values are consistent with the backend contract
+	NUMBER = "number",
+	STRING = "string",
+	BOOLEAN = "boolean",
+}
+
+export enum RangeT {
+	//The String values are consistent with the backend contract
+	DISCRETE = "discrete",
+	INTERVAL = "interval",
+}
+
+export enum UIComponentT /*eslint-disable @typescript-eslint/naming-convention*/ {
+	//The String values are consistent with the backend contract
+	CHECKBOX = "checkbox",
+	DROPDOWN = "dropdown",
+	TEXTBOX = "textbox",
+}
+
+/*** Types for Possible Networks ***/
 
 /**
  * Type to describe basic information about a network
  */
 export type NetworkMetaDataT = {
-	id: bigint;
+	id: number;
 	name: string;
-};
-
-/**
- * Type to describe all the information about a simulator element
- */
-export type ElementMetaDataT = {
-	shortDescription: string;
-	longDescription: string;
-	type: string;
-	terminals: TerminalT;
-	parameters?: any;
 };
 
 /**
@@ -59,7 +97,7 @@ export type NetworkT = {
 	metaData: NetworkMetaDataT;
 	nodes: Array<Node<NodeDataT>>;
 	edges: Array<Edge<EdgeDataT>>;
-	params: Record<string, Parameters>; //Store the parameter values for every Node of the Graph
+	params: Record<string, Record<string, string>>; //<NodeId -> Parameter Object having key value>
 };
 
 /**
@@ -74,7 +112,8 @@ export type NodeDataT = {
  * Type to describe data to be stored for a particular edge
  */
 export type EdgeDataT = {
-	data?: string;
+	sourceTerminalType: string;
+	targetTerminalType: string;
 };
 
 const initialState: ModelCreationState = {
@@ -125,12 +164,26 @@ export const modelCreationSlice = createSlice({
 		addNode: (state, action: PayloadAction<{ node: Node<NodeDataT> }>) => {
 			state.selectedNetwork.nodes = [...state.selectedNetwork.nodes, action.payload.node];
 		},
+		/**
+		 * Sets the elements that the user would want to use to create simulation network
+		 * @param state: Model creation state
+		 * @param action: The action would have all the elements that the simulator supports
+		 */
+		setAllElements: (state, action: PayloadAction<{ allElements: Record<string, ElementT> }>) => {
+			state.allElements = action.payload.allElements;
+		},
 	},
 });
 
-export const selectCurrentNetwork = createSelector([(state: RootState) => state.modelCreation], (state) => {
-	return state.selectedNetwork;
-});
+export const selectCurrentNetwork = createSelector(
+	[(state: RootState) => state.modelCreation],
+	(state) => state.selectedNetwork
+);
+
+export const selectAllElements = createSelector(
+	[(state: RootState) => state.modelCreation],
+	(state) => state.allElements
+);
 
 export const {
 	name: modelCreationSliceKey,

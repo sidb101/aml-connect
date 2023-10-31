@@ -25,6 +25,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../hooks";
 import {
 	modelCreationActions,
 	type NodeDataT,
+	selectAllElements,
 	selectCurrentNetwork,
 } from "../../../../../redux/slices/ModelCreationSlice";
 
@@ -44,6 +45,7 @@ export default function Canvas() {
 
 	const dispatch = useAppDispatch();
 	const currentNetwork = useAppSelector(selectCurrentNetwork);
+	const allElements = useAppSelector(selectAllElements);
 
 	// Handle the click event of the dropdown option.
 	const handleOptionClick = (option: OptionT) => {

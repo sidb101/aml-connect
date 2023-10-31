@@ -74,7 +74,7 @@ const Root = (props: RootT) => {
 			<div className={`Root_sidebarContainer`}>
 				<Sidebar logo="AnalogML Connect" sideRegion={[getSideRegion()]} />
 			</div>
-			<div className={"xlight-panel content-container"} data-testid={testIds.contentHeading}>
+			<div className={"xlight-panel content-container"}>
 				<Outlet />
 			</div>
 		</div>
