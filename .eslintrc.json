@@ -44,7 +44,8 @@
         "@typescript-eslint/prefer-nullish-coalescing": "off",
         "spaced-comment": "off",
         "no-implicit-coercion": "off",
-        "@typescript-eslint/padding-line-between-statements": "off"
+        "@typescript-eslint/padding-line-between-statements": "off",
+        "@typescript-eslint/naming-convention": "warn"
     }
 }
 
