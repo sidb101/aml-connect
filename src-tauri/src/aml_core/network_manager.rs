@@ -47,8 +47,8 @@ pub struct SimulateNetworkResponse {
 pub struct Node {
     pub id: String,
     pub name: String,
-    pub parent_network_id: u64,
-    pub terminal_ids: Vec<u64>,
+    pub parent_network_id: Option<u64>,
+    pub terminal_ids: Vec<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -57,7 +57,7 @@ pub struct Node {
 pub struct Network {
     //id is optional so that frontend doesn't need to send an id to backend
     //if backend notices id is null, this means backend needs to generate an
-    //id for this network
+    //id for this network (and propagage to corresponding parent_network_id fields)
     pub id: Option<u64>, 
     pub name: String,
     pub elements: Vec<Element>,
@@ -71,7 +71,7 @@ pub struct Network {
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Element{
     pub id: String,
-    pub parent_network_id: u64,
+    pub parent_network_id: Option<u64>,
     pub name: String,
 
     pub type_name: String,
@@ -94,7 +94,7 @@ pub struct Position {
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Terminal{
     pub id: String,
-    pub parent_element_id: u64,
+    pub parent_element_id: String,
     pub type_name: String,
     pub node_name: String,
 }
