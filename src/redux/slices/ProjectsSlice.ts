@@ -16,14 +16,12 @@ export enum ProjectStatus {
 }
 
 type ProjectsState = {
-	isInitialised: boolean;
 	projectStatus: ProjectStatus;
 	currentProject: ProjectDetails | undefined;
 	allProjects: ProjectDetails[];
 };
 
 const initialState: ProjectsState = {
-	isInitialised: false,
 	projectStatus: ProjectStatus.NOT_OPEN,
 	currentProject: undefined,
 	allProjects: [],
@@ -65,7 +63,6 @@ const projectsSlice = createSlice({
 		 */
 		setAllProjects: (state, action: PayloadAction<ProjectDetails[]>) => {
 			state.allProjects = action.payload;
-			state.isInitialised = true;
 		},
 
 		/**
@@ -111,16 +108,13 @@ function setAllProjects(): ThunkAction<void, RootState, unknown, AnyAction> {
 		// Check if projects have already been fetched by inspecting the state
 		const currentState: ProjectsState = getState().projects;
 
-		// If projects haven't already been loaded
-		if (!currentState.isInitialised) {
-			// Backend call
-			const projects = await remoteService.getProjects();
+		// Backend call
+		const projects = await remoteService.getProjects();
 
-			dispatch({
-				type: "projects/setAllProjects",
-				payload: projects,
-			});
-		}
+		dispatch({
+			type: "projects/setAllProjects",
+			payload: projects,
+		});
 	};
 }
 

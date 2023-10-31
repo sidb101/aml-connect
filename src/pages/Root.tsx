@@ -21,7 +21,11 @@ function Root() {
 	const isLoading = useAppSelector(selectIsLoading);
 
 	const dispatch = useAppDispatch();
-	dispatch(projectsActions.setAllProjects());
+
+	useEffect(() => {
+		// get all the projects of the application and set them in the state
+		dispatch(projectsActions.setAllProjects());
+	}, []);
 
 	useEffect(() => {
 		if (currentProject) {

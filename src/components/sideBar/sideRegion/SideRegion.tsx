@@ -1,7 +1,7 @@
 import "./SideRegion.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons/faChevronRight";
-import type { PropsWithChildren, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export type SideRegionT = {
 	heading: string;
@@ -9,13 +9,7 @@ export type SideRegionT = {
 	region?: ReactNode;
 };
 
-type SideRegionProps = {
-	sideRegion: SideRegionT;
-};
-
-function SideRegion({ sideRegion }: SideRegionProps) {
-	const { heading, isVisible = true, region } = sideRegion;
-
+function SideRegion({ heading, isVisible = true, region }: SideRegionT) {
 	return (
 		isVisible && (
 			<div className={"SideRegion_container"}>
