@@ -36,6 +36,7 @@ export type ElementT = {
 export type TerminalT = {
 	description: string;
 	direction: DirectionT;
+	// eslint-disable-next-line @typescript-eslint/ban-types
 	default: string | null;
 	dcRange?: string;
 	acRange?: string;
@@ -47,8 +48,10 @@ export type TerminalT = {
 export type ParameterT = {
 	parameterType: ParamTypeT;
 	description?: string;
+	// eslint-disable-next-line @typescript-eslint/ban-types
 	default: string | null;
 	rangeType?: RangeT;
+	// eslint-disable-next-line @typescript-eslint/ban-types
 	range?: Array<string | null>;
 	unit?: string;
 	uiComponent: UIComponentT;
@@ -73,7 +76,8 @@ export enum RangeT {
 	INTERVAL = "interval",
 }
 
-export enum UIComponentT /*eslint-disable @typescript-eslint/naming-convention*/ {
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export enum UIComponentT {
 	//The String values are consistent with the backend contract
 	CHECKBOX = "checkbox",
 	DROPDOWN = "dropdown",

@@ -21,6 +21,8 @@ describe("Testing createSimulateRequest()", () => {
 	test("Normal Test", () => {
 		const expectedTransformation: SimulateNetworkRequest = {
 			network: mockExpectedNetworkTransform,
+
+			//eslint-disable-next-line @typescript-eslint/naming-convention
 			audio_file_path: audioFilesMock[0].metadata.name,
 		};
 

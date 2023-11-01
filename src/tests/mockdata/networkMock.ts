@@ -2,8 +2,28 @@ import type { Edge, Node } from "reactflow";
 import { Position } from "reactflow";
 import type { EdgeDataT, NetworkMetaDataT, NetworkT, NodeDataT } from "../../redux/slices/ModelCreationSlice";
 import type { Network } from "../../service/RemoteService/client/bindings/Network";
-import type { Parameters } from "../../service/RemoteService/client/bindings/Parameters";
 import type { TerminalParams } from "../../service/RemoteService/client/bindings/TerminalParams";
+import type { OptionT } from "../../components/dropdown/Dropdown";
+
+// TODO: Remove this and use all elements fetched from backend 'ElementT'
+export const allNodes: OptionT[] = [
+	{
+		label: "IN",
+		menuLabel: "Input",
+	},
+	{
+		label: "BPF",
+		menuLabel: "Band Pass Filter",
+	},
+	{
+		label: "GAIN",
+		menuLabel: "Gain",
+	},
+	{
+		label: "OUT",
+		menuLabel: "Output",
+	},
+];
 
 export const mockNetworkMetaData: NetworkMetaDataT = {
 	id: 5000n,

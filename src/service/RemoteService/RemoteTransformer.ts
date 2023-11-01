@@ -62,10 +62,10 @@ const remoteTransformer = {
 	},
 
 	parseGetElementsResponse(getElementsResponse: Record<string, ElementMetadata>): Record<string, ElementT> {
-		const elementEntries: [string, ElementT][] = Object.entries(getElementsResponse).map(
+		const elementEntries: Array<[string, ElementT]> = Object.entries(getElementsResponse).map(
 			([elType, elData]): [string, ElementT] => {
 				//get transformed parameter entries
-				const parameterEntries: [string, ParameterT][] | undefined = elData.parameters
+				const parameterEntries: Array<[string, ParameterT]> | undefined = elData.parameters
 					? Object.entries(elData.parameters)
 							.map(([pName, pData]): [string, ParameterT] => {
 								try {
@@ -85,14 +85,15 @@ const remoteTransformer = {
 									];
 								} catch (e) {
 									console.error("ERROR: Skipping parameter..", e);
+									// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 									return ["", {} as ParameterT];
 								}
 							})
-							.filter(([pName]) => pName != "")
+							.filter(([pName]) => pName !== "")
 					: undefined;
 
 				//get transformed terminal entries
-				const terminalEntries: [string, TerminalT][] = Object.entries(elData.terminals)
+				const terminalEntries: Array<[string, TerminalT]> = Object.entries(elData.terminals)
 					.map(([tName, tData]): [string, TerminalT] => {
 						try {
 							return [
@@ -107,6 +108,7 @@ const remoteTransformer = {
 							];
 						} catch (e) {
 							console.error("ERROR: Skipping terminal..", e);
+							// eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 							return ["", {} as TerminalT];
 						}
 					})
@@ -131,7 +133,7 @@ const remoteTransformer = {
 	createSimulateRequest(network: NetworkT, inputFile: InputFileMetaDataT): SimulateNetworkRequest {
 		//TODO: Perform the validations on network
 
-		const terminalMap: Map<string, Array<Terminal>> = getTerminalMap(network.edges);
+		const terminalMap: Map<string, Terminal[]> = getTerminalMap(network.edges);
 
 		const networkToSimulate: Network = {
 			id: network.metaData.id as unknown as bigint,
@@ -188,13 +190,13 @@ function getFileExtension(fileName: string): string {
  * To get Enum Key from its corresponding string value
  * @throws Error: if can't convert to specific enum
  */
-function getEnumValue<T extends { [index: string]: string }>(myEnum: T, value: string): string {
-	let values = Object.values(myEnum).filter((val) => val === value);
+function getEnumValue<T extends Record<string, string>>(myEnum: T, value: string): string {
+	const values = Object.values(myEnum).filter((val) => val === value);
 	if (values.length > 0) {
 		return values[0];
-	} else {
-		throw new Error("Can't convert : '" + value + "'");
 	}
+
+	throw new Error("Can't convert : '" + value + "'");
 }
 
 /**
@@ -211,13 +213,13 @@ function getTerminalId(nodeId: string, edgeId: string) {
  * @param edges Representing connection between nodes
  * @return Map having key as nodeId and value as list of Terminals for that nodeId
  */
-function getTerminalMap(edges: Array<Edge<EdgeDataT>>): Map<string, Array<Terminal>> {
-	const terminalMap: Map<string, Array<Terminal>> = new Map<string, Array<Terminal>>();
+function getTerminalMap(edges: Array<Edge<EdgeDataT>>): Map<string, Terminal[]> {
+	const terminalMap: Map<string, Terminal[]> = new Map<string, Terminal[]>();
 
 	edges.forEach((edge) => {
 		//Add a terminal for the source node
 		const sourceNode = edge.source;
-		const sourceTerminals: Array<Terminal> = terminalMap.get(sourceNode) || new Array<Terminal>();
+		const sourceTerminals: Terminal[] = terminalMap.get(sourceNode) || new Array<Terminal>();
 		sourceTerminals.push({
 			id: getTerminalId(sourceNode, edge.id),
 			parent_element_id: sourceNode,
@@ -228,7 +230,7 @@ function getTerminalMap(edges: Array<Edge<EdgeDataT>>): Map<string, Array<Termin
 
 		//Add a terminal for the target node
 		const targetNode = edge.target;
-		const targetTerminals: Array<Terminal> = terminalMap.get(targetNode) || new Array<Terminal>();
+		const targetTerminals: Terminal[] = terminalMap.get(targetNode) || new Array<Terminal>();
 		targetTerminals.push({
 			id: getTerminalId(targetNode, edge.id),
 			parent_element_id: targetNode,

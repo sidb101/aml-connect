@@ -32,7 +32,7 @@ function ParameterFormDriver() {
 function ParameterForm({ defaultParams, parameterInfo, elementType, ...props }: ParameterFormT) {
 	const [params, setParam] = useState<Record<string, string>>(defaultParams);
 
-	const onTextBoxInputChange = (event: any, parameterName: string) => {
+	const onTextBoxInputChange = (event: React.ChangeEvent<HTMLInputElement>, parameterName: string) => {
 		setParam((oldParams) => {
 			const newParams = { ...oldParams };
 			newParams[parameterName] = event.target.value;
@@ -40,7 +40,7 @@ function ParameterForm({ defaultParams, parameterInfo, elementType, ...props }: 
 		});
 	};
 
-	const onCheckBoxInputChange = (event: any, parameterName: string) => {
+	const onCheckBoxInputChange = (event: React.ChangeEvent<HTMLInputElement>, parameterName: string) => {
 		setParam((oldParams) => {
 			const newParams = { ...oldParams };
 			newParams[parameterName] = event.target.checked.toString();
@@ -48,7 +48,7 @@ function ParameterForm({ defaultParams, parameterInfo, elementType, ...props }: 
 		});
 	};
 
-	const onSelectInputChange = (event: any, parameterName: string) => {
+	const onSelectInputChange = (event: React.ChangeEvent<HTMLSelectElement>, parameterName: string) => {
 		setParam((oldParams) => {
 			const newParams = { ...oldParams };
 			newParams[parameterName] = event.target.value;
@@ -61,7 +61,7 @@ function ParameterForm({ defaultParams, parameterInfo, elementType, ...props }: 
 			case UIComponentT.TEXTBOX:
 				return (
 					<input
-						type={`${param.parameterType == ParamTypeT.NUMBER ? "number" : "text"}`}
+						type={`${param.parameterType === ParamTypeT.NUMBER ? "number" : "text"}`}
 						value={params[paramName] || ""}
 						onChange={(e) => {
 							onTextBoxInputChange(e, paramName);
@@ -73,7 +73,7 @@ function ParameterForm({ defaultParams, parameterInfo, elementType, ...props }: 
 				return (
 					<input
 						type={"checkbox"}
-						checked={JSON.parse(params[paramName])}
+						checked={JSON.parse(params[paramName]) as boolean}
 						onChange={(e) => {
 							onCheckBoxInputChange(e, paramName);
 						}}
@@ -130,9 +130,9 @@ function ParameterForm({ defaultParams, parameterInfo, elementType, ...props }: 
 	);
 }
 
-export const getParamObject = (paramInfo: Record<string, ParameterT>) => {
+export const getParamObject = (paramInfo: Record<string, ParameterT>): Record<string, string> => {
 	const paramEntries = Object.entries(paramInfo).map(([key, value]) => [key, value.default]);
-	return Object.fromEntries(paramEntries);
+	return Object.fromEntries(paramEntries) as Record<string, string>;
 };
 
 export default ParameterFormDriver;

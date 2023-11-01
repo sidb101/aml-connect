@@ -47,7 +47,9 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 
 	/** Get all the elements to create the simulation network and persist them in the global state **/
 	useEffect(() => {
-		fetchAllElements().catch((e) => console.error("Couldn't fetch all elements..", e));
+		fetchAllElements().catch((e) => {
+			console.error("Couldn't fetch all elements..", e);
+		});
 	}, []);
 
 	const fetchAllElements = async () => {
