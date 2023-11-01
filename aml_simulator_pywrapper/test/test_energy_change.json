@@ -1,11 +1,8 @@
 {
     "id": 5001,
     "name": "energy_change_detector_network",
-    
     "elements": [
         {
-            "id": 100,
-            "parent_network_id": 5001,
             "type_name": "Terminal",
             "element_type_params": {
                 "Terminal": {
@@ -18,178 +15,122 @@
             },
             "terminals": [
                 {
-                    "id": 1,
-                    "parent_element_id": 100,
                     "type_name": "net",
                     "node_name": "in"
                 }
-            ],
-            "position": {
-                "x": 0,
-                "y": 0
-            }
+            ]
         },
         {
-            "id": 100,
-            "parent_network_id": 5000,
             "type_name": "PeakDetector",
             "element_type_params": {
-                "Terminal": {
-                    "hardware_pin": "A0",
-                    "is_input": true,
-                    "is_output": false,
-                    "is_ac_coupled": null,
-                    "is_extern": null
+                "PeakDetector": {
+                    "atk": 20e3,
+                    "dec": 100
                 }
             },
             "terminals": [
                 {
-                    "id": 1,
-                    "parent_element_id": 100,
-                    "type_name": "net",
-                    "node_name": "in"
-                }
-            ],
-            "position": {
-                "x": 0,
-                "y": 0
-            }
-        },
-        {
-            "id": 100,
-            "parent_network_id": 5000,
-            "type_name": "Comparator",
-            "element_type_params": {
-                "Terminal": {
-                    "hardware_pin": "A0",
-                    "is_input": true,
-                    "is_output": false,
-                    "is_ac_coupled": null,
-                    "is_extern": null
-                }
-            },
-            "terminals": [
-                {
-                    "id": 1,
-                    "parent_element_id": 100,
-                    "type_name": "net",
-                    "node_name": "in"
-                }
-            ],
-            "position": {
-                "x": 0,
-                "y": 0
-            }
-        },
-        {
-            "id": 100,
-            "parent_network_id": 5000,
-            "type_name": "Terminal",
-            "element_type_params": {
-                "Terminal": {
-                    "hardware_pin": "A0",
-                    "is_input": true,
-                    "is_output": false,
-                    "is_ac_coupled": null,
-                    "is_extern": null
-                }
-            },
-            "terminals": [
-                {
-                    "id": 1,
-                    "parent_element_id": 100,
-                    "type_name": "net",
-                    "node_name": "in"
-                }
-            ],
-            "position": {
-                "x": 0,
-                "y": 0
-            }
-        },
-        {
-            "id": 100,
-            "parent_network_id": 5000,
-            "type_name": "Terminal",
-            "element_type_params": {
-                "Terminal": {
-                    "hardware_pin": "A0",
-                    "is_input": true,
-                    "is_output": false,
-                    "is_ac_coupled": null,
-                    "is_extern": null
-                }
-            },
-            "terminals": [
-                {
-                    "id": 1,
-                    "parent_element_id": 100,
-                    "type_name": "net",
-                    "node_name": "in"
-                }
-            ],
-            "position": {
-                "x": 0,
-                "y": 0
-            }
-        },
-        {
-            "id": 100,
-            "parent_network_id": 5000,
-            "type_name": "Terminal",
-            "element_type_params": {
-                "Terminal": {
-                    "hardware_pin": "A0",
-                    "is_input": true,
-                    "is_output": false,
-                    "is_ac_coupled": null,
-                    "is_extern": null
-                }
-            },
-            "terminals": [
-                {
-                    "id": 1,
-                    "parent_element_id": 100,
-                    "type_name": "net",
-                    "node_name": "in"
-                }
-            ],
-            "position": {
-                "x": 0,
-                "y": 0
-            }
-        },
-        {
-            "id": 100,
-            "parent_network_id": 5000,
-            "type_name": "Filter",
-            "element_type_params": {
-                "Filter": {
-                    "hardware_pin": "A0",
-                    "is_input": true,
-                    "is_output": false,
-                    "is_ac_coupled": null,
-                    "is_extern": null
-                }
-            },
-            "terminals": [
-                {
-                    "id": 1,
-                    "parent_element_id": 100,
-                    "type_name": "output",
+                    "type_name": "input",
                     "node_name": "in"
                 },
                 {
-                    "id": 1,
-                    "parent_element_id": 100,
-                    "type_name": "input",
-                    "node_name": "in"
+                    "type_name": "output",
+                    "node_name": "energy"
                 }
-            ],
-            "position": {
-                "x": 0,
-                "y": 0
-            }
+            ]
+        },
+        {
+            "type_name": "Comparator",
+            "element_type_params": {
+                "Comparator": {
+                    "threshold": 0.09
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "positive",
+                    "node_name": "energy"
+                },
+                {
+                    "type_name": "negative",
+                    "node_name": "mean_energy"
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "detection"
+                }
+            ]
+        },
+        {
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "is_input": false,
+                    "is_output": true,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "net",
+                    "node_name": "energy"
+                }
+            ]
+        },
+        {
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "is_input": false,
+                    "is_output": true,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "net",
+                    "node_name": "mean_energy"
+                }
+            ]
+        },
+        {
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "hardware_pin": "D3",
+                    "is_input": false,
+                    "is_output": true,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "net",
+                    "node_name": "detection"
+                }
+            ]
+        },
+        {
+            "type_name": "Filter",
+            "element_type_params": {
+                "Filter": {
+                    "characteristic_frequency": 20,
+                    "filter_type": "lpf1"
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "input",
+                    "node_name": "energy"
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "mean_energy"
+                }
+            ]
         }
     ],
     "nodes": [],

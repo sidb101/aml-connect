@@ -49,6 +49,19 @@ def test_Comparator_constructor(setup_network_json):
         if element['type_name'] == 'Comparator':
             element_found = True
             comparator = Comparator(element)
+            """
+            TODO: check with Henk: Perhaps we should write our tests to check 
+            for instance of aspinity.Comparator instead? possible issues with 
+            current setup is that even though in the json our comparator has 
+            mis-typed param "Vdd" (V capital), this test passes. 
+            Can be reproduced via: 
+            >>> aspinity.Comparator(Vdd = "name", threshold = "1.0")
+            TypeError: Comparator.__new__() got an unexpected keyword argument 
+                'Vdd'
+
+            >>> aspinity.Comparator(vdd = "name", threshold = "1.0")
+            # this works
+            """
             assert isinstance(comparator, Comparator)
 
     if not element_found:

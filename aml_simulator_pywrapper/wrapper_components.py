@@ -53,7 +53,7 @@ class AcDiff():
         )
         self.orig_element.bias = float(
             coalesce(
-                elementJSON["element_type_params"]["AcDiff"]["bias"],
+                elementJSON["element_type_params"]["AcDiff"].get("bias", None),
                 0.0
             )
         )
@@ -196,7 +196,7 @@ class Filter():
         )
         self.orig_element.quality_factor = float(
             coalesce(
-                elementJSON["element_type_params"]["Filter"]["quality_factor"],
+                elementJSON["element_type_params"]["Filter"].get("quality_factor", 0),
                 0.0
             )
         )
@@ -710,7 +710,7 @@ class PeakDetector():
             )
         )
 
-        model_version_str = elementJSON["element_type_params"]["PeakDetector"]["model_version"]
+        model_version_str = elementJSON["element_type_params"]["PeakDetector"].get("model_version", None)
         if model_version_str == 'FirstOrder':
             self.orig_element.model_version = aspinity.ModelVersion.FirstOrder
         elif model_version_str == 'SecondOrder':
@@ -836,7 +836,7 @@ class Terminal():
         self.orig_element.is_output = coalesce(
             elementJSON["element_type_params"]["Terminal"]["is_output"], False)
         self.orig_element.hardware_pin = coalesce(
-            elementJSON["element_type_params"]["Terminal"]["hardware_pin"], "")
+            elementJSON["element_type_params"]["Terminal"].get("hardware_pin", None), "")
         self.orig_element.is_ac_coupled = coalesce(
             elementJSON["element_type_params"]["Terminal"]["is_ac_coupled"], False)
         self.orig_element.is_extern = coalesce(
