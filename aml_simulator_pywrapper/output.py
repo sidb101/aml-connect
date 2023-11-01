@@ -33,7 +33,7 @@ from aspinity import (
 )
 
 def load_wav():
-    samples, sample_rate = sf.read("/home/sbhatna2/workspace/aml-connect/src-tauri/tests/bearing-faults.wav")
+    samples, sample_rate = sf.read("/home/sbhatna2/workspace/aml-connect/test_resources/bearing-faults.wav")
     times = np.arange(len(samples)) / sample_rate
     return times, samples
 

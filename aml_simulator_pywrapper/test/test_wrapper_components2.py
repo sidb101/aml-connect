@@ -9,7 +9,8 @@ from wrapper_components import *
 @pytest.fixture
 def setup_network_json():
     network_json = None
-    network_json_path = os.path.join(os.getcwd(), "test", "test_network_all.json")
+    parent_dir = os.path.dirname(os.getcwd())
+    network_json_path = os.path.join(parent_dir, "test_resources", "test_network_all.json")
     with open(network_json_path, 'r') as f:
         network_json = json.load(f)
     return network_json
