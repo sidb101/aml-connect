@@ -1,21 +1,13 @@
 use anyhow::{Context, Result};
-use diesel::ExpressionMethods;
-use diesel::QueryDsl;
-use diesel::RunQueryDsl;
-use diesel::result::Error::NotFound;
 use serde::{Deserialize, Serialize};
 use std::fmt;
 use std::fs;
 use std::path::PathBuf;
+use strum_macros::EnumString;
 use thiserror::Error;
 use ts_rs::TS;
-use strum_macros::EnumString;
 
-
-use crate::aml_core::db_adapter::models::Project;
-use crate::aml_core::db_adapter::schema::projects;
-
-use super::db_adapter::DbConn;
+use super::AppError;
 
 pub mod get_files;
 pub mod put_files;
@@ -45,6 +37,8 @@ impl fmt::Display for DataSet {
 // TODO: @sidb101, I think we should rename this so that it can be used by other methods in file data manager.
 // I also think errors that are specific to the DB should be defined in DB adapater and used throughout the app. Let me know what you think.
 pub enum FileUploadError {
+    #[error("invalid argument")]
+    InvalidArgument(String),
     #[error("file not found")]
     FileNotFound,
     #[error("processing error")]
@@ -115,7 +109,7 @@ pub struct GetFilesResponse {
     pub files: Vec<FileMetadata>,
 }
 
-pub type GetFilesResponseResult = Result<GetFilesResponse, FileUploadError>;
+pub type GetFilesResponseResult = Result<GetFilesResponse, AppError>;
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
@@ -128,7 +122,7 @@ pub struct FilesUploadResponse {
     pub failed: i32,
 }
 
-pub type SaveFilesResponseResult = Result<FilesUploadResponse, FileUploadError>;
+pub type SaveFilesResponseResult = Result<FilesUploadResponse, AppError>;
 
 pub fn create_app_dir_if_not_exists(path_resolver: &tauri::PathResolver) -> Result<PathBuf> {
     // let proj_dirs = ProjectDirs::from("com", "aspinity", "aml_connect")
@@ -146,25 +140,5 @@ pub fn create_app_dir_if_not_exists(path_resolver: &tauri::PathResolver) -> Resu
     Ok(app_dir)
 }
 
-// TODO: Move to project manager once that module is created
-fn project_exists(proj_slug: &str, db_conn: &mut DbConn) -> Result<bool, FileUploadError> {
-    let found_project = projects::table
-        .filter(projects::slug.eq(proj_slug))
-        .first::<Project>(db_conn);
-
-    print!("Found project: {:?}", found_project);
-    match found_project {
-        Ok(_) => Ok(true),
-        Err(NotFound) => Ok(false),
-        Err(_) => {
-            eprintln!("Error finding project - {}", proj_slug);
-            Err(FileUploadError::UnableToQueryDatabase(
-                "Database error while searching for project".to_string(),
-            ))
-        }
-    }
-}
-
 #[cfg(test)]
-mod tests {
-}
+mod tests {}

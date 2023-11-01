@@ -1,6 +1,9 @@
 -- Your SQL goes here
 CREATE TABLE projects (
     id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    slug TEXT NOT NULL UNIQUE,
-    description TEXT
+    slug TEXT NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    modified_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 )

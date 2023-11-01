@@ -1,60 +1,40 @@
-// Prevents additional console window on Windows in release, DO NOT REMOVE!!
-#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+use std::env;
 
-use std::path::PathBuf;
-
-use aml_connect::aml_core::db_adapter;
 use aml_connect::aml_core::db_adapter::models::NewProject;
 use aml_connect::aml_core::db_adapter::schema::projects;
-use aml_connect::uicontroller;
+use aml_connect::aml_core::{db_adapter, project_manager};
 use anyhow::Context;
 use diesel::r2d2::{ConnectionManager, Pool};
-use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl, SqliteConnection};
+use diesel::{delete, Connection, ExpressionMethods, QueryDsl, RunQueryDsl, SqliteConnection};
 use log::{info, warn};
-use simple_logger::SimpleLogger;
 
-use aml_connect::aml_core::file_data_manager;
+#[test]
+fn test_get_all_projects() {
+    env::set_var("DATABASE_PATH", "./tests");
+    let conn_pool = db_adapter::establish_connection().unwrap();
+    env::remove_var("DATABASE_PATH");
+    let mut conn = conn_pool.get().unwrap();
+    conn.begin_test_transaction().unwrap();
 
-fn main() {
-    info!("Starting AML Connect...");
+    // Create some test projects
+    add_dummy_projects(&conn_pool);
 
-    tauri::Builder::default()
-        .setup(|app| {
-            init_logger();
-            info!("Initializing AML Connect...");
-            let db_conn_pool = init_db();
-            let app_dir = init_fs(&app.path_resolver());
-            tauri::Manager::manage(app, db_conn_pool);
-            tauri::Manager::manage(app, app_dir);
-            Ok(())
-        })
-        .invoke_handler(tauri::generate_handler![
-            uicontroller::get_elements,
-            uicontroller::put_files,
-            uicontroller::get_files,
-        ])
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+    let res = project_manager::get_projects::get_projects(
+        &project_manager::GetProjectsRequest {},
+        &mut conn,
+    )
+    .unwrap();
+
+    // Check that the returned projects match the inserted projects
+    assert_eq!(res.projects.len(), 5);
+    assert_eq!(
+        res.projects[0].name,
+        "Test Project for projects_integration_tests"
+    );
+
+    delete(projects::table).execute(&mut conn).unwrap();
 }
 
-fn init_db() -> Pool<ConnectionManager<SqliteConnection>> {
-    let db_conn_pool = db_adapter::establish_connection().unwrap_or_else(|e| {
-        panic!("Could not establish connection to database :{:?}", e);
-    });
-
-    //Ensures that the migrations are run before the application starts
-    db_adapter::run_db_migrations(&db_conn_pool).unwrap_or_else(|e| {
-        warn!("Failed to run pending database migrations :{:?}", e);
-        ()
-    });
-
-    // TODO: Remove this
-    add_dummy_projects(&db_conn_pool);
-
-    db_conn_pool
-}
-
-// TODO: Remove this when create projects is implemented
 fn add_dummy_projects(db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>) {
     add_dummy_project("test_project", db_conn_pool).unwrap_or_else(|e| {
         warn!(
@@ -115,7 +95,7 @@ fn add_dummy_project(
         info!("Adding dummy project");
         let dummy_project = NewProject {
             slug: project_slug.to_owned(),
-            name: "Test Project".to_owned(),
+            name: "Test Project for projects_integration_tests".to_owned(),
             description: Some("This is a test project".to_owned()),
         };
         diesel::insert_into(projects::table)
@@ -124,17 +104,4 @@ fn add_dummy_project(
             .with_context(|| format!("failed to insert dummy project : {project_slug}"))?;
         Ok(())
     }
-}
-
-fn init_fs(path_resolver: &tauri::PathResolver) -> PathBuf {
-    // TODO: Fix
-    file_data_manager::create_app_dir_if_not_exists(path_resolver).unwrap_or_else(|e| {
-        panic!("Could not create app dir :{:?}", e);
-    })
-}
-
-fn init_logger() {
-    SimpleLogger::new().init().unwrap_or_else(|e| {
-        panic!("Failed to initialize logger :{:?}", e.to_string());
-    });
 }

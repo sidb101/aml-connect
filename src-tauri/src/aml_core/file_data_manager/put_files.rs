@@ -4,19 +4,27 @@ use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl, SqliteConnection};
 use std::fs::{self};
 use std::path::PathBuf;
 
-use crate::aml_core::file_data_manager::*;
+use crate::aml_core::{file_data_manager::*, project_manager};
 
-use crate::aml_core::db_adapter::models::{InputData, NewInputData, Project};
-use crate::aml_core::db_adapter::schema::{input_data, projects};
+use crate::aml_core::db_adapter::models::{InputData, NewInputData};
+use crate::aml_core::db_adapter::schema::input_data;
 
 /// For a given filename, this function derives the absolute path of the file
 /// the app_dir is setup at the app startup, and can be fetched from tauri state
-fn get_file_absolute_path(project_dir: &str, file_name: String, app_dir: &PathBuf) -> Result<PathBuf> {
+fn get_file_absolute_path(
+    project_dir: &str,
+    file_name: String,
+    app_dir: &PathBuf,
+) -> Result<PathBuf> {
     Ok(app_dir.join(project_dir).join("audio").join(file_name))
 }
 
-/// Validates the input file exists for a given project, as specified by FileUploadRequest filename 
-fn validate_exists(project_slug: &str, f: &FileUploadRequest, app_dir: &PathBuf) -> Result<PathBuf> {
+/// Validates the input file exists for a given project, as specified by FileUploadRequest filename
+fn validate_exists(
+    project_slug: &str,
+    f: &FileUploadRequest,
+    app_dir: &PathBuf,
+) -> Result<PathBuf> {
     let file_path = get_file_absolute_path(project_slug, f.file_name.clone(), app_dir)?;
     ensure!(file_path.exists(), "File does not exist");
     Ok(file_path)
@@ -46,10 +54,13 @@ fn validate_size(file_path: &PathBuf) -> Result<()> {
     Ok(())
 }
 
-
 /// Performs levels of validation for a given FileUploadRequest, returns the \
 /// validation status in a basic FilesUploadResponse
-pub fn validate_files(project_slug: &str, files: &Vec<FileUploadRequest>, app_dir: &PathBuf) -> FilesUploadResponse {
+pub fn validate_files(
+    project_slug: &str,
+    files: &Vec<FileUploadRequest>,
+    app_dir: &PathBuf,
+) -> FilesUploadResponse {
     let mut response: FilesUploadResponse = FilesUploadResponse {
         upload_success_files: Vec::new(),
         upload_failed_files: Vec::new(),
@@ -108,24 +119,24 @@ pub fn save_input_files(
     conn: &mut PooledConnection<ConnectionManager<SqliteConnection>>,
 ) -> SaveFilesResponseResult {
     // validation of the list of input file paths (file will be deleted if invalid)
-    let mut ans: FilesUploadResponse = validate_files(&input.proj_slug ,&input.input_files, app_dir);
+    let mut ans: FilesUploadResponse =
+        validate_files(&input.proj_slug, &input.input_files, app_dir);
     let succesfull_uploads = ans.upload_success_files.clone();
     ans.upload_success_files.clear();
 
     // Check input.project_slug must exist in db
-    if !project_exists(&input.proj_slug, conn)? {
-        log::error!("Project not found");
-        return Err(FileUploadError::ProjectNotFound(input.proj_slug.clone()).into());
-    }
-
-    let found_project = projects::table
-        .filter(projects::slug.eq(&input.proj_slug))
-        .first::<Project>(conn)
-        .map_err(|e| FileUploadError::UnableToQueryDatabase(e.to_string()))?;
+    let found_project =
+        match project_manager::get_projects::get_project_by_slug(&input.proj_slug, conn) {
+            Ok(project) => project,
+            Err(e) => {
+                return Err(AppError::ProjectManagerError(e));
+            }
+        };
 
     for file in succesfull_uploads {
         let dataset_type = file.dataset_type.to_string();
-        let fpath = get_file_absolute_path(&input.proj_slug, file.file_name.clone(), app_dir).unwrap();
+        let fpath =
+            get_file_absolute_path(&input.proj_slug, file.file_name.clone(), app_dir).unwrap();
         let fpath_str = fpath.to_str().unwrap();
         let fsize = fpath.metadata().unwrap().len();
         let new_input_files = NewInputData {
@@ -148,7 +159,9 @@ pub fn save_input_files(
         if db_upload_res.is_err() {
             ans.upload_failed_files.push(FileUploadErrorResponse {
                 file_name: file.file_name.clone(),
-                error_response: FileUploadError::UnableToStoreInDatabase(db_upload_res.unwrap_err().to_string()),
+                error_response: FileUploadError::UnableToStoreInDatabase(
+                    db_upload_res.unwrap_err().to_string(),
+                ),
             });
         } else {
             ans.upload_success_files.push(file);
@@ -157,11 +170,18 @@ pub fn save_input_files(
 
     // delete all files that failed to upload
     for file in ans.upload_failed_files.iter() {
-        let file_path = get_file_absolute_path(&input.proj_slug, file.file_name.clone(), app_dir).unwrap();
-        println!("Deleting file: {:?} for reason {}", file_path, file.error_response);
+        let file_path =
+            get_file_absolute_path(&input.proj_slug, file.file_name.clone(), app_dir).unwrap();
+        println!(
+            "Deleting file: {:?} for reason {}",
+            file_path, file.error_response
+        );
         if file_path.exists() {
-            fs::remove_file(file_path)
-                .map_err(|_e| FileUploadError::UnableToDeleteFile(file.file_name.clone()))?;
+            fs::remove_file(file_path).map_err(|_e| {
+                AppError::FileUploadError(FileUploadError::UnableToDeleteFile(
+                    file.file_name.clone(),
+                ))
+            })?;
         }
         ans.failed += 1;
     }
@@ -170,14 +190,13 @@ pub fn save_input_files(
         let found_file = input_data::table
             .filter(input_data::file_name.eq(&file.file_name))
             .first::<InputData>(conn)
-            .map_err(|e| FileUploadError::UnableToQueryDatabase(e.to_string()))?;
+            .map_err(|e| AppError::InternalError(e.to_string()))?;
         ans.succeeded += 1;
         file.file_id = found_file.id.to_string();
     }
 
     Ok(ans)
 }
-
 
 // unit tests
 #[cfg(test)]
@@ -193,10 +212,12 @@ mod tests {
         let project_dir = "test_project";
         let file_name = "test_file.wav".to_string();
         let app_dir = PathBuf::from("~/.local/share/aml_connect/");
-        let expected_file_path = PathBuf::from("~/.local/share/aml_connect/test_project/audio/test_file.wav");
+        let expected_file_path =
+            PathBuf::from("~/.local/share/aml_connect/test_project/audio/test_file.wav");
 
         // act
-        let file_path = put_files::get_file_absolute_path(project_dir, file_name, &app_dir).unwrap();
+        let file_path =
+            put_files::get_file_absolute_path(project_dir, file_name, &app_dir).unwrap();
 
         // assert
         assert_eq!(file_path, expected_file_path);
@@ -218,10 +239,10 @@ mod tests {
         // Create a PathBuf by concatenating the home directory with the subpath
         let app_dir = home_dir.join(subpath);
 
-        let file_path = put_files::get_file_absolute_path(project_slug, file_name.clone(), &app_dir).unwrap();
+        let file_path =
+            put_files::get_file_absolute_path(project_slug, file_name.clone(), &app_dir).unwrap();
         println!("file_path: {:?}", file_path);
-        let _ = File::create(&file_path)
-            .expect("Error encountered while creating file!");
+        let _ = File::create(&file_path).expect("Error encountered while creating file!");
 
         let fur = FileUploadRequest {
             file_name: file_name.clone(),
@@ -252,10 +273,10 @@ mod tests {
         // Create a PathBuf by concatenating the home directory with the subpath
         let app_dir = home_dir.join(subpath);
 
-        let file_path = put_files::get_file_absolute_path(project_slug, file_name.clone(), &app_dir).unwrap();
+        let file_path =
+            put_files::get_file_absolute_path(project_slug, file_name.clone(), &app_dir).unwrap();
         println!("file_path: {:?}", file_path);
-        let _ = File::create(&file_path)
-            .expect("Error encountered while creating file!");
+        let _ = File::create(&file_path).expect("Error encountered while creating file!");
 
         let fur = FileUploadRequest {
             file_name: "test_file2.wav".to_string(), // different filename
@@ -293,7 +314,4 @@ mod tests {
         // assert
         assert!(result.is_err());
     }
-
-
-
 }
