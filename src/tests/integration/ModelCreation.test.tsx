@@ -15,7 +15,7 @@ import {
 } from "../test-utils";
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
-import { mockProjects } from "../mockdata/allProjects";
+import { mockProjects } from "../mockdata/allProjectsMock";
 import React from "react";
 import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageTabs";
 import { mockReactFlow } from "../mockdata/mockReactFlow";

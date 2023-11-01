@@ -6,6 +6,7 @@ import remoteTransformer from "./RemoteTransformer";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import { type ElementT, type NetworkT } from "../../redux/slices/ModelCreationSlice";
 import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
+import { backendElements } from "../../tests/mockdata/allElementsMock";
 
 /**
  * Object responsible for Transforming the UI Data to required Backend DTOs and then call the Backend using
@@ -48,7 +49,8 @@ const remoteService = {
 	},
 
 	getAllElements: async (): Promise<Record<string, ElementT>> => {
-		const getElementsResponse = await remoteClient.getAllElements();
+		// const getElementsResponse = await remoteClient.getAllElements();
+		const getElementsResponse = await backendElements;
 		return remoteTransformer.parseGetElementsResponse(getElementsResponse);
 	},
 

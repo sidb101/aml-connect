@@ -1,6 +1,6 @@
 import "./App.scss";
 import React from "react";
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from "react-router-dom";
 import {
 	BASE_ROUTE,
 	CREATE_MODEL_ROUTE,
@@ -31,11 +31,7 @@ import ResultsAnalysis from "./pages/resultsPage/layouts/ResultsAnalysis/Results
 import ResultsComparison from "./pages/resultsPage/layouts/ResultsComparison/ResultsComparison";
 import ParameterFormDriver from "./components/storybook/ParameterForm";
 
-// const App = () => <RouterProvider router={router} />;
-
-const App = () => {
-	return <ParameterFormDriver />;
-};
+const App = () => <RouterProvider router={router} />;
 
 /** Exporting the routes to use them in testing as well **/
 export const routes = createRoutesFromElements(

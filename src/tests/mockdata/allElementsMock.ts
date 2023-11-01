@@ -6,7 +6,7 @@ import type { RangeType } from "../../service/RemoteService/client/bindings/Rang
 import type { UIComponentType } from "../../service/RemoteService/client/bindings/UIComponentType";
 import { DirectionT, ParamTypeT, RangeT, UIComponentT } from "../../redux/slices/ModelCreationSlice";
 
-export const backendElements = {
+export const backendElements: Record<string, ElementMetadata> = {
 	AcDiff: {
 		short_description: "ac-coupled difference amplifier",
 		long_description:

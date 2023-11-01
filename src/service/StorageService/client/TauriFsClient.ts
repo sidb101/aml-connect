@@ -3,7 +3,7 @@
 import { BaseDirectory, readBinaryFile, writeBinaryFile } from "@tauri-apps/api/fs";
 import type { StorageClient } from "./StorageClient";
 import type { InputFileDataT, InputFileMetaDataT } from "../../../redux/slices/DataHubSlice";
-import { audioFiles } from "../../../tests/mockdata/allAudioFiles";
+import { audioFilesMock } from "../../../tests/mockdata/audioFilesMock";
 
 class TauriFsClient implements StorageClient {
 	/**

@@ -8,7 +8,6 @@ import ReactFlow, {
 	type DefaultEdgeOptions,
 	type EdgeChange,
 	type FitViewOptions,
-	MiniMap,
 	type Node,
 	type NodeChange,
 	type OnConnect,
@@ -19,8 +18,6 @@ import ReactFlow, {
 
 import "reactflow/dist/style.css";
 import "./Canvas.scss";
-import { nodeOptions, type OptionT } from "../../../../../tests/mockdata/allNodesAndEdges";
-import Dropdown from "../../../../../components/dropdown/Dropdown";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
 import {
 	modelCreationActions,
@@ -28,6 +25,7 @@ import {
 	selectAllElements,
 	selectCurrentNetwork,
 } from "../../../../../redux/slices/ModelCreationSlice";
+import Toolbar from "../components/Toolbar";
 
 const fitViewOptions: FitViewOptions = {
 	padding: 0.2,
@@ -38,20 +36,12 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 };
 
 export default function Canvas() {
-	const [showDropdown, setShowDropdown] = useState(false);
-
-	// Define the options for the dropdown.
-	const options = nodeOptions;
-
 	const dispatch = useAppDispatch();
 	const currentNetwork = useAppSelector(selectCurrentNetwork);
 	const allElements = useAppSelector(selectAllElements);
 
-	// Handle the click event of the dropdown option.
-	const handleOptionClick = (option: OptionT) => {
-		onAdd(option.label);
-		setShowDropdown(false); // close the dropdown when an option is clicked
-	};
+	console.log(currentNetwork.nodes);
+	console.log(currentNetwork.edges);
 
 	const onNodesChange: OnNodesChange = useCallback((changes: NodeChange[]) => {
 		dispatch(modelCreationActions.updateNodes({ nodeChanges: changes }));
@@ -72,38 +62,29 @@ export default function Canvas() {
 
 			if (label === "IN") {
 				newNode = {
-					id: String(currentNodes.length + 1),
+					id: newNodeId(),
 					sourcePosition: Position.Right,
 					type: "input",
 					data: { label: label, elementType: "in" },
-					position: {
-						x: currentNodes[currentNodes.length - 1].position.x - 25,
-						y: currentNodes[currentNodes.length - 1].position.y + 25,
-					},
+					position: newNodePosition(),
 					className: "Canvas_input",
 				};
 			} else if (label === "OUT") {
 				newNode = {
-					id: String(currentNodes.length + 1),
+					id: newNodeId(),
 					targetPosition: Position.Left,
 					type: "output",
 					data: { label: label, elementType: "out" },
-					position: {
-						x: currentNodes[currentNodes.length - 1].position.x - 25,
-						y: currentNodes[currentNodes.length - 1].position.y + 25,
-					},
+					position: newNodePosition(),
 					className: "Canvas_output",
 				};
 			} else {
 				newNode = {
-					id: String(currentNodes.length + 1),
+					id: newNodeId(),
 					sourcePosition: Position.Right,
 					targetPosition: Position.Left,
 					data: { label: label, elementType: label.toLowerCase() },
-					position: {
-						x: currentNodes[currentNodes.length - 1].position.x - 25,
-						y: currentNodes[currentNodes.length - 1].position.y + 25,
-					},
+					position: newNodePosition(),
 					className: "Canvas_node",
 				};
 			}
@@ -112,6 +93,18 @@ export default function Canvas() {
 		},
 		[currentNetwork.nodes]
 	);
+
+	const newNodePosition = () => {
+		const currentNodes: Array<Node<NodeDataT>> = currentNetwork.nodes;
+		return {
+			x: currentNodes[currentNodes.length - 1].position.x - 25,
+			y: currentNodes[currentNodes.length - 1].position.y + 25,
+		};
+	};
+
+	const newNodeId = () => {
+		return String(currentNetwork.nodes.length + 1);
+	};
 
 	return (
 		<div className={`Canvas_container`}>
@@ -125,37 +118,9 @@ export default function Canvas() {
 				fitViewOptions={fitViewOptions}
 				defaultEdgeOptions={defaultEdgeOptions}
 				connectionLineType={ConnectionLineType.Step}
-				onPaneClick={() => {
-					setShowDropdown(false);
-				}}
 			>
-				<div className={`Canvas_allMenuContainer`}>
-					<div className={`Canvas_sideMenuContainer`}>
-						<div className={`Canvas_sideMenuBtnContainer`}>
-							<button
-								onClick={() => {
-									setShowDropdown((s) => !s);
-								}}
-							>
-								+
-							</button>
-						</div>
-					</div>
-					<div className={`Canvas_sideMenuContainer`}>
-						<div className={`Canvas_sideMenuNodeMenuContainer`}>
-							{showDropdown && (
-								<Dropdown
-									options={options}
-									onOptionClick={handleOptionClick}
-									onClose={() => {
-										setShowDropdown(false);
-									}}
-								/>
-							)}
-						</div>
-					</div>
-				</div>
-				<Controls className={`Canvas_controls`}></Controls>
+				<Toolbar allElements={Object.values(allElements)} handleAddElement={onAdd} />
+				<Controls className={`Canvas_controls`} />
 				{/* <MiniMap /> */}
 				<Background variant={BackgroundVariant.Dots} gap={12} size={1} />
 			</ReactFlow>

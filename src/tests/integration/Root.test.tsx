@@ -7,7 +7,7 @@ import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 import { getExactText, renderWithProviders, testIds } from "../test-utils";
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
-import { mockProjects } from "../mockdata/allProjects";
+import { mockProjects } from "../mockdata/allProjectsMock";
 import { getOpenProjectNavLinks } from "../../components/sideBar/navRegion/appNavLinks";
 import { linkSelectedClass } from "../../components/sideBar/navRegion/navLink/NavLink";
 import { mockReactFlow } from "../mockdata/mockReactFlow";

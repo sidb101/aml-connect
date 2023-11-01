@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { dataVizRoute, neuralNetworkRoute } from "../../../../routes";
 import { useAppSelector } from "../../../../hooks";
 import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
+import Canvas from "./Canvas/Canvas";
 
 export type ModelPageT = {
 	data?: string;
@@ -25,7 +26,7 @@ const CreateModel = (props: ModelPageT) => {
 
 	return (
 		<>
-			<CreateModelView />
+			<CreateModelView canvas={<Canvas />} />
 		</>
 	);
 };

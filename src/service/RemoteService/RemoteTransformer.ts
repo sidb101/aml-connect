@@ -143,6 +143,7 @@ const remoteTransformer = {
 				params[node.data.elementType] = network.params[node.id];
 				return {
 					id: node.id,
+					name: node.data.label,
 					parent_network_id: network.metaData.id as unknown as bigint,
 					type_name: node.data.elementType,
 					element_type_params: params as Parameters, //consider the given params object as Parameters
@@ -162,7 +163,7 @@ const remoteTransformer = {
 		};
 		return {
 			network: networkToSimulate,
-			input_file_path: inputFile.name,
+			audio_file_path: inputFile.name,
 		};
 	},
 

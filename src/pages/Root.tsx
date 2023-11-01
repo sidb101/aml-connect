@@ -2,7 +2,7 @@ import { Outlet, useLocation, useMatches } from "react-router-dom";
 import { Sidebar } from "../components/sideBar/Sidebar";
 import { NavRegion } from "../components/sideBar/navRegion/NavRegion";
 import { ProjectsRegion } from "../components/sideBar/projectRegion/ProjectsRegion";
-import { mockProjects } from "../tests/mockdata/allProjects";
+import { mockProjects } from "../tests/mockdata/allProjectsMock";
 import React, { useEffect, useState } from "react";
 import type { SideRegionT } from "../components/sideBar/sideRegion/SideRegion";
 import { useAppDispatch, useAppSelector } from "../hooks";

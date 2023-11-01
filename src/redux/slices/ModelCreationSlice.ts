@@ -9,7 +9,7 @@ import { type RootState } from "../store";
 import { type Parameters } from "../../service/RemoteService/client/bindings/Parameters";
 import type { Connection, Edge, EdgeChange, Node, NodeChange } from "reactflow";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
-import { testNetwork, testNetworkMetaData } from "../../tests/mockdata/allNodesAndEdges";
+import { mockNetwork, mockNetworkMetaData } from "../../tests/mockdata/networkMock";
 
 export type ModelCreationState = {
 	allNetworks: NetworkMetaDataT[]; //Used to show all available networks of user to choose from
@@ -86,7 +86,7 @@ export enum UIComponentT /*eslint-disable @typescript-eslint/naming-convention*/
  * Type to describe basic information about a network
  */
 export type NetworkMetaDataT = {
-	id: number;
+	id: bigint;
 	name: string;
 };
 
@@ -117,9 +117,9 @@ export type EdgeDataT = {
 };
 
 const initialState: ModelCreationState = {
-	allNetworks: [testNetworkMetaData],
+	allNetworks: [mockNetworkMetaData],
 	allElements: {},
-	selectedNetwork: testNetwork,
+	selectedNetwork: mockNetwork,
 };
 
 /**

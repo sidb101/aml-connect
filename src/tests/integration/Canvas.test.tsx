@@ -1,9 +1,9 @@
 import React from "react";
 import { render, fireEvent, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Canvas from "../../pages/modelCreationPage/layouts/CreateModel/components/Canvas";
+import Canvas from "../../pages/modelCreationPage/layouts/CreateModel/Canvas/Canvas";
 import { mockReactFlow } from "../mockdata/mockReactFlow";
-import { nodeOptions } from "../mockdata/allNodesAndEdges";
+import { nodeOptions } from "../mockdata/networkMock";
 
 beforeEach(() => {
 	mockReactFlow();
