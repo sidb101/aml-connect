@@ -99,12 +99,6 @@ class AsymmetricIntegrator():
                 0.0
             )
         )
-        self.orig_element.up = bool(
-            coalesce(
-                elementJSON["element_type_params"]["AsymmetricIntegrator"]["comparator_enable"],
-                False
-            )
-        )
         up_down_type_str = elementJSON["element_type_params"]["AsymmetricIntegrator"]["up_down_type"]
         if up_down_type_str == 'Rate':
             self.orig_element.up_down_type = aspinity.UpDownType.Rate
@@ -358,18 +352,10 @@ class GainOpamp():
         else:
             self.orig_element.gain_mode = aspinity.GainOpampMode.Inverting10x #default value
 
-        # opamp_implementation_str = elementJSON["element_type_params"]["GainOpamp"]["opamp_implementation"]
-        # if opamp_implementation_str == 'Pin':
-        #     self.orig_element.opamp_implementation = aspinity.OpampType.Pin
-        # elif opamp_implementation_str == 'StageZero':
-        #     self.orig_element.opamp_implementation = aspinity.OpampType.StageZero
-        # else:
-        #     self.orig_element.opamp_implementation = aspinity.OpampType.StageZero #default value
-        
         self.orig_element.feedback_cap_count = int(
             coalesce(
                 elementJSON["element_type_params"]["GainOpamp"]["feedback_cap_count"],
-                0.0
+                0
             )
         )
 
@@ -800,7 +786,6 @@ class PGA():
             "parameters": {"Av1": self.orig_element.Av1, "Av2": self.orig_element.Av2},
         }
 
-
 class SynthesizedFilter():
     """Wrapper for aspinity SynthesizedFilter"""
 
@@ -809,7 +794,7 @@ class SynthesizedFilter():
         if elementJSON is None:
             return
 
-        #terminals
+        # terminals
         input_terminal, output_terminal = None, None
         for item in elementJSON["terminals"]:
             if item["type_name"] == "input":
@@ -820,9 +805,9 @@ class SynthesizedFilter():
         self.orig_element.input = input_terminal
         self.orig_element.output = output_terminal
 
-        #params (TODO: check with Sid)
+        # params
         coefficient_vals = elementJSON["element_type_params"]["SynthesizedFilter"]["coefficients"]
-        self.orig_element.coefficients = [float(x) for x in coefficient_vals] if coefficient_vals is not None else []
+        self.orig_element.coefficients = [list(map(float, arr)) for arr in coefficient_vals] if coefficient_vals is not None else []
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
