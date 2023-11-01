@@ -60,8 +60,6 @@ pub enum RangeType {
     Discrete,
     #[serde(rename = "interval")]
     Interval,
-    #[serde(rename = "string")]
-    String,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -83,7 +81,7 @@ pub struct ParameterMetadata{
     pub parameter_type: ParameterType,
     pub description: String,
     pub default: Option<String>,
-    pub range_type: RangeType,
+    pub range_type: Option<RangeType>,
     pub range: Option<Vec<Option<String>>>,
     pub unit: Option<String>,
     pub ui_component: UIComponentType
@@ -123,10 +121,10 @@ mod tests {
     fn test_metadata_load_from_json() {
         // arrange
         // act
-        let el_json_res = list_elements_from_simulator();
+        let el_json_res = list_elements_from_simulator().unwrap();
         
         // assert
-        assert!( el_json_res.is_ok() );
+        // assert!( el_json_res.is_ok() );
         // println!("{}", serde_json::to_string_pretty(&el_json_res.unwrap()).unwrap());        
     }
 

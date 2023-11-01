@@ -275,7 +275,7 @@
         },
         "parameters": {
             "band_frequencies": {
-                "parameter_type": "string",
+                "parameter_type": "number",
                 "description": "List of Center frequencies for the subband components",
                 "default": "[1000, 5000]",
                 "range_type": "interval",
@@ -287,7 +287,7 @@
                 "ui_component": "textbox"
             },
             "quality_factor": {
-                "parameter_type": "string",
+                "parameter_type": "number",
                 "description": "List of individual filter quality factors",
                 "default": "[1,1]",
                 "range_type": "interval",
@@ -369,7 +369,7 @@
                 "ui_component": "dropdown"
             },
             "feedback_cap_count": {
-                "parameter_type": "string",
+                "parameter_type": "number",
                 "description": "Incremental (4.7pF) capacitance",
                 "default": "0",
                 "range_type": "interval",
@@ -459,17 +459,7 @@
                 "ac_range": "logic levels"
             }
         },
-        "parameters": {
-            "expression": {
-                "parameter_type": "string",
-                "description": "Python format lookup table logic expression",
-                "default": "1",
-                "range_type": "interval",
-                "range": [null, null],
-                "unit": null,
-                "ui_component": "textbox"
-            }
-        }
+        "parameters": {}
     },
     "Multiplier": {
         "short_description": "Multiplier",
@@ -697,7 +687,7 @@
                 "parameter_type": "string",
                 "description": "List of second order section coefficients",
                 "default": null,
-                "range_type": "string",
+                "range_type": null,
                 "range": null,
                 "unit": null,
                 "ui_component": "textbox"
