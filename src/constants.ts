@@ -3,3 +3,5 @@
 
 export const SUPPORTED_FILE_TYPES = [".wav"];
 export const AUDIO_DIR = "audio/";
+
+export const USER_ID = 1;

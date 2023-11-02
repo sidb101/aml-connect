@@ -25,7 +25,8 @@
         "prettier"
     ],
     "ignorePatterns" : [
-        "src/service/RemoteService/client/bindings/*.ts"
+        "src/service/RemoteService/client/bindings/*.ts",
+        "src/tests/mockdata/*.ts"
     ],
     "rules": {
         /**
@@ -44,7 +45,8 @@
         "@typescript-eslint/prefer-nullish-coalescing": "off",
         "spaced-comment": "off",
         "no-implicit-coercion": "off",
-        "@typescript-eslint/padding-line-between-statements": "off"
+        "@typescript-eslint/padding-line-between-statements": "off",
+        "@typescript-eslint/naming-convention": "warn"
     }
 }
 

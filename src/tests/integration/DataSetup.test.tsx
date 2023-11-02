@@ -7,7 +7,7 @@
 
 import { routes as appRoutes } from "../../App";
 import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
-import { mockProjects } from "../mockdata/allProjects";
+import { mockProjects } from "../mockdata/allProjectsMock";
 import { when } from "jest-when";
 import { BASE_ROUTE } from "../../routes";
 import { getExactText, renderWithProviders, testIds } from "../test-utils";
