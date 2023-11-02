@@ -23,7 +23,7 @@ describe("Testing the Result Page navigation", () => {
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 	const routes = appRoutes;
 
-	test("Results: Test 1: Testing the result pages exist, and the page tabs exist on the result pages", () => {
+	test("Results: Test 1: Testing the result pages exist, and the page tabs exist on the result pages", async () => {
 		// ARRANGE (from where to start the test)
 
 		// -> should start with empty store
@@ -74,7 +74,7 @@ describe("Testing the Result Page navigation", () => {
 		page = 0;
 		fireEvent.click(navLinks[3]);
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 1
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
@@ -89,7 +89,7 @@ describe("Testing the Result Page navigation", () => {
 		page = 1;
 		fireEvent.click(actualPageTabLinks[page]);
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 2
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
@@ -104,7 +104,7 @@ describe("Testing the Result Page navigation", () => {
 		page = 0;
 		fireEvent.click(actualPageTabLinks[page]);
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 3
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
@@ -119,7 +119,7 @@ describe("Testing the Result Page navigation", () => {
 		page = 1;
 		fireEvent.click(screen.getByTestId(testIds.nextBtn));
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 4
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
@@ -134,7 +134,7 @@ describe("Testing the Result Page navigation", () => {
 		page = 0;
 		fireEvent.click(screen.getByTestId(testIds.prevBtn));
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 5
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);

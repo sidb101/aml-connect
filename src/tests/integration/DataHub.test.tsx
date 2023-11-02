@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { describe } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/react";
@@ -18,12 +19,15 @@ import { BASE_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjectsMock";
 import React from "react";
 import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageTabs";
+import remoteClient from "../../service/RemoteService/client/TauriApiClient";
+
+jest.mock("../../service/RemoteService/client/TauriApiClient");
 
 describe("Testing the Data Hub navigation", () => {
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 	const routes = appRoutes;
 
-	test("Data Hub: Test 1: Testing the data hub page exists, and the page tabs exist on the data hub page", () => {
+	test("Data Hub: Test 1: Testing the data hub page exists, and the page tabs exist on the data hub page", async () => {
 		// ARRANGE (from where to start the test)
 
 		// -> should start with empty store
@@ -32,6 +36,14 @@ describe("Testing the Data Hub navigation", () => {
 
 		// -> mock the response from backend
 		when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
+		when(remoteClient.getInputFiles)
+			.expectCalledWith({
+				dataset_type: "Training",
+				proj_slug: projects[0].slug,
+			})
+			.mockResolvedValue({
+				files: [],
+			});
 
 		// -> Start this app with this store state and this ("/") as the current route
 		renderWithProviders(routes, {
@@ -74,7 +86,7 @@ describe("Testing the Data Hub navigation", () => {
 		page = 0;
 		fireEvent.click(navLinks[1]);
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 1
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
@@ -89,7 +101,7 @@ describe("Testing the Data Hub navigation", () => {
 		page = 1;
 		fireEvent.click(actualPageTabLinks[page]);
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 2
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
@@ -104,7 +116,7 @@ describe("Testing the Data Hub navigation", () => {
 		page = 0;
 		fireEvent.click(actualPageTabLinks[page]);
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 3
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
@@ -119,7 +131,7 @@ describe("Testing the Data Hub navigation", () => {
 		page = 1;
 		fireEvent.click(screen.getByTestId(testIds.nextBtn));
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 4
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
@@ -134,7 +146,7 @@ describe("Testing the Data Hub navigation", () => {
 		page = 0;
 		fireEvent.click(screen.getByTestId(testIds.prevBtn));
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 5
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);

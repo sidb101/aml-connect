@@ -58,7 +58,8 @@ const remoteService = {
 		const simulationRequest: SimulateNetworkRequest = remoteTransformer.createSimulateRequest(network, inputFile);
 		console.log("Request:", simulationRequest);
 
-		const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);
+		const simulationResponse = { response: {} as Record<string, number[]> };
+		// const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);
 		console.log(simulationResponse);
 
 		return remoteTransformer.parseSimulationResponse(simulationResponse);

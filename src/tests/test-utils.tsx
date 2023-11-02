@@ -1,7 +1,7 @@
 import React, { type PropsWithChildren } from "react";
 // import "@testing-library/jest-dom";
 import type { RenderOptions } from "@testing-library/react";
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import type { PreloadedState } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import type { AppStore, RootState } from "../redux/store";
@@ -68,7 +68,11 @@ export function getExactText(text: string) {
  * Common verification methods
  */
 
-export const getPageElements = () => {
+export const getPageElements = async () => {
+	//Wait for all the elements to be stable after redux state update has happened
+	await waitFor(() => {
+		screen.getByTestId(testIds.contentHeading);
+	});
 	const actualPageHeading = screen.getByTestId(testIds.contentHeading);
 	const actualPageTabLinks = screen.getAllByTestId(testIds.pageTabLink);
 	const actualPageTabLabels = screen.getAllByTestId(testIds.pageTabLinkLabel);
@@ -139,4 +143,6 @@ export const testIds = {
 	// Footer buttons
 	prevBtn: "previous-btn",
 	nextBtn: "next-btn",
+
+	spinner: "spinner",
 };

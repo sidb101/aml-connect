@@ -7,9 +7,10 @@ import { allNodes } from "../../../../../tests/mockdata/networkMock";
 export type ToolbarT = {
 	allElements: ElementT[];
 	handleAddElement?: (option: string) => void;
+	handleSimulate: () => void;
 };
 
-const Toolbar = ({ handleAddElement }: ToolbarT) => {
+const Toolbar = ({ handleAddElement, handleSimulate }: ToolbarT) => {
 	const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
 	const toolBarRef = useRef<HTMLDivElement>(null);
@@ -49,6 +50,7 @@ const Toolbar = ({ handleAddElement }: ToolbarT) => {
 						>
 							+
 						</button>
+						<button onClick={handleSimulate}>Sim</button>
 					</div>
 				</div>
 				<div className={`Toolbar_sideContainer`}>

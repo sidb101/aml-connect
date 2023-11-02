@@ -4,15 +4,24 @@ import type { FilesUploadRequest } from "./client/bindings/FilesUploadRequest";
 import type { FilesUploadResponse } from "./client/bindings/FilesUploadResponse";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import type { GetFilesResponse } from "./client/bindings/GetFilesResponse";
-import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
-import type { EdgeDataT, ElementT, NetworkT, ParameterT, TerminalT } from "../../redux/slices/ModelCreationSlice";
-import type { Network } from "./client/bindings/Network";
-import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
+import {
+	DirectionT,
+	type EdgeDataT,
+	type ElementT,
+	type NetworkT,
+	type NodeDataT,
+	type ParameterT,
+	ParamTypeT,
+	RangeT,
+	type TerminalT,
+	UIComponentT,
+} from "../../redux/slices/ModelCreationSlice";
 import type { ElementMetadata } from "./client/bindings/ElementMetadata";
-import { DirectionT, ParamTypeT, RangeT, UIComponentT } from "../../redux/slices/ModelCreationSlice";
-import type { Parameters } from "./client/bindings/Parameters";
-import type { Edge } from "reactflow";
+import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
 import type { Terminal } from "./client/bindings/Terminal";
+import type { Edge, Node } from "reactflow";
+import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
+import type { NetworkVO } from "./client/bindings/NetworkVO";
 /* eslint-disable  @typescript-eslint/naming-convention */
 
 /***
@@ -135,20 +144,20 @@ const remoteTransformer = {
 
 		const terminalMap: Map<string, Terminal[]> = getTerminalMap(network.edges);
 
-		const networkToSimulate: Network = {
-			id: network.metaData.id as unknown as bigint,
+		const networkToSimulate: NetworkVO = {
+			id: BigInt(network.metaData.id),
 			creator_id: 1n,
 			name: network.metaData.name,
-			elements: network.nodes.map((node) => {
+			elements: network.nodes.map((node: Node<NodeDataT>) => {
 				//create the params object
-				const params: Record<string, unknown> = {};
+				const params: Record<string, Record<string, string>> = {};
 				params[node.data.elementType] = network.params[node.id];
 				return {
 					id: node.id,
 					name: node.data.label,
-					parent_network_id: network.metaData.id as unknown as bigint,
+					parent_network_id: BigInt(network.metaData.id),
 					type_name: node.data.elementType,
-					element_type_params: params as Parameters, //consider the given params object as Parameters
+					element_type_params: params, //consider the given params object as Parameters
 					terminals: terminalMap.get(node.id) || [], //empty terminals in case the node is not connected anything
 					position: {
 						x: node.position.x,
@@ -156,10 +165,10 @@ const remoteTransformer = {
 					},
 				};
 			}),
-			nodes: network.edges.map((edge) => ({
+			nodes: network.edges.map((edge: Edge<EdgeDataT>) => ({
 				id: edge.id,
 				name: edge.id,
-				parent_network_id: network.metaData.id as unknown as bigint,
+				parent_network_id: BigInt(network.metaData.id),
 				terminal_ids: [getTerminalId(edge.source, edge.id), getTerminalId(edge.target, edge.id)], //source and target terminal ids
 			})),
 		};

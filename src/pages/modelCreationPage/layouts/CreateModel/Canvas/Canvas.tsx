@@ -26,6 +26,8 @@ import {
 	selectCurrentNetwork,
 } from "../../../../../redux/slices/ModelCreationSlice";
 import Toolbar from "../components/Toolbar";
+import remoteService from "../../../../../service/RemoteService/RemoteService";
+import { audioFilesMock } from "../../../../../tests/mockdata/audioFilesMock";
 
 const fitViewOptions: FitViewOptions = {
 	padding: 0.2,
@@ -39,9 +41,6 @@ export default function Canvas() {
 	const dispatch = useAppDispatch();
 	const currentNetwork = useAppSelector(selectCurrentNetwork);
 	const allElements = useAppSelector(selectAllElements);
-
-	console.log(currentNetwork.nodes);
-	console.log(currentNetwork.edges);
 
 	const onNodesChange: OnNodesChange = useCallback((changes: NodeChange[]) => {
 		dispatch(modelCreationActions.updateNodes({ nodeChanges: changes }));
@@ -94,6 +93,12 @@ export default function Canvas() {
 		[currentNetwork.nodes]
 	);
 
+	const simulateNetwork = () => {
+		remoteService
+			.simulateNetwork(currentNetwork, audioFilesMock[0].metadata)
+			.catch((e) => console.error("Couldn't simulate", e));
+	};
+
 	const newNodePosition = () => {
 		const currentNodes: Array<Node<NodeDataT>> = currentNetwork.nodes;
 		return {
@@ -119,7 +124,11 @@ export default function Canvas() {
 				defaultEdgeOptions={defaultEdgeOptions}
 				connectionLineType={ConnectionLineType.Step}
 			>
-				<Toolbar allElements={Object.values(allElements)} handleAddElement={onAdd} />
+				<Toolbar
+					allElements={Object.values(allElements)}
+					handleAddElement={onAdd}
+					handleSimulate={simulateNetwork}
+				/>
 				<Controls className={`Canvas_controls`} />
 				{/* <MiniMap /> */}
 				<Background variant={BackgroundVariant.Dots} gap={12} size={1} />

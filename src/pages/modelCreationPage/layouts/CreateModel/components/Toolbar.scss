@@ -17,6 +17,8 @@
 
 .Toolbar_sideBtnContainer {
 	z-index: 6; // 1 more than the canvas controls
+	display: flex;
+	flex-direction: column;
 
 	button {
 		user-select: none;

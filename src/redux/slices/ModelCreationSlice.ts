@@ -6,7 +6,6 @@
  */
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { type RootState } from "../store";
-import { type Parameters } from "../../service/RemoteService/client/bindings/Parameters";
 import type { Connection, Edge, EdgeChange, Node, NodeChange } from "reactflow";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
 import { mockNetwork, mockNetworkMetaData } from "../../tests/mockdata/networkMock";
@@ -90,7 +89,7 @@ export enum UIComponentT {
  * Type to describe basic information about a network
  */
 export type NetworkMetaDataT = {
-	id: bigint;
+	id: number;
 	name: string;
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { describe } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { fireEvent, screen, within } from "@testing-library/react";
@@ -11,7 +12,9 @@ import { mockProjects } from "../mockdata/allProjectsMock";
 import { getOpenProjectNavLinks } from "../../components/sideBar/navRegion/appNavLinks";
 import { linkSelectedClass } from "../../components/sideBar/navRegion/navLink/NavLink";
 import { mockReactFlow } from "../mockdata/mockReactFlow";
+import remoteClient from "../../service/RemoteService/client/TauriApiClient";
 
+jest.mock("../../service/RemoteService/client/TauriApiClient");
 beforeEach(() => {
 	mockReactFlow();
 });
@@ -46,6 +49,16 @@ describe("Testing the Sidebar of the App", () => {
 			//mock the response from backend
 			const projects: BasicProjectDataT[] = mockProjects;
 			when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
+
+			//set the values of mocked functions
+			when(remoteClient.getInputFiles)
+				.expectCalledWith({
+					dataset_type: "Training",
+					proj_slug: projects[0].slug,
+				})
+				.mockResolvedValue({
+					files: [],
+				});
 
 			//Need to start from the base route
 			const routeToRender = [BASE_ROUTE];

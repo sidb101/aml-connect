@@ -1,9 +1,8 @@
 import type { Edge, Node } from "reactflow";
 import { Position } from "reactflow";
 import type { EdgeDataT, NetworkMetaDataT, NetworkT, NodeDataT } from "../../redux/slices/ModelCreationSlice";
-import type { Network } from "../../service/RemoteService/client/bindings/Network";
-import type { TerminalParams } from "../../service/RemoteService/client/bindings/TerminalParams";
 import type { OptionT } from "../../components/dropdown/Dropdown";
+import type { NetworkVO } from "../../service/RemoteService/client/bindings/NetworkVO";
 
 // TODO: Remove this and use all elements fetched from backend 'ElementT'
 export const allNodes: OptionT[] = [
@@ -26,7 +25,7 @@ export const allNodes: OptionT[] = [
 ];
 
 export const mockNetworkMetaData: NetworkMetaDataT = {
-	id: 5000n,
+	id: 5000,
 	name: "sample_network",
 };
 
@@ -99,6 +98,7 @@ const mockEdges: Array<Edge<EdgeDataT>> = [
 ];
 
 const mockParams: Record<string, Record<string, string>> = {
+	"1": {},
 	"2": {
 		characteristic_frequency: "1000",
 		quality_factor: "2",
@@ -109,6 +109,7 @@ const mockParams: Record<string, Record<string, string>> = {
 		quality_factor: "1",
 		filter_type: "lpf2",
 	},
+	"4": {},
 };
 
 export const mockNetwork: NetworkT = {
@@ -119,7 +120,7 @@ export const mockNetwork: NetworkT = {
 };
 
 /**** Expected Transformation ***/
-export const mockExpectedNetworkTransform: Network = {
+export const mockExpectedNetworkTransform: NetworkVO = {
 	id: 5000n,
 	name: "sample_network",
 	creator_id: 1n,
@@ -139,7 +140,7 @@ export const mockExpectedNetworkTransform: Network = {
 				},
 			],
 			element_type_params: {
-				Terminal: undefined as unknown as TerminalParams,
+				Terminal: {},
 			},
 		},
 		{
@@ -213,7 +214,7 @@ export const mockExpectedNetworkTransform: Network = {
 			],
 			position: { x: 650, y: 200 },
 			element_type_params: {
-				Terminal: undefined as unknown as TerminalParams,
+				Terminal: {},
 			},
 		},
 	],

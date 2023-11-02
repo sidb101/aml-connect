@@ -53,8 +53,10 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 	}, []);
 
 	const fetchAllElements = async () => {
+		dispatch(generalActions.markLoading(true));
 		const allElements = await remoteService.getAllElements();
 		dispatch(modelCreationActions.setAllElements({ allElements }));
+		dispatch(generalActions.markLoading(false));
 	};
 
 	return (
