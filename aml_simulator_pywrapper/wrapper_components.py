@@ -53,7 +53,7 @@ class AcDiff():
         )
         self.orig_element.bias = float(
             coalesce(
-                elementJSON["element_type_params"]["AcDiff"].get("bias", None),
+                elementJSON["element_type_params"]["AcDiff"].get("bias"),
                 0.0
             )
         )
@@ -482,7 +482,7 @@ class Multiplier():
         #params
         self.orig_element.slope = float(
             coalesce(
-                elementJSON["element_type_params"]["Multiplier"].get("slope", None),
+                elementJSON["element_type_params"]["Multiplier"].get("slope"),
                 1.0
             )
         )
@@ -629,16 +629,23 @@ class NeuralNet():
         self.orig_element.out_7 = out7_terminal
 
         #params 
-        weight_vals = elementJSON["element_type_params"]["NeuralNet"].get("weights", None)
+        weight_vals = elementJSON["element_type_params"]["NeuralNet"].get("weights")
         self.orig_element.weights = [float(x) for x in weight_vals] if weight_vals is not None else []
 
-        biases_vals = elementJSON["element_type_params"]["NeuralNet"].get("biases", None)
+        biases_vals = elementJSON["element_type_params"]["NeuralNet"].get("biases")
         self.orig_element.biases = [float(x) for x in biases_vals] if biases_vals is not None else []
 
-        #(TODO: check with Sid)
-        activation_function_vals = elementJSON["element_type_params"]["NeuralNet"].get("activation_function", None)
+        activation_function_vals = elementJSON["element_type_params"]["NeuralNet"].get("activation_function")
         self.orig_element.activation_function = [map_activation_function_str_to_enum(x) for x in activation_function_vals] if activation_function_vals is not None else []
 
+        if elementJSON["element_type_params"]["NeuralNet"].get("activation_scale") is not None:
+            self.orig_element.activation_scale = elementJSON["element_type_params"]["NeuralNet"].get("activation_scale")
+        
+        if elementJSON["element_type_params"]["NeuralNet"].get("input_compress_scale") is not None:
+            self.orig_element.input_compress_scale = elementJSON["element_type_params"]["NeuralNet"].get("input_compress_scale")
+
+        if elementJSON["element_type_params"]["NeuralNet"].get("input_compression_type") is not None:
+            self.orig_element.input_compression_type = elementJSON["element_type_params"]["NeuralNet"].get("input_compression_type")
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -699,24 +706,31 @@ class PeakDetector():
         #params
         self.orig_element.atk = float(
             coalesce(
-                elementJSON["element_type_params"]["PeakDetector"].get("atk", None),
+                elementJSON["element_type_params"]["PeakDetector"].get("atk"),
                 0.0
             )
         )
         self.orig_element.dec = float(
             coalesce(
-                elementJSON["element_type_params"]["PeakDetector"].get("dec", None),
+                elementJSON["element_type_params"]["PeakDetector"].get("dec"),
                 0.0
             )
         )
 
-        model_version_str = elementJSON["element_type_params"]["PeakDetector"].get("model_version", None)
+        model_version_str = elementJSON["element_type_params"]["PeakDetector"].get("model_version")
         if model_version_str == 'FirstOrder':
             self.orig_element.model_version = aspinity.ModelVersion.FirstOrder
         elif model_version_str == 'SecondOrder':
             self.orig_element.model_version = aspinity.ModelVersion.SecondOrder
         else:
             self.orig_element.model_version = aspinity.ModelVersion.SecondOrder #default value
+
+        # hidden params
+        if elementJSON["element_type_params"]["PeakDetector"].get("buff") is not None:
+            self.orig_element.buff = elementJSON["element_type_params"]["PeakDetector"].get("buff")
+
+        if elementJSON["element_type_params"]["PeakDetector"].get("parasitic_ratio") is not None:
+            self.orig_element.parasitic_ratio = elementJSON["element_type_params"]["PeakDetector"].get("parasitic_ratio")
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -761,16 +775,20 @@ class PGA():
         #params
         self.orig_element.Av1 = float(
             coalesce(
-                elementJSON["element_type_params"]["PGA"].get("Av1", None),
+                elementJSON["element_type_params"]["PGA"].get("Av1"),
                 1.0
             )
         )
         self.orig_element.Av2 = float(
             coalesce(
-                elementJSON["element_type_params"]["PGA"].get("Av2", None),
+                elementJSON["element_type_params"]["PGA"].get("Av2"),
                 0.5
             )
         )
+
+        # hidden params
+        if elementJSON["element_type_params"]["PGA"].get("den") is not None:
+            self.orig_element.den = elementJSON["element_type_params"]["PGA"].get("den")
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -806,7 +824,7 @@ class SynthesizedFilter():
         self.orig_element.output = output_terminal
 
         # params
-        coefficient_vals = elementJSON["element_type_params"]["SynthesizedFilter"].get("coefficients", None)
+        coefficient_vals = elementJSON["element_type_params"]["SynthesizedFilter"].get("coefficients")
         self.orig_element.coefficients = [list(map(float, arr)) for arr in coefficient_vals] if coefficient_vals is not None else []
 
     def as_dict(self):
@@ -828,19 +846,22 @@ class Terminal():
         if elementJSON is None:
             return
 
+        # params
         for item in elementJSON["terminals"]:
             if item["type_name"] == "net":
                 self.orig_element.net = item["node_name"]
         self.orig_element.is_input = coalesce(
-            elementJSON["element_type_params"]["Terminal"].get("is_input", None), False)
+            elementJSON["element_type_params"]["Terminal"].get("is_input"), False)
         self.orig_element.is_output = coalesce(
-            elementJSON["element_type_params"]["Terminal"].get("is_output", None), False)
+            elementJSON["element_type_params"]["Terminal"].get("is_output"), False)
         self.orig_element.hardware_pin = coalesce(
-            elementJSON["element_type_params"]["Terminal"].get("hardware_pin", None), "")
-        self.orig_element.is_ac_coupled = coalesce(
-            elementJSON["element_type_params"]["Terminal"].get("is_ac_coupled", None), False)
-        self.orig_element.is_extern = coalesce(
-            elementJSON["element_type_params"]["Terminal"].get("is_extern", None), False)
+            elementJSON["element_type_params"]["Terminal"].get("hardware_pin"), "")
+
+        # hidden params
+        if elementJSON["element_type_params"]["Terminal"].get("is_ac_coupled") is not None:
+            self.orig_element.is_ac_coupled = elementJSON["element_type_params"]["Terminal"].get("is_ac_coupled")
+        if elementJSON["element_type_params"]["Terminal"].get("is_extern") is not None:
+            self.orig_element.is_extern = elementJSON["element_type_params"]["Terminal"].get("is_extern")
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
