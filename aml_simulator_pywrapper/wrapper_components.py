@@ -680,7 +680,7 @@ class NeuralNet():
             self.orig_element.input_compress_scale = elementJSON["element_type_params"]["NeuralNet"].get("input_compress_scale")
 
         if elementJSON["element_type_params"]["NeuralNet"].get("input_compression_type") is not None:
-            self.orig_element.input_compression_type = elementJSON["element_type_params"]["NeuralNet"].get("input_compression_type")
+            self.orig_element.input_compression_type = map_activation_function_str_to_enum(elementJSON["element_type_params"]["NeuralNet"].get("input_compression_type"))
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
