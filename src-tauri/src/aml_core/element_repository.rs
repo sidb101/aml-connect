@@ -34,7 +34,7 @@ pub enum TerminalDirection {
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct TerminalMetadata{
     pub description: String,
-    pub direction: TerminalDirection,
+    pub direction: Option<TerminalDirection>,
     pub default: Option<String>,
     pub dc_range: Option<String>,
     pub ac_range: Option<String>,
@@ -121,11 +121,11 @@ mod tests {
     fn test_metadata_load_from_json() {
         // arrange
         // act
-        let el_json_res = list_elements_from_simulator().unwrap();
+        let el_json_res = list_elements_from_simulator();
         
         // assert
-        // assert!( el_json_res.is_ok() );
-        // println!("{}", serde_json::to_string_pretty(&el_json_res.unwrap()).unwrap());        
+        assert!( el_json_res.is_ok() );
+        println!("{}", serde_json::to_string_pretty(&el_json_res.unwrap()).unwrap());        
     }
 
 }
