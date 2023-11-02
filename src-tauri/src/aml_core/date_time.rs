@@ -11,7 +11,7 @@ pub struct AMLDateTime(pub NaiveDateTime);
 
 impl TS for AMLDateTime {
     fn name() -> String {
-        "DateTime".to_string()
+        "Date".to_string()
     }
 
     fn dependencies() -> Vec<ts_rs::Dependency> {
