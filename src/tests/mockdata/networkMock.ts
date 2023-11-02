@@ -3,6 +3,9 @@ import { Position } from "reactflow";
 import type { EdgeDataT, NetworkMetaDataT, NetworkT, NodeDataT } from "../../redux/slices/ModelCreationSlice";
 import type { OptionT } from "../../components/dropdown/Dropdown";
 import type { NetworkVO } from "../../service/RemoteService/client/bindings/NetworkVO";
+import { USER_ID } from "../../constants";
+
+const MOCK_NETWORK_ID = BigInt(5000);
 
 // TODO: Remove this and use all elements fetched from backend 'ElementT'
 export const allNodes: OptionT[] = [
@@ -25,7 +28,7 @@ export const allNodes: OptionT[] = [
 ];
 
 export const mockNetworkMetaData: NetworkMetaDataT = {
-	id: 5000,
+	id: Number(MOCK_NETWORK_ID),
 	name: "sample_network",
 };
 
@@ -121,14 +124,14 @@ export const mockNetwork: NetworkT = {
 
 /**** Expected Transformation ***/
 export const mockExpectedNetworkTransform: NetworkVO = {
-	id: 5000n,
+	id: MOCK_NETWORK_ID,
 	name: "sample_network",
-	creator_id: 1n,
+	creator_id: BigInt(USER_ID),
 	elements: [
 		{
 			id: "1",
 			name: "IN",
-			parent_network_id: 5000n,
+			parent_network_id: MOCK_NETWORK_ID,
 			type_name: "Terminal",
 			position: { x: 50, y: 200 },
 			terminals: [
@@ -146,7 +149,7 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 		{
 			id: "2",
 			name: "HPF2",
-			parent_network_id: 5000n,
+			parent_network_id: MOCK_NETWORK_ID,
 			type_name: "Filter",
 			element_type_params: {
 				Filter: {
@@ -174,7 +177,7 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 		{
 			id: "3",
 			name: "LPF2",
-			parent_network_id: 5000n,
+			parent_network_id: MOCK_NETWORK_ID,
 			type_name: "Filter",
 			terminals: [
 				{
@@ -202,7 +205,7 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 		{
 			id: "4",
 			name: "OUT",
-			parent_network_id: 5000n,
+			parent_network_id: MOCK_NETWORK_ID,
 			type_name: "Terminal",
 			terminals: [
 				{
@@ -222,19 +225,19 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 		{
 			id: "reactflow__edge-1-2",
 			name: "reactflow__edge-1-2",
-			parent_network_id: 5000n,
+			parent_network_id: MOCK_NETWORK_ID,
 			terminal_ids: ["1|reactflow__edge-1-2", "2|reactflow__edge-1-2"],
 		},
 		{
 			id: "reactflow__edge-2-3",
 			name: "reactflow__edge-2-3",
-			parent_network_id: 5000n,
+			parent_network_id: MOCK_NETWORK_ID,
 			terminal_ids: ["2|reactflow__edge-2-3", "3|reactflow__edge-2-3"],
 		},
 		{
 			id: "reactflow__edge-3-4",
 			name: "reactflow__edge-3-4",
-			parent_network_id: 5000n,
+			parent_network_id: MOCK_NETWORK_ID,
 			terminal_ids: ["3|reactflow__edge-3-4", "4|reactflow__edge-3-4"],
 		},
 	],

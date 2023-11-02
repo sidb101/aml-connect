@@ -22,6 +22,7 @@ import type { Terminal } from "./client/bindings/Terminal";
 import type { Edge, Node } from "reactflow";
 import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
 import type { NetworkVO } from "./client/bindings/NetworkVO";
+import { USER_ID } from "../../constants";
 /* eslint-disable  @typescript-eslint/naming-convention */
 
 /***
@@ -146,7 +147,7 @@ const remoteTransformer = {
 
 		const networkToSimulate: NetworkVO = {
 			id: BigInt(network.metaData.id),
-			creator_id: 1n,
+			creator_id: BigInt(USER_ID),
 			name: network.metaData.name,
 			elements: network.nodes.map((node: Node<NodeDataT>) => {
 				//create the params object
