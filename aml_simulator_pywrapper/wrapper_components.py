@@ -47,16 +47,14 @@ class AcDiff():
         #params
         self.orig_element.gain = float(
             coalesce(
-                elementJSON["element_type_params"]["AcDiff"]["gain"],
+                elementJSON["element_type_params"]["AcDiff"].get("gain"),
                 9.0
             )
         )
-        self.orig_element.bias = float(
-            coalesce(
-                elementJSON["element_type_params"]["AcDiff"].get("bias"),
-                0.0
-            )
-        )
+
+        #hidden params
+        if elementJSON["element_type_params"]["AcDiff"].get("bias") is not None:
+            self.orig_element.bias = float(elementJSON["element_type_params"]["AcDiff"].get("bias"))
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -87,25 +85,57 @@ class AsymmetricIntegrator():
         self.orig_element.output = out_terminal
 
         #params
-        self.orig_element.down = float(
-            coalesce(
-                elementJSON["element_type_params"]["AsymmetricIntegrator"]["down"],
-                9.0
-            )
-        )
         self.orig_element.up = float(
             coalesce(
-                elementJSON["element_type_params"]["AsymmetricIntegrator"]["up"],
-                0.0
+                elementJSON["element_type_params"]["AsymmetricIntegrator"].get("up"),
+                100
             )
         )
-        up_down_type_str = elementJSON["element_type_params"]["AsymmetricIntegrator"]["up_down_type"]
+        self.orig_element.down = float(
+            coalesce(
+                elementJSON["element_type_params"]["AsymmetricIntegrator"].get("down"),
+                10
+            )
+        )
+        up_down_type_str = elementJSON["element_type_params"]["AsymmetricIntegrator"].get("up_down_type")
         if up_down_type_str == 'Rate':
             self.orig_element.up_down_type = aspinity.UpDownType.Rate
         elif up_down_type_str == 'Hang':
             self.orig_element.up_down_type = aspinity.UpDownType.Hang
         else:
             self.orig_element.up_down_type = aspinity.UpDownType.Rate #default value
+        self.orig_element.comparator_enable = bool(
+            coalesce(
+                elementJSON["element_type_params"]["AsymmetricIntegrator"].get("comparator_enable"),
+                False
+            )
+        )
+
+        #hidden params
+        if elementJSON["element_type_params"]["AsymmetricIntegrator"].get("buffer_gm") is not None:
+            self.orig_element.buffer_gm = float(elementJSON["element_type_params"]["AsymmetricIntegrator"].get("buffer_gm"))
+        if elementJSON["element_type_params"]["AsymmetricIntegrator"].get("capacitor_configuration") is not None:
+            capacitor_configuration_str = elementJSON["element_type_params"]["AsymmetricIntegrator"].get("capacitor_configuration")
+            if capacitor_configuration_str == 'Internal':
+                self.orig_element.capacitor_configuration = aspinity.CapacitorConfiguration.Internal
+            elif capacitor_configuration_str == 'Internal2x':
+                self.orig_element.capacitor_configuration = aspinity.CapacitorConfiguration.Internal2x
+            elif capacitor_configuration_str == 'Internal3x':
+                self.orig_element.capacitor_configuration = aspinity.CapacitorConfiguration.Internal3x
+            elif capacitor_configuration_str == 'Internal4x':
+                self.orig_element.capacitor_configuration = aspinity.CapacitorConfiguration.Internal4x
+            elif capacitor_configuration_str == 'Internal4x_2xS4_S3': 
+                self.orig_element.capacitor_configuration = aspinity.CapacitorConfiguration.Internal4x_2xS4_S3
+            elif capacitor_configuration_str == 'Internal4x_2xS4_S3_S2': 
+                self.orig_element.capacitor_configuration = aspinity.CapacitorConfiguration.Internal4x_2xS4_S3_S2
+            elif capacitor_configuration_str == 'Internal4x_S4':
+                self.orig_element.capacitor_configuration = aspinity.CapacitorConfiguration.Internal4x_S4
+            elif capacitor_configuration_str == 'ParasiticOnly': 
+                self.orig_element.capacitor_configuration = aspinity.CapacitorConfiguration.ParasiticOnly
+        if elementJSON["element_type_params"]["AsymmetricIntegrator"].get("parasitic_capacitance") is not None:
+            self.orig_element.parasitic_capacitance = float(elementJSON["element_type_params"]["AsymmetricIntegrator"].get("parasitic_capacitance"))
+        if elementJSON["element_type_params"]["AsymmetricIntegrator"].get("unit_capacitance") is not None:
+            self.orig_element.unit_capacitance = float(elementJSON["element_type_params"]["AsymmetricIntegrator"].get("unit_capacitance"))
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -148,10 +178,15 @@ class Comparator():
         #params
         self.orig_element.threshold = float(
             coalesce(
-                elementJSON["element_type_params"]["Comparator"]["threshold"],
+                elementJSON["element_type_params"]["Comparator"].get("threshold"),
                 0.0
             )
         )
+
+        #hidden params
+        if elementJSON["element_type_params"]["Comparator"].get("hysteresis_voltage") is not None:
+            self.orig_element.hysteresis_voltage = float(elementJSON["element_type_params"]["Comparator"].get("hysteresis_voltage"))
+
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
@@ -190,18 +225,18 @@ class Filter():
         #params
         self.orig_element.characteristic_frequency = float(
             coalesce(
-                elementJSON["element_type_params"]["Filter"]["characteristic_frequency"],
-                0.0
+                elementJSON["element_type_params"]["Filter"].get("characteristic_frequency"),
+                1e3
             )
         )
         self.orig_element.quality_factor = float(
             coalesce(
-                elementJSON["element_type_params"]["Filter"].get("quality_factor", 0),
-                0.0
+                elementJSON["element_type_params"]["Filter"].get("quality_factor"),
+                2
             )
         )
 
-        filter_type_str = elementJSON["element_type_params"]["Filter"]["filter_type"]
+        filter_type_str = elementJSON["element_type_params"]["Filter"].get("filter_type")
         if filter_type_str == 'hpf2':
             self.orig_element.filter_type = aspinity.FilterType.hpf2
         elif filter_type_str == 'hpf1':
@@ -276,17 +311,17 @@ class Filterbank():
         self.orig_element.out_6 = out6_terminal
         self.orig_element.out_7 = out7_terminal
 
-        #params (TODO: check with Sid)
-        band_freq_vals = elementJSON["element_type_params"]["Filterbank"]["band_frequencies"]
+        #params
+        band_freq_vals = elementJSON["element_type_params"]["Filterbank"].get("band_frequencies")
         self.orig_element.band_frequencies = [float(x) for x in band_freq_vals] if band_freq_vals is not None else [1000, 5000]
 
-        quality_factor_vals = elementJSON["element_type_params"]["Filterbank"]["quality_factor"]
+        quality_factor_vals = elementJSON["element_type_params"]["Filterbank"].get("quality_factor")
         self.orig_element.quality_factor = [float(x) for x in quality_factor_vals] if quality_factor_vals is not None else [1, 1]
 
-        attack_rates_vals = elementJSON["element_type_params"]["Filterbank"]["attack_rates"]
+        attack_rates_vals = elementJSON["element_type_params"]["Filterbank"].get("attack_rates")
         self.orig_element.attack_rates = [float(x) for x in attack_rates_vals] if attack_rates_vals is not None else []
 
-        decay_rates_vals = elementJSON["element_type_params"]["Filterbank"]["decay_rates"]
+        decay_rates_vals = elementJSON["element_type_params"]["Filterbank"].get("decay_rates")
         self.orig_element.decay_rates = [float(x) for x in decay_rates_vals] if decay_rates_vals is not None else []
 
     def as_dict(self):
@@ -336,7 +371,7 @@ class GainOpamp():
         self.orig_element.output = out_terminal
 
         #params
-        gain_mode_str = elementJSON["element_type_params"]["GainOpamp"]["gain_mode"]
+        gain_mode_str = elementJSON["element_type_params"]["GainOpamp"].get("gain_mode")
         if gain_mode_str == 'Noninverting1x':
             self.orig_element.gain_mode = aspinity.GainOpampMode.Noninverting1x
         elif gain_mode_str == 'Noninverting11x':
@@ -354,7 +389,7 @@ class GainOpamp():
 
         self.orig_element.feedback_cap_count = int(
             coalesce(
-                elementJSON["element_type_params"]["GainOpamp"]["feedback_cap_count"],
+                elementJSON["element_type_params"]["GainOpamp"].get("feedback_cap_count"),
                 0
             )
         )
@@ -399,7 +434,7 @@ class LookupTable():
         #params
         self.orig_element.expression = str(
             coalesce(
-                elementJSON["element_type_params"]["LookupTable"]["expression"],
+                elementJSON["element_type_params"]["LookupTable"].get("expression"),
                 1
             )
         )

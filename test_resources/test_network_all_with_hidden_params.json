@@ -6,8 +6,11 @@
             "type_name": "Terminal",
             "element_type_params": {
                 "Terminal": {
+                    "hardware_pin": "A0",
                     "is_input": true,
-                    "is_output": false
+                    "is_output": false,
+                    "is_ac_coupled": null,
+                    "is_extern": null
                 }
             },
             "terminals": [
@@ -21,7 +24,8 @@
             "type_name": "AcDiff",
             "element_type_params": {
                 "AcDiff": {
-                    "gain": 9.0
+                    "gain": 9.0,
+                    "bias": -1.34
                 }
             },
             "terminals": [
@@ -46,7 +50,11 @@
                     "up": 100,
                     "down": 10,
                     "up_down_type": "Rate",
-                    "comparator_enable": true
+                    "comparator_enable": false,
+                    "buffer_gm": 0.5,
+                    "capacitator_configuration": "Internal4x_2xS4_S3_S2",
+                    "parasitic_capacitance": 0.1324,
+                    "unit_capacitance": 3.14
                 }
             },
             "terminals": [
@@ -64,7 +72,8 @@
             "type_name": "Comparator",
             "element_type_params": {
                 "Comparator": {
-                    "threshold": 0.1
+                    "threshold": 0.1,
+                    "hysteresis_voltage": 4.25
                 }
             },
             "terminals": [
@@ -250,7 +259,10 @@
                 "NeuralNet": {
                     "weights": [0.1, 0.2, 0.3, 0.4],
                     "biases": [0.1, 0.2, 0.3, 0.4],
-                    "activation_function": ["Tanh", "Sigmoid", "ReLU", "Linear"]
+                    "activation_function": ["Tanh", "Sigmoid", "ReLU", "Linear"],
+                    "activation_scale": 0.5,
+                    "input_compress_scale": 30.5,
+                    "input_compression_type": "Tanh"
                 }
             },
             "terminals": [
@@ -270,7 +282,9 @@
                 "PeakDetector": {
                     "atk": 1e3,
                     "dec": 10,
-                    "model_version": "FirstOrder"
+                    "model_version": "FirstOrder",
+                    "buff": 0.5,
+                    "parasitic_ratio": 0.3
                 }
             },
             "terminals": [
@@ -289,7 +303,8 @@
             "element_type_params": {
                 "PGA": {
                     "Av1": 2,
-                    "Av2": 0.5
+                    "Av2": 0.5,
+                    "den": 0.234
                 }
             },
             "terminals": [
@@ -329,8 +344,11 @@
             "type_name": "Terminal",
             "element_type_params": {
                 "Terminal": {
+                    "hardware_pin": "A1",
                     "is_input": false,
-                    "is_output": true
+                    "is_output": true,
+                    "is_ac_coupled": null,
+                    "is_extern": null
                 }
             },
             "terminals": [
