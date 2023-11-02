@@ -715,7 +715,7 @@
                 "unit": null,
                 "ui_component": "checkbox"
             },
-            "is_outut": {
+            "is_output": {
                 "parameter_type": "boolean",
                 "description": "is_output",
                 "default": "false",
