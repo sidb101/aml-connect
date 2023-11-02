@@ -4,18 +4,22 @@ This test can utilize the following:
     - test_network_all_with_hidden_params.json
 '''
 
+import json
 import pytest
 import os
 from wrapper_components import *
+
 
 @pytest.fixture
 def setup_network_json():
     network_json = None
     parent_dir = os.path.dirname(os.getcwd())
-    network_json_path = os.path.join(parent_dir, "test_resources", "test_network_all_with_hidden_params.json")
+    network_json_path = os.path.join(
+        parent_dir, "test_resources", "test_network_all_with_hidden_params.json")
     with open(network_json_path, 'r') as f:
         network_json = json.load(f)
     return network_json
+
 
 def test_AcDiff_constructor(setup_network_json):
     network_json = setup_network_json
@@ -27,9 +31,10 @@ def test_AcDiff_constructor(setup_network_json):
             element_found = True
             ac_diff = AcDiff(element)
             assert isinstance(ac_diff.orig_element, aspinity.AcDiff)
-    
+
     if not element_found:
         assert False, "Element not found in the network json"
+
 
 def test_AsymmetricIntegrator_constructor(setup_network_json):
     network_json = setup_network_json
@@ -39,10 +44,12 @@ def test_AsymmetricIntegrator_constructor(setup_network_json):
         if element['type_name'] == 'AsymmetricIntegrator':
             element_found = True
             asymmetric_integrator = AsymmetricIntegrator(element)
-            assert isinstance(asymmetric_integrator.orig_element, aspinity.AsymmetricIntegrator)
+            assert isinstance(asymmetric_integrator.orig_element,
+                              aspinity.AsymmetricIntegrator)
 
     if not element_found:
         assert False, "Element not found in the network json"
+
 
 def test_Comparator_constructor(setup_network_json):
     network_json = setup_network_json
@@ -70,6 +77,7 @@ def test_Comparator_constructor(setup_network_json):
     if not element_found:
         assert False, "Element not found in the network json"
 
+
 def test_Filter_constructor(setup_network_json):
     network_json = setup_network_json
 
@@ -82,6 +90,7 @@ def test_Filter_constructor(setup_network_json):
 
     if not element_found:
         assert False, "Element not found in the network json"
+
 
 def test_Filterbank_constructor(setup_network_json):
     network_json = setup_network_json
@@ -96,6 +105,7 @@ def test_Filterbank_constructor(setup_network_json):
     if not element_found:
         assert False, "Element not found in the network json"
 
+
 def test_GainOpamp_constructor(setup_network_json):
     network_json = setup_network_json
 
@@ -108,6 +118,7 @@ def test_GainOpamp_constructor(setup_network_json):
 
     if not element_found:
         assert False, "Element not found in the network json"
+
 
 def test_LookupTable_constructor(setup_network_json):
     network_json = setup_network_json
@@ -122,6 +133,7 @@ def test_LookupTable_constructor(setup_network_json):
     if not element_found:
         assert False, "Element not found in the network json"
 
+
 def test_DelayFlipFlop_constructor(setup_network_json):
     network_json = setup_network_json
 
@@ -130,10 +142,12 @@ def test_DelayFlipFlop_constructor(setup_network_json):
         if element['type_name'] == 'DelayFlipFlop':
             element_found = True
             delayFlipFlop = DelayFlipFlop(element)
-            assert isinstance(delayFlipFlop.orig_element, aspinity.DelayFlipFlop)
+            assert isinstance(delayFlipFlop.orig_element,
+                              aspinity.DelayFlipFlop)
 
     if not element_found:
         assert False, "Element not found in the network json"
+
 
 def test_Multiplier_constructor(setup_network_json):
     network_json = setup_network_json
@@ -148,6 +162,7 @@ def test_Multiplier_constructor(setup_network_json):
     if not element_found:
         assert False, "Element not found in the network json"
 
+
 def test_Mux2_constructor(setup_network_json):
     network_json = setup_network_json
 
@@ -160,6 +175,7 @@ def test_Mux2_constructor(setup_network_json):
 
     if not element_found:
         assert False, "Element not found in the network json"
+
 
 def test_NeuralNet_constructor(setup_network_json):
     network_json = setup_network_json
@@ -174,6 +190,7 @@ def test_NeuralNet_constructor(setup_network_json):
     if not element_found:
         assert False, "Element not found in the network json"
 
+
 def test_PeakDetector_constructor(setup_network_json):
     network_json = setup_network_json
 
@@ -186,6 +203,7 @@ def test_PeakDetector_constructor(setup_network_json):
 
     if not element_found:
         assert False, "Element not found in the network json"
+
 
 def test_PGA_constructor(setup_network_json):
     network_json = setup_network_json
@@ -200,6 +218,7 @@ def test_PGA_constructor(setup_network_json):
     if not element_found:
         assert False, "Element not found in the network json"
 
+
 def test_SynthesizedFilter_constructor(setup_network_json):
     network_json = setup_network_json
 
@@ -208,10 +227,12 @@ def test_SynthesizedFilter_constructor(setup_network_json):
         if element['type_name'] == 'SynthesizedFilter':
             element_found = True
             synthesizedFilter = SynthesizedFilter(element)
-            assert isinstance(synthesizedFilter.orig_element, aspinity.SynthesizedFilter)
+            assert isinstance(synthesizedFilter.orig_element,
+                              aspinity.SynthesizedFilter)
 
     if not element_found:
         assert False, "Element not found in the network json"
+
 
 def test_Terminal_constructor(setup_network_json):
     network_json = setup_network_json

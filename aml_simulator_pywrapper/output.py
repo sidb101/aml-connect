@@ -1,5 +1,5 @@
 
-
+# pylint: skip-file
 # !/usr/bin/python3
 from aspinity import Network, simulate
 import soundfile as sf

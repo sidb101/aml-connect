@@ -49,7 +49,7 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
 
         def safe_serialize(obj):
             def default(
-                o): return f"<<non-serializable: {type(o).__qualname__}>>"
+                obj2): return f"<<non-serializable: {type(obj2).__qualname__}>>"
             return json.dumps(obj, default=default)
 
         res = {
@@ -72,7 +72,7 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
             raise FileNotFoundError(
                 f"Audio file not found at {audio_file_path}")
 
-        with open(network_json_path, "r") as network_json_file:
+        with open(network_json_path, "r", encoding="utf-8") as network_json_file:
             network_json = json.load(network_json_file)
             network = Network(network_json)
             network.export_sourcecode(audio_file_path)
@@ -81,7 +81,7 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
             return result
 
 
-if __name__ == "__main__": # pragma: no cover
+if __name__ == "__main__":  # pragma: no cover
     PARSER = argparse.ArgumentParser(description="Wrapper to AML Simulator")
 
     # Option that returns all elements

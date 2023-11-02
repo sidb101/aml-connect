@@ -1,6 +1,7 @@
 import pytest
 from wrapper_components import *
 
+
 def test_AcDiff_constructor():
     elementJSON = {
         "type_name": "AcDiff",
@@ -28,6 +29,7 @@ def test_AcDiff_constructor():
     ac_diff = AcDiff(elementJSON)
     assert isinstance(ac_diff, AcDiff)
 
+
 def test_AsymmetricIntegrator_constructor():
     elementJSON = {
         "type_name": "AsymmetricIntegrator",
@@ -52,6 +54,7 @@ def test_AsymmetricIntegrator_constructor():
     }
     asymmetric_integrator = AsymmetricIntegrator(elementJSON)
     assert isinstance(asymmetric_integrator, AsymmetricIntegrator)
+
 
 def test_Comparator_constructor():
     elementJSON = {
@@ -83,6 +86,7 @@ def test_Comparator_constructor():
     comparator = Comparator(elementJSON)
     assert isinstance(comparator, Comparator)
 
+
 def test_Filter_constructor():
     elementJSON = {
         "type_name": "Filter",
@@ -106,6 +110,7 @@ def test_Filter_constructor():
     }
     filter = Filter(elementJSON)
     assert isinstance(filter, Filter)
+
 
 def test_Filterbank_constructor():
     elementJSON = {
@@ -160,6 +165,7 @@ def test_Filterbank_constructor():
     filterbank = Filterbank(elementJSON)
     assert isinstance(filterbank, Filterbank)
 
+
 def test_GainOpamp_constructor():
     elementJSON = {
         "type_name": "GainOpamp",
@@ -183,6 +189,7 @@ def test_GainOpamp_constructor():
     }
     gain_opamp = GainOpamp(elementJSON)
     assert isinstance(gain_opamp, GainOpamp)
+
 
 def test_LookupTable_constructor():
     elementJSON = {
@@ -214,6 +221,7 @@ def test_LookupTable_constructor():
     lookup_table = LookupTable(elementJSON)
     assert isinstance(lookup_table, LookupTable)
 
+
 def test_DelayFlipFlop_constructor():
     elementJSON = {
         "type_name": "DelayFlipFlop",
@@ -239,6 +247,7 @@ def test_DelayFlipFlop_constructor():
     }
     delay_flip_flop = DelayFlipFlop(elementJSON)
     assert isinstance(delay_flip_flop, DelayFlipFlop)
+
 
 def test_Multiplier_constructor():
     elementJSON = {
@@ -274,6 +283,7 @@ def test_Multiplier_constructor():
     multiplier = Multiplier(elementJSON)
     assert isinstance(multiplier, Multiplier)
 
+
 def test_Mux2_constructor():
     elementJSON = {
         "type_name": "Mux2",
@@ -299,6 +309,7 @@ def test_Mux2_constructor():
     }
     mux2 = Mux2(elementJSON)
     assert isinstance(mux2, Mux2)
+
 
 def test_NeuralNet_constructor():
     elementJSON = {
@@ -412,6 +423,7 @@ def test_NeuralNet_constructor():
     neural_net = NeuralNet(elementJSON)
     assert isinstance(neural_net, NeuralNet)
 
+
 def test_PeakDetector_constructor():
     elementJSON = {
         "type_name": "PeakDetector",
@@ -435,6 +447,7 @@ def test_PeakDetector_constructor():
     }
     peak_detector = PeakDetector(elementJSON)
     assert isinstance(peak_detector, PeakDetector)
+
 
 def test_PGA_constructor():
     elementJSON = {
@@ -471,6 +484,7 @@ def test_PGA_constructor():
     pga = PGA(elementJSON)
     assert isinstance(pga, PGA)
 
+
 def test_SynthesizedFilter_constructor():
     elementJSON = {
         "type_name": "SynthesizedFilter",
@@ -492,6 +506,7 @@ def test_SynthesizedFilter_constructor():
     }
     synthesized_filter = SynthesizedFilter(elementJSON)
     assert isinstance(synthesized_filter, SynthesizedFilter)
+
 
 def test_Terminal_constructor():
     elementJSON = {
