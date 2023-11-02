@@ -42,6 +42,8 @@ export default function Canvas() {
 	const currentNetwork = useAppSelector(selectCurrentNetwork);
 	const allElements = useAppSelector(selectAllElements);
 
+	console.log(currentNetwork.nodes);
+
 	const onNodesChange: OnNodesChange = useCallback((changes: NodeChange[]) => {
 		dispatch(modelCreationActions.updateNodes({ nodeChanges: changes }));
 	}, []);

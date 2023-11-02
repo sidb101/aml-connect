@@ -1,10 +1,9 @@
-// import "./ParameterForm.scss";
 import type { ParameterT } from "../../redux/slices/ModelCreationSlice";
 import { ParamTypeT, UIComponentT } from "../../redux/slices/ModelCreationSlice";
 import React, { type ReactNode, useState } from "react";
 import { transformedElements } from "../../tests/mockdata/allElementsMock";
 
-export type ParameterFormT = {
+type ParameterFormT = {
 	elementType: string;
 	parameterInfo: Record<string, ParameterT>;
 	defaultParams: Record<string, string>; //would be determined on runtime

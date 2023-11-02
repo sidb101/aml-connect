@@ -6,15 +6,9 @@
  */
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { type RootState } from "../store";
-import type { Connection, Edge, EdgeChange, Node, NodeChange } from "reactflow";
+import type { Connection, Edge, EdgeChange, Node, NodeAddChange, NodeChange } from "reactflow";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
 import { mockNetwork, mockNetworkMetaData } from "../../tests/mockdata/networkMock";
-
-export type ModelCreationState = {
-	allNetworks: NetworkMetaDataT[]; //Used to show all available networks of user to choose from
-	allElements: Record<string, ElementT>; //information about all the elements that can be used to create the network
-	selectedNetwork: NetworkT;
-};
 
 /*** Types for  Possible Network Elements ***/
 
@@ -34,7 +28,7 @@ export type ElementT = {
  */
 export type TerminalT = {
 	description: string;
-	direction: DirectionT;
+	direction?: DirectionT;
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	default: string | null;
 	dcRange?: string;
@@ -119,6 +113,12 @@ export type EdgeDataT = {
 	targetTerminalType: string;
 };
 
+type ModelCreationState = {
+	allNetworks: NetworkMetaDataT[]; //Used to show all available networks of user to choose from
+	allElements: Record<string, ElementT>; //information about all the elements that can be used to create the network
+	selectedNetwork: NetworkT;
+};
+
 const initialState: ModelCreationState = {
 	allNetworks: [mockNetworkMetaData],
 	allElements: {},
@@ -134,8 +134,8 @@ export const modelCreationSlice = createSlice({
 	reducers: {
 		/**
 		 * To incorporate any changes done in the nodes of the network.
-		 * @param state: Model Creation State
-		 * @param action: The action would have the Node changes needed to be applied
+		 * @param state Model Creation State
+		 * @param action The action would have the Node changes needed to be applied
 		 */
 		updateNodes: (state, action: PayloadAction<{ nodeChanges: NodeChange[] }>) => {
 			state.selectedNetwork.nodes = applyNodeChanges(action.payload.nodeChanges, state.selectedNetwork.nodes);
@@ -143,8 +143,8 @@ export const modelCreationSlice = createSlice({
 
 		/**
 		 * To incorporate any changes done in the edges of the network.
-		 * @param state: Model Creation State
-		 * @param action: The action would have the edge changes needed to be applied
+		 * @param state Model Creation State
+		 * @param action The action would have the edge changes needed to be applied
 		 */
 		updateEdges: (state, action: PayloadAction<{ edgeChanges: EdgeChange[] }>) => {
 			state.selectedNetwork.edges = applyEdgeChanges(action.payload.edgeChanges, state.selectedNetwork.edges);
@@ -152,8 +152,8 @@ export const modelCreationSlice = createSlice({
 
 		/**
 		 * To connect two nodes of the network.
-		 * @param state: Model Creation State
-		 * @param action: The action would have the connection needed to be applied
+		 * @param state Model Creation State
+		 * @param action The action would have the connection needed to be applied
 		 */
 		connectNodes: (state, action: PayloadAction<{ connection: Connection }>) => {
 			state.selectedNetwork.edges = addEdge(action.payload.connection, state.selectedNetwork.edges);
@@ -161,16 +161,17 @@ export const modelCreationSlice = createSlice({
 
 		/**
 		 * To add a new node to the network.
-		 * @param state: Model Creation State
-		 * @param action: The action would have the node to be added
+		 * @param state Model Creation State
+		 * @param action The action would have the node to be added
 		 */
 		addNode: (state, action: PayloadAction<{ node: Node<NodeDataT> }>) => {
-			state.selectedNetwork.nodes = [...state.selectedNetwork.nodes, action.payload.node];
+			const nodeAddChange: NodeAddChange = { item: action.payload.node, type: "add" };
+			state.selectedNetwork.nodes = applyNodeChanges([nodeAddChange], state.selectedNetwork.nodes);
 		},
 		/**
 		 * Sets the elements that the user would want to use to create simulation network
-		 * @param state: Model creation state
-		 * @param action: The action would have all the elements that the simulator supports
+		 * @param state Model creation state
+		 * @param action The action would have all the elements that the simulator supports
 		 */
 		setAllElements: (state, action: PayloadAction<{ allElements: Record<string, ElementT> }>) => {
 			state.allElements = action.payload.allElements;
@@ -188,8 +189,4 @@ export const selectAllElements = createSelector(
 	(state) => state.allElements
 );
 
-export const {
-	name: modelCreationSliceKey,
-	reducer: modelCreationReducer,
-	actions: modelCreationActions,
-} = modelCreationSlice;
+export const { reducer: modelCreationReducer, actions: modelCreationActions } = modelCreationSlice;
