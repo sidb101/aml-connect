@@ -94,9 +94,9 @@ export default function Canvas() {
 	);
 
 	const simulateNetwork = () => {
-		remoteService
-			.simulateNetwork(currentNetwork, audioFilesMock[0].metadata)
-			.catch((e) => console.error("Couldn't simulate", e));
+		remoteService.simulateNetwork(currentNetwork, audioFilesMock[0].metadata).catch((e) => {
+			console.error("Couldn't simulate", e);
+		});
 	};
 
 	const newNodePosition = () => {

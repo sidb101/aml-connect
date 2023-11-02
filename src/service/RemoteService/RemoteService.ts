@@ -58,6 +58,7 @@ const remoteService = {
 		const simulationRequest: SimulateNetworkRequest = remoteTransformer.createSimulateRequest(network, inputFile);
 		console.log("Request:", simulationRequest);
 
+		//eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		const simulationResponse = { response: {} as Record<string, number[]> };
 		// const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);
 		console.log(simulationResponse);
