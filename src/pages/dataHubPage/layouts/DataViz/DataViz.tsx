@@ -16,7 +16,7 @@ const DataViz = (props: DataVizT) => {
 
 	//Change the headers and footers of DataHub as per the current view
 	useEffect(() => {
-		setHeading("Data Visualization");
+		setHeading("Visualize Data");
 		setFooter((state) => ({
 			...state,
 			prevBtn: { label: "Data Setup", route: dataSetupRoute(projectSlug) },

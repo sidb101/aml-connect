@@ -7,6 +7,8 @@ import "./ModelCreationPage.scss";
 import Header from "../../components/header/Header";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
 import { getModelCreationPageTabs } from "./modelCreationPageTabs";
+import remoteService from "../../service/RemoteService/RemoteService";
+import { modelCreationActions } from "../../redux/slices/ModelCreationSlice";
 
 export type ModelCreationPageT = {
 	data?: string;
@@ -42,6 +44,20 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 	useEffect(() => {
 		setSelectedTabIndex(getSelectedTabIndex(pageTabs, pathname));
 	}, [pageTabs, pathname]);
+
+	/** Get all the elements to create the simulation network and persist them in the global state **/
+	useEffect(() => {
+		fetchAllElements().catch((e) => {
+			console.error("Couldn't fetch all elements..", e);
+		});
+	}, []);
+
+	const fetchAllElements = async () => {
+		dispatch(generalActions.markLoading(true));
+		const allElements = await remoteService.getAllElements();
+		dispatch(modelCreationActions.setAllElements({ allElements }));
+		dispatch(generalActions.markLoading(false));
+	};
 
 	return (
 		projectSlug && (

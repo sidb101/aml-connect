@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { generalActions, ProjectStatus } from "../../redux/slices/GeneralSlice";
 import LandingPageView from "./layouts/LandingView";
-import { projectCards } from "../../tests/mockdata/allProjectCards";
+import { mockProjectCards } from "../../tests/mockdata/allProjectsMock";
 
 type LandingPageProps = {
 	data?: string;
@@ -19,7 +19,7 @@ const LandingPage = (props: LandingPageProps) => {
 
 	return (
 		<>
-			<LandingPageView projectCards={projectCards} />
+			<LandingPageView projectCards={mockProjectCards} />
 		</>
 	);
 };

@@ -1,12 +1,16 @@
 import "./Dropdown.scss";
-import React from "react";
-import ReactFlow, { type Node } from "reactflow";
-import type { OptionT } from "../../tests/mockdata/allNodesAndEdges";
+import React, { useEffect, useRef } from "react";
 
+//TODO: Make this component Generic
 type DropdownProps = {
 	options: OptionT[];
 	onOptionClick: (option: OptionT) => void;
 	onClose: () => void;
+};
+
+export type OptionT = {
+	label: string;
+	menuLabel: string;
 };
 
 const Dropdown: React.FC<DropdownProps> = ({ options, onOptionClick, onClose }) => {
