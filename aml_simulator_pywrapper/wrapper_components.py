@@ -482,7 +482,7 @@ class Multiplier():
         #params
         self.orig_element.slope = float(
             coalesce(
-                elementJSON["element_type_params"]["Multiplier"]["slope"],
+                elementJSON["element_type_params"]["Multiplier"].get("slope", None),
                 1.0
             )
         )
@@ -629,14 +629,14 @@ class NeuralNet():
         self.orig_element.out_7 = out7_terminal
 
         #params 
-        weight_vals = elementJSON["element_type_params"]["NeuralNet"]["weights"]
+        weight_vals = elementJSON["element_type_params"]["NeuralNet"].get("weights", None)
         self.orig_element.weights = [float(x) for x in weight_vals] if weight_vals is not None else []
 
-        biases_vals = elementJSON["element_type_params"]["NeuralNet"]["biases"]
+        biases_vals = elementJSON["element_type_params"]["NeuralNet"].get("biases", None)
         self.orig_element.biases = [float(x) for x in biases_vals] if biases_vals is not None else []
 
         #(TODO: check with Sid)
-        activation_function_vals = elementJSON["element_type_params"]["NeuralNet"]["activation_function"]
+        activation_function_vals = elementJSON["element_type_params"]["NeuralNet"].get("activation_function", None)
         self.orig_element.activation_function = [map_activation_function_str_to_enum(x) for x in activation_function_vals] if activation_function_vals is not None else []
 
 
@@ -699,13 +699,13 @@ class PeakDetector():
         #params
         self.orig_element.atk = float(
             coalesce(
-                elementJSON["element_type_params"]["PeakDetector"]["atk"],
+                elementJSON["element_type_params"]["PeakDetector"].get("atk", None),
                 0.0
             )
         )
         self.orig_element.dec = float(
             coalesce(
-                elementJSON["element_type_params"]["PeakDetector"]["dec"],
+                elementJSON["element_type_params"]["PeakDetector"].get("dec", None),
                 0.0
             )
         )
@@ -761,13 +761,13 @@ class PGA():
         #params
         self.orig_element.Av1 = float(
             coalesce(
-                elementJSON["element_type_params"]["PGA"]["Av1"],
+                elementJSON["element_type_params"]["PGA"].get("Av1", None),
                 1.0
             )
         )
         self.orig_element.Av2 = float(
             coalesce(
-                elementJSON["element_type_params"]["PGA"]["Av2"],
+                elementJSON["element_type_params"]["PGA"].get("Av2", None),
                 0.5
             )
         )
@@ -801,12 +801,12 @@ class SynthesizedFilter():
                 input_terminal = item["node_name"]
             elif item["type_name"] == "output":
                 output_terminal = item["node_name"]
-        print(type(input_terminal))
+
         self.orig_element.input = input_terminal
         self.orig_element.output = output_terminal
 
         # params
-        coefficient_vals = elementJSON["element_type_params"]["SynthesizedFilter"]["coefficients"]
+        coefficient_vals = elementJSON["element_type_params"]["SynthesizedFilter"].get("coefficients", None)
         self.orig_element.coefficients = [list(map(float, arr)) for arr in coefficient_vals] if coefficient_vals is not None else []
 
     def as_dict(self):
@@ -832,15 +832,15 @@ class Terminal():
             if item["type_name"] == "net":
                 self.orig_element.net = item["node_name"]
         self.orig_element.is_input = coalesce(
-            elementJSON["element_type_params"]["Terminal"]["is_input"], False)
+            elementJSON["element_type_params"]["Terminal"].get("is_input", None), False)
         self.orig_element.is_output = coalesce(
-            elementJSON["element_type_params"]["Terminal"]["is_output"], False)
+            elementJSON["element_type_params"]["Terminal"].get("is_output", None), False)
         self.orig_element.hardware_pin = coalesce(
             elementJSON["element_type_params"]["Terminal"].get("hardware_pin", None), "")
         self.orig_element.is_ac_coupled = coalesce(
-            elementJSON["element_type_params"]["Terminal"]["is_ac_coupled"], False)
+            elementJSON["element_type_params"]["Terminal"].get("is_ac_coupled", None), False)
         self.orig_element.is_extern = coalesce(
-            elementJSON["element_type_params"]["Terminal"]["is_extern"], False)
+            elementJSON["element_type_params"]["Terminal"].get("is_extern", None), False)
 
     def as_dict(self):
         """returns the wrapped object in JSON serializable format"""
