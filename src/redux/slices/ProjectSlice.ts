@@ -104,6 +104,8 @@ export const projectSlice = createSlice({
 		},
 
 		updateProject: (state, action: PayloadAction<ShallowProjectDetails>) => {
+			state.projectName = action.payload.name;
+			state.projectDescription = action.payload.description;
 			// TODO: Only need the below once backend is implemented
 			state.allProjects = state.allProjects.map((project) => {
 				return project.slug === action.payload.slug ? action.payload : project;
