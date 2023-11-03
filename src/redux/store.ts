@@ -3,12 +3,14 @@ import { useDispatch } from "react-redux";
 import { projectReducer } from "./slices/ProjectSlice";
 import { dataHubReducer } from "./slices/DataHubSlice";
 import { generalReducer } from "./slices/GenralSlice";
+import { modelCreationReducer } from "./slices/ModelCreationSlice";
 
 // Create the root reducer separately so we can extract the RootState type
 const rootReducer = combineReducers({
 	general: generalReducer,
 	project: projectReducer,
 	dataHub: dataHubReducer,
+	modelCreation: modelCreationReducer,
 });
 
 /** To set up store from a preloaded state, to facilitate testing with various

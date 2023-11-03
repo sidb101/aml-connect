@@ -1,65 +1,29 @@
 import { describe } from "@jest/globals";
 import "@testing-library/jest-dom";
-import { fireEvent, screen, within } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import { when } from "jest-when";
 import { invoke } from "@tauri-apps/api/tauri";
-import { renderWithProviders, testIds } from "../test-utils";
+import {
+	getPageElements,
+	renderWithProviders,
+	testIds,
+	verifyFooterButtons,
+	verifyPageHeading,
+	verifyPageTabLabels,
+	verifyPageTabLinkIsActive,
+} from "../test-utils";
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
-import { mockProjects } from "../mockdata/allProjects";
 import React from "react";
-import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
 import { getResultsPageTabs } from "../../pages/resultsPage/resultsPageTabs";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
-
-const getPageElements = () => {
-	const actualPageHeading = screen.getByTestId(testIds.contentHeading);
-	const actualPageTabLinks = screen.getAllByTestId(testIds.pageTabLink);
-	const actualPageTabLabels = screen.getAllByTestId(testIds.pageTabLinkLabel);
-	const actualPrevBtn = screen.getByTestId(testIds.prevBtn);
-	const actualNextBtn = screen.getByTestId(testIds.nextBtn);
-
-	return {
-		actualPageHeading,
-		actualPageTabLinks,
-		actualPageTabLabels,
-		actualPrevBtn,
-		actualNextBtn,
-	};
-};
-
-const verifyPageHeading = (expectedPageHeading: string, actualPageHeading: HTMLElement) => {
-	expect(within(screen.getByTestId(testIds.contentHeading)).getByText(expectedPageHeading)).toBeInTheDocument();
-};
-
-const verifyPageTabLinkIsActive = (actualPageTabLinks: HTMLElement) => {
-	expect(within(actualPageTabLinks).getByTestId(testIds.pageTabLinkLabel)).toHaveClass(pageTabsActiveClass);
-};
-
-const verifyPageTabLabels = (expectedPageTabLabels: string[], actualPageTabLabels: HTMLElement[]) => {
-	if (expectedPageTabLabels.length !== actualPageTabLabels.length) {
-		fail("Mismatch in the length of expected and actual page tab labels.");
-		return;
-	}
-
-	expectedPageTabLabels.forEach((label, index) => {
-		if (actualPageTabLabels[index].textContent === "") {
-			fail(`Empty Label Found in Page Tab at index: ${index}`);
-		} else {
-			expect(actualPageTabLabels[index]).toHaveTextContent(label);
-		}
-	});
-};
-
-const verifyFooterButtons = (expectedPrevBtnText: string, actualPrevBtn: HTMLElement) => {
-	expect(actualPrevBtn).toHaveTextContent(expectedPrevBtnText);
-};
+import { mockProjects } from "../mockdata/allProjects";
 
 describe("Testing the Result Page navigation", () => {
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 	const routes = appRoutes;
 
-	test("Results: Test 1: Testing the result pages exist, and the page tabs exist on the result pages", () => {
+	test("Results: Test 1: Testing the result pages exist, and the page tabs exist on the result pages", async () => {
 		// ARRANGE (from where to start the test)
 
 		// -> should start with empty store
@@ -110,7 +74,7 @@ describe("Testing the Result Page navigation", () => {
 		page = 0;
 		fireEvent.click(navLinks[3]);
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 1
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
@@ -125,7 +89,7 @@ describe("Testing the Result Page navigation", () => {
 		page = 1;
 		fireEvent.click(actualPageTabLinks[page]);
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 2
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
@@ -140,7 +104,7 @@ describe("Testing the Result Page navigation", () => {
 		page = 0;
 		fireEvent.click(actualPageTabLinks[page]);
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 3
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
@@ -155,7 +119,7 @@ describe("Testing the Result Page navigation", () => {
 		page = 1;
 		fireEvent.click(screen.getByTestId(testIds.nextBtn));
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 4
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
@@ -170,7 +134,7 @@ describe("Testing the Result Page navigation", () => {
 		page = 0;
 		fireEvent.click(screen.getByTestId(testIds.prevBtn));
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			getPageElements());
+			await getPageElements());
 
 		// ASSERT - 5
 		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);

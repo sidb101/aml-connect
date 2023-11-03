@@ -10,6 +10,9 @@ import type { FilesUploadRequest } from "./bindings/FilesUploadRequest";
 import type { FilesUploadResponse } from "./bindings/FilesUploadResponse";
 import type { GetFilesRequest } from "./bindings/GetFilesRequest";
 import type { GetFilesResponse } from "./bindings/GetFilesResponse";
+import type { SimulateNetworkRequest } from "./bindings/SimulateNetworkRequest";
+import type { SimulateNetworkResponse } from "./bindings/SimulateNetworkResponse";
+import type { ElementMetadata } from "./bindings/ElementMetadata";
 
 export interface RemoteClient {
 	/**
@@ -24,4 +27,15 @@ export interface RemoteClient {
 	 * @param getFilesRequest: Request containing required data to get the files.
 	 */
 	getInputFiles(getFilesRequest: GetFilesRequest): Promise<GetFilesResponse>;
+
+	/**
+	 * This method would get all the elements supported by the simulator
+	 */
+	getAllElements(): Promise<Record<string, ElementMetadata>>;
+
+	/**
+	 * This method would simulate the given network as per the request
+	 * @param simulateNetworkRequest: Request containing required data to get the files.
+	 */
+	simulateNetwork(simulateNetworkRequest: SimulateNetworkRequest): Promise<SimulateNetworkResponse>;
 }

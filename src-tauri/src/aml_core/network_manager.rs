@@ -30,7 +30,7 @@ pub enum SimulatorError {
 #[ts(export)]
 #[ts(export_to =  "../src/service/RemoteService/client/bindings/")]
 pub struct SimulateNetworkRequest {
-    pub network: Network,
+    pub network: NetworkVO,
     pub audio_file_path: String
 }
 
@@ -54,6 +54,22 @@ pub struct Node {
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+pub struct NetworkVO {
+    //id is optional so that frontend doesn't need to send an id to backend
+    //if backend notices id is null, this means backend needs to generate an
+    //id for this network (and propagage to corresponding parent_network_id fields)
+    pub id: Option<u64>, 
+    pub name: String,
+    pub elements: Vec<ElementVO>,
+    pub nodes: Vec<Node>,
+
+    pub creator_id: u64,
+}
+
+//// Not exported dueto NetworkVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Network {
     //id is optional so that frontend doesn't need to send an id to backend
     //if backend notices id is null, this means backend needs to generate an
@@ -69,6 +85,22 @@ pub struct Network {
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+pub struct ElementVO{
+    pub id: String,
+    pub parent_network_id: Option<u64>,
+    pub name: String,
+
+    pub type_name: String,
+    pub element_type_params: HashMap<String, HashMap<String, String>>,
+
+    pub terminals: Vec<Terminal>,
+    pub position: Position
+}
+
+//// Not exported dueto ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Element{
     pub id: String,
     pub parent_network_id: Option<u64>,
@@ -99,9 +131,10 @@ pub struct Terminal{
     pub node_name: String,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum Parameters {
     AcDiff(AcDiffParams),
     AsymmetricIntegrator(AsymmetricIntegratorParams),

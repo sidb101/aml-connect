@@ -11,9 +11,9 @@ import "./Root.scss";
 import type { NavLinkT } from "../components/sideBar/navRegion/navLink/NavLink";
 import { isNavLinkSelected } from "../components/sideBar/navRegion/navLink/NavLink";
 import Spinner from "../components/spinner/Spinner";
-import ProjectsRegion from "../components/sideBar/projectRegion/ProjectsRegion";
 import Sidebar from "../components/sideBar/Sidebar";
 import { selectLoading } from "../redux/slices/GenralSlice";
+import ProjectsRegion from "../components/sideBar/projectRegion/ProjectsRegion";
 
 export type RootT = {
 	data?: string;
@@ -75,7 +75,7 @@ const Root = (props: RootT) => {
 			<div className={`Root_sidebarContainer`}>
 				<Sidebar logo="AnalogML Connect" sideRegions={[getSideRegion()]} />
 			</div>
-			<div className={"xlight-panel content-container"} data-testid={testIds.contentHeading}>
+			<div className={"xlight-panel content-container"}>
 				{/*Suspense is used by React Router when loading a page or getting data using its loader*/}
 				<Suspense fallback={<Spinner />}>
 					<Outlet />

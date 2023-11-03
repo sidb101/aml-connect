@@ -2,7 +2,7 @@ import risingChirp from "./assets/rising-chirp.wav";
 import bearingFaults from "./assets/bearing-faults.wav";
 import type { InputFileDataT } from "../../redux/slices/DataHubSlice";
 
-export const audioFiles: InputFileDataT[] = [
+export const audioFilesMock: InputFileDataT[] = [
 	{
 		metadata: {
 			name: "rising-chirp.wav",
