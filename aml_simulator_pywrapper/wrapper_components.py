@@ -163,7 +163,7 @@ class AsymmetricIntegrator():
             "parameters": {
                 "down": self.orig_element.down,
                 "up": self.orig_element.up,
-                "up_down_type": str(self.orig_element.up_down_type),
+                "up_down_type": self.orig_element.up_down_type,
             },
         }
 
@@ -433,7 +433,7 @@ class GainOpamp():
             "terminals": {"input": self.orig_element.input, "output": self.orig_element.output},
             "parameters": {
                 "feedback_cap_count": self.orig_element.feedback_cap_count,
-                "gain_mode": str(self.orig_element.gain_mode),
+                "gain_mode": self.orig_element.gain_mode,
             },
         }
 
@@ -826,7 +826,7 @@ class PeakDetector():
             "parameters": {
                 "atk": self.orig_element.atk,
                 "dec": self.orig_element.dec,
-                "model_version": str(self.orig_element.model_version),
+                "model_version": self.orig_element.model_version,
             },
         }
 

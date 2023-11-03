@@ -41,7 +41,8 @@ class Network():
         self.context = {"element_imports": [], "elements": []}
 
         for element_json in network_json["elements"]:
-            self.context["element_imports"].append(element_json["type_name"])
+            if element_json["type_name"] not in self.context["element_imports"]:
+                self.context["element_imports"].append(element_json["type_name"])
             element = Network.__load_element(element_json)
             self.context["elements"].append(element.as_dict())
             self.orig_network.add(element.orig_element)

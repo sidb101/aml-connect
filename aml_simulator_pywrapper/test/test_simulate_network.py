@@ -2,7 +2,6 @@ import wrapper
 import wrapper_network
 import os
 
-
 def test_simulate_network():
     # arrange
     parent_dir = os.path.dirname(os.getcwd())
@@ -53,7 +52,6 @@ def test_simulate_network_3():
         network_json_path, audio_file_path)
     # assert
     assert set(d.keys()).difference(expected_keys) == set()
-
 
 def test_simulate_network_4():
     # arrange

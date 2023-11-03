@@ -5,6 +5,7 @@
 from aspinity import Network, simulate
 import soundfile as sf
 import numpy as np
+from aspinity import FilterType, GainOpampMode, ActivationFunction, ModelVersion
 from aspinity import (
     {% for import in element_imports -%}
     {{ import }}, 
@@ -17,7 +18,7 @@ def load_wav():
     times = np.arange(len(samples)) / sample_rate
     return times, samples
 
-newtork = Network()
+network = Network()
 network.add(
     {% for element in elements -%}
     {{ element.element_type }}(
@@ -36,3 +37,4 @@ network.add(
 
 times, samples = load_wav()
 res = simulate(network, times, samples)
+print(*res.items(), sep="\n")
