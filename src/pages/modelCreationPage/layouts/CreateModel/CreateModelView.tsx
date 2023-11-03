@@ -1,25 +1,18 @@
 import "./CreateModelView.scss";
-import React, { useState } from "react";
-import Canvas from "./components/canvas/Canvas";
-import ParameterForm from "./components/parameterForm/ParameterForm";
+import React, { type ReactNode, useState } from "react";
+import ParameterFormView from "./ParameterForm/ParameterFormView";
 
 export type CreateModelViewProps = {
-	data?: string;
+	canvas: ReactNode;
+	form: ReactNode;
+	showSideForm?: boolean;
 };
 
-const CreateModelView = (props: CreateModelViewProps) => {
-	const [showSideMenu, setShowSideMenu] = useState<boolean>(false);
-
+const CreateModelView = ({ canvas, showSideForm = false, form }: CreateModelViewProps) => {
 	return (
 		<>
-			<div className={showSideMenu ? `CreateModelView_smallCanvas` : `CreateModelView_fullCanvas`}>
-				<Canvas setShowSideMenu={setShowSideMenu} />
-			</div>
-			{showSideMenu && (
-				<div className={`CreateModelView_sideMenu`}>
-					<ParameterForm />
-				</div>
-			)}
+			<div className={showSideForm ? `CreateModelView_smallCanvas` : `CreateModelView_fullCanvas`}>{canvas}</div>
+			{showSideForm && <div className={`CreateModelView_sideMenu`}>{form}</div>}
 		</>
 	);
 };
