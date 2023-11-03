@@ -65,6 +65,8 @@ export function getExactText(text: string) {
 /******** Various testIds *******/
 
 export const testIds = {
+	logo: "logo",
+
 	sideBar: "side-test",
 	projectLinks: "project-link",
 	navHeading: "nav-heading",
@@ -90,4 +92,12 @@ export const testIds = {
 	// Footer buttons
 	prevBtn: "previous-btn",
 	nextBtn: "next-btn",
+
+	// Display cards
+	displayCardLinks: "display-card-links",
+
+	// Project Form
+	projectNameInput: "new-project-name-input",
+	projectDescriptionInput: "new-project-description-input",
+	projectFormSubmitBtn: "project-form-submit-btn",
 };

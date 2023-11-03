@@ -3,7 +3,7 @@ import { type ModelCreationPageContextT, useModelCreationContext } from "../../M
 import { useEffect } from "react";
 import { dataVizRoute, neuralNetworkRoute } from "../../../../routes";
 import { useAppSelector } from "../../../../hooks";
-import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
+import { selectCurrentProjectSlug } from "../../../../redux/slices/ProjectSlice";
 
 export type ModelPageT = {
 	data?: string;

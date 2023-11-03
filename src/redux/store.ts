@@ -1,11 +1,13 @@
 import { combineReducers, configureStore, type PreloadedState } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
-import { generalReducer } from "./slices/GeneralSlice";
+import { projectReducer } from "./slices/ProjectSlice";
 import { dataHubReducer } from "./slices/DataHubSlice";
+import { generalReducer } from "./slices/GenralSlice";
 
 // Create the root reducer separately so we can extract the RootState type
 const rootReducer = combineReducers({
 	general: generalReducer,
+	project: projectReducer,
 	dataHub: dataHubReducer,
 });
 

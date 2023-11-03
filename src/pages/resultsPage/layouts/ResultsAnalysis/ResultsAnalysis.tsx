@@ -3,7 +3,7 @@ import { useResultsContext } from "../../ResultsPage";
 import { useEffect } from "react";
 import { neuralNetworkRoute, resultsComparisonRoute } from "../../../../routes";
 import { useAppSelector } from "../../../../hooks";
-import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
+import { selectCurrentProjectSlug } from "../../../../redux/slices/ProjectSlice";
 import ResultsAnalysisView from "./ResultsAnalysisView";
 
 type ResultsAnalysisProps = {

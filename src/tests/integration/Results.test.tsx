@@ -3,7 +3,6 @@ import "@testing-library/jest-dom";
 import { fireEvent, screen, within } from "@testing-library/react";
 import { when } from "jest-when";
 import { invoke } from "@tauri-apps/api/tauri";
-import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 import { renderWithProviders, testIds } from "../test-utils";
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
@@ -11,6 +10,7 @@ import { mockProjects } from "../mockdata/allProjects";
 import React from "react";
 import { pageTabsActiveClass } from "../../components/pageTabs/PageTabs";
 import { getResultsPageTabs } from "../../pages/resultsPage/resultsPageTabs";
+import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
 
 const getPageElements = () => {
 	const actualPageHeading = screen.getByTestId(testIds.contentHeading);
@@ -64,7 +64,7 @@ describe("Testing the Result Page navigation", () => {
 
 		// -> should start with empty store
 		const storeState = {};
-		const projects: BasicProjectDataT[] = mockProjects;
+		const projects: ShallowProjectDetails[] = mockProjects;
 
 		// -> mock the response from backend
 		when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);

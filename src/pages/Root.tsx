@@ -1,18 +1,19 @@
-import { Outlet, useLocation, useMatches } from "react-router-dom";
-import { Sidebar } from "../components/sideBar/Sidebar";
+import { Outlet, useLocation } from "react-router-dom";
 import { NavRegion } from "../components/sideBar/navRegion/NavRegion";
-import { ProjectsRegion } from "../components/sideBar/projectRegion/ProjectsRegion";
 import { mockProjects } from "../tests/mockdata/allProjects";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import type { SideRegionT } from "../components/sideBar/sideRegion/SideRegion";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { generalActions, ProjectStatus, selectCurrentProjectName, selectLoading } from "../redux/slices/GeneralSlice";
+import { projectActions, ProjectStatus, selectCurrentProjectName } from "../redux/slices/ProjectSlice";
 import { getOpenProjectNavLinks } from "../components/sideBar/navRegion/appNavLinks";
 import { testIds } from "../tests/test-utils";
 import "./Root.scss";
 import type { NavLinkT } from "../components/sideBar/navRegion/navLink/NavLink";
 import { isNavLinkSelected } from "../components/sideBar/navRegion/navLink/NavLink";
 import Spinner from "../components/spinner/Spinner";
+import ProjectsRegion from "../components/sideBar/projectRegion/ProjectsRegion";
+import Sidebar from "../components/sideBar/Sidebar";
+import { selectLoading } from "../redux/slices/GenralSlice";
 
 export type RootT = {
 	data?: string;
@@ -27,7 +28,7 @@ const Root = (props: RootT) => {
 	const { pathname } = useLocation();
 
 	// getting the required data from the state
-	const { projectStatus, projectSlug, allProjects } = useAppSelector((state) => state.general);
+	const { projectStatus, projectSlug, allProjects } = useAppSelector((state) => state.project);
 	const projectName = useAppSelector(selectCurrentProjectName);
 	const isLoading = useAppSelector(selectLoading);
 
@@ -35,7 +36,7 @@ const Root = (props: RootT) => {
 
 	useEffect(() => {
 		// get all the projects of the application and set them in the state
-		dispatch(generalActions.setAllProjects(mockProjects));
+		dispatch(projectActions.setAllProjects(mockProjects));
 	}, []);
 
 	//get the proper links based on given project
@@ -72,10 +73,13 @@ const Root = (props: RootT) => {
 		<div className={`Root_container`}>
 			{isLoading && <Spinner />}
 			<div className={`Root_sidebarContainer`}>
-				<Sidebar logo="AnalogML Connect" sideRegion={[getSideRegion()]} />
+				<Sidebar logo="AnalogML Connect" sideRegions={[getSideRegion()]} />
 			</div>
 			<div className={"xlight-panel content-container"} data-testid={testIds.contentHeading}>
-				<Outlet />
+				{/*Suspense is used by React Router when loading a page or getting data using its loader*/}
+				<Suspense fallback={<Spinner />}>
+					<Outlet />
+				</Suspense>
 			</div>
 		</div>
 	);

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
+import { projectActions, selectCurrentProjectName, selectIsProjectOpen } from "../../redux/slices/ProjectSlice";
 import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
-import { projectOverviewRoute, dataVizRoute } from "../../routes";
+import { dataVizRoute, projectOverviewRoute } from "../../routes";
 import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import "./DataHubPage.scss";
 import Header from "../../components/header/Header";
@@ -22,6 +22,7 @@ const DataHubPage = (props: DataSetupPageT) => {
 	const dispatch = useAppDispatch();
 	const { projectSlug = "" } = useParams();
 	const projectName = useAppSelector(selectCurrentProjectName);
+	const isProjectOpen = useAppSelector(selectIsProjectOpen);
 	const { pathname } = useLocation();
 
 	const [heading, setHeading] = useState<string>("");
@@ -34,14 +35,11 @@ const DataHubPage = (props: DataSetupPageT) => {
 
 	//tasks to be done for the whole data hub page
 	useEffect(() => {
-		if (projectSlug) {
-			//Update the global state
-			dispatch(generalActions.openProject(projectSlug));
+		dispatch(projectActions.openProject(projectSlug));
+		if (isProjectOpen) {
 			setPageTabs(getDataHubPageTabs(projectSlug));
-		} else {
-			console.error("projectSlug not present in the URL.");
 		}
-	}, [projectSlug]);
+	}, [projectSlug, isProjectOpen]);
 
 	useEffect(() => {
 		setSelectedTabIndex(getSelectedTabIndex(pageTabs, pathname));

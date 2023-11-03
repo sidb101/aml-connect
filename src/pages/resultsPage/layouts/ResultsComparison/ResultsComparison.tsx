@@ -3,7 +3,7 @@ import type { ResultsPageContextT } from "../../ResultsPage";
 import { useEffect } from "react";
 import { resultsAnalysisRoute, sendToHardwareRoute } from "../../../../routes";
 import { useAppSelector } from "../../../../hooks";
-import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
+import { selectCurrentProjectSlug } from "../../../../redux/slices/ProjectSlice";
 import ResultsComparisonView from "./ResultsComparisonView";
 
 type ResultsAnalysisProps = {

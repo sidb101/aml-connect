@@ -6,7 +6,6 @@
  */
 
 import { routes as appRoutes } from "../../App";
-import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 import { mockProjects } from "../mockdata/allProjects";
 import { when } from "jest-when";
 import { BASE_ROUTE } from "../../routes";
@@ -18,6 +17,7 @@ import type { InputFileDataT } from "../../redux/slices/DataHubSlice";
 import type { FilesUploadRequest } from "../../service/RemoteService/client/bindings/FilesUploadRequest";
 import remoteClient from "../../service/RemoteService/client/TauriApiClient";
 import storageClient from "../../service/StorageService/client/TauriFsClient";
+import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");
 jest.mock("../../service/StorageService/client/TauriFsClient");
@@ -35,7 +35,7 @@ describe("Testing the Data Setup Functionality", () => {
 			const storeState = {};
 
 			//get the mock projects
-			const projects: BasicProjectDataT[] = mockProjects;
+			const projects: ShallowProjectDetails[] = mockProjects;
 
 			//Need to start from the base route
 			const routeToRender = [BASE_ROUTE];

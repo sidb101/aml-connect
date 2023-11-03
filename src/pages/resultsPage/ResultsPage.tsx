@@ -2,7 +2,7 @@ import "./ResultsPage.scss";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
-import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
+import { projectActions, selectCurrentProjectName } from "../../redux/slices/ProjectSlice";
 import ResultsView from "./layouts/ResultsView";
 import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
@@ -33,7 +33,7 @@ const ResultsPage = (props: ResultsPageProps) => {
 	useEffect(() => {
 		if (projectSlug) {
 			//Update the global state
-			dispatch(generalActions.openProject(projectSlug));
+			dispatch(projectActions.openProject(projectSlug));
 			setPageTabs(getResultsPageTabs(projectSlug));
 		} else {
 			console.error("projectSlug not present in the URL.");

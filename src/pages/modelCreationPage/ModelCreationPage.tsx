@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
+import { projectActions, selectCurrentProjectName, selectIsProjectOpen } from "../../redux/slices/ProjectSlice";
 import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
 import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import "./ModelCreationPage.scss";
@@ -21,6 +21,7 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 	const dispatch = useAppDispatch();
 	const { projectSlug = "" } = useParams();
 	const projectName = useAppSelector(selectCurrentProjectName);
+	const isProjectOpen = useAppSelector(selectIsProjectOpen);
 	const { pathname } = useLocation();
 
 	const [heading, setHeading] = useState<string>("");
@@ -30,14 +31,11 @@ const ModelCreationPage = (props: ModelCreationPageT) => {
 
 	//tasks to be done for the whole model creation page
 	useEffect(() => {
-		if (projectSlug) {
-			//Update the global state
-			dispatch(generalActions.openProject(projectSlug));
+		dispatch(projectActions.openProject(projectSlug));
+		if (isProjectOpen) {
 			setPageTabs(getModelCreationPageTabs(projectSlug));
-		} else {
-			console.error("projectSlug not present in the URL.");
 		}
-	}, [projectSlug]);
+	}, [projectSlug, isProjectOpen]);
 
 	useEffect(() => {
 		setSelectedTabIndex(getSelectedTabIndex(pageTabs, pathname));

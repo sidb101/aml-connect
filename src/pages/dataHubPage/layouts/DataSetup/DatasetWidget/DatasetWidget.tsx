@@ -1,21 +1,18 @@
 import "./DatasetWidget.scss";
 import AudioFileTable from "../AudioFileTable";
 import Accordion from "../../../../../components/accordion/Accordion";
-import { type ReactNode, useState } from "react";
+import { type ReactNode } from "react";
 import { dataHubActions, DataSetT, selectInputFiles } from "../../../../../redux/slices/DataHubSlice";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
-import {
-	generalActions,
-	selectCurrentAudioPath,
-	selectCurrentProjectSlug,
-} from "../../../../../redux/slices/GeneralSlice";
+import { selectCurrentAudioPath, selectCurrentProjectSlug } from "../../../../../redux/slices/ProjectSlice";
 import remoteService from "../../../../../service/RemoteService/RemoteService";
 import storageService from "../../../../../service/StorageService/StorageService";
+import { generalActions } from "../../../../../redux/slices/GenralSlice";
 
 export type DatasetWidgetProps = {
 	widgetHeight?: string;
 	datasetType: DataSetT;
-	header?: ReactNode | ReactNode[];
+	header?: ReactNode;
 	defaultIsOpen: boolean;
 };
 

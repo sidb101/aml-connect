@@ -2,13 +2,10 @@ import ImportLocalDataView from "./ImportLocalDataView";
 import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
 import { dataHubActions, DataSetT } from "../../../../../redux/slices/DataHubSlice";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
-import {
-	generalActions,
-	selectCurrentAudioPath,
-	selectCurrentProjectSlug,
-} from "../../../../../redux/slices/GeneralSlice";
+import { selectCurrentAudioPath, selectCurrentProjectSlug } from "../../../../../redux/slices/ProjectSlice";
 import remoteService from "../../../../../service/RemoteService/RemoteService";
 import storageService from "../../../../../service/StorageService/StorageService";
+import { generalActions } from "../../../../../redux/slices/GenralSlice";
 
 export type ImportLocalDataT = {
 	onClose: () => void;
