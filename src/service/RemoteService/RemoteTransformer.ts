@@ -110,7 +110,9 @@ const remoteTransformer = {
 								tName,
 								{
 									description: tData.description,
-									direction: getEnumValue(DirectionT, tData.direction) as DirectionT,
+									direction: tData.direction
+                                        ? (getEnumValue(DirectionT, tData.direction) as DirectionT)
+                                        : undefined,
 									default: tData.default,
 									dcRange: tData.dc_range || undefined,
 									acRange: tData.ac_range || undefined,
