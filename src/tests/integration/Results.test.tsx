@@ -15,9 +15,9 @@ import {
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
 import React from "react";
-import { getResultsPageTabs } from "../../pages/resultsPage/resultsPageTabs";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
 import { mockProjects } from "../mockdata/allProjects";
+import { getResultsPageTabs } from "../../pages/resultsPage/resultsPageLabels";
 
 describe("Testing the Result Page navigation", () => {
 	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;

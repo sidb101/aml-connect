@@ -16,10 +16,10 @@ import {
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
 import React from "react";
-import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageTabs";
 import remoteClient from "../../service/RemoteService/client/TauriApiClient";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
 import { mockProjects } from "../mockdata/allProjects";
+import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageLabels";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");
 

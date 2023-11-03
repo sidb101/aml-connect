@@ -15,7 +15,6 @@ import {
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE, modelCreationRoute } from "../../routes";
 import React from "react";
-import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageTabs";
 import { mockReactFlow } from "../mockdata/mockReactFlow";
 import { allNodes } from "../mockdata/networkMock";
 import remoteClient from "../../service/RemoteService/client/TauriApiClient";
@@ -23,6 +22,7 @@ import { transformedElements } from "../mockdata/allElementsMock";
 import remoteService from "../../service/RemoteService/RemoteService";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
 import { mockProjects } from "../mockdata/allProjects";
+import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageLabels";
 
 jest.mock("../../service/RemoteService/RemoteService");
 

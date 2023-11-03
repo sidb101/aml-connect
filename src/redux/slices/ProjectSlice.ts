@@ -52,16 +52,18 @@ export const projectSlice = createSlice({
 		 * @param action: The action have slug in the request
 		 */
 		openProject: (state, action: PayloadAction<string>) => {
-			const projectToOpen = state.allProjects.find((project) => project.slug === action.payload);
+			if (state.projectStatus !== ProjectStatus.OPEN) {
+				const projectToOpen = state.allProjects.find((project) => project.slug === action.payload);
 
-			if (projectToOpen) {
-				state.projectStatus = ProjectStatus.OPEN;
-				state.projectSlug = action.payload;
-				state.projectName = projectToOpen.name;
-				state.projectDescription = projectToOpen.description;
-			} else {
-				console.error(`Project with slug: ${action.payload} does not exist.`);
-				state.projectStatus = ProjectStatus.NOT_OPEN;
+				if (projectToOpen) {
+					state.projectStatus = ProjectStatus.OPEN;
+					state.projectSlug = action.payload;
+					state.projectName = projectToOpen.name;
+					state.projectDescription = projectToOpen.description;
+				} else {
+					console.error(`Project with slug: ${action.payload} does not exist.`);
+					state.projectStatus = ProjectStatus.NOT_OPEN;
+				}
 			}
 		},
 
