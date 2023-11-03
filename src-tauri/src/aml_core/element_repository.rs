@@ -16,7 +16,7 @@ pub struct ElementMetadata {
     pub long_description: String,
     pub type_name: String,
     pub terminals: HashMap<String, TerminalMetadata>,
-    pub parameters: HashMap<String, ParameterMetadata>
+    pub parameters: Option<HashMap<String, ParameterMetadata>>
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
