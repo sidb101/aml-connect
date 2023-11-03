@@ -166,8 +166,8 @@ export const modelCreationSlice = createSlice({
 		 */
 		addNode: (state, action: PayloadAction<{ node: Node<NodeDataT> }>) => {
 			//add the node
-			const node = action.payload.node;
-			const elementType = node.data.elementType;
+			const { node } = action.payload;
+			const { elementType } = node.data;
 			console.log(elementType);
 			state.selectedNetwork.nodes = [...state.selectedNetwork.nodes, node];
 

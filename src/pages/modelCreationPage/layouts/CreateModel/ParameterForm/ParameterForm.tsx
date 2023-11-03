@@ -38,9 +38,9 @@ const ParameterForm = ({ node, onSimulate }: ParameterFormProps) => {
 		) : (
 			<></>
 		);
-	} else {
-		return <></>;
 	}
+
+	return <></>;
 };
 
 export default ParameterForm;

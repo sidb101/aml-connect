@@ -115,7 +115,7 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 	elements: [
 		{
 			id: "1",
-			name: "IN",
+			name: "Source",
 			parent_network_id: MOCK_NETWORK_ID,
 			type_name: "Terminal",
 			position: { x: 50, y: 200 },
@@ -133,7 +133,7 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 		},
 		{
 			id: "2",
-			name: "HPF2",
+			name: "Filter",
 			parent_network_id: MOCK_NETWORK_ID,
 			type_name: "Filter",
 			element_type_params: {
@@ -161,7 +161,7 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 		},
 		{
 			id: "3",
-			name: "LPF2",
+			name: "Filter",
 			parent_network_id: MOCK_NETWORK_ID,
 			type_name: "Filter",
 			terminals: [
@@ -189,7 +189,7 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 		},
 		{
 			id: "4",
-			name: "OUT",
+			name: "Sink",
 			parent_network_id: MOCK_NETWORK_ID,
 			type_name: "Terminal",
 			terminals: [

@@ -53,7 +53,7 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 	};
 
 	function getInput(paramName: string, param: ParameterT): ReactNode {
-		const params = paramData.params;
+		const { params } = paramData;
 		switch (param.uiComponent) {
 			case UIComponentT.TEXTBOX:
 				return (
@@ -124,7 +124,17 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 						Submit{" "}
 					</button>
 					&nbsp;
-					{onSimulate ? <button onClick={() => onSimulate()}>Simulate</button> : <></>}
+					{onSimulate ? (
+						<button
+							onClick={() => {
+								onSimulate();
+							}}
+						>
+							Simulate
+						</button>
+					) : (
+						<></>
+					)}
 				</div>
 			) : (
 				<></>

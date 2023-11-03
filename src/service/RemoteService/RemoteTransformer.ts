@@ -161,7 +161,6 @@ const remoteTransformer = {
 			terminals: { ...terminalElement.terminals },
 		};
 
-		//eslint-disable-next-line  @typescript-eslint/no-dynamic-delete
 		delete allElements.Terminal;
 
 		return allElements;
@@ -180,12 +179,13 @@ const remoteTransformer = {
 			elements: network.nodes.map((node: Node<NodeDataT>) => {
 				//create the params object
 				const params: Record<string, Record<string, string>> = {};
+				const { elementType } = node.data;
 				params[node.data.elementType] = network.params[node.id];
 				return {
 					id: node.id,
 					name: node.data.label,
 					parent_network_id: BigInt(network.metaData.id),
-					type_name: node.data.elementType,
+					type_name: elementType === "Source" || elementType === "Sink" ? "Terminal" : elementType,
 					element_type_params: params, //consider the given params object as Parameters
 					terminals: terminalMap.get(node.id) || [], //empty terminals in case the node is not connected anything
 					position: {
