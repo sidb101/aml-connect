@@ -1,0 +1,31 @@
+@use "../../../../../../../global";
+
+.TwoOptionForm_container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.TwoOptionForm_innerContainer {
+	padding: global.$panel-padding;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: global.$panel-padding;
+}
+
+.TwoOptionForm_buttonContainer {
+	width: 100%;
+	display: flex;
+	justify-content: space-evenly;
+	gap: global.$panel-padding;
+
+	button,
+	Form {
+		width: 50%;
+		button {
+			width: 100%;
+		}
+	}
+}
