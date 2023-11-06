@@ -357,19 +357,8 @@
                 "unit": null,
                 "ui_component": "dropdown"
             },
-            "opamp_implementation": {
-                "parameter_type": "string",
-                "description": "Opamp to use",
-                "default": "OpampType.StageZero",
-                "range_type": "discrete",
-                "range": [
-                    "OpampType.StageZero", "OpampType.Pin"
-                ],
-                "unit": null,
-                "ui_component": "dropdown"
-            },
             "feedback_cap_count": {
-                "parameter_type": "nu",
+                "parameter_type": "number",
                 "description": "Incremental (4.7pF) capacitance",
                 "default": "0",
                 "range_type": "interval",
@@ -458,7 +447,8 @@
                 "dc_range": "logic levels",
                 "ac_range": "logic levels"
             }
-        }
+        },
+        "parameters": {}
     },
     "Multiplier": {
         "short_description": "Multiplier",
@@ -690,6 +680,49 @@
                 "range": null,
                 "unit": null,
                 "ui_component": "textbox"
+            }
+        }
+    },
+    "Terminal": {
+        "short_description": "Terminal as Element",
+        "long_description": "Terminal as Element",
+        "type_name": "Terminal",
+        "terminals": {
+            "net": {
+                "description": "terminal",
+                "direction": null,
+                "default": null,
+                "dc_range": null,
+                "ac_range": null
+            }
+        },
+        "parameters": {
+            "hardware_pin": {
+                "parameter_type": "string",
+                "description": "hardware pin",
+                "default": null,
+                "range_type": null,
+                "range": null,
+                "unit": null,
+                "ui_component": "textbox"
+            },
+            "is_input": {
+                "parameter_type": "boolean",
+                "description": "is_input",
+                "default": "false",
+                "range_type": "discrete",
+                "range": ["true", "false"],
+                "unit": null,
+                "ui_component": "checkbox"
+            },
+            "is_output": {
+                "parameter_type": "boolean",
+                "description": "is_output",
+                "default": "false",
+                "range_type": "discrete",
+                "range": ["true", "false"],
+                "unit": null,
+                "ui_component": "checkbox"
             }
         }
     }
