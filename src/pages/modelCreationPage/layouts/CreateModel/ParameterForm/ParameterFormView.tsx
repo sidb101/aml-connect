@@ -110,7 +110,10 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 					<br />
 					{Object.entries(paramData.parameterInfo).map(([parameterName, val], key) => (
 						<div key={key}>
-							{parameterName} {val.unit ? `(${val.unit})` : ""}: {getInput(parameterName, val)}
+							<label title={val.description}>
+								{parameterName} {val.unit ? `(${val.unit})` : ""}:
+							</label>{" "}
+							{getInput(parameterName, val)}
 							<br />
 							<br />
 						</div>

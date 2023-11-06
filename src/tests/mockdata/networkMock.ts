@@ -128,7 +128,10 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 				},
 			],
 			element_type_params: {
-				Terminal: {},
+				Terminal: {
+					is_input: "true",
+					is_output: "false",
+				},
 			},
 		},
 		{
@@ -202,7 +205,10 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			],
 			position: { x: 650, y: 200 },
 			element_type_params: {
-				Terminal: {},
+				Terminal: {
+					is_input: "false",
+					is_output: "true",
+				},
 			},
 		},
 	],

@@ -195,7 +195,7 @@ describe("Testing the Canvas Interaction", () => {
 
 		// Find the button and click it to show dropdown.
 		await waitFor(() => {
-			const addButton = screen.getByText("+");
+			const addButton = screen.getByText("Add");
 			fireEvent.click(addButton);
 		});
 

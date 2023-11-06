@@ -169,7 +169,6 @@ const remoteTransformer = {
 	createSimulateRequest(network: NetworkT, inputFile: InputFileMetaDataT): SimulateNetworkRequest {
 		//TODO: Perform the validations on network
 
-		//TODO: Transform Source and Sink Elements to Terminal
 		const terminalMap: Map<string, Terminal[]> = getTerminalMap(network.edges);
 
 		const networkToSimulate: NetworkVO = {
@@ -180,12 +179,14 @@ const remoteTransformer = {
 				//create the params object
 				const params: Record<string, Record<string, string>> = {};
 				const { elementType } = node.data;
-				params[node.data.elementType] = network.params[node.id];
+				const actualElementType = elementType === "Source" || elementType === "Sink" ? "Terminal" : elementType;
+
+				params[actualElementType] = network.params[node.id];
 				return {
 					id: node.id,
 					name: node.data.label,
 					parent_network_id: BigInt(network.metaData.id),
-					type_name: elementType === "Source" || elementType === "Sink" ? "Terminal" : elementType,
+					type_name: actualElementType,
 					element_type_params: params, //consider the given params object as Parameters
 					terminals: terminalMap.get(node.id) || [], //empty terminals in case the node is not connected anything
 					position: {
