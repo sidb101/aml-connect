@@ -32,9 +32,9 @@ fn integration_test_setup(app_dir: PathBuf) {
 
     fs::create_dir_all(&destination_dir).unwrap();
 
-    fs::copy(PathBuf::from("./tests/bearing-faults.wav"), &destination_path1).unwrap();
-    fs::copy(PathBuf::from("./tests/rising-chirp.wav"), &destination_path2).unwrap();
-    fs::copy(PathBuf::from("./tests/heart-rate.wav"), &destination_path3).unwrap();
+    fs::copy(PathBuf::from("../test_resources/bearing-faults.wav"), &destination_path1).unwrap();
+    fs::copy(PathBuf::from("../test_resources/rising-chirp.wav"), &destination_path2).unwrap();
+    fs::copy(PathBuf::from("../test_resources/heart-rate.wav"), &destination_path3).unwrap();
 }
 
 #[test]
