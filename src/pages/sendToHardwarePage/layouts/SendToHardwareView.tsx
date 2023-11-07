@@ -1,6 +1,6 @@
 import "./SendToHardwareView.scss";
 import React from "react";
-import { resultsRoute } from "../../../routes";
+import { resultsComparisonRoute, resultsRoute } from "../../../routes";
 import Footer from "../../../components/footer/Footer";
 import Header from "../../../components/header/Header";
 import type { DisplayCardT } from "../../../components/displayCard/DisplayCard";
@@ -31,7 +31,7 @@ const SendToHardwareView = (props: SendToHardwareViewT) => {
 			</div>
 			<Footer
 				footerBtnGroup={{
-					prevBtn: { label: "Results", route: resultsRoute(props.projectSlug) },
+					prevBtn: { label: "Results Comparison", route: resultsComparisonRoute(props.projectSlug) },
 					nextBtn: { label: "Homepage", route: "/" },
 				}}
 			/>

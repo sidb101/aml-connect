@@ -1,16 +1,12 @@
 import "./CreateModelView.scss";
-import React from "react";
+import React, { type ReactNode } from "react";
 
-export type ModelCreationViewT = {
-	data?: string;
+export type CreateModelViewProps = {
+	canvas: ReactNode;
 };
 
-const CreateModelView = (props: ModelCreationViewT) => {
-	return (
-		<>
-			<h2>ModelCreationView</h2>
-		</>
-	);
+const CreateModelView = ({ canvas }: CreateModelViewProps) => {
+	return <div className={`CreateModelView_canvas`}>{canvas}</div>;
 };
 
 export default CreateModelView;

@@ -24,6 +24,8 @@ export const MODEL_CREATION_ROUTE = `${PROJECT_ROUTE}/model-creation`;
 export const CREATE_MODEL_ROUTE = `${MODEL_CREATION_ROUTE}/create-model`;
 export const NEURAL_NETWORK_ROUTE = `${MODEL_CREATION_ROUTE}/neural-networks`;
 export const RESULTS_ROUTE = `${PROJECT_ROUTE}/results`;
+export const RESULTS_ANALYSIS_ROUTE = `${RESULTS_ROUTE}/results-analysis`;
+export const RESULTS_COMPARISON_ROUTE = `${RESULTS_ROUTE}/results-comparison`;
 export const SEND_TO_HARDWARE_ROUTE = `${PROJECT_ROUTE}/send-to-hardware`;
 
 /*********** DYNAMIC ROUTES ************/
@@ -35,4 +37,7 @@ export const modelCreationRoute = (projectSlug: string) => MODEL_CREATION_ROUTE.
 export const createModelRoute = (projectSlug: string) => CREATE_MODEL_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const neuralNetworkRoute = (projectSlug: string) => NEURAL_NETWORK_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const resultsRoute = (projectSlug: string) => RESULTS_ROUTE.replace(PROJECT_SLUG, projectSlug);
+export const resultsAnalysisRoute = (projectSlug: string) => RESULTS_ANALYSIS_ROUTE.replace(PROJECT_SLUG, projectSlug);
+export const resultsComparisonRoute = (projectSlug: string) =>
+	RESULTS_COMPARISON_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const sendToHardwareRoute = (projectSlug: string) => SEND_TO_HARDWARE_ROUTE.replace(PROJECT_SLUG, projectSlug);

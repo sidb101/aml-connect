@@ -1,11 +1,19 @@
+import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
+import { type DisplayCardT } from "../../components/displayCard/DisplayCard";
 import { projectOverviewRoute } from "../../routes";
-import type { DisplayCardT } from "../../components/displayCard/DisplayCard";
-import { mockProjects } from "./allProjects";
 
-export const projectCards: DisplayCardT[] = [
+export const mockProjects: BasicProjectDataT[] = [
+	{ name: "Glass Break Detection", slug: "test_project" },
+	{ name: "Dog Bark Detection", slug: "project-2" },
+	{ name: "Alexa Wakeword Detection", slug: "project-3" },
+	{ name: "Vibration Detection", slug: "project-4" },
+	{ name: "Irregular Heartbeat Detection", slug: "project-5" },
+];
+
+export const mockProjectCards: DisplayCardT[] = [
 	{
 		route: projectOverviewRoute(mockProjects[0].slug),
-		title: "Glass Break Detection",
+		title: mockProjects[0].name,
 		labels: ["94.3% Accuracy", "97.6% True Positive Rate", "3sec in 24hr False Positive Rate"],
 		description:
 			"We are developing a smart device for in-home surveillance. This device would detect the sounds of glass breaking to help trigger a security alert within our system.",

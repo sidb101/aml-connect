@@ -7,6 +7,7 @@ import {
 	projectOverviewRoute,
 	resultsRoute,
 	sendToHardwareRoute,
+	resultsAnalysisRoute,
 } from "../../../routes";
 
 /**
@@ -34,7 +35,8 @@ export const getOpenProjectNavLinks = (projectSlug: string): NavLinkT[] => [
 	},
 	{
 		label: "Results",
-		route: resultsRoute(projectSlug),
+		route: resultsAnalysisRoute(projectSlug),
+		parentLink: { route: resultsRoute(projectSlug) },
 	},
 	{
 		label: "Send to Hardware",
