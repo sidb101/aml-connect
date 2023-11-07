@@ -1,6 +1,6 @@
 import "./ResultsView.scss";
 import React from "react";
-import { modelCreationRoute, sendToHardwareRoute } from "../../../routes";
+import { neuralNetworkRoute, sendToHardwareRoute } from "../../../routes";
 import Footer from "../../../components/footer/Footer";
 import Header from "../../../components/header/Header";
 
@@ -14,10 +14,12 @@ const ResultsView = (props: ResultsViewT) => {
 	return (
 		<>
 			<Header headerTitle={`${props.title}`} />
-			<div className={`body-content-container`}></div>
+			<div className={`body-content-container-no-header-btns-with-footer`}></div>
 			<Footer
-				prevBtn={{ label: "Model Creation", route: modelCreationRoute(props.projectSlug) }}
-				nextBtn={{ label: "Send To Hardware", route: sendToHardwareRoute(props.projectSlug) }}
+				footerBtnGroup={{
+					prevBtn: { label: "Neural Networks", route: neuralNetworkRoute(props.projectSlug) },
+					nextBtn: { label: "Send To Hardware", route: sendToHardwareRoute(props.projectSlug) },
+				}}
 			/>
 		</>
 	);

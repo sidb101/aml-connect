@@ -3,9 +3,11 @@ import {
 	dataHubRoute,
 	dataSetupRoute,
 	modelCreationRoute,
+	createModelRoute,
 	projectOverviewRoute,
 	resultsRoute,
 	sendToHardwareRoute,
+	resultsAnalysisRoute,
 } from "../../../routes";
 
 /**
@@ -28,11 +30,13 @@ export const getOpenProjectNavLinks = (projectSlug: string): NavLinkT[] => [
 	},
 	{
 		label: "Model Creation",
-		route: modelCreationRoute(projectSlug),
+		route: createModelRoute(projectSlug),
+		parentLink: { route: modelCreationRoute(projectSlug) },
 	},
 	{
 		label: "Results",
-		route: resultsRoute(projectSlug),
+		route: resultsAnalysisRoute(projectSlug),
+		parentLink: { route: resultsRoute(projectSlug) },
 	},
 	{
 		label: "Send to Hardware",

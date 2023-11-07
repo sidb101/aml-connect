@@ -4,39 +4,50 @@ workspace {
         customer = person "Chip Programmer" "Aspinity's customer"
         engineer = person "Aspinity Engineer" "usually Nick"
         developer = person "System Developer" "Team ChipMonks"
+        
         filemanager = softwareSystem "File System" "The user's local file system"
+        # aspinitySimulator = softwareSystem "AML 100 Simulator"
+        
         astrl = softwareSystem "Aspinity Development Platform" {
             
             group Clients {
-                
+            
                 uiLayer = container "UI Layer"{
+
                     group ReactComponents {
-                        component1 = component "Sample React Component"    
+                        reactComponent = component "Sample React Component" "UI Smart Component dealing with states and data"   
                     }
 
                     group Slices {
-                        slice1 = component "Sample Slice"
+                        slice = component "Sample State Slice" "Responsible to update the store with new information"
                     }         
 
-                    reduxStore = component "Redux store"
+                    reduxStore = component "Redux store" "Storing all the state information"
 
-                    apiInterface = component "API Interface"
-                    apiTransformer = component "API Transformer" "Converts state to DTO object"
-                    tauriApiClient = component "Tauri API Client"
-                    restAPIClient = component "REST API Client"
+                    remoteService = component "Remote Service" "Responsible for transforming UI data to DTO and exchanging data with backend server"
+                    remoteClient = component "Remote Client" "Interface for the Server API Calls happening to backend"
+                    tauriApiClient = component "Tauri API Client" "Concrete Client having logic to call the backend server"
+                    
+                    storageService = component "Storage Service" "Responsible for transforming UI data to DTO and exchanging data with storage server"  
+                    storageClient = component "Storage Client" "Interface for the Storage API Calls happening to backend"
+                    tauriFsClient = component "Tauri FS Client" "Concrete Client having logic to call the Local File System"
 
-                    component1 -> reduxstore "uses"
-                    component1 -> slice1 "uses"
-                    component1 -> apiInterface "uses"
-                    component1 -> apiTransformer "uses"
-                    tauriApiClient -> apiInterface "implements"
-                    restAPIClient -> apiInterface "implements"
+                    reactComponent -> reduxstore "uses"
+                    reactComponent -> slice "uses"
+                    reactComponent -> remoteService "uses"
+                    reactComponent -> storageService "uses"
 
-                    reduxStore -> slice1 "has"                 
+                    remoteService -> tauriApiClient "has"
+                    storageService -> tauriFsClient "has"
 
-                    customer -> component1 "Design customized networks"
-                    component1 -> engineer "Receives customized network"
-                    developer -> component1 "Maintains" 
+                    tauriApiClient -> remoteClient "implements"
+                    tauriFsClient -> storageClient "implements"
+
+                    reduxStore -> slice "has"                 
+
+                    customer -> reactComponent "Design customized networks"
+                    reactComponent -> engineer "Receives customized network"
+                    developer -> reactComponent "Maintains" 
                 }
 
                 cliapp = container "Command Line Application" {
@@ -47,6 +58,8 @@ workspace {
 
             }
 
+            # Can we have some other name for this, confusing with Aspinity AML 100 Simulator
+
             appserver = container "Application Layer" {
                 datasetup = component "DataManager"
                 projectmanager = component "ProjectManager"
@@ -56,7 +69,7 @@ workspace {
                 UIController = component "UI Controller"
                 CLIController = component "CLI Controller"
                 amlConnectCore = component "AML Connect Core"
-                chipsimulator = component "AML 100 Simulator"
+                chipsimulator = component "AML 100 Simulator" 
                 dbmanager = component "DBManager"
                 audiomanager = component "AudioManager"
                 mlinterpretormod = component "MLInterpretor"
@@ -69,22 +82,18 @@ workspace {
                 amlConnectCore -> audiomanager
                 networkmanager -> resultgenerator
                 networkmanager -> filtermanager
-                networkmanager -> simulatorInterface
+                networkmanager -> chipsimulator
                 networkmanager -> dbmanager
                 networkmanager -> featurengineer
                 networkmanager -> mlinterpretormod
                 chipsimulator -> simulatorInterface "implements"
                 
-                filemanager -> datasetup "retrieve files" "Upload from local PC"
+                datasetup -> filemanager "retrieve files" "Upload from local PC"
             }
 
             app_db = container "Application Database" {
-                description "Responsible for storing application data that does not pertain directly to the network. Details TBD"
+                description "Responsible for storing application data"
                 tags "DB"
-            }
-
-            cache = container "Cache" {
-                description "focused on caching network files for fast retrieval. Details TBD."
             }
 
             ml_interepretor = container "Machine Learning Interpretor" {
@@ -97,16 +106,17 @@ workspace {
 
             cliapp -> CLIController "calls" "bash commands"
             tauriApiClient -> UIController "makes calls to" "IPC-JSON"
+            tauriFsClient -> filemanager "makes calls to" "IPC-JSON"
 
             UIController -> amlConnectCore 
             CLIController -> amlConnectCore
 
-            dbmanager -> app_db "saves and retreives data" "TBD"
-            
-            dbmanager -> cache "retrieves cached network config" "TBD"
-            cache -> app_db "retrieves data" "TBD"
-
+            dbmanager -> app_db "saves and retreives data"
         }
+
+
+        ## Why are we calling this crate, isn't it a python component??
+        ## We need to separate out the aspinity_simulator from here, so that it can be added in the context diagram, without other things
         simulator_crate = softwareSystem "Simulator Crate" {
             python_binary = container "Compiled Python Interpretor"
             aspinity_simulator = container "Aspinity AML100 Simulator"
@@ -119,7 +129,8 @@ workspace {
         chipSimulator -> simulator_crate "Spawns new sidecar"
         chipsimulator -> python_app "async call" "bash commands"
         python_app -> chipsimulator "results" 
-        
+
+
         simulator = deploymentEnvironment "Simulator" {
             deploymentNode "User Laptop" {
                 containerInstance uiLayer
@@ -166,6 +177,11 @@ workspace {
             autoLayout
         }
 
+        container simulator_crate {
+            include *
+            autoLayout lr
+        }
+
         deployment * simulator {
             include *
             autoLayout lr
@@ -174,9 +190,9 @@ workspace {
         dynamic appserver {
             title "[Extensibility] Rust Simulator Swap"
 
-            networkmanager -> simulatorInterface "passes user-defined network & audio data"
-            networkmanager -> simulatorInterface "calls simulate_network()"
-            simulatorInterface -> chipsimulator "calls chipSimulator implementation"
+            networkmanager -> chipSimulator "passes user-defined network & audio data"
+            networkmanager -> chipSimulator "calls simulate_network()"
+            chipsimulator -> simulatorInterface "implements"
             chipsimulator -> simulator_crate "translates data to simulator input data"
             simulator_crate -> chipsimulator "sends back audio result"
 
@@ -186,15 +202,30 @@ workspace {
         dynamic uiLayer {
             title "[Performance] Add Network Element"
 
-            customer -> component1 "user request to add network element"
-            component1 -> reduxStore "asks for metadata regarding network element"
-            reduxStore -> component1 "data is received"
-            component1 -> slice1 "user defined network is updated with the additional network element"
-            component1 -> customer "new network element is displayed on canvas"
+            customer -> reactComponent "user request to add network element"
+            reactComponent -> reduxStore "asks for metadata regarding network element"
+            reduxStore -> reactComponent "data is received"
+            reactComponent -> slice "user defined network is updated with the additional network element"
+            reactComponent -> customer "new network element is displayed on canvas"
             
             autoLayout lr
         }
-        
+
+        dynamic appserver {
+            title "Network Simulation From UI"
+
+
+            reactComponent -> remoteService "Network JSON generated at UI"
+            remoteService -> tauriApiClient "Transformed JSON that backend needs"
+            tauriApiClient -> UIController "Network JSON"
+            UIController -> amlConnectCore "Network JSON"
+            amlConnectCore -> networkmanager "Network JSON for validation"
+            networkmanager -> chipSimulator "Valid Network JSON"
+            chipSimulator -> simulator_crate "Translated Data for Simulator"
+
+            autoLayout lr
+        }
+
         theme default
     }
 }

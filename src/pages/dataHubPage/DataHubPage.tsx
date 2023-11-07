@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
 import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
-import { dataVizRoute, projectOverviewRoute } from "../../routes";
-import Footer, { type FooterBtnT } from "../../components/footer/Footer";
+import { projectOverviewRoute, dataVizRoute } from "../../routes";
+import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import "./DataHubPage.scss";
-import PageTabs, { getSelectedTabIndex, type PageTabT } from "./layouts/PageTabs/PageTabs";
-import { getPageTabs } from "./layouts/pageTabs";
 import Header from "../../components/header/Header";
+import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
+import { getDataHubPageTabs } from "./dataHubPageTabs";
 
 export type DataSetupPageT = {
 	data?: string;
@@ -15,12 +15,7 @@ export type DataSetupPageT = {
 
 export type DataHubContextT = {
 	setHeading: React.Dispatch<React.SetStateAction<string>>;
-	setFooter: React.Dispatch<React.SetStateAction<DataHubFooterT>>;
-};
-
-export type DataHubFooterT = {
-	nextBtn: FooterBtnT;
-	prevBtn: FooterBtnT;
+	setFooter: React.Dispatch<React.SetStateAction<FooterBtnGroupT>>;
 };
 
 const DataHubPage = (props: DataSetupPageT) => {
@@ -32,7 +27,7 @@ const DataHubPage = (props: DataSetupPageT) => {
 	const [heading, setHeading] = useState<string>("");
 	const [pageTabs, setPageTabs] = useState<PageTabT[]>([]);
 	const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
-	const [footer, setFooter] = useState<DataHubFooterT>({
+	const [footer, setFooter] = useState<FooterBtnGroupT>({
 		prevBtn: { label: "Overview", route: projectOverviewRoute(projectSlug) },
 		nextBtn: { label: "Visualize Data", route: dataVizRoute(projectSlug) },
 	});
@@ -42,7 +37,7 @@ const DataHubPage = (props: DataSetupPageT) => {
 		if (projectSlug) {
 			//Update the global state
 			dispatch(generalActions.openProject(projectSlug));
-			setPageTabs(getPageTabs(projectSlug));
+			setPageTabs(getDataHubPageTabs(projectSlug));
 		} else {
 			console.error("projectSlug not present in the URL.");
 		}
@@ -56,7 +51,7 @@ const DataHubPage = (props: DataSetupPageT) => {
 		projectSlug && (
 			<>
 				<Header headerTitle={`${projectName || "Undefined Project"} > Data Hub > ${heading}`} />
-				<div className={`body-content-container-no-header-btns DataHub_bodyContainer`}>
+				<div className={`body-content-container-no-header-btns-with-footer DataHub_bodyContainer`}>
 					<div className={"DataHub_bodyRow1"}>
 						<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
 					</div>
@@ -72,7 +67,7 @@ const DataHubPage = (props: DataSetupPageT) => {
 						/>
 					</div>
 				</div>
-				<Footer prevBtn={footer.prevBtn} nextBtn={footer.nextBtn} />
+				<Footer footerBtnGroup={footer} />
 			</>
 		)
 	);

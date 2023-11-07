@@ -1,0 +1,15 @@
+@use "../../global";
+
+.ModelCreation_bodyContainer {
+  display: grid;
+  grid-template-rows: global.$panel-header-height;
+  gap: global.$general-padding;
+}
+
+.ModelCreation_bodyRow1 {
+  grid-row: 1;
+}
+
+.ModelCreation_bodyRow2 {
+  grid-row: 2;
+}

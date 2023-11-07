@@ -1,7 +1,7 @@
 import DataVizView from "./DataVizView";
 import { type DataHubContextT, useDataHubContext } from "../../DataHubPage";
 import { useEffect } from "react";
-import { dataSetupRoute, dataVizRoute, modelCreationRoute, projectOverviewRoute } from "../../../../routes";
+import { dataSetupRoute, createModelRoute } from "../../../../routes";
 import { useLocation } from "react-router-dom";
 import { useAppSelector } from "../../../../hooks";
 import { selectCurrentProjectSlug } from "../../../../redux/slices/GeneralSlice";
@@ -16,11 +16,11 @@ const DataViz = (props: DataVizT) => {
 
 	//Change the headers and footers of DataHub as per the current view
 	useEffect(() => {
-		setHeading("Data Visualization");
+		setHeading("Visualize Data");
 		setFooter((state) => ({
 			...state,
 			prevBtn: { label: "Data Setup", route: dataSetupRoute(projectSlug) },
-			nextBtn: { label: "Model Creation", route: modelCreationRoute(projectSlug) },
+			nextBtn: { label: "Create Model", route: createModelRoute(projectSlug) },
 		}));
 	}, [projectSlug]);
 

@@ -1,0 +1,15 @@
+@use "../../global";
+
+.Results_bodyContainer {
+	display: grid;
+	grid-template-rows: global.$panel-header-height;
+	gap: global.$general-padding;
+}
+
+.Results_bodyRow1 {
+	grid-row: 1;
+}
+
+.Results_bodyRow2 {
+	grid-row: 2;
+}

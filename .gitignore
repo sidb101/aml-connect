@@ -27,6 +27,7 @@ architecture/c4-model/.structurizr/*
 architecture/c4-model/workspace.json
 3.0.0.tar.gz
 adr-tools-3.0.0/*
+architecture/c4-model/adr-tools-3.0.0/*
 
 #Test Coverage Reports
 coverage
@@ -44,3 +45,4 @@ src-tauri/binaries/aspinity_wrapper-x86_64-pc-windows-msvc.exe
 
 #Rust
 src-tauri/src/*.db
+*.db

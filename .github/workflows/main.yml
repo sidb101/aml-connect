@@ -97,10 +97,21 @@ jobs:
       # Install node dependencies
       - name: Install frontend dependencies
         run: npm install
+
+      # Run frontend tests
+      - name: run jest
+        run: |
+          COVERAGE=$(npm run test | grep "All files" | awk '{print $4}' | cut -d '%' -f 1)
+          echo "Code coverage is $COVERAGE%"
+          if (( $(echo "$COVERAGE < 60" | bc -l) )); then exit 1; fi
       
       # Runs a single command using the runners shell
-      - name: Run Rust backend tests
-        run: cd src-tauri && cargo test && cd ..
+      - name: Run Rust backend unit tests
+        run: cd src-tauri && cargo test --lib && cd ..
+
+      # Runs a single command using the runners shell
+      - name: Run Rust backend integration tests
+        run: cd src-tauri && cargo test --test integration_test -- --test-threads 1 && cd ..
 
       # Run tauri-action build
       - name: Build the app using Tauri Action
