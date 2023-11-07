@@ -1,10 +1,7 @@
 pub mod aml_core;
 
 pub mod uicontroller {
-    use serde_json;
-    use crate::aml_core::element_repository;
     use crate::aml_core::file_data_manager;
-    use crate::aml_core::network_manager::SimulatorError;
     use crate::aml_core::{element_repository, project_manager};
     use diesel::r2d2::{ConnectionManager, Pool};
     use diesel::SqliteConnection;

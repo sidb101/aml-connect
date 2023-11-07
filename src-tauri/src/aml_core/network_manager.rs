@@ -6,7 +6,6 @@ use mockall::{automock, predicate::*};
 use tauri::api::process::Command;
 use serde::{Deserialize, Serialize};
 use ts_rs::TS;
-use serde_json::json;
 
 use thiserror::Error;
 
