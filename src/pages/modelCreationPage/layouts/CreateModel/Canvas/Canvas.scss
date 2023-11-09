@@ -21,7 +21,7 @@
 .Canvas_node {
 	background: global.$color-grey-3;
 	border: 1px solid black;
-	border-radius: 4px;
+	border-radius: global.$border-radius;
 	width: fit-content;
 	height: 50px;
 	display: flex;

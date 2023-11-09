@@ -4,7 +4,7 @@ import { modelCreationActions, selectNodeParams } from "../../../../../redux/sli
 import ParameterFormView from "./ParameterFormView";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
 
-export type ParameterFormProps = {
+type ParameterFormProps = {
 	node?: Node<NodeDataT>;
 	onSimulate?: () => void;
 };

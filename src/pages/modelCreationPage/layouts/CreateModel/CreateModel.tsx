@@ -12,19 +12,19 @@ import remoteService from "../../../../service/RemoteService/RemoteService";
 import { audioFilesMock } from "../../../../tests/mockdata/audioFilesMock";
 import { selectCurrentNetwork } from "../../../../redux/slices/ModelCreationSlice";
 
-export type ModelPageT = {
-	data?: string;
-};
-
 type ModelFormOptions = {
 	showForm: boolean;
 	selectedNode?: Node<NodeDataT>;
 };
 
-const CreateModel = (props: ModelPageT) => {
+const CreateModel = () => {
 	const { setHeading, setFooter }: ModelCreationPageContextT = useModelCreationContext();
 	const projectSlug = useAppSelector(selectCurrentProjectSlug);
 	const currentNetwork = useAppSelector(selectCurrentNetwork);
+
+	const [formOptions, setFormOptions] = useState<ModelFormOptions>({
+		showForm: false,
+	});
 
 	//Change the headers and footers of Model Creation as per the current view
 	useEffect(() => {
@@ -35,10 +35,6 @@ const CreateModel = (props: ModelPageT) => {
 			nextBtn: { label: "Neural Networks", route: neuralNetworkRoute(projectSlug) },
 		}));
 	}, [projectSlug]);
-
-	const [formOptions, setFormOptions] = useState<ModelFormOptions>({
-		showForm: false,
-	});
 
 	const handleElementDoubleClick = (node: Node<NodeDataT>) => {
 		if (!formOptions.selectedNode || formOptions.selectedNode.id !== node.id) {

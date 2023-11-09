@@ -168,7 +168,6 @@ export const modelCreationSlice = createSlice({
 			//add the node
 			const { node } = action.payload;
 			const { elementType } = node.data;
-			console.log(elementType);
 			state.selectedNetwork.nodes = [...state.selectedNetwork.nodes, node];
 
 			//add the default params for that node in current state
@@ -209,7 +208,6 @@ export const selectNodeParams = createSelector(
 
 /**** Utility Methods ***/
 export const getDefaultParams = (paramInfo: Record<string, ParameterT>): Record<string, string> => {
-	console.log("Get Default Params: ", paramInfo);
 	const paramEntries = Object.entries(paramInfo).map(([key, value]) => [key, value.default]);
 	return Object.fromEntries(paramEntries) as Record<string, string>;
 };

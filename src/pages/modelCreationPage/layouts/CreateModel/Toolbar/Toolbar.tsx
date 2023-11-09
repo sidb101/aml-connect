@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import type { ElementT } from "../../../../../redux/slices/ModelCreationSlice";
 import ElementMenu from "../ElementMenu/ElementMenu";
 
-export type ToolbarProps = {
+type ToolbarProps = {
 	allElements: ElementT[];
 	handleAddElement?: (element: ElementT) => void;
 	handleSimulate: () => void;

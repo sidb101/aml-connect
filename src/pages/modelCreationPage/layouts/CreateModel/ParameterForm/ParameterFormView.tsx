@@ -2,7 +2,7 @@ import "./ParameterFormView.scss";
 import React, { type ReactNode, useEffect, useState } from "react";
 import { type ParameterT, ParamTypeT, UIComponentT } from "../../../../../redux/slices/ModelCreationSlice";
 
-type ParameterFormProps = {
+type ParameterFormViewProps = {
 	elementType?: string;
 	initialParamData: ParameterDataT;
 	onParameterSave?: (params: Record<string, string>) => void;
@@ -14,7 +14,7 @@ type ParameterDataT = {
 	params: Record<string, string>; //would be determined on runtime
 };
 
-function ParameterFormView({ initialParamData, elementType, onParameterSave, onSimulate }: ParameterFormProps) {
+function ParameterFormView({ initialParamData, elementType, onParameterSave, onSimulate }: ParameterFormViewProps) {
 	const [paramData, setParamData] = useState<ParameterDataT>({
 		parameterInfo: initialParamData.parameterInfo,
 		params: initialParamData.params,
