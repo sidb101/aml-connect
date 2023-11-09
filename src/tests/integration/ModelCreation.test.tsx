@@ -21,7 +21,7 @@ import remoteClient from "../../service/RemoteService/client/TauriApiClient";
 import { transformedElements } from "../mockdata/allElementsMock";
 import remoteService from "../../service/RemoteService/RemoteService";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
-import { mockProjects } from "../mockdata/allProjects";
+import { mockProjects } from "../mockdata/allProjectsMock";
 import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageLabels";
 
 jest.mock("../../service/RemoteService/RemoteService");

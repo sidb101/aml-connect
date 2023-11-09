@@ -12,7 +12,7 @@ import { linkSelectedClass } from "../../components/sideBar/navRegion/navLink/Na
 import { mockReactFlow } from "../mockdata/mockReactFlow";
 import remoteClient from "../../service/RemoteService/client/TauriApiClient";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
-import { mockProjects } from "../mockdata/allProjects";
+import { mockProjects } from "../mockdata/allProjectsMock";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");
 beforeEach(() => {

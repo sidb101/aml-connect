@@ -21,6 +21,11 @@ function LandingPage() {
 	return <LandingView projects={projects} />;
 }
 
+/**
+ * React Browser Router action to handle requests. Currently, this is used when
+ * a user wishes to delete a project.
+ * @param request The request.
+ */
 export async function landingPageAction({ request, params }: { request: Request; params: Params }) {
 	if (request.method === "DELETE") {
 		const formData = await request.formData();

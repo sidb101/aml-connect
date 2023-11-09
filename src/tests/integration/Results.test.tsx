@@ -16,7 +16,7 @@ import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
 import React from "react";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
-import { mockProjects } from "../mockdata/allProjects";
+import { mockProjects } from "../mockdata/allProjectsMock";
 import { getResultsPageTabs } from "../../pages/resultsPage/resultsPageLabels";
 
 describe("Testing the Result Page navigation", () => {

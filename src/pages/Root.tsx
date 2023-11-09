@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { NavRegion } from "../components/sideBar/navRegion/NavRegion";
-import { mockProjects } from "../tests/mockdata/allProjects";
+import { mockProjects } from "../tests/mockdata/allProjectsMock";
 import React, { Suspense, useEffect, useState } from "react";
 import type { SideRegionT } from "../components/sideBar/sideRegion/SideRegion";
 import { useAppDispatch, useAppSelector } from "../hooks";

@@ -17,7 +17,7 @@ import type { FilesUploadRequest } from "../../service/RemoteService/client/bind
 import remoteClient from "../../service/RemoteService/client/TauriApiClient";
 import storageClient from "../../service/StorageService/client/TauriFsClient";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
-import { mockProjects } from "../mockdata/allProjects";
+import { mockProjects } from "../mockdata/allProjectsMock";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");
 jest.mock("../../service/StorageService/client/TauriFsClient");

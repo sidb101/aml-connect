@@ -18,7 +18,7 @@ import { BASE_ROUTE } from "../../routes";
 import React from "react";
 import remoteClient from "../../service/RemoteService/client/TauriApiClient";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
-import { mockProjects } from "../mockdata/allProjects";
+import { mockProjects } from "../mockdata/allProjectsMock";
 import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageLabels";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");

@@ -27,6 +27,8 @@ function DataHubPage() {
 		dispatch(projectActions.openProject(projectSlug));
 		if (isProjectOpen) {
 			setPageTabs(getDataHubPageTabs(projectSlug));
+		} else {
+			console.error("projectSlug not present in the URL.");
 		}
 	}, [projectSlug, isProjectOpen]);
 
