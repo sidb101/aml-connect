@@ -1,17 +1,16 @@
 import "./Toolbar.scss";
-import Dropdown, { type OptionT } from "../../../../../components/dropdown/Dropdown";
 import React, { useEffect, useRef, useState } from "react";
 import type { ElementT } from "../../../../../redux/slices/ModelCreationSlice";
-import { allNodes } from "../../../../../tests/mockdata/networkMock";
+import ElementMenu from "../ElementMenu/ElementMenu";
 
-export type ToolbarT = {
+type ToolbarProps = {
 	allElements: ElementT[];
-	handleAddElement?: (option: string) => void;
+	handleAddElement?: (element: ElementT) => void;
 	handleSimulate: () => void;
 };
 
-const Toolbar = ({ handleAddElement, handleSimulate }: ToolbarT) => {
-	const [showDropdown, setShowDropdown] = useState<boolean>(false);
+const Toolbar = ({ handleAddElement, handleSimulate, allElements }: ToolbarProps) => {
+	const [showElementMenu, setShowElementMenu] = useState<boolean>(false);
 
 	const toolBarRef = useRef<HTMLDivElement>(null);
 
@@ -21,7 +20,7 @@ const Toolbar = ({ handleAddElement, handleSimulate }: ToolbarT) => {
 	useEffect(() => {
 		const handleClickOutside = (event: any) => {
 			if (toolBarRef.current && !toolBarRef.current.contains(event.target as Node)) {
-				setShowDropdown(false);
+				setShowElementMenu(false);
 			}
 		};
 
@@ -33,9 +32,9 @@ const Toolbar = ({ handleAddElement, handleSimulate }: ToolbarT) => {
 	}, []);
 
 	// Handle the click event of the dropdown option.
-	const addElementClick = (option: OptionT) => {
-		handleAddElement?.(option.label);
-		setShowDropdown(false); // close the dropdown when an option is clicked
+	const addElementClick = (element: ElementT) => {
+		handleAddElement?.(element);
+		setShowElementMenu(false); // close the dropdown when an option is clicked
 	};
 
 	return (
@@ -45,27 +44,27 @@ const Toolbar = ({ handleAddElement, handleSimulate }: ToolbarT) => {
 					<div className={`Toolbar_sideBtnContainer`}>
 						<button
 							onClick={() => {
-								setShowDropdown((s) => !s);
+								setShowElementMenu((s) => !s);
 							}}
 						>
-							+
+							Add
 						</button>
 						<button onClick={handleSimulate}>Sim</button>
 					</div>
 				</div>
-				<div className={`Toolbar_sideContainer`}>
-					<div className={`Toolbar_sideNodeMenuContainer`}>
-						{showDropdown && (
-							<Dropdown
-								options={allNodes}
-								onOptionClick={addElementClick}
-								onClose={() => {
-									setShowDropdown(false);
-								}}
-							/>
-						)}
-					</div>
+				{/* <div className={`Toolbar_sideContainer`}> */}
+				<div className={`Toolbar_sideNodeMenuContainer`}>
+					{showElementMenu && (
+						<ElementMenu
+							elements={allElements}
+							onMenuItemClick={addElementClick}
+							onClose={() => {
+								setShowElementMenu(false);
+							}}
+						/>
+					)}
 				</div>
+				{/* </div> */}
 			</div>
 		</>
 	);

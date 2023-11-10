@@ -80,9 +80,9 @@
             "up_down_type": {
                 "parameter_type": "string",
                 "description": "slope type",
-                "default": "UpDownType.Rate",
+                "default": "Rate",
                 "range_type": "discrete",
-                "range": ["UpDownType.Rate", "UpDownType.Hand"],
+                "range": ["Rate", "Hand"],
                 "unit": null,
                 "ui_component": "dropdown"
             },
@@ -191,13 +191,10 @@
             "filter_type": {
                 "parameter_type": "string",
                 "description": "Comparison threshold",
-                "default": "FilterType.bpf2",
+                "default": "bpf2",
                 "range_type": "discrete",
                 "range": [
-                    "FilterType.bpf2",
-                    "FilterType.lpf2",
-                    "FilterType.hpf2",
-                    "FilterType.lpf1"
+                    "bpf2", "lpf2", "hpf2", "lpf1"
                 ],
                 "unit": null,
                 "ui_component": "dropdown"
@@ -275,7 +272,7 @@
         },
         "parameters": {
             "band_frequencies": {
-                "parameter_type": "number",
+                "parameter_type": "string",
                 "description": "List of Center frequencies for the subband components",
                 "default": "[1000, 5000]",
                 "range_type": "interval",
@@ -287,7 +284,7 @@
                 "ui_component": "textbox"
             },
             "quality_factor": {
-                "parameter_type": "number",
+                "parameter_type": "string",
                 "description": "List of individual filter quality factors",
                 "default": "[1,1]",
                 "range_type": "interval",
@@ -349,10 +346,15 @@
             "gain_mode": {
                 "parameter_type": "string",
                 "description": "Gain",
-                "default": "GainOpampMode.Inverting10x",
+                "default": "Inverting10x",
                 "range_type": "discrete",
                 "range": [
-                    "GainOpampMode.Noninverting1x", "GainOpampMode.Noninverting11x", "GainOpampMode.Inverting2x", "GainOpampMode.Inverting4x", "GainOpampMode.Inverting10x", "GainOpampMode.Inverting20x"
+                    "Noninverting1x",
+                    "Noninverting11x",
+                    "Inverting2x",
+                    "Inverting4x",
+                    "Inverting10x",
+                    "Inverting20x"
                 ],
                 "unit": null,
                 "ui_component": "dropdown"
@@ -447,8 +449,7 @@
                 "dc_range": "logic levels",
                 "ac_range": "logic levels"
             }
-        },
-        "parameters": {}
+        }
     },
     "Multiplier": {
         "short_description": "Multiplier",
@@ -581,9 +582,9 @@
             "model_version": {
                 "parameter_type": "string",
                 "description": "Version of simulation model",
-                "default": "ModelVersion.SecondOrder",
+                "default": "SecondOrder",
                 "range_type": "discrete",
-                "range": ["ModelVersion.FirstOrder", "ModelVersion.SecondOrder"],
+                "range": ["FirstOrder", "SecondOrder"],
                 "unit": null,
                 "ui_component": "dropdown"
             }

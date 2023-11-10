@@ -6,7 +6,6 @@
 	box-sizing: border-box;
 	border: 2px solid black;
 }
-
 .Canvas_input {
 	color: white;
 	background: global.$color-grey-5;
@@ -22,13 +21,12 @@
 .Canvas_node {
 	background: global.$color-grey-3;
 	border: 1px solid black;
-	border-radius: 4px;
-	width: 70px;
+	border-radius: global.$border-radius;
+	width: fit-content;
 	height: 50px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	text-align: center;
 }
 
 .Canvas_output {

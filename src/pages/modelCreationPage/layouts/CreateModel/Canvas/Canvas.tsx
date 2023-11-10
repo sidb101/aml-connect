@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import ReactFlow, {
 	Background,
 	BackgroundVariant,
@@ -20,14 +20,13 @@ import "reactflow/dist/style.css";
 import "./Canvas.scss";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
 import {
+	type ElementT,
 	modelCreationActions,
 	type NodeDataT,
 	selectAllElements,
 	selectCurrentNetwork,
 } from "../../../../../redux/slices/ModelCreationSlice";
-import Toolbar from "../components/Toolbar";
-import remoteService from "../../../../../service/RemoteService/RemoteService";
-import { audioFilesMock } from "../../../../../tests/mockdata/audioFilesMock";
+import Toolbar from "../Toolbar/Toolbar";
 
 const fitViewOptions: FitViewOptions = {
 	padding: 0.2,
@@ -37,12 +36,14 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 	type: "step",
 };
 
-export default function Canvas() {
+type CanvasProps = {
+	onElementDoubleClick: (node: Node<NodeDataT>) => void;
+	onSimulate: () => void;
+};
+export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps) {
 	const dispatch = useAppDispatch();
 	const currentNetwork = useAppSelector(selectCurrentNetwork);
 	const allElements = useAppSelector(selectAllElements);
-
-	console.log(currentNetwork.nodes);
 
 	const onNodesChange: OnNodesChange = useCallback((changes: NodeChange[]) => {
 		dispatch(modelCreationActions.updateNodes({ nodeChanges: changes }));
@@ -57,11 +58,11 @@ export default function Canvas() {
 	}, []);
 
 	const onAdd = useCallback(
-		(label: string) => {
-			const currentNodes: Array<Node<NodeDataT>> = currentNetwork.nodes;
+		(element: ElementT) => {
+			const label = element.typeName;
 			let newNode: Node<NodeDataT>;
 
-			if (label === "IN") {
+			if (label === "Source") {
 				newNode = {
 					id: newNodeId(),
 					sourcePosition: Position.Right,
@@ -70,7 +71,7 @@ export default function Canvas() {
 					position: newNodePosition(),
 					className: "Canvas_input",
 				};
-			} else if (label === "OUT") {
+			} else if (label === "Sink") {
 				newNode = {
 					id: newNodeId(),
 					targetPosition: Position.Left,
@@ -84,7 +85,7 @@ export default function Canvas() {
 					id: newNodeId(),
 					sourcePosition: Position.Right,
 					targetPosition: Position.Left,
-					data: { label: label, elementType: label.toLowerCase() },
+					data: { label: label, elementType: label },
 					position: newNodePosition(),
 					className: "Canvas_node",
 				};
@@ -94,12 +95,6 @@ export default function Canvas() {
 		},
 		[currentNetwork.nodes]
 	);
-
-	const simulateNetwork = () => {
-		remoteService.simulateNetwork(currentNetwork, audioFilesMock[0].metadata).catch((e) => {
-			console.error("Couldn't simulate", e);
-		});
-	};
 
 	const newNodePosition = () => {
 		const currentNodes: Array<Node<NodeDataT>> = currentNetwork.nodes;
@@ -125,11 +120,14 @@ export default function Canvas() {
 				fitViewOptions={fitViewOptions}
 				defaultEdgeOptions={defaultEdgeOptions}
 				connectionLineType={ConnectionLineType.Step}
+				onNodeDoubleClick={(e: React.MouseEvent, node: Node<NodeDataT>) => {
+					onElementDoubleClick(node);
+				}}
 			>
 				<Toolbar
 					allElements={Object.values(allElements)}
 					handleAddElement={onAdd}
-					handleSimulate={simulateNetwork}
+					handleSimulate={onSimulate}
 				/>
 				<Controls className={`Canvas_controls`} />
 				{/* <MiniMap /> */}
