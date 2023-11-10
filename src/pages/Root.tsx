@@ -11,7 +11,7 @@ import type { NavLinkT } from "../components/sideBar/navRegion/navLink/NavLink";
 import { isNavLinkSelected } from "../components/sideBar/navRegion/navLink/NavLink";
 import Spinner from "../components/spinner/Spinner";
 import Sidebar from "../components/sideBar/Sidebar";
-import { selectLoading } from "../redux/slices/GenralSlice";
+import { selectLoading } from "../redux/slices/GeneralSlice";
 import ProjectsRegion from "../components/sideBar/projectRegion/ProjectsRegion";
 
 function Root() {

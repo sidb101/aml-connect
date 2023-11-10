@@ -8,7 +8,7 @@ import Header from "../../components/header/Header";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
 import remoteService from "../../service/RemoteService/RemoteService";
 import { modelCreationActions } from "../../redux/slices/ModelCreationSlice";
-import { generalActions } from "../../redux/slices/GenralSlice";
+import { generalActions } from "../../redux/slices/GeneralSlice";
 import {
 	getModelCreationPageFooters,
 	getModelCreationPageHeadings,

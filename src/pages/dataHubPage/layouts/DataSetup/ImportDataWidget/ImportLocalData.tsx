@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../../../../hooks";
 import { selectCurrentAudioPath, selectCurrentProjectSlug } from "../../../../../redux/slices/ProjectSlice";
 import remoteService from "../../../../../service/RemoteService/RemoteService";
 import storageService from "../../../../../service/StorageService/StorageService";
-import { generalActions } from "../../../../../redux/slices/GenralSlice";
+import { generalActions } from "../../../../../redux/slices/GeneralSlice";
 
 export type ImportLocalDataT = {
 	onClose: () => void;
