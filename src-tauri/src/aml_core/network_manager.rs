@@ -153,17 +153,19 @@ pub enum Parameters {
     Terminal(TerminalParams),
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct AcDiffParams{
     pub gain: f64,
     pub bias: Option<f64>,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct AsymmetricIntegratorParams{
     pub up: f64,
     pub down: f64,
@@ -175,26 +177,29 @@ pub struct AsymmetricIntegratorParams{
     pub unit_capacitance: Option<f64>,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct ComparatorParams{
     pub threshold: f64,
     pub hysteresis_voltage: Option<f64>,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct FilterParams{
     pub characteristic_frequency: f64,
     pub quality_factor: f64,
     pub filter_type: FilterType,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct FilterbankParams{
     pub band_frequencies: Vec<u64>,
     pub quality_factor: Vec<f64>,
@@ -202,32 +207,36 @@ pub struct FilterbankParams{
     pub decay_rates: Vec<f64>,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct GainOpampParams{
     pub gain_mode: GainOpampMode,
     //pub opamp_implementation: OpampType,  //not supported as it is not exposed
     pub feedback_cap_count: f64,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct LookupTableParams{
     pub expression: String
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct MultiplierParams{
     pub slope: f64,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct NeuralNetParams{
     pub weights: Vec<f64>,
     pub biases: Vec<f64>,
@@ -237,9 +246,10 @@ pub struct NeuralNetParams{
     pub input_compression_type: Option<ActivationFunction>,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct PeakDetectorParams{
     pub atk: f64,
     pub dec: f64,
@@ -248,26 +258,28 @@ pub struct PeakDetectorParams{
     pub parasitic_ratio: Option<f64>,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct PGAParams{
     pub Av1: f64,
     pub Av2: f64,
     pub den: Option<f64>,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct SynthesizedFilterParams{
     pub coefficients: Vec<Vec<f64>>
 }
 
-
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct TerminalParams{
     pub hardware_pin: Option<String>,
     pub is_input: bool,
@@ -276,9 +288,10 @@ pub struct TerminalParams{
     pub is_extern: Option<bool>
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum CapacitorConfiguration{
     Internal,
     Internal2x,
@@ -290,9 +303,10 @@ pub enum CapacitorConfiguration{
     ParasiticOnly,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum FilterType{
     lpf1,
     lpf2,
@@ -301,9 +315,10 @@ pub enum FilterType{
     hpf2
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum GainOpampMode{
     Noninverting1x,
     Noninverting11x,
@@ -313,33 +328,37 @@ pub enum GainOpampMode{
     Inverting20x,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum OpampType{
     StageZero,
     Pin,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum ModelVersion{
     FirstOrder,
     SecondOrder,
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum UpDownType{
     Rate,
     Hang
 }
 
-#[derive(Debug, Serialize, Deserialize, TS)]
-#[ts(export)]
-#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+//// NOTE: Not exported due to ElementVO
+// #[derive(Debug, Serialize, Deserialize, TS)]
+// #[ts(export)]
+// #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum ActivationFunction{
     Tanh,
     Sigmoid,

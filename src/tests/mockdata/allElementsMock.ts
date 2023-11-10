@@ -445,6 +445,7 @@ export const backendElements: Record<string, ElementMetadata> = {
 				ac_range: "logic levels",
 			},
 		},
+		parameters: null,
 	},
 	Multiplier: {
 		short_description: "Multiplier",

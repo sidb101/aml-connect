@@ -3,12 +3,4 @@ import type { ParameterType } from "./ParameterType";
 import type { RangeType } from "./RangeType";
 import type { UIComponentType } from "./UIComponentType";
 
-export interface ParameterMetadata {
-	parameter_type: ParameterType;
-	description: string;
-	default: string | null;
-	range_type: RangeType | null;
-	range: Array<string | null> | null;
-	unit: string | null;
-	ui_component: UIComponentType;
-}
+export interface ParameterMetadata { parameter_type: ParameterType, description: string, default: string | null, range_type: RangeType | null, range: Array<string | null> | null, unit: string | null, ui_component: UIComponentType, }
