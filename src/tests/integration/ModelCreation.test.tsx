@@ -3,7 +3,6 @@ import "@testing-library/jest-dom";
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { when } from "jest-when";
 import { invoke } from "@tauri-apps/api/tauri";
-import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 import {
 	getPageElements,
 	renderWithProviders,
@@ -17,10 +16,11 @@ import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjectsMock";
 import React from "react";
-import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageTabs";
 import { mockReactFlow } from "../mockdata/mockReactFlow";
 import { allElements, transformedElements } from "../mockdata/allElementsMock";
 import remoteService from "../../service/RemoteService/RemoteService";
+import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
+import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageLabels";
 
 jest.mock("../../service/RemoteService/RemoteService");
 
@@ -37,7 +37,7 @@ describe("Testing the Model Creation navigation", () => {
 
 		// -> should start with empty store
 		const storeState = {};
-		const projects: BasicProjectDataT[] = mockProjects;
+		const projects: ShallowProjectDetails[] = mockProjects;
 
 		// -> mock the response from backend
 		when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);

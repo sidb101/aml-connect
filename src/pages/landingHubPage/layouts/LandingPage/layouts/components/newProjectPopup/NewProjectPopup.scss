@@ -1,4 +1,4 @@
-@use "../../../../global";
+@use "../../../../../../../global";
 
 .NewProjectPopup_container {
 	display: flex;
@@ -18,6 +18,16 @@
 
 		&:hover {
 			background-color: global.$color-grey-2;
+		}
+
+		&:disabled {
+			background: repeating-linear-gradient(
+				45deg,
+				transparent,
+				transparent 10px,
+				global.$color-grey-3 10px,
+				global.$color-grey-3 20px
+			);
 		}
 	}
 }

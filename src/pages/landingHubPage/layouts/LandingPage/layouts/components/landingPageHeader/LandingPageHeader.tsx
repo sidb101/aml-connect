@@ -1,8 +1,8 @@
 import "./LandingPageHeader.scss";
-import { NewProjectPopup } from "./NewProjectPopup";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
+import { NewProjectPopup } from "../newProjectPopup/NewProjectPopup";
 
 export const LandingPageHeader = () => {
 	const [isSelected, setIsSelected] = useState(false);

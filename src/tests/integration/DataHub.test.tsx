@@ -4,7 +4,6 @@ import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/react";
 import { when } from "jest-when";
 import { invoke } from "@tauri-apps/api/tauri";
-import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 import {
 	getPageElements,
 	renderWithProviders,
@@ -16,10 +15,11 @@ import {
 } from "../test-utils";
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
-import { mockProjects } from "../mockdata/allProjectsMock";
 import React from "react";
-import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageTabs";
 import remoteClient from "../../service/RemoteService/client/TauriApiClient";
+import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
+import { mockProjects } from "../mockdata/allProjectsMock";
+import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageLabels";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");
 
@@ -32,7 +32,7 @@ describe("Testing the Data Hub navigation", () => {
 
 		// -> should start with empty store
 		const storeState = {};
-		const projects: BasicProjectDataT[] = mockProjects;
+		const projects: ShallowProjectDetails[] = mockProjects;
 
 		// -> mock the response from backend
 		when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
