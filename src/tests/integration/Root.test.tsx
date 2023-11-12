@@ -32,6 +32,7 @@ describe("Testing the Sidebar of the App", () => {
 	const contentHeadings = [
 		"Overview",
 		"Data Hub > Data Setup",
+		"Neural Networks",
 		"Model Creation > Create Model",
 		"Results > Results Analysis",
 		"Send to Hardware",

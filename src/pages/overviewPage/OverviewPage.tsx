@@ -22,7 +22,6 @@ export type OverviewT = {
 const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 	const dispatch = useAppDispatch();
 	const { projectSlug = "" } = useParams();
-	const { pathname } = useLocation();
 	const currentProjectName = useAppSelector(selectCurrentProjectName);
 	const currentProjectDescription = useAppSelector(selectCurrentProjectDescription);
 

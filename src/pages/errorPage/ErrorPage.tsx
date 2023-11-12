@@ -3,7 +3,7 @@ import "./ErrorPage.scss";
 import { testIds } from "../../tests/test-utils";
 const ErrorPage = () => {
 	const routerError: any = useRouteError();
-	console.error(routerError);
+	//console.error(routerError);
 
 	return (
 		<div className="ErrorPage_container" data-testid={testIds.errorPage}>

@@ -57,7 +57,7 @@ describe("Testing the Result Page navigation", () => {
 			projects[0].name + " > Results > " + expectedPageTabLabels[0],
 			projects[0].name + " > Results > " + expectedPageTabLabels[1],
 		];
-		const expectedPrevBtnTexts = ["Neural Networks", expectedPageTabLabels[0]];
+		const expectedPrevBtnTexts = ["Run Simulation", expectedPageTabLabels[0]];
 		const expectedNextBtnTexts = [expectedPageTabLabels[1], "Send To Hardware"];
 
 		let page: number;
@@ -72,7 +72,7 @@ describe("Testing the Result Page navigation", () => {
 		// ACT - 1: Click the "Results" link in the sidebar
 		// -----------------------------------------------------------------------------------
 		page = 0;
-		fireEvent.click(navLinks[3]);
+		fireEvent.click(navLinks[4]);
 		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
 			await getPageElements());
 

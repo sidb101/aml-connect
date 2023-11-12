@@ -70,7 +70,7 @@ describe("Testing the Data Hub navigation", () => {
 			projects[0].name + " > Data Hub > " + expectedPageTabLabels[1],
 		];
 		const expectedPrevBtnTexts = ["Overview", expectedPageTabLabels[0]];
-		const expectedNextBtnTexts = [expectedPageTabLabels[1], "Create Model"];
+		const expectedNextBtnTexts = [expectedPageTabLabels[1], "Neural Networks"];
 
 		let page: number;
 

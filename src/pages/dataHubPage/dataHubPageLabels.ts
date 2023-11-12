@@ -1,4 +1,4 @@
-import { createModelRoute, dataSetupRoute, dataVizRoute, projectOverviewRoute } from "../../routes";
+import { dataSetupRoute, dataVizRoute, neuralNetworkRoute, projectOverviewRoute } from "../../routes";
 import type { PageTabT } from "../../components/pageTabs/PageTabs";
 import type { FooterBtnGroupT } from "../../components/footer/Footer";
 
@@ -22,6 +22,6 @@ export const getDataHubPageFooters = (projectSlug: string): FooterBtnGroupT[] =>
 	},
 	{
 		prevBtn: { label: "Data Setup", route: dataSetupRoute(projectSlug) },
-		nextBtn: { label: "Create Model", route: createModelRoute(projectSlug) },
+		nextBtn: { label: "Neural Networks", route: neuralNetworkRoute(projectSlug) },
 	},
 ];

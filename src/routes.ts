@@ -20,9 +20,10 @@ export const OVERVIEW_ROUTE = `${PROJECT_ROUTE}/overview`;
 export const DATA_HUB_ROUTE = `${PROJECT_ROUTE}/data-hub`;
 export const DATA_SETUP_ROUTE = `${DATA_HUB_ROUTE}/setup`;
 export const DATA_VIZ_ROUTE = `${DATA_HUB_ROUTE}/visualize`;
+export const NEURAL_NETWORK_ROUTE = `${PROJECT_ROUTE}/neural-networks`;
 export const MODEL_CREATION_ROUTE = `${PROJECT_ROUTE}/model-creation`;
 export const CREATE_MODEL_ROUTE = `${MODEL_CREATION_ROUTE}/create-model`;
-export const NEURAL_NETWORK_ROUTE = `${MODEL_CREATION_ROUTE}/neural-networks`;
+export const RUN_SIMULATION_ROUTE = `${MODEL_CREATION_ROUTE}/run-simulation`;
 export const RESULTS_ROUTE = `${PROJECT_ROUTE}/results`;
 export const RESULTS_ANALYSIS_ROUTE = `${RESULTS_ROUTE}/results-analysis`;
 export const RESULTS_COMPARISON_ROUTE = `${RESULTS_ROUTE}/results-comparison`;
@@ -33,9 +34,10 @@ export const projectOverviewRoute = (projectSlug: string) => OVERVIEW_ROUTE.repl
 export const dataHubRoute = (projectSlug: string) => DATA_HUB_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const dataSetupRoute = (projectSlug: string) => DATA_SETUP_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const dataVizRoute = (projectSlug: string) => DATA_VIZ_ROUTE.replace(PROJECT_SLUG, projectSlug);
+export const neuralNetworkRoute = (projectSlug: string) => NEURAL_NETWORK_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const modelCreationRoute = (projectSlug: string) => MODEL_CREATION_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const createModelRoute = (projectSlug: string) => CREATE_MODEL_ROUTE.replace(PROJECT_SLUG, projectSlug);
-export const neuralNetworkRoute = (projectSlug: string) => NEURAL_NETWORK_ROUTE.replace(PROJECT_SLUG, projectSlug);
+export const runSimulationRoute = (projectSlug: string) => RUN_SIMULATION_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const resultsRoute = (projectSlug: string) => RESULTS_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const resultsAnalysisRoute = (projectSlug: string) => RESULTS_ANALYSIS_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const resultsComparisonRoute = (projectSlug: string) =>
