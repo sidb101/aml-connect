@@ -88,7 +88,10 @@ const remoteService = {
 
 	getAllElements: async (): Promise<Record<string, ElementT>> => {
 		const getElementsResponse = await remoteClient.getAllElements();
-		return remoteTransformer.parseGetElementsResponse(getElementsResponse);
+		console.log(getElementsResponse);
+		const ans = remoteTransformer.parseGetElementsResponse(getElementsResponse);
+		console.log(ans);
+		return ans;
 	},
 
 	simulateNetwork: async (network: NetworkT, inputFile: InputFileMetaDataT): Promise<Record<string, number[]>> => {
