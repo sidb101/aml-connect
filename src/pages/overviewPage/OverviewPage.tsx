@@ -13,6 +13,7 @@ import Footer from "../../components/footer/Footer";
 import remoteService from "../../service/RemoteService/RemoteService";
 import { appStore } from "../../redux/store";
 import type { ProjectFormT } from "../../components/projectForm/ProjectForm";
+import View from "../../components/view/View";
 
 export type OverviewT = {
 	data?: string;
@@ -33,14 +34,18 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 	return (
 		projectSlug &&
 		currentProjectName && (
-			<>
-				<Header headerTitle={`${currentProjectName} > Overview`} />
-				<OverviewView
-					currentProjectName={currentProjectName}
-					currentProjectDescription={currentProjectDescription}
-				/>
-				<Footer footerBtnGroup={{ nextBtn: { label: "Data Hub", route: dataSetupRoute(projectSlug) } }} />
-			</>
+			<View
+				header={<Header headerTitle={`${currentProjectName} > Overview`} />}
+				main={
+					<OverviewView
+						currentProjectName={currentProjectName}
+						currentProjectDescription={currentProjectDescription}
+					/>
+				}
+				footer={
+					<Footer footerBtnGroup={{ nextBtn: { label: "Data Hub", route: dataSetupRoute(projectSlug) } }} />
+				}
+			/>
 		)
 	);
 };

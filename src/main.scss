@@ -39,17 +39,6 @@ Common Classes
 	border-radius: global.$border-radius;
 }
 
-/* -- Various kinds of containers -- */
-
-.content-container {
-  $left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
-
-  margin-left: $left-offset; /* This should be the same as the width of the sidebar */
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-}
-
 /* -- Various kinds of texts -- */
 
 .brand-text {
@@ -64,7 +53,6 @@ Common Classes
 	font-family: global.$font-primary-bold;
 	font-size: global.$text-xxlarge;
 	line-height: 36px;
-	padding-bottom: 20px;
 	color: global.$color-dark-blue;
 }
 
@@ -167,7 +155,7 @@ Common Classes
 
 	&:hover {
 		background-color: global.$color-green;
-		color: global.$color-white;
+		color: global.$color-white !important; // Over-right the !important on "a" elements
 	}
 
 	&:active {
