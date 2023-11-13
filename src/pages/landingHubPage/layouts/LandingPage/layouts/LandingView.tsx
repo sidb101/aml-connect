@@ -5,16 +5,31 @@ import { projectOverviewRoute } from "../../../../../routes";
 import type { DisplayCardT } from "../../../../../components/displayCard/DisplayCard";
 import DisplayCard from "../../../../../components/displayCard/DisplayCard";
 import type { ShallowProjectDetails } from "../../../../../redux/slices/ProjectSlice";
+import MainContent from "../../../../../components/mainContent/MainContent";
+import { useEffect, useState } from "react";
 
 type LandingPageViewProps = {
 	projects?: ShallowProjectDetails[];
 };
 
 function LandingView({ projects }: LandingPageViewProps) {
+	const [headerHeight, setHeaderHeight] = useState(0);
+
+	useEffect(() => {
+		const updateHeaderHeight = () => {
+			setHeaderHeight(document.getElementById("header").offsetHeight);
+		};
+
+		updateHeaderHeight();
+
+		window.addEventListener("resize", updateHeaderHeight);
+		return () => window.removeEventListener("resize", updateHeaderHeight);
+	}, []);
+
 	return (
 		<>
 			<Header headerTitle={"Projects"}>{<LandingPageHeader />}</Header>
-			<div className={`body-content-container-with-header-btns-no-footer`}>
+			<MainContent headerHeight={headerHeight}>
 				<div className={`LandingView_container`}>
 					{projects?.map((project: ShallowProjectDetails) => {
 						const displayCard: DisplayCardT = {
@@ -32,7 +47,7 @@ function LandingView({ projects }: LandingPageViewProps) {
 						return <DisplayCard key={project.id} displayCard={displayCard} />;
 					})}
 				</div>
-			</div>
+			</MainContent>
 		</>
 	);
 }

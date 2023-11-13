@@ -5,23 +5,16 @@ import { testIds } from "../../tests/test-utils";
 
 type HeaderT = {
 	headerTitle?: string;
-	className?: string;
 };
 
-function Header({ headerTitle = "", className = "", children }: PropsWithChildren<HeaderT>) {
+function Header({ headerTitle = "", children }: PropsWithChildren<HeaderT>) {
 	return (
-		<div
-			className={
-				children
-					? `Header_contentContainer--with-btns ${className}`
-					: `Header_contentContainer--no-btns ${className}`
-			}
-		>
+		<header id="header" className="header_container">
 			<div className={`main-heading-text`} data-testid={testIds.contentHeading}>
 				{headerTitle}
 			</div>
-			{children && <div className={`Header_btnContainer`}>{children}</div>}
-		</div>
+			<div>{children}</div>
+		</header>
 	);
 }
 
