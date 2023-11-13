@@ -88,16 +88,12 @@ const remoteService = {
 
 	getAllElements: async (): Promise<Record<string, ElementT>> => {
 		const getElementsResponse = await remoteClient.getAllElements();
-		console.log(getElementsResponse);
-		const ans = remoteTransformer.parseGetElementsResponse(getElementsResponse);
-		console.log(ans);
-		return ans;
+		return remoteTransformer.parseGetElementsResponse(getElementsResponse);
 	},
 
 	simulateNetwork: async (network: NetworkT, inputFile: InputFileMetaDataT): Promise<Record<string, number[]>> => {
 		//TODO: Perform the validations on network
 		const simulationRequest: SimulateNetworkRequest = remoteTransformer.createSimulateRequest(network, inputFile);
-		console.log("Request:", simulationRequest);
 
 		//eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		const simulationResponse = { response: {} as Record<string, number[]> };
