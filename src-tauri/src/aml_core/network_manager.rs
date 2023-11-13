@@ -26,6 +26,14 @@ pub enum SimulatorError {
     JsonParseError(String),
 }
 
+#[derive(Error, Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+pub enum RequestParseError {
+    #[error("Failed to parse request to proper type")]
+    MalformedRequest(String),
+}
+
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to =  "../src/service/RemoteService/client/bindings/")]
@@ -66,6 +74,23 @@ pub struct NetworkVO {
     pub creator_id: u64,
 }
 
+impl NetworkVO {
+    fn to_network(self) -> Result<Network, RequestParseError> {
+        let mut elements: Vec<Element> = Vec::new();
+        for element in self.elements {
+            elements.push( element.to_element()?);
+        }
+
+        Ok(Network {
+            id: self.id,
+            name: self.name,
+            elements: elements,
+            nodes: self.nodes,
+            creator_id: self.creator_id,
+        })
+    }
+}
+
 //// Not exported dueto NetworkVO
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
@@ -95,6 +120,64 @@ pub struct ElementVO{
 
     pub terminals: Vec<Terminal>,
     pub position: Position
+}
+
+impl ElementVO {
+    fn to_element(self) -> Result<Element, RequestParseError> {
+        let mut params: Params = match self.type_name.as_str() {
+            "AcDiff" => Parameters::AcDiff(
+                AcDiffParams.from_hashmap(self.element_type_params.get(&"AcDiff"))?,
+            ),
+            "AsymmetricIntegrator" => Parameters::AsymmetricIntegrator(
+                AsymmetricIntegratorParams.from_hashmap(self.element_type_params.get(&"AsymmetricIntegrator"))?,
+            ),
+            // "Comparator" => Parameters::Comparator(
+            //     ComparatorParams.from_hashmap(self.element_type_params.get(&"Comparator"))?,
+            // ),
+            // "Filter" => Parameters::Filter(
+            //     FilterParams.from_hashmap(self.element_type_params.get(&"Filter"))?,
+            // ),
+            // "Filterbank" => Parameters::Filterbank(
+            //     FilterbankParams.from_hashmap(self.element_type_params.get(&"Filterbank"))?,
+            // ),
+            // "GainOpamp" => Parameters::GainOpamp(
+            //     GainOpampParams.from_hashmap(self.element_type_params.get(&"GainOpamp"))?,
+            // ),
+            // "LookupTable" => Parameters::LookupTable(
+            //     LookupTableParams.from_hashmap(self.element_type_params.get(&"LookupTable"))?,
+            // ),
+            // "DelayFlipFlop" => Parameters::DelayFlipFlop,
+            // "Multiplier" => Parameters::Multiplier(
+            //     MultiplierParams.from_hashmap(self.element_type_params.get(&"Multiplier"))?,
+            // ),
+            // "Mux2" => Parameters::Mux2,
+            // "NeuralNet" => Parameters::NeuralNet(
+            //     NeuralNetParams.from_hashmap(self.element_type_params.get(&"NeuralNet"))?,
+            // ),
+            // "PeakDetector" => Parameters::PeakDetector(
+            //     PeakDetectorParams.from_hashmap(self.element_type_params.get(&"PeakDetector"))?,
+            // ),
+            // "PGA" => Parameters::PGA(
+            //     PGAParams.from_hashmap(self.element_type_params.get(&"PGA"))?,
+            // ),
+            // "SynthesizedFilter" => Parameters::SynthesizedFilter(
+            //     SynthesizedFilterParams.from_hashmap(self.element_type_params.get(&"SynthesizedFilter"))?,
+            // ),
+            // "Terminal" => Parameters::Terminal(
+            //     TerminalParams.from_hashmap(self.element_type_params.get(&"Terminal"))?,
+            // ),
+        }
+
+        Ok(Element {
+            id: self.id,
+            parent_network_id: self.parent_network_id,
+            name: self.name,
+            type_name: self.type_name,
+            element_type_params: params,
+            terminals: self.terminals,
+            position: self.position,
+        })
+    }
 }
 
 //// Not exported dueto ElementVO
@@ -162,6 +245,26 @@ pub struct AcDiffParams{
     pub bias: Option<f64>,
 }
 
+impl AcDiffParams {
+    fn from_hashmap(params: HashMap<String, String>) -> Result<Self, RequestParseError> {
+        let gain = params.get("gain")
+            .unwrap().map_err(|_| RequestParseError::MalformedRequest("Missing key: gain".to_string()))?
+            .parse::<f64>()
+            .unwrap().map_err(|_| RequestParseError::MalformedRequest("Invalid value for key: gain (expected - float)".to_string()))?;
+        let bias = match params.get("bias") {
+            Some(bias) => Some(
+                bias.parse::<f64>().unwrap().map_err(|_| RequestParseError::MalformedRequest("Invalid value for key: bias (expected - float)".to_string()))?
+            ),
+            None => None,
+        };
+
+        Ok(AcDiffParams {
+            gain: gain,
+            bias: bias,
+        })
+    }
+}
+
 //// NOTE: Not exported due to ElementVO
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
@@ -175,6 +278,39 @@ pub struct AsymmetricIntegratorParams{
     pub capacitor_configuration: Option<CapacitorConfiguration>,
     pub parasitic_capacitance: Option<f64>,
     pub unit_capacitance: Option<f64>,
+}
+
+impl AsymmetricIntegratorParams {
+    fn from_hashmap(params: HashMap<String, String>) -> Result<Self, RequestParseError> {
+        let up = params.get("up")
+            .unwrap().map_err(|_| RequestParseError::MalformedRequest("Missing key: up".to_string()))?
+            .parse::<f64>()
+            .unwrap().map_err(|_| RequestParseError::MalformedRequest("Invalid value for key: up (expected - float)".to_string()))?;
+        let down = params.get("down")
+            .unwrap().map_err(|_| RequestParseError::MalformedRequest("Missing key: down".to_string()))?
+            .parse::<f64>()
+            .unwrap().map_err(|_| RequestParseError::MalformedRequest("Invalid value for key: down (expected - float)".to_string()))?;
+        let up_down_type = match params.get("up_down_type")
+            .unwrap().map_err(|_| RequestParseError::MalformedRequest("Missing key: up_down_type"))?
+            .as_str() {
+                "Rate" => UpDownType::Rate,
+                "Hang" => UpDownType::Hang,
+                _ => return Err(RequestParseError::MalformedRequest("Invalid value for key: up_down_type (expected - Rate or Hang)".to_string())),
+            }
+        }
+        let comparator_enable = params.get("comparator_enable")
+            .unwrap().map_err(|_| RequestParseError::MalformedRequest("Missing key: comparator_enable".to_string()))?
+            .parse::<bool>()
+            .unwrap().map_err(|_| RequestParseError::MalformedRequest("Invalid value for key: comparator_enable (expected - bool)".to_string()))?;
+        
+        Ok(AsymmetricIntegratorParams {
+                up: up,
+                down: down,
+                up_down_type: up_down_type,
+                comparator_enable: comparator_enable,
+        })
+    }
+
 }
 
 //// NOTE: Not exported due to ElementVO
