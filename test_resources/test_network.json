@@ -76,7 +76,7 @@
                     "id": 4,
                     "parent_element_id": 102,
                     "type_name": "net",
-                    "node_name": "out"
+                    "node_name": "filter_out"
                 }
             ],
             "position": {
