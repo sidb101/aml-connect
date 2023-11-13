@@ -67,7 +67,7 @@ export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps
 					id: newNodeId(),
 					sourcePosition: Position.Right,
 					type: "input",
-					data: { label: label, elementType: "in" },
+					data: { label: label, elementType: "Source" },
 					position: newNodePosition(),
 					className: "Canvas_input",
 				};
@@ -76,7 +76,7 @@ export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps
 					id: newNodeId(),
 					targetPosition: Position.Left,
 					type: "output",
-					data: { label: label, elementType: "out" },
+					data: { label: label, elementType: "Sink" },
 					position: newNodePosition(),
 					className: "Canvas_output",
 				};
