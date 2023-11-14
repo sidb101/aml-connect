@@ -31,6 +31,7 @@ function Root() {
 		// get all the projects of the application and set them in the state
 		fetchAllProjects().catch((e) => {
 			console.error("Couldn't fetch all projects..", e);
+		dispatch(generalActions.markLoading(false));
 		});
 	}, []);
 
