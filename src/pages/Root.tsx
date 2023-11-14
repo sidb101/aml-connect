@@ -32,7 +32,6 @@ function Root() {
 		fetchAllProjects().catch((e) => {
 			console.error("Couldn't fetch all projects..", e);
 		});
-		// dispatch(projectActions.setAllProjects(mockProjects));
 	}, []);
 
 	//get the proper links based on given project
@@ -41,7 +40,6 @@ function Root() {
 	}, [projectSlug]);
 
 	const fetchAllProjects = async () => {
-		console.log("fetching projects");
 		dispatch(generalActions.markLoading(true));
 		const allProjects = await remoteService.getAllProjects();
 		dispatch(projectActions.setAllProjects(allProjects));

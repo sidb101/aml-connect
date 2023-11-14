@@ -63,7 +63,6 @@ class TauriApiClient implements RemoteClient {
 
 	async getAllProjects(): Promise<GetProjectsResponse> {
 		try {
-			console.log("calling rust");
 			return await invoke("get_projects");
 		} catch (e) {
 			console.error("Couldn't get all projets from backend", e);

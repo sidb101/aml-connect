@@ -87,7 +87,6 @@ const remoteService = {
 	},
 
 	getAllProjects: async (): Promise<ShallowProjectDetails[]> => {
-		console.log("here");
 		const getProjectsResponse = await remoteClient.getAllProjects();
 		return remoteTransformer.parseGetProjectsResponse(getProjectsResponse);
 	},
