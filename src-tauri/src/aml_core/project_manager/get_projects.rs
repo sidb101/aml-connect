@@ -6,11 +6,12 @@ use crate::aml_core::{
 };
 
 use super::{
-    GetProjectsRequest, GetProjectsResponse, GetProjectsResponseResult, ProjectDetails,
+    GetProjectsResponse, GetProjectsResponseResult, ProjectDetails,
     ProjectManagerError,
 };
 
-pub fn get_projects(_req: &GetProjectsRequest, conn: &mut DbConn) -> GetProjectsResponseResult {
+pub fn get_projects(conn: &mut DbConn) -> GetProjectsResponseResult {
+    log::info!("get_projects request received");
     let projects = projects::table
         .load::<Project>(conn)
         .map_err(|e| ProjectManagerError::InternalError(e.to_string()));
@@ -29,6 +30,7 @@ pub fn get_projects(_req: &GetProjectsRequest, conn: &mut DbConn) -> GetProjects
         }
     };
 
+    log::info!("get_projects response: {:?}", project_details);
     Ok(GetProjectsResponse {
         projects: project_details,
     })

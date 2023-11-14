@@ -30,6 +30,7 @@ fn validate_exists(
     Ok(file_path)
 }
 
+
 /// validates the extension of a file at `file_path` matches `extension`
 fn validate_extension(file_path: &PathBuf, extension: String) -> Result<()> {
     ensure!(

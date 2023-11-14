@@ -2,17 +2,16 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::path::PathBuf;
-
-use aml_connect::aml_core::db_adapter;
-use aml_connect::aml_core::db_adapter::models::NewProject;
-use aml_connect::aml_core::db_adapter::schema::projects;
-use aml_connect::uicontroller;
 use anyhow::Context;
 use diesel::r2d2::{ConnectionManager, Pool};
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl, SqliteConnection};
 use log::{info, warn};
 use simple_logger::SimpleLogger;
 
+use aml_connect::aml_core::db_adapter;
+use aml_connect::aml_core::db_adapter::models::NewProject;
+use aml_connect::aml_core::db_adapter::schema::projects;
+use aml_connect::uicontroller;
 use aml_connect::aml_core::file_data_manager;
 
 fn main() {
@@ -22,8 +21,8 @@ fn main() {
         .setup(|app| {
             init_logger();
             info!("Initializing AML Connect...");
-            let db_conn_pool = init_db();
             let app_dir = init_fs(&app.path_resolver());
+            let db_conn_pool = init_db(app_dir.clone());
             tauri::Manager::manage(app, db_conn_pool);
             tauri::Manager::manage(app, app_dir);
             Ok(())
@@ -38,7 +37,7 @@ fn main() {
         .expect("error while running tauri application");
 }
 
-fn init_db() -> Pool<ConnectionManager<SqliteConnection>> {
+fn init_db(app_dir: PathBuf) -> Pool<ConnectionManager<SqliteConnection>> {
     let db_conn_pool = db_adapter::establish_connection().unwrap_or_else(|e| {
         panic!("Could not establish connection to database :{:?}", e);
     });
@@ -50,14 +49,14 @@ fn init_db() -> Pool<ConnectionManager<SqliteConnection>> {
     });
 
     // TODO: Remove this
-    add_dummy_projects(&db_conn_pool);
+    add_dummy_projects(&db_conn_pool, &app_dir);
 
     db_conn_pool
 }
 
 // TODO: Remove this when create projects is implemented
-fn add_dummy_projects(db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>) {
-    add_dummy_project("test_project", db_conn_pool).unwrap_or_else(|e| {
+fn add_dummy_projects(db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>, app_dir: &PathBuf) {
+    add_dummy_project("test_project", db_conn_pool, app_dir).unwrap_or_else(|e| {
         warn!(
             "Failed to add dummy project OR project already exists:{:?}",
             e
@@ -65,28 +64,28 @@ fn add_dummy_projects(db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>) 
         ()
     });
 
-    add_dummy_project("test_project1", db_conn_pool).unwrap_or_else(|e| {
+    add_dummy_project("test_project1", db_conn_pool, app_dir).unwrap_or_else(|e| {
         warn!(
             "Failed to add dummy project OR project already exists:{:?}",
             e
         );
         ()
     });
-    add_dummy_project("test_project2", db_conn_pool).unwrap_or_else(|e| {
+    add_dummy_project("test_project2", db_conn_pool, app_dir).unwrap_or_else(|e| {
         warn!(
             "Failed to add dummy project OR project already exists:{:?}",
             e
         );
         ()
     });
-    add_dummy_project("test_project3", db_conn_pool).unwrap_or_else(|e| {
+    add_dummy_project("test_project3", db_conn_pool, app_dir).unwrap_or_else(|e| {
         warn!(
             "Failed to add dummy project OR project already exists:{:?}",
             e
         );
         ()
     });
-    add_dummy_project("test_project4", db_conn_pool).unwrap_or_else(|e| {
+    add_dummy_project("test_project4", db_conn_pool, app_dir).unwrap_or_else(|e| {
         warn!(
             "Failed to add dummy project OR project already exists:{:?}",
             e
@@ -95,9 +94,12 @@ fn add_dummy_projects(db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>) 
     });
 }
 
+
+// This method changes the state on the system. It adds projects to database and creates file system directories
 fn add_dummy_project(
     project_slug: &str,
     db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>,
+    app_dir: &PathBuf,
 ) -> anyhow::Result<()> {
     let conn = &mut db_conn_pool
         .get()
@@ -123,6 +125,11 @@ fn add_dummy_project(
             .values(&dummy_project)
             .execute(conn)
             .with_context(|| format!("failed to insert dummy project : {project_slug}"))?;
+
+        file_data_manager::create_project_dir(project_slug, app_dir).unwrap_or_else(|e| {
+            panic!("Could not create project dir :{:?}", e);
+        });
+
         Ok(())
     }
 }

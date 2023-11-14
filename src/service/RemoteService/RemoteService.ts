@@ -86,6 +86,12 @@ const remoteService = {
 		console.log("ESLINT doesn't like empty functions :(");
 	},
 
+	getAllProjects: async (): Promise<ShallowProjectDetails[]> => {
+		console.log("here");
+		const getProjectsResponse = await remoteClient.getAllProjects();
+		return remoteTransformer.parseGetProjectsResponse(getProjectsResponse);
+	},
+
 	getAllElements: async (): Promise<Record<string, ElementT>> => {
 		const getElementsResponse = await remoteClient.getAllElements();
 		return remoteTransformer.parseGetElementsResponse(getElementsResponse);

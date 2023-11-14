@@ -34,10 +34,9 @@ pub mod uicontroller {
 
     #[tauri::command]
     pub fn get_projects(
-        req: project_manager::GetProjectsRequest,
         db_conn: State<Pool<ConnectionManager<SqliteConnection>>>,
     ) -> project_manager::GetProjectsResponseResult {
         let conn = &mut db_conn.get().expect("Unable to get db connection");
-        project_manager::get_projects::get_projects(&req, conn)
+        project_manager::get_projects::get_projects(conn)
     }
 }

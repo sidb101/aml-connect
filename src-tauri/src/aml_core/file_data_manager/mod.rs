@@ -140,5 +140,11 @@ pub fn create_app_dir_if_not_exists(path_resolver: &tauri::PathResolver) -> Resu
     Ok(app_dir)
 }
 
+pub fn create_project_dir(project_slug: &str, app_dir: &PathBuf) -> Result<()> {
+    let project_dir = app_dir.join(project_slug);
+    fs::create_dir_all(project_dir)?;
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {}

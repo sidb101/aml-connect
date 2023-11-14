@@ -11,6 +11,7 @@ import type { GetFilesResponse } from "./bindings/GetFilesResponse";
 import type { SimulateNetworkRequest } from "./bindings/SimulateNetworkRequest";
 import type { SimulateNetworkResponse } from "./bindings/SimulateNetworkResponse";
 import type { ElementMetadata } from "./bindings/ElementMetadata";
+import type { GetProjectsResponse } from "./bindings/GetProjectsResponse";
 
 class TauriApiClient implements RemoteClient {
 	/**
@@ -56,6 +57,16 @@ class TauriApiClient implements RemoteClient {
 			return await invoke("simulate_network", { req: simulateNetworkRequest });
 		} catch (e) {
 			console.error("Couldn't simulate the network", e);
+			return Promise.reject(e);
+		}
+	}
+
+	async getAllProjects(): Promise<GetProjectsResponse> {
+		try {
+			console.log("calling rust");
+			return await invoke("get_projects");
+		} catch (e) {
+			console.error("Couldn't get all projets from backend", e);
 			return Promise.reject(e);
 		}
 	}

@@ -23,6 +23,8 @@ import type { Edge, Node } from "reactflow";
 import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
 import type { NetworkVO } from "./client/bindings/NetworkVO";
 import { USER_ID } from "../../constants";
+import type { ShallowProjectDetails } from "redux/slices/ProjectSlice";
+import type { GetProjectsResponse } from "./client/bindings/GetProjectsResponse";
 /* eslint-disable  @typescript-eslint/naming-convention */
 
 /***
@@ -164,6 +166,20 @@ const remoteTransformer = {
 		delete allElements.Terminal;
 
 		return allElements;
+	},
+
+	parseGetProjectsResponse(getProjectsResponse: GetProjectsResponse): ShallowProjectDetails[] {
+		console.log(getProjectsResponse);
+		const { projects } = getProjectsResponse;
+
+		return projects.map((project) => {
+			return {
+				id: project.id,
+				slug: project.slug,
+				name: project.name,
+				description: project.description === null ? undefined : project.description,
+			};
+		});
 	},
 
 	createSimulateRequest(network: NetworkT, inputFile: InputFileMetaDataT): SimulateNetworkRequest {

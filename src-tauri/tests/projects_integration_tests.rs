@@ -20,7 +20,6 @@ fn test_get_all_projects() {
     add_dummy_projects(&conn_pool);
 
     let res = project_manager::get_projects::get_projects(
-        &project_manager::GetProjectsRequest {},
         &mut conn,
     )
     .unwrap();
