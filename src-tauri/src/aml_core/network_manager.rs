@@ -261,6 +261,7 @@ pub struct PeakDetectorParams{
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+#[allow(non_snake_case)]
 pub struct PGAParams{
     pub Av1: f64,
     pub Av2: f64,
@@ -291,6 +292,7 @@ pub struct TerminalParams{
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+#[allow(non_camel_case_types)]
 pub enum CapacitorConfiguration{
     Internal,
     Internal2x,
@@ -306,6 +308,7 @@ pub enum CapacitorConfiguration{
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+#[allow(non_camel_case_types)]
 pub enum FilterType{
     lpf1,
     lpf2,
