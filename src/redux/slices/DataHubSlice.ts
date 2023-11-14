@@ -60,7 +60,7 @@ export const dataHubSlice = createSlice({
 });
 
 export const selectInputFiles = createSelector(
-	[(state: RootState) => state.dataHub, (state: RootState, dataSet: DataSetT) => dataSet],
+	[(state: RootState) => state.dataHub, (_, dataSet: DataSetT) => dataSet],
 	(state, dataSet) => {
 		return state[dataSet];
 	}

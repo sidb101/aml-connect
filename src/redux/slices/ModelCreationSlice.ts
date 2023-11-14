@@ -165,8 +165,16 @@ export const modelCreationSlice = createSlice({
 		 * @param action The action would have the node to be added
 		 */
 		addNode: (state, action: PayloadAction<{ node: Node<NodeDataT> }>) => {
-			const nodeAddChange: NodeAddChange = { item: action.payload.node, type: "add" };
-			state.selectedNetwork.nodes = applyNodeChanges([nodeAddChange], state.selectedNetwork.nodes);
+			//add the node
+			const { node } = action.payload;
+			const { elementType } = node.data;
+			state.selectedNetwork.nodes = [...state.selectedNetwork.nodes, node];
+
+			//add the default params for that node in current state
+			const element = state.allElements[elementType];
+			if (element.parameters) {
+				state.selectedNetwork.params[node.id] = getDefaultParams(element.parameters);
+			}
 		},
 		/**
 		 * Sets the elements that the user would want to use to create simulation network
@@ -175,6 +183,10 @@ export const modelCreationSlice = createSlice({
 		 */
 		setAllElements: (state, action: PayloadAction<{ allElements: Record<string, ElementT> }>) => {
 			state.allElements = action.payload.allElements;
+		},
+
+		setParameters: (state, action: PayloadAction<{ nodeId: string; params: Record<string, string> }>) => {
+			state.selectedNetwork.params[action.payload.nodeId] = action.payload.params;
 		},
 	},
 });
@@ -188,5 +200,16 @@ export const selectAllElements = createSelector(
 	[(state: RootState) => state.modelCreation],
 	(state) => state.allElements
 );
+
+export const selectNodeParams = createSelector(
+	[(state: RootState) => state.modelCreation, (_, nodeId: string) => nodeId],
+	(state, nodeId) => state.selectedNetwork.params[nodeId]
+);
+
+/**** Utility Methods ***/
+export const getDefaultParams = (paramInfo: Record<string, ParameterT>): Record<string, string> => {
+	const paramEntries = Object.entries(paramInfo).map(([key, value]) => [key, value.default]);
+	return Object.fromEntries(paramEntries) as Record<string, string>;
+};
 
 export const { reducer: modelCreationReducer, actions: modelCreationActions } = modelCreationSlice;

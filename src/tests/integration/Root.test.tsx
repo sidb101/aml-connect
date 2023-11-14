@@ -4,15 +4,15 @@ import "@testing-library/jest-dom";
 import { fireEvent, screen, within } from "@testing-library/react";
 import { when } from "jest-when";
 import { invoke } from "@tauri-apps/api/tauri";
-import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 import { getExactText, renderWithProviders, testIds } from "../test-utils";
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
-import { mockProjects } from "../mockdata/allProjectsMock";
 import { getOpenProjectNavLinks } from "../../components/sideBar/navRegion/appNavLinks";
 import { linkSelectedClass } from "../../components/sideBar/navRegion/navLink/NavLink";
 import { mockReactFlow } from "../mockdata/mockReactFlow";
 import remoteClient from "../../service/RemoteService/client/TauriApiClient";
+import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
+import { mockProjects } from "../mockdata/allProjectsMock";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");
 beforeEach(() => {
@@ -47,7 +47,7 @@ describe("Testing the Sidebar of the App", () => {
 			const storeState = {};
 
 			//mock the response from backend
-			const projects: BasicProjectDataT[] = mockProjects;
+			const projects: ShallowProjectDetails[] = mockProjects;
 			when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
 
 			//set the values of mocked functions

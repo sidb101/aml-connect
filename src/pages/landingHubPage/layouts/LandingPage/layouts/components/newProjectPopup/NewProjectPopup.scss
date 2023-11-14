@@ -1,0 +1,33 @@
+@use "../../../../../../../global";
+
+.NewProjectPopup_container {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding: global.$panel-padding;
+	gap: global.$general-padding;
+	width: 315px;
+
+	.NewProjectPopup_btn {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: global.$general-padding;
+		border: solid 1px global.$color-grey-3;
+		text-align: left;
+
+		&:hover {
+			background-color: global.$color-grey-2;
+		}
+
+		&:disabled {
+			background: repeating-linear-gradient(
+				45deg,
+				transparent,
+				transparent 10px,
+				global.$color-grey-3 10px,
+				global.$color-grey-3 20px
+			);
+		}
+	}
+}

@@ -111,8 +111,8 @@ const remoteTransformer = {
 								{
 									description: tData.description,
 									direction: tData.direction
-                                        ? (getEnumValue(DirectionT, tData.direction) as DirectionT)
-                                        : undefined,
+										? (getEnumValue(DirectionT, tData.direction) as DirectionT)
+										: undefined,
 									default: tData.default,
 									dcRange: tData.dc_range || undefined,
 									acRange: tData.ac_range || undefined,
@@ -139,7 +139,31 @@ const remoteTransformer = {
 			}
 		);
 
-		return Object.fromEntries(elementEntries);
+		const allElements = Object.fromEntries(elementEntries);
+
+		//Add Source and Sink elements from Terminal Element
+		const terminalElement = allElements.Terminal;
+		allElements.Source = {
+			...terminalElement,
+			typeName: "Source",
+			shortDescription: "Source Terminal Element for the Network",
+			longDescription: "Source Terminal Element for the Network",
+			parameters: { ...terminalElement.parameters },
+			terminals: { ...terminalElement.terminals },
+		};
+
+		allElements.Sink = {
+			...terminalElement,
+			typeName: "Sink",
+			shortDescription: "Sink Terminal Element for the Network",
+			longDescription: "Sink Terminal Element for the Network",
+			parameters: { ...terminalElement.parameters },
+			terminals: { ...terminalElement.terminals },
+		};
+
+		delete allElements.Terminal;
+
+		return allElements;
 	},
 
 	createSimulateRequest(network: NetworkT, inputFile: InputFileMetaDataT): SimulateNetworkRequest {
@@ -154,12 +178,15 @@ const remoteTransformer = {
 			elements: network.nodes.map((node: Node<NodeDataT>) => {
 				//create the params object
 				const params: Record<string, Record<string, string>> = {};
-				params[node.data.elementType] = network.params[node.id];
+				const { elementType } = node.data;
+				const actualElementType = elementType === "Source" || elementType === "Sink" ? "Terminal" : elementType;
+
+				params[actualElementType] = network.params[node.id];
 				return {
 					id: node.id,
 					name: node.data.label,
 					parent_network_id: BigInt(network.metaData.id),
-					type_name: node.data.elementType,
+					type_name: actualElementType,
 					element_type_params: params, //consider the given params object as Parameters
 					terminals: terminalMap.get(node.id) || [], //empty terminals in case the node is not connected anything
 					position: {

@@ -3,7 +3,6 @@ import "@testing-library/jest-dom";
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { when } from "jest-when";
 import { invoke } from "@tauri-apps/api/tauri";
-import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 import {
 	getPageElements,
 	renderWithProviders,
@@ -14,15 +13,14 @@ import {
 	verifyPageTabLinkIsActive,
 } from "../test-utils";
 import { routes as appRoutes } from "../../App";
-import { BASE_ROUTE, modelCreationRoute } from "../../routes";
+import { BASE_ROUTE } from "../../routes";
 import { mockProjects } from "../mockdata/allProjectsMock";
 import React from "react";
-import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageTabs";
 import { mockReactFlow } from "../mockdata/mockReactFlow";
-import { allNodes } from "../mockdata/networkMock";
-import remoteClient from "../../service/RemoteService/client/TauriApiClient";
-import { transformedElements } from "../mockdata/allElementsMock";
+import { allElements, transformedElements } from "../mockdata/allElementsMock";
 import remoteService from "../../service/RemoteService/RemoteService";
+import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
+import { getModelCreationPageTabs } from "../../pages/modelCreationPage/modelCreationPageLabels";
 
 jest.mock("../../service/RemoteService/RemoteService");
 
@@ -39,7 +37,7 @@ describe("Testing the Model Creation navigation", () => {
 
 		// -> should start with empty store
 		const storeState = {};
-		const projects: BasicProjectDataT[] = mockProjects;
+		const projects: ShallowProjectDetails[] = mockProjects;
 
 		// -> mock the response from backend
 		when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
@@ -197,7 +195,7 @@ describe("Testing the Canvas Interaction", () => {
 
 		// Find the button and click it to show dropdown.
 		await waitFor(() => {
-			const addButton = screen.getByText("+");
+			const addButton = screen.getByText("Add");
 			fireEvent.click(addButton);
 		});
 
@@ -206,12 +204,12 @@ describe("Testing the Canvas Interaction", () => {
 		const { getByText } = within(dropdown);
 
 		// Click an option in the dropdown.
-		fireEvent.click(getByText(allNodes[1].menuLabel));
+		fireEvent.click(getByText(allElements[1].typeName));
 
 		// -----------------------------------------------------------------------------------
 		// ASSERT
 		// -----------------------------------------------------------------------------------
-		const elements = screen.getAllByText(allNodes[1].label);
+		const elements = screen.getAllByText(allElements[1].typeName);
 		expect(elements[0]).toBeInTheDocument();
 	});
 });

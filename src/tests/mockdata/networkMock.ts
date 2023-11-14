@@ -1,31 +1,10 @@
 import type { Edge, Node } from "reactflow";
 import { Position } from "reactflow";
 import type { EdgeDataT, NetworkMetaDataT, NetworkT, NodeDataT } from "../../redux/slices/ModelCreationSlice";
-import type { OptionT } from "../../components/dropdown/Dropdown";
 import type { NetworkVO } from "../../service/RemoteService/client/bindings/NetworkVO";
 import { USER_ID } from "../../constants";
 
 const MOCK_NETWORK_ID = BigInt(5000);
-
-// TODO: Remove this and use all elements fetched from backend 'ElementT'
-export const allNodes: OptionT[] = [
-	{
-		label: "IN",
-		menuLabel: "Input",
-	},
-	{
-		label: "BPF",
-		menuLabel: "Band Pass Filter",
-	},
-	{
-		label: "GAIN",
-		menuLabel: "Gain",
-	},
-	{
-		label: "OUT",
-		menuLabel: "Output",
-	},
-];
 
 export const mockNetworkMetaData: NetworkMetaDataT = {
 	id: Number(MOCK_NETWORK_ID),
@@ -38,8 +17,8 @@ const mockNodes: Array<Node<NodeDataT>> = [
 		sourcePosition: Position.Right,
 		type: "input",
 		data: {
-			elementType: "Terminal",
-			label: "IN",
+			elementType: "Source",
+			label: "Source",
 		},
 		position: { x: 50, y: 200 },
 		className: "Canvas_input",
@@ -50,7 +29,7 @@ const mockNodes: Array<Node<NodeDataT>> = [
 		targetPosition: Position.Left,
 		data: {
 			elementType: "Filter",
-			label: "HPF2",
+			label: "Filter",
 		},
 		position: { x: 250, y: 100 },
 		className: "Canvas_node",
@@ -61,7 +40,7 @@ const mockNodes: Array<Node<NodeDataT>> = [
 		targetPosition: Position.Left,
 		data: {
 			elementType: "Filter",
-			label: "LPF2",
+			label: "Filter",
 		},
 		position: { x: 450, y: 200 },
 		className: "Canvas_node",
@@ -71,8 +50,8 @@ const mockNodes: Array<Node<NodeDataT>> = [
 		targetPosition: Position.Left,
 		type: "output",
 		data: {
-			elementType: "Terminal",
-			label: "OUT",
+			elementType: "Sink",
+			label: "Sink",
 		},
 		position: { x: 650, y: 200 },
 		className: "Canvas_output",
@@ -101,7 +80,10 @@ const mockEdges: Array<Edge<EdgeDataT>> = [
 ];
 
 const mockParams: Record<string, Record<string, string>> = {
-	"1": {},
+	"1": {
+		is_input: "true",
+		is_output: "false",
+	},
 	"2": {
 		characteristic_frequency: "1000",
 		quality_factor: "2",
@@ -112,7 +94,10 @@ const mockParams: Record<string, Record<string, string>> = {
 		quality_factor: "1",
 		filter_type: "lpf2",
 	},
-	"4": {},
+	"4": {
+		is_input: "false",
+		is_output: "true",
+	},
 };
 
 export const mockNetwork: NetworkT = {
@@ -130,7 +115,7 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 	elements: [
 		{
 			id: "1",
-			name: "IN",
+			name: "Source",
 			parent_network_id: MOCK_NETWORK_ID,
 			type_name: "Terminal",
 			position: { x: 50, y: 200 },
@@ -143,12 +128,15 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 				},
 			],
 			element_type_params: {
-				Terminal: {},
+				Terminal: {
+					is_input: "true",
+					is_output: "false",
+				},
 			},
 		},
 		{
 			id: "2",
-			name: "HPF2",
+			name: "Filter",
 			parent_network_id: MOCK_NETWORK_ID,
 			type_name: "Filter",
 			element_type_params: {
@@ -176,7 +164,7 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 		},
 		{
 			id: "3",
-			name: "LPF2",
+			name: "Filter",
 			parent_network_id: MOCK_NETWORK_ID,
 			type_name: "Filter",
 			terminals: [
@@ -204,7 +192,7 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 		},
 		{
 			id: "4",
-			name: "OUT",
+			name: "Sink",
 			parent_network_id: MOCK_NETWORK_ID,
 			type_name: "Terminal",
 			terminals: [
@@ -217,7 +205,10 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			],
 			position: { x: 650, y: 200 },
 			element_type_params: {
-				Terminal: {},
+				Terminal: {
+					is_input: "false",
+					is_output: "true",
+				},
 			},
 		},
 	],

@@ -8,6 +8,17 @@
 	gap: global.$panel-padding;
 }
 
+.DisplayCard_headingContainer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	button {
+		border: none;
+		background: none;
+	}
+}
+
 .DisplayCard_labels {
 	display: flex;
 	gap: global.$general-padding;
@@ -28,9 +39,13 @@
 }
 
 .DisplayCard_link {
-	width: 33%;
+	min-height: 0;
 }
 
-.DisplayCard_button {
-	width: 100%;
+.DisplayCard_cross {
+	&:hover {
+		background-color: global.$color-green;
+		color: global.$color-white;
+		border-radius: 50%;
+	}
 }

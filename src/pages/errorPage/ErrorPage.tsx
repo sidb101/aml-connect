@@ -12,6 +12,7 @@ const ErrorPage = () => {
 			<p>
 				<i>{routerError.statusText || routerError.message}</i>
 			</p>
+			<p>{routerError.stack}</p>
 			<p>
 				<Link to={"/"}> Go Back to Home</Link>
 			</p>
