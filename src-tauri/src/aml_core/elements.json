@@ -315,9 +315,9 @@
             }
         }
     },
-    "GainOpamp": {
+    "GainOpAmp": {
         "short_description": "GainOpAmp",
-        "long_description": "`GainOpamp` is one of several ways to amplify signals. ",
+        "long_description": "`GainOpAmp` is one of several ways to amplify signals. ",
         "type_name": "GainOpAmp",
         "terminals": {
             "input": {

@@ -6,7 +6,6 @@ import remoteTransformer from "./RemoteTransformer";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import { type ElementT, type NetworkT } from "../../redux/slices/ModelCreationSlice";
 import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
-import { backendElements } from "../../tests/mockdata/allElementsMock";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
 
 /**
@@ -86,8 +85,8 @@ const remoteService = {
 	},
 
 	getAllElements: async (): Promise<Record<string, ElementT>> => {
-		// const getElementsResponse = await remoteClient.getAllElements();
-		return remoteTransformer.parseGetElementsResponse(backendElements);
+		const getElementsResponse = await remoteClient.getAllElements();
+		return remoteTransformer.parseGetElementsResponse(getElementsResponse);
 	},
 
 	simulateNetwork: async (network: NetworkT, inputFile: InputFileMetaDataT): Promise<Record<string, number[]>> => {
