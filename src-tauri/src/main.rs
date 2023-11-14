@@ -32,6 +32,7 @@ fn main() {
             uicontroller::get_elements,
             uicontroller::put_files,
             uicontroller::get_files,
+            uicontroller::get_projects,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
