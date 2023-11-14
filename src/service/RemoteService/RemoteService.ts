@@ -31,20 +31,17 @@ const remoteService = {
 
 		//send it to the backend
 		const filesUploadResponse = await remoteClient.uploadInputFiles(filesUploadRequest);
-		//console.log(filesUploadResponse);
+
 		return remoteTransformer.parseSuccessFilesUploadResponse(filesUploadResponse, files);
 	},
 
 	getFilesMetaData: async (projectSlug: string, dataSet: DataSetT): Promise<InputFileMetaDataT[]> => {
 		//get the files information
 		const filesGetRequest: GetFilesRequest = remoteTransformer.createFilesGetRequest(projectSlug, dataSet);
-		//console.log("Request", filesGetRequest);
 
 		const filesGetResponse = await remoteClient.getInputFiles(filesGetRequest);
-		//console.log(filesGetResponse);
 
 		const inputFilesMetaData: InputFileMetaDataT[] = remoteTransformer.parseFilesGetResponse(filesGetResponse);
-		//console.log("Transformed: ", inputFilesMetaData);
 
 		return inputFilesMetaData;
 	},
@@ -84,7 +81,8 @@ const remoteService = {
 
 	// TODO: Update once backend is implemented
 	deleteProject: async (projectSlug: string): Promise<void> => {
-		//console.log("ESLINT doesn't like empty functions :(");
+		// TODO: Delete the console.log(), only here as ESLINT doesn't like empty functions
+		console.log("ESLINT doesn't like empty functions :(");
 	},
 
 	getAllElements: async (): Promise<Record<string, ElementT>> => {
@@ -95,12 +93,11 @@ const remoteService = {
 	simulateNetwork: async (network: NetworkT, inputFile: InputFileMetaDataT): Promise<Record<string, number[]>> => {
 		//TODO: Perform the validations on network
 		const simulationRequest: SimulateNetworkRequest = remoteTransformer.createSimulateRequest(network, inputFile);
-		//console.log("Request:", simulationRequest);
 
 		//eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		const simulationResponse = { response: {} as Record<string, number[]> };
 		// const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);
-		//console.log(simulationResponse);
+		console.log(simulationResponse);
 
 		return remoteTransformer.parseSimulationResponse(simulationResponse);
 	},

@@ -14,10 +14,9 @@ class TauriFsClient implements StorageClient {
 	async writeInputFileToStorage(fileData: InputFileDataT, path: string): Promise<InputFileDataT> {
 		//TODO: create a directory for the project if it doesn't exist
 
-		console.log("Writing file: ", fileData.metadata.name);
 		const fileBinary = await dataUrlToArrayBuffer(fileData.dataUrl);
 		await writeBinaryFile(path + fileData.metadata.name, fileBinary, { dir: BaseDirectory.AppLocalData });
-		console.log("File Written: ", fileData.metadata.name);
+
 		return fileData;
 	}
 
@@ -27,10 +26,9 @@ class TauriFsClient implements StorageClient {
 	 * @param path: Relative path from LocalAppDir (should have trailing '/')
 	 */
 	async readInputFileFromStorage(fileMetaData: InputFileMetaDataT, path: string): Promise<InputFileDataT> {
-		console.log("Reading file: ", path + fileMetaData.name);
 		const fileData = await readBinaryFile(path + fileMetaData.name, { dir: BaseDirectory.AppLocalData });
 		const dataUrl = uInt8ArrayToDataUrl(fileData, fileMetaData.mediaType);
-		console.log("Read file: ", fileMetaData.name);
+
 		return { metadata: fileMetaData, dataUrl };
 	}
 }

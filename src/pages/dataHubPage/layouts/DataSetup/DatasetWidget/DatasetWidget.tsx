@@ -52,12 +52,9 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 
 			//get the files data along with content from the given metadata
 			const inputFiles = await storageService.readFilesFromStorage(inputFilesMetaData, audioPath);
-			//console.log("Read the files: ", inputFiles);
 
 			//update it in the redux state
 			dispatch(dataHubActions.setInputFiles({ dataSet, inputFiles }));
-
-			//console.log("Set input files in the redux state");
 		} catch (e) {
 			console.error("Error in getting files");
 		}
@@ -72,7 +69,6 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 				header={header}
 				onOpen={() => {
 					handleAccordionOpen();
-					//console.log(datasetType + " Opened");
 				}}
 				defaultIsOpen={defaultIsOpen}
 			>
