@@ -7,7 +7,7 @@ import { testIds } from "../../tests/test-utils";
 type AccordionProps = {
 	defaultIsOpen?: boolean;
 	header: React.ReactNode;
-	bodyMaxHeight?: string;
+	bodyHeight?: string;
 	className?: string;
 	onOpen?: () => void; //called when an accordion is open
 };
@@ -19,7 +19,7 @@ const Accordion: React.FC<React.PropsWithChildren<AccordionProps>> = ({
 	defaultIsOpen = true,
 	header,
 	children,
-	bodyMaxHeight,
+	bodyHeight,
 	className = "",
 	onOpen,
 }) => {
@@ -47,7 +47,7 @@ const Accordion: React.FC<React.PropsWithChildren<AccordionProps>> = ({
 					<FontAwesomeIcon icon={faAngleDown} />
 				</i>
 			</div>
-			<div className={`Accordion_bodyContainer ${active}`} style={isActive ? { maxHeight: bodyMaxHeight } : {}}>
+			<div className={`Accordion_bodyContainer ${active}`} style={isActive ? { height: bodyHeight } : {}}>
 				<div>{children}</div>
 			</div>
 		</div>
