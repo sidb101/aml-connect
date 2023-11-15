@@ -13,8 +13,11 @@ import { mockReactFlow } from "../mockdata/mockReactFlow";
 import remoteClient from "../../service/RemoteService/client/TauriApiClient";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
 import { mockProjects } from "../mockdata/allProjectsMock";
+import remoteService from "../../service/RemoteService/RemoteService";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");
+jest.mock("../../service/RemoteService/remoteService");
+
 beforeEach(() => {
 	mockReactFlow();
 });
@@ -23,9 +26,6 @@ beforeEach(() => {
  * Performing test on basic Navigation Functionality
  */
 describe("Testing the Sidebar of the App", () => {
-	//mock the invoke method of backend module
-	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
-
 	//define the routing for given test suite
 	const routes = appRoutes;
 
@@ -48,7 +48,8 @@ describe("Testing the Sidebar of the App", () => {
 
 			//mock the response from backend
 			const projects: ShallowProjectDetails[] = mockProjects;
-			when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
+			when(remoteService.getAllProjects).mockResolvedValue(projects);
+			when(remoteService.getAllElements).mockResolvedValue({});
 
 			//set the values of mocked functions
 			when(remoteClient.getInputFiles)
@@ -71,7 +72,7 @@ describe("Testing the Sidebar of the App", () => {
 
 			//ASSERT - 1
 			//the sidebar should have all the projects shown.
-			const sideBarLinks = screen.getAllByTestId(testIds.projectLinks);
+			const sideBarLinks = await screen.findAllByTestId(testIds.projectLinks);
 			sideBarLinks.forEach((sideBarLink, index) => {
 				expect(sideBarLink).toHaveTextContent(getExactText(projects[index].name));
 			});
@@ -111,11 +112,8 @@ describe("Testing the Sidebar of the App", () => {
 				fireEvent.click(navLinks[i]);
 
 				//eslint-disable-next-line no-await-in-loop
-				const contentHeading = await within(screen.getByTestId(testIds.contentHeading)).findByText(
-					projects[0].name + " > " + contentHeadings[i]
-				);
-				//valid page rendered
-				expect(contentHeading).toBeInTheDocument();
+				const contentHeading = await screen.findByTestId(testIds.contentHeading);
+				expect(contentHeading).toHaveTextContent(projects[0].name + " > " + contentHeadings[i]);
 
 				//valid nav link is selected
 				//eslint-disable-next-line no-await-in-loop
