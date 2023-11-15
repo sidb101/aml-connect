@@ -13,6 +13,7 @@ import type { GetFilesResponse } from "./bindings/GetFilesResponse";
 import type { SimulateNetworkRequest } from "./bindings/SimulateNetworkRequest";
 import type { SimulateNetworkResponse } from "./bindings/SimulateNetworkResponse";
 import type { ElementMetadata } from "./bindings/ElementMetadata";
+import type { GetProjectsResponse } from "./bindings/GetProjectsResponse";
 
 export interface RemoteClient {
 	/**
@@ -38,4 +39,9 @@ export interface RemoteClient {
 	 * @param simulateNetworkRequest: Request containing required data to get the files.
 	 */
 	simulateNetwork(simulateNetworkRequest: SimulateNetworkRequest): Promise<SimulateNetworkResponse>;
+
+	/**
+	 * This method returns all projects that the user has access to
+	 */
+	getAllProjects(): Promise<GetProjectsResponse>;
 }

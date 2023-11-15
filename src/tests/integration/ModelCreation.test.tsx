@@ -40,7 +40,7 @@ describe("Testing the Model Creation navigation", () => {
 		const projects: ShallowProjectDetails[] = mockProjects;
 
 		// -> mock the response from backend
-		when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
+		when(remoteService.getAllProjects).mockResolvedValue(projects);
 		when(remoteService.getAllElements).calledWith().mockResolvedValue(transformedElements);
 
 		// -> Start this app with this store state and this ("/") as the current route
@@ -52,7 +52,7 @@ describe("Testing the Model Creation navigation", () => {
 		// -> Get all the project links in the sidebar with a given test ID
 		// NOTE: getAllByTestId() does not need the await keyword
 		// NOTE: DO NOT WRITE testIDs everywhere, only where needed
-		const sideBarLinks = screen.getAllByTestId(testIds.projectLinks);
+		const sideBarLinks = await screen.findAllByTestId(testIds.projectLinks);
 
 		// -> Click the first sidebar link
 		fireEvent.click(sideBarLinks[0]);
@@ -156,7 +156,6 @@ describe("Testing the Model Creation navigation", () => {
 });
 
 describe("Testing the Canvas Interaction", () => {
-	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 	const routes = appRoutes;
 
 	test("Model Creation: Test 2: Testing Add Element to Canvas", async () => {
@@ -166,7 +165,7 @@ describe("Testing the Canvas Interaction", () => {
 		const storeState = {};
 
 		// -> mock the response from backend
-		when(mockInvoke).calledWith("getProjects").mockResolvedValue(mockProjects);
+		when(remoteService.getAllProjects).mockResolvedValue(mockProjects);
 
 		// -> Start this app with this store state and this ("/") as the current route
 		renderWithProviders(routes, {
@@ -177,7 +176,7 @@ describe("Testing the Canvas Interaction", () => {
 		// -> Get all the project links in the sidebar with a given test ID
 		// NOTE: getAllByTestId() does not need the await keyword
 		// NOTE: DO NOT WRITE testIDs everywhere, only where needed
-		const sideBarLinks = screen.getAllByTestId(testIds.projectLinks);
+		const sideBarLinks = await screen.findAllByTestId(testIds.projectLinks);
 
 		// -> Click the first sidebar link
 		fireEvent.click(sideBarLinks[0]);
