@@ -20,7 +20,7 @@ import { mockProjects } from "../mockdata/allProjectsMock";
 import { getResultsPageTabs } from "../../pages/resultsPage/resultsPageLabels";
 import remoteService from "../../service/RemoteService/RemoteService";
 
-jest.mock("../../service/RemoteService/remoteService");
+jest.mock("../../service/RemoteService/RemoteService");
 
 describe("Testing the Result Page navigation", () => {
 	const routes = appRoutes;

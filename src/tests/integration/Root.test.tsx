@@ -16,7 +16,7 @@ import { mockProjects } from "../mockdata/allProjectsMock";
 import remoteService from "../../service/RemoteService/RemoteService";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");
-jest.mock("../../service/RemoteService/remoteService");
+jest.mock("../../service/RemoteService/RemoteService");
 
 beforeEach(() => {
 	mockReactFlow();

@@ -22,7 +22,7 @@ import remoteService from "../../service/RemoteService/RemoteService";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");
 jest.mock("../../service/StorageService/client/TauriFsClient");
-jest.mock("../../service/RemoteService/remoteService");
+jest.mock("../../service/RemoteService/RemoteService");
 
 describe("Testing the Data Setup Functionality", () => {
 	//define the routing for given test suite
