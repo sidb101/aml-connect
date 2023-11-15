@@ -68,7 +68,7 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 	return (
 		widgetHeight && (
 			<Accordion
-				bodyHeight={widgetHeight}
+				maxBodyHeight={widgetHeight}
 				header={header}
 				onOpen={() => {
 					handleAccordionOpen();

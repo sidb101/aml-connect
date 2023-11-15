@@ -9,7 +9,7 @@ type LabelDataWidgetProps = {
 const LabelDataWidget = ({ widgetHeight }: LabelDataWidgetProps) => {
 	return (
 		widgetHeight && (
-			<Accordion bodyHeight={widgetHeight} header={<>Label Data</>} defaultIsOpen={false}>
+			<Accordion maxBodyHeight={widgetHeight} header={<>Label Data</>} defaultIsOpen={false}>
 				<h4>Label Body</h4>
 			</Accordion>
 		)
