@@ -13,7 +13,6 @@ import Sidebar from "../components/sideBar/Sidebar";
 import { generalActions, selectLoading } from "../redux/slices/GeneralSlice";
 import ProjectsRegion from "../components/sideBar/projectRegion/ProjectsRegion";
 import remoteService from "../service/RemoteService/RemoteService";
-import { mockProjects } from "../tests/mockdata/allProjectsMock";
 
 function Root() {
 	const [openProjectNavLinks, setOpenProjectNavLinks] = useState<NavLinkT[]>([]);
@@ -29,9 +28,16 @@ function Root() {
 
 	useEffect(() => {
 		// get all the projects of the application and set them in the state
+		const fetchAllProjects = async () => {
+			dispatch(generalActions.markLoading(true));
+			const allProjects = await remoteService.getAllProjects();
+			dispatch(projectActions.setAllProjects(allProjects));
+			dispatch(generalActions.markLoading(false));
+		};
+
 		fetchAllProjects().catch((e) => {
 			console.error("Couldn't fetch all projects..", e);
-		dispatch(generalActions.markLoading(false));
+			dispatch(generalActions.markLoading(false));
 		});
 	}, []);
 
@@ -39,13 +45,6 @@ function Root() {
 	useEffect(() => {
 		setOpenProjectNavLinks(getOpenProjectNavLinks(projectSlug));
 	}, [projectSlug]);
-
-	const fetchAllProjects = async () => {
-		dispatch(generalActions.markLoading(true));
-		const allProjects = await remoteService.getAllProjects();
-		dispatch(projectActions.setAllProjects(allProjects));
-		dispatch(generalActions.markLoading(false));
-	};
 
 	const getSideRegion = (): SideRegionT => {
 		if (projectStatus === ProjectStatus.OPEN) {
