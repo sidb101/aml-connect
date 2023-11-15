@@ -8,14 +8,12 @@ type OverviewViewProps = {
 
 const OverviewView = ({ currentProjectName, currentProjectDescription }: OverviewViewProps) => {
 	return (
-		<div className={`body-content-container-no-header-btns-with-footer`}>
-			<ProjectForm
-				heading={`Overview`}
-				projectName={currentProjectName}
-				projectDescription={currentProjectDescription}
-				buttonText={{ isSubmitting: "Saving...", notSubmitting: "Save" }}
-			/>
-		</div>
+		<ProjectForm
+			heading={`Overview`}
+			projectName={currentProjectName}
+			projectDescription={currentProjectDescription}
+			buttonText={{ isSubmitting: "Saving...", notSubmitting: "Save" }}
+		/>
 	);
 };
 

@@ -86,12 +86,10 @@ function Root() {
 			<div className={`Root_sidebarContainer`}>
 				<Sidebar logo="AnalogML Connect" sideRegions={[getSideRegion()]} />
 			</div>
-			<div className={"xlight-panel content-container"}>
-				{/*Suspense is used by React Router when loading a page or getting data using its loader*/}
-				<Suspense fallback={<Spinner />}>
-					<Outlet />
-				</Suspense>
-			</div>
+			{/*Suspense is used by React Router when loading a page or getting data using its loader*/}
+			<Suspense fallback={<Spinner />}>
+				<Outlet />
+			</Suspense>
 		</div>
 	);
 }

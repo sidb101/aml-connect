@@ -5,6 +5,7 @@ import Footer from "../../../components/footer/Footer";
 import Header from "../../../components/header/Header";
 import type { DisplayCardT } from "../../../components/displayCard/DisplayCard";
 import DisplayCard from "../../../components/displayCard/DisplayCard";
+import View from "../../../components/view/View";
 
 export type SendToHardwareViewT = {
 	data?: string;
@@ -21,22 +22,22 @@ const SendToHardwareView = (props: SendToHardwareViewT) => {
 		buttonText: "Send to Aspinity",
 	};
 
-	return (
-		<>
-			<Header headerTitle={`${props.title}`} />
-			<div className={`body-content-container-no-header-btns-with-footer`}>
-				<div className={`SendToHardwareView_container`}>
-					<DisplayCard displayCard={sentToHardwareCard} />
-				</div>
-			</div>
-			<Footer
-				footerBtnGroup={{
-					prevBtn: { label: "Results Comparison", route: resultsComparisonRoute(props.projectSlug) },
-					nextBtn: { label: "Homepage", route: "/" },
-				}}
-			/>
-		</>
+	const header = <Header headerTitle={`${props.title}`} />;
+	const main = (
+		<div className={`SendToHardwareView_container`}>
+			<DisplayCard displayCard={sentToHardwareCard} />
+		</div>
 	);
+	const footer = (
+		<Footer
+			footerBtnGroup={{
+				prevBtn: { label: "Results Comparison", route: resultsComparisonRoute(props.projectSlug) },
+				nextBtn: { label: "Homepage", route: "/" },
+			}}
+		/>
+	);
+
+	return <View header={header} main={main} footer={footer} />;
 };
 
 export default SendToHardwareView;

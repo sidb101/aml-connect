@@ -1,15 +1,6 @@
 @use "../../global";
 
 .Footer_contentContainer {
-	$left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
-
-	position: fixed; /* Fixed position will make the footer stick to the bottom */
-	bottom: 0;
-	left: $left-offset; /* This should be the same as the width of the sidebar */
-	height: global.$footer-height; /* Adjust this value to fit your design */
-	width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
-	padding: global.$panel-padding global.$content-padding; // (Top & Bottom) (Left & Right)
-	z-index: 0;
 	display: flex;
 }
 

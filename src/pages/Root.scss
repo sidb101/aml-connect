@@ -10,9 +10,7 @@
 }
 
 .Root_container {
-	display: flex;
-	height: 100vh;
-	overflow: hidden; /* This will prevent the entire page from scrolling */
 	font-family: global.$font-primary;
 	color: global.$color-dark-blue;
+	background: global.$color-grey-1;
 }

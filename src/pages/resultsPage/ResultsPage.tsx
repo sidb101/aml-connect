@@ -7,6 +7,7 @@ import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
 import Header from "../../components/header/Header";
 import { getResultsPageFooters, getResultsPageHeadings, getResultsPageTabs } from "./resultsPageLabels";
+import View from "../../components/view/View";
 
 function ResultsPage() {
 	const [heading, setHeading] = useState<string>("");
@@ -41,22 +42,20 @@ function ResultsPage() {
 		}
 	}, [selectedTabIndex, isProjectOpen]);
 
-	return (
-		projectSlug && (
-			<>
-				<Header headerTitle={`${projectName || "Undefined Project"} > Results > ${heading}`} />
-				<div className={`body-content-container-no-header-btns-with-footer Results_bodyContainer`}>
-					<div className={"Results_bodyRow1"}>
-						<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
-					</div>
-					<div className={"Results_bodyRow2"}>
-						<Outlet />
-					</div>
-				</div>
-				<Footer footerBtnGroup={footer} />
-			</>
-		)
+	const header = <Header headerTitle={`${projectName || "Undefined Project"} > Results > ${heading}`} />;
+	const main = (
+		<div className={`Results_bodyContainer`}>
+			<div className={"Results_bodyRow1"}>
+				<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
+			</div>
+			<div className={"Results_bodyRow2"}>
+				<Outlet />
+			</div>
+		</div>
 	);
+	const footerElem = <Footer footerBtnGroup={footer} />;
+
+	return projectSlug && <View header={header} main={main} footer={footerElem} />;
 }
 
 export default ResultsPage;

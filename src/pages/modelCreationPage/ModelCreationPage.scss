@@ -1,6 +1,7 @@
 @use "../../global";
 
 .ModelCreation_bodyContainer {
+	height: 100%;
 	display: grid;
 	grid-template-rows: global.$panel-header-height;
 	gap: global.$general-padding;
