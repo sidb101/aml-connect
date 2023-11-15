@@ -23,7 +23,7 @@ import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageLabels";
 import remoteService from "../../service/RemoteService/RemoteService";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");
-jest.mock("../../service/RemoteService/remoteService");
+jest.mock("../../service/RemoteService/RemoteService");
 
 describe("Testing the Data Hub navigation", () => {
 	const routes = appRoutes;
