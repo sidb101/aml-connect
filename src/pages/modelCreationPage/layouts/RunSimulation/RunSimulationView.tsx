@@ -1,7 +1,5 @@
-import React from "react";
-
 function RunSimulationView() {
-	return <h2>Run Simulation</h2>;
+	return <div>Run Simulation View</div>;
 }
 
 export default RunSimulationView;

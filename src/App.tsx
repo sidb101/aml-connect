@@ -37,6 +37,8 @@ import CreateNewProjectPage, {
 } from "./pages/landingHubPage/layouts/CreateNewProjectPage/CreateNewProjectPage";
 import RunSimulation from "./pages/modelCreationPage/layouts/RunSimulation/RunSimulation";
 import CheckSeparation from "./pages/modelCreationPage/layouts/CheckSeparation/CheckSeparation";
+import MakeNeuralNet from "./pages/modelCreationPage/layouts/MakeNeuralNet/MakeNeuralNet";
+import TrainNeuralNet from "./pages/modelCreationPage/layouts/TrainNeuralNet/TrainNeuralNet";
 
 /** Exporting the routes to use them in testing as well **/
 export const routes = [
@@ -97,11 +99,11 @@ export const routes = [
 					},
 					{
 						path: MAKE_YOUR_NEURAL_NET_ROUTE,
-						element: <h1>MAKE_YOUR_NEURAL_NET_ROUTE</h1>,
+						element: <MakeNeuralNet />,
 					},
 					{
 						path: TRAIN_YOUR_NEURAL_NET_ROUTE,
-						element: <h1>TRAIN_YOUR_NEURAL_NET_ROUTE</h1>,
+						element: <TrainNeuralNet />,
 					},
 					{
 						path: RUN_SIMULATION_ROUTE,

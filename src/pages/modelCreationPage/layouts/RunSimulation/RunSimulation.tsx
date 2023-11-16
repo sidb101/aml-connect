@@ -1,4 +1,3 @@
-import React from "react";
 import RunSimulationView from "./RunSimulationView";
 
 function RunSimulation() {

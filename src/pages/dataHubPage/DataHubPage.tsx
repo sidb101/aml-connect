@@ -7,6 +7,7 @@ import "./DataHubPage.scss";
 import Header from "../../components/header/Header";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
 import { getDataHubPageFooters, getDataHubPageHeadings, getDataHubPageTabs } from "./dataHubPageLabels";
+import View from "../../components/view/View";
 
 function DataHubPage() {
 	const [heading, setHeading] = useState<string>("");
@@ -43,22 +44,20 @@ function DataHubPage() {
 		}
 	}, [selectedTabIndex, isProjectOpen]);
 
-	return (
-		projectSlug && (
-			<>
-				<Header headerTitle={`${projectName || "Undefined Project"} > Data Hub > ${heading}`} />
-				<div className={`body-content-container-no-header-btns-with-footer DataHub_bodyContainer`}>
-					<div className={"DataHub_bodyRow1"}>
-						<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
-					</div>
-					<div className={"DataHub_bodyRow2"}>
-						<Outlet />
-					</div>
-				</div>
-				<Footer footerBtnGroup={footer} />
-			</>
-		)
+	const header = <Header headerTitle={`${projectName || "Undefined Project"} > Data Hub > ${heading}`} />;
+	const main = (
+		<div className={`DataHub_bodyContainer`}>
+			<div className={"DataHub_bodyRow1"}>
+				<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
+			</div>
+			<div className={"DataHub_bodyRow2"}>
+				<Outlet />
+			</div>
+		</div>
 	);
+	const footerElem = <Footer footerBtnGroup={footer} />;
+
+	return projectSlug && <View header={header} main={main} footer={footerElem} />;
 }
 
 export default DataHubPage;

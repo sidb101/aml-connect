@@ -14,6 +14,7 @@ import {
 	getModelCreationPageHeadings,
 	getModelCreationPageTabs,
 } from "./modelCreationPageLabels";
+import View from "../../components/view/View";
 
 function ModelCreationPage() {
 	const [heading, setHeading] = useState<string>("");
@@ -62,22 +63,20 @@ function ModelCreationPage() {
 		dispatch(generalActions.markLoading(false));
 	};
 
-	return (
-		projectSlug && (
-			<>
-				<Header headerTitle={`${projectName || "Undefined Project"} > Model Creation > ${heading}`} />
-				<div className={`body-content-container-no-header-btns-with-footer ModelCreation_bodyContainer`}>
-					<div className={"ModelCreation_bodyRow1"}>
-						<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
-					</div>
-					<div className={"ModelCreation_bodyRow2"}>
-						<Outlet />
-					</div>
-				</div>
-				<Footer footerBtnGroup={footer} />
-			</>
-		)
+	const header = <Header headerTitle={`${projectName || "Undefined Project"} > Model Creation > ${heading}`} />;
+	const main = (
+		<div className={`ModelCreation_bodyContainer`}>
+			<div className={"ModelCreation_bodyRow1"}>
+				<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
+			</div>
+			<div className={"ModelCreation_bodyRow2"}>
+				<Outlet />
+			</div>
+		</div>
 	);
+	const footerElem = <Footer footerBtnGroup={footer} />;
+
+	return projectSlug && <View header={header} main={main} footer={footerElem} />;
 }
 
 export default ModelCreationPage;

@@ -1,0 +1,38 @@
+@use "../../global";
+
+.View_overallContainer {
+	$left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
+
+	margin-left: $left-offset; /* This should be the same as the width of the sidebar */
+	display: flex;
+	flex-direction: row;
+	height: 100vh;
+}
+
+.View_headerContainer {
+	$left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
+
+	position: fixed;
+	top: 0;
+	left: $left-offset;
+	padding: global.$panel-padding;
+	width: calc(100% - #{$left-offset} - 2 * #{global.$panel-padding}); /* Subtract sidebar width and padding */
+	z-index: 1;
+}
+
+.View_mainContainer {
+	padding: 0 global.$panel-padding;
+	overflow: auto;
+	width: 100%;
+}
+
+.View_footerContainer {
+	$left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
+
+	position: fixed;
+	bottom: 0;
+	left: $left-offset; /* This should be the same as the width of the sidebar */
+	padding: global.$panel-padding;
+	width: calc(100% - #{$left-offset} - 2 * #{global.$panel-padding}); /* Subtract sidebar width and padding */
+	z-index: 1;
+}

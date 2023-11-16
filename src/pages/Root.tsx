@@ -1,7 +1,6 @@
 import { Outlet, useLocation } from "react-router-dom";
 import { NavRegion } from "../components/sideBar/navRegion/NavRegion";
-import { mockProjects } from "../tests/mockdata/allProjectsMock";
-import React, { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import type { SideRegionT } from "../components/sideBar/sideRegion/SideRegion";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import { projectActions, ProjectStatus, selectCurrentProjectName } from "../redux/slices/ProjectSlice";
@@ -11,8 +10,9 @@ import type { NavLinkT } from "../components/sideBar/navRegion/navLink/NavLink";
 import { isNavLinkSelected } from "../components/sideBar/navRegion/navLink/NavLink";
 import Spinner from "../components/spinner/Spinner";
 import Sidebar from "../components/sideBar/Sidebar";
-import { selectLoading } from "../redux/slices/GeneralSlice";
+import { generalActions, selectLoading } from "../redux/slices/GeneralSlice";
 import ProjectsRegion from "../components/sideBar/projectRegion/ProjectsRegion";
+import remoteService from "../service/RemoteService/RemoteService";
 
 function Root() {
 	const [openProjectNavLinks, setOpenProjectNavLinks] = useState<NavLinkT[]>([]);
@@ -28,8 +28,18 @@ function Root() {
 
 	useEffect(() => {
 		// get all the projects of the application and set them in the state
-		dispatch(projectActions.setAllProjects(mockProjects));
-	}, [mockProjects]);
+		const fetchAllProjects = async () => {
+			dispatch(generalActions.markLoading(true));
+			const allProjects = await remoteService.getAllProjects();
+			dispatch(projectActions.setAllProjects(allProjects));
+			dispatch(generalActions.markLoading(false));
+		};
+
+		fetchAllProjects().catch((e) => {
+			console.error("Couldn't fetch all projects..", e);
+			dispatch(generalActions.markLoading(false));
+		});
+	}, []);
 
 	//get the proper links based on given project
 	useEffect(() => {
@@ -76,12 +86,10 @@ function Root() {
 			<div className={`Root_sidebarContainer`}>
 				<Sidebar logo="AnalogML Connect" sideRegions={[getSideRegion()]} />
 			</div>
-			<div className={"xlight-panel content-container"}>
-				{/*Suspense is used by React Router when loading a page or getting data using its loader*/}
-				<Suspense fallback={<Spinner />}>
-					<Outlet />
-				</Suspense>
-			</div>
+			{/*Suspense is used by React Router when loading a page or getting data using its loader*/}
+			<Suspense fallback={<Spinner />}>
+				<Outlet />
+			</Suspense>
 		</div>
 	);
 }
