@@ -20,9 +20,11 @@ export const OVERVIEW_ROUTE = `${PROJECT_ROUTE}/overview`;
 export const DATA_HUB_ROUTE = `${PROJECT_ROUTE}/data-hub`;
 export const DATA_SETUP_ROUTE = `${DATA_HUB_ROUTE}/setup`;
 export const DATA_VIZ_ROUTE = `${DATA_HUB_ROUTE}/visualize`;
-export const NEURAL_NETWORK_ROUTE = `${PROJECT_ROUTE}/neural-networks`;
 export const MODEL_CREATION_ROUTE = `${PROJECT_ROUTE}/model-creation`;
 export const CREATE_MODEL_ROUTE = `${MODEL_CREATION_ROUTE}/create-model`;
+export const CHECK_SEPARATION_ROUTE = `${MODEL_CREATION_ROUTE}/check-separation`;
+export const MAKE_YOUR_NEURAL_NET_ROUTE = `${MODEL_CREATION_ROUTE}/make-your-neural-net`;
+export const TRAIN_YOUR_NEURAL_NET_ROUTE = `${MODEL_CREATION_ROUTE}/train-your-neural-net`;
 export const RUN_SIMULATION_ROUTE = `${MODEL_CREATION_ROUTE}/run-simulation`;
 export const RESULTS_ROUTE = `${PROJECT_ROUTE}/results`;
 export const RESULTS_ANALYSIS_ROUTE = `${RESULTS_ROUTE}/results-analysis`;
@@ -34,9 +36,13 @@ export const projectOverviewRoute = (projectSlug: string) => OVERVIEW_ROUTE.repl
 export const dataHubRoute = (projectSlug: string) => DATA_HUB_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const dataSetupRoute = (projectSlug: string) => DATA_SETUP_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const dataVizRoute = (projectSlug: string) => DATA_VIZ_ROUTE.replace(PROJECT_SLUG, projectSlug);
-export const neuralNetworkRoute = (projectSlug: string) => NEURAL_NETWORK_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const modelCreationRoute = (projectSlug: string) => MODEL_CREATION_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const createModelRoute = (projectSlug: string) => CREATE_MODEL_ROUTE.replace(PROJECT_SLUG, projectSlug);
+export const checkSeparationRoute = (projectSlug: string) => CHECK_SEPARATION_ROUTE.replace(PROJECT_SLUG, projectSlug);
+export const makeYourNeuralNetRoute = (projectSlug: string) =>
+	MAKE_YOUR_NEURAL_NET_ROUTE.replace(PROJECT_SLUG, projectSlug);
+export const trainYourNeuralNetRoute = (projectSlug: string) =>
+	TRAIN_YOUR_NEURAL_NET_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const runSimulationRoute = (projectSlug: string) => RUN_SIMULATION_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const resultsRoute = (projectSlug: string) => RESULTS_ROUTE.replace(PROJECT_SLUG, projectSlug);
 export const resultsAnalysisRoute = (projectSlug: string) => RESULTS_ANALYSIS_ROUTE.replace(PROJECT_SLUG, projectSlug);

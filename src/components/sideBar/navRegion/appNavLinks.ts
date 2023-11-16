@@ -8,7 +8,6 @@ import {
 	resultsRoute,
 	sendToHardwareRoute,
 	resultsAnalysisRoute,
-	neuralNetworkRoute,
 } from "../../../routes";
 
 /**
@@ -28,10 +27,6 @@ export const getOpenProjectNavLinks = (projectSlug: string): NavLinkT[] => [
 		label: "Data Hub",
 		route: dataSetupRoute(projectSlug),
 		parentLink: { route: dataHubRoute(projectSlug) },
-	},
-	{
-		label: "Neural Networks",
-		route: neuralNetworkRoute(projectSlug),
 	},
 	{
 		label: "Model Creation",

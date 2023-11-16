@@ -3,18 +3,20 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
 	BASE_ROUTE,
+	CHECK_SEPARATION_ROUTE,
 	CREATE_MODEL_ROUTE,
 	DATA_HUB_ROUTE,
 	DATA_SETUP_ROUTE,
 	DATA_VIZ_ROUTE,
+	MAKE_YOUR_NEURAL_NET_ROUTE,
 	MODEL_CREATION_ROUTE,
-	NEURAL_NETWORK_ROUTE,
 	OVERVIEW_ROUTE,
 	RESULTS_ANALYSIS_ROUTE,
 	RESULTS_COMPARISON_ROUTE,
 	RESULTS_ROUTE,
 	RUN_SIMULATION_ROUTE,
 	SEND_TO_HARDWARE_ROUTE,
+	TRAIN_YOUR_NEURAL_NET_ROUTE,
 } from "./routes";
 import Root from "./pages/Root";
 import LandingPage, { landingPageAction } from "./pages/landingHubPage/layouts/LandingPage/LandingPage";
@@ -33,8 +35,8 @@ import LandingHubPage from "./pages/landingHubPage/LandingHubPage";
 import CreateNewProjectPage, {
 	createNewProjectPageAction,
 } from "./pages/landingHubPage/layouts/CreateNewProjectPage/CreateNewProjectPage";
-import NeuralNetworksPage from "./pages/neuralNetworkPage/NeuralNetworksPage";
 import RunSimulation from "./pages/modelCreationPage/layouts/RunSimulation/RunSimulation";
+import CheckSeparation from "./pages/modelCreationPage/layouts/CheckSeparation/CheckSeparation";
 
 /** Exporting the routes to use them in testing as well **/
 export const routes = [
@@ -68,10 +70,6 @@ export const routes = [
 				errorElement: <ErrorPage />,
 			},
 			{
-				path: NEURAL_NETWORK_ROUTE,
-				element: <NeuralNetworksPage />,
-			},
-			{
 				path: DATA_HUB_ROUTE,
 				element: <DataHubPage />,
 				children: [
@@ -92,6 +90,18 @@ export const routes = [
 					{
 						path: CREATE_MODEL_ROUTE,
 						element: <CreateModel />,
+					},
+					{
+						path: CHECK_SEPARATION_ROUTE,
+						element: <CheckSeparation />,
+					},
+					{
+						path: MAKE_YOUR_NEURAL_NET_ROUTE,
+						element: <h1>MAKE_YOUR_NEURAL_NET_ROUTE</h1>,
+					},
+					{
+						path: TRAIN_YOUR_NEURAL_NET_ROUTE,
+						element: <h1>TRAIN_YOUR_NEURAL_NET_ROUTE</h1>,
 					},
 					{
 						path: RUN_SIMULATION_ROUTE,
