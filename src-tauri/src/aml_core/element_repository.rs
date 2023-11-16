@@ -125,7 +125,7 @@ mod tests {
         
         // assert
         assert!( el_json_res.is_ok() );
-        println!("{}", serde_json::to_string_pretty(&el_json_res.unwrap()).unwrap());        
+        // println!("{}", serde_json::to_string_pretty(&el_json_res.unwrap()).unwrap());        
     }
 
 }
