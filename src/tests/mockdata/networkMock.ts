@@ -14,68 +14,63 @@ export const mockNetworkMetaData: NetworkMetaDataT = {
 const mockNodes: Array<Node<NodeDataT>> = [
 	{
 		id: "1",
-		sourcePosition: Position.Right,
-		type: "input",
+		type: "networkTerminal",
 		data: {
 			elementType: "Source",
 			label: "Source",
 		},
 		position: { x: 50, y: 200 },
-		className: "Canvas_input",
 	},
 	{
 		id: "2",
-		sourcePosition: Position.Right,
-		targetPosition: Position.Left,
 		data: {
-			elementType: "Filter",
-			label: "Filter",
+			elementType: "Filterbank",
+			label: "Filterbank",
 		},
+		type: "networkElement",
 		position: { x: 250, y: 100 },
-		className: "Canvas_node",
 	},
 	{
 		id: "3",
-		sourcePosition: Position.Right,
-		targetPosition: Position.Left,
 		data: {
-			elementType: "Filter",
-			label: "Filter",
+			elementType: "Comparator",
+			label: "Comparator",
 		},
+		type: "networkElement",
 		position: { x: 450, y: 200 },
-		className: "Canvas_node",
 	},
 	{
 		id: "4",
-		targetPosition: Position.Left,
-		type: "output",
+		type: "networkTerminal",
 		data: {
 			elementType: "Sink",
 			label: "Sink",
 		},
 		position: { x: 650, y: 200 },
-		className: "Canvas_output",
 	},
 ];
 
 const mockEdges: Array<Edge<EdgeDataT>> = [
 	{
-		id: "reactflow__edge-1-2",
+		id: "edge__1-2",
 		source: "1",
 		target: "2",
-		data: { sourceTerminalType: "input", targetTerminalType: "input" },
+		sourceHandle: "handle__1-net",
+		data: { sourceTerminalType: "net", targetTerminalType: "input" },
 	},
 	{
-		id: "reactflow__edge-2-3",
+		id: "edge__2-3",
 		source: "2",
 		target: "3",
-		data: { sourceTerminalType: "output", targetTerminalType: "input" },
+		sourceHandle: "handle__2-out_0",
+		data: { sourceTerminalType: "out_0", targetTerminalType: "positive" },
 	},
 	{
-		id: "reactflow__edge-3-4",
+		id: "edge__3-4",
 		source: "3",
 		target: "4",
-		data: { sourceTerminalType: "output", targetTerminalType: "output" },
+		sourceHandle: "handle__3-net",
+		data: { sourceTerminalType: "output", targetTerminalType: "net" },
 	},
 ];
 

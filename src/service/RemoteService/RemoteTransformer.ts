@@ -73,7 +73,7 @@ const remoteTransformer = {
 		});
 	},
 
-	parseGetElementsResponse(getElementsResponse: Record<string, ElementMetadata>): Record<string, ElementT> {
+	parseGetElementsResponse(getElementsResponse: Record<number, ElementMetadata>): Record<string, ElementT> {
 		const elementEntries: Array<[string, ElementT]> = Object.entries(getElementsResponse).map(
 			([elType, elData]): [string, ElementT] => {
 				//get transformed parameter entries
