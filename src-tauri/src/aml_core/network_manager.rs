@@ -80,11 +80,11 @@ fn value_to_vec(value: &serde_json::Value) -> Result<Vec<ElementVO>, RequestPars
             "Invalid value for key: elements (expected array)".to_string(),
         ))?
         .iter()
-        .map(|element| {
-            serde_json::from_value(element.clone())
-                .map_err(|_| RequestParseError::MalformedRequest("Invalid element".to_string()))
+        .map(|element: &serde_json::Value| {
+            ElementVO::from_serde_value(element.clone()).unwrap()
+                // .map_err(|_| RequestParseError::MalformedRequest("Invalid element".to_string()))
         })
-        .collect::<Result<Vec<ElementVO>, RequestParseError>>()?;
+        .collect::<Vec<ElementVO>>();
 
     Ok(elements)
 }
@@ -95,19 +95,6 @@ impl NetworkVO {
         let json_reader = std::io::BufReader::new(json_file);
         let network_json: serde_json::Value = serde_json::from_reader(json_reader).unwrap();
         let network_hashmap = network_json.get("network").unwrap();
-
-        println!("checkkk {}", network_hashmap
-            .get("id")
-            .ok_or(RequestParseError::MalformedRequest(
-                "Missing key: id".to_string(),
-            ))?
-            .as_str()
-            .ok_or(RequestParseError::MalformedRequest(
-                "Invalid value for key: id (expected - string)".to_string(),
-            ))?
-            .parse::<u64>()
-            .unwrap()
-        );
 
         Ok(NetworkVO {
             id: Some(
@@ -129,9 +116,15 @@ impl NetworkVO {
                 .get("name")
                 .ok_or(RequestParseError::MalformedRequest(
                     "Missing key: name".to_string(),
-                ))
-                .unwrap()
-                .to_string(),
+                ))?
+                .as_str()
+                .ok_or(RequestParseError::MalformedRequest(
+                    "Invalid value for key: name (expected - string)".to_string(),
+                ))?
+                .parse::<String>()
+                .map_err(|_| RequestParseError::MalformedRequest(
+                    "Invalid value for key: name (expected - string)".to_string(),
+            ))?,
             elements: value_to_vec(network_hashmap.get("elements").ok_or(
                 RequestParseError::MalformedRequest("Missing key: elements".to_string()),
             )?)?,
@@ -140,9 +133,11 @@ impl NetworkVO {
                 .get("creator_id")
                 .ok_or(RequestParseError::MalformedRequest(
                     "Missing key: creator_id".to_string(),
-                ))
-                .unwrap()
-                .to_string()
+                ))?
+                .as_str()
+                .ok_or(RequestParseError::MalformedRequest(
+                    "Invalid value for key: creator_id (expected - string)".to_string(),
+                ))?
                 .parse::<u64>()
                 .map_err(|_| {
                     RequestParseError::MalformedRequest(
@@ -201,11 +196,13 @@ pub struct ElementVO {
 
 impl ElementVO {
     fn from_serde_value(element_value: serde_json::Value) -> Result<Self, RequestParseError> {
-        serde_json::from_value(element_value).map_err(|_| {
-            RequestParseError::MalformedRequest(
-                "Invalid value for key: element (expected - ElementVO)".to_string(),
-            )
-        })
+        println!("element_value: {:?}", element_value);
+        serde_json::from_value(element_value).unwrap()
+        // map_err(|_| {
+        //     RequestParseError::MalformedRequest(
+        //         "Invalid value for key: element (expected - ElementVO)".to_string(),
+        //     )
+        // })
     }
 
     fn to_element(self) -> Result<Element, RequestParseError> {
