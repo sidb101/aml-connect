@@ -3,6 +3,7 @@ pub mod aml_core;
 pub mod uicontroller {
     use crate::aml_core::element_repository;
     use crate::aml_core::file_data_manager;
+    use crate::aml_core::network_manager;
     use tauri::State;
     use diesel::r2d2::{ConnectionManager, Pool};
     use diesel::SqliteConnection;
@@ -32,4 +33,19 @@ pub mod uicontroller {
         file_data_manager::get_files::get_input_files(&req, conn)
 
     }
+
+    #[tauri::command]
+    pub fn simulate_network(
+        req: network_manager::SimulateNetworkRequest,
+    ) -> i32 {
+    // ) -> network_manager::SimulateNetworkResponse {
+        let nvo: network_manager::NetworkVO = req.network;
+        let actual_network: network_manager::Network = nvo.to_network().unwrap();
+        let audio_path: String = req.audio_file_path;
+
+        // call simulate network
+        // network_manager::simulate_network(&actual_network, &audio_path);
+        42
+    }
+    
 }

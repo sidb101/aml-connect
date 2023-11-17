@@ -46,6 +46,8 @@ pub struct SimulateNetworkRequest {
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct SimulateNetworkResponse {
     pub response: HashMap<String, Vec<f64>>,
+    pub py_code_path: String,
+    pub visualization_path: String,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -73,81 +75,8 @@ pub struct NetworkVO {
     pub creator_id: u64,
 }
 
-fn value_to_vec(value: &serde_json::Value) -> Result<Vec<ElementVO>, RequestParseError> {
-    let elements = value
-        .as_array()
-        .ok_or(RequestParseError::MalformedRequest(
-            "Invalid value for key: elements (expected array)".to_string(),
-        ))?
-        .iter()
-        .map(|element: &serde_json::Value| {
-            ElementVO::from_serde_value(element.clone()).unwrap()
-                // .map_err(|_| RequestParseError::MalformedRequest("Invalid element".to_string()))
-        })
-        .collect::<Vec<ElementVO>>();
-
-    Ok(elements)
-}
-
 impl NetworkVO {
-    fn from_json(json_file_path: PathBuf) -> Result<Self, RequestParseError> {
-        let json_file = std::fs::File::open(json_file_path).unwrap();
-        let json_reader = std::io::BufReader::new(json_file);
-        let network_json: serde_json::Value = serde_json::from_reader(json_reader).unwrap();
-        let network_hashmap = network_json.get("network").unwrap();
-
-        Ok(NetworkVO {
-            id: Some(
-                network_hashmap
-                .get("id")
-                .ok_or(RequestParseError::MalformedRequest(
-                    "Missing key: id".to_string(),
-                ))?
-                .as_str()
-                .ok_or(RequestParseError::MalformedRequest(
-                    "Invalid value for key: id (expected - string)".to_string(),
-                ))?
-                .parse::<u64>()
-                .map_err(|_| RequestParseError::MalformedRequest(
-                    "Invalid value for key: id (expected - u64)".to_string(),
-                ))?
-            ),
-            name: network_hashmap
-                .get("name")
-                .ok_or(RequestParseError::MalformedRequest(
-                    "Missing key: name".to_string(),
-                ))?
-                .as_str()
-                .ok_or(RequestParseError::MalformedRequest(
-                    "Invalid value for key: name (expected - string)".to_string(),
-                ))?
-                .parse::<String>()
-                .map_err(|_| RequestParseError::MalformedRequest(
-                    "Invalid value for key: name (expected - string)".to_string(),
-            ))?,
-            elements: value_to_vec(network_hashmap.get("elements").ok_or(
-                RequestParseError::MalformedRequest("Missing key: elements".to_string()),
-            )?)?,
-            nodes: vec![],
-            creator_id: network_hashmap
-                .get("creator_id")
-                .ok_or(RequestParseError::MalformedRequest(
-                    "Missing key: creator_id".to_string(),
-                ))?
-                .as_str()
-                .ok_or(RequestParseError::MalformedRequest(
-                    "Invalid value for key: creator_id (expected - string)".to_string(),
-                ))?
-                .parse::<u64>()
-                .map_err(|_| {
-                    RequestParseError::MalformedRequest(
-                        "Invalid value for key: creator_id (expected - u64)".to_string(),
-                    )
-                })?,
-        })
-    }
-
-    fn to_network(self) -> Result<Network, RequestParseError> {
+    pub fn to_network(self) -> Result<Network, RequestParseError> {
         let mut elements: Vec<Element> = Vec::new();
         for element in self.elements {
             elements.push(element.to_element()?);
@@ -195,16 +124,6 @@ pub struct ElementVO {
 }
 
 impl ElementVO {
-    fn from_serde_value(element_value: serde_json::Value) -> Result<Self, RequestParseError> {
-        println!("element_value: {:?}", element_value);
-        serde_json::from_value(element_value).unwrap()
-        // map_err(|_| {
-        //     RequestParseError::MalformedRequest(
-        //         "Invalid value for key: element (expected - ElementVO)".to_string(),
-        //     )
-        // })
-    }
-
     fn to_element(self) -> Result<Element, RequestParseError> {
         let params: Parameters = match self.type_name.as_str() {
             "AcDiff" => Parameters::AcDiff(AcDiffParams::from_hashmap(
@@ -1517,12 +1436,41 @@ mod tests {
     #[test]
     fn test_to_network() {
         // arrange
-        let mut file_path = std::path::PathBuf::new();
-        file_path.push("src");
-        file_path.push("aml_core");
-        file_path.push("sample_request.json");
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("characteristic_frequency".to_string(), "1.0".to_string());
+        params.insert("quality_factor".to_string(), "2.0".to_string());
+        params.insert("filter_type".to_string(), "lpf1".to_string());        
 
-        let nvo: NetworkVO = NetworkVO::from_json(file_path).unwrap();
+        let mut filter_params: HashMap<String, HashMap<String, String>> = HashMap::new();
+        filter_params.insert("Filter".to_string(), params);
+
+        let sample_filter: ElementVO = ElementVO { 
+            id: "123".to_string(), 
+            parent_network_id: Some(5000), 
+            name: "Test ElementVO".to_string(), 
+            type_name: "Filter".to_string(), 
+            element_type_params: filter_params, 
+            terminals: vec![Terminal{
+                id: "2|reactflow__edge-1-2".to_string(),
+                parent_element_id: "2".to_string(),
+                type_name: "input".to_string(),
+                node_name: "reactflow__edge-1-2".to_string(),
+            }, Terminal{
+                id: "2|reactflow__edge-2-3".to_string(),
+                parent_element_id: "2".to_string(),
+                type_name: "output".to_string(),
+                node_name: "reactflow__edge-2-3".to_string(),
+            }], 
+            position: Position { x: 1, y: 1 } 
+        };
+
+        let nvo: NetworkVO = NetworkVO { 
+            id: Some(5000), 
+            name: "Test NetworkVO".to_string(), 
+            elements: vec![sample_filter], 
+            nodes: vec![], 
+            creator_id: 1u64, 
+        };
 
         // act
         let result = nvo.to_network();
