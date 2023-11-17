@@ -3,7 +3,6 @@ import { describe } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { fireEvent, screen, within } from "@testing-library/react";
 import { when } from "jest-when";
-import { invoke } from "@tauri-apps/api/tauri";
 import { getExactText, renderWithProviders, testIds } from "../test-utils";
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";

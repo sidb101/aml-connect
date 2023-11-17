@@ -22,7 +22,6 @@ const ParameterForm = ({ node, onSimulate }: ParameterFormProps) => {
 		const handleParameterSave = (params: Record<string, string>) => {
 			//save the parameters in the redux state
 			dispatch(modelCreationActions.setParameters({ nodeId: node.id, params }));
-			console.log("Saved Parameters for Node ", node.id, params);
 		};
 
 		return currentParams && parameterInfo ? (

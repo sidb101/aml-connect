@@ -3,7 +3,6 @@ import { describe } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/react";
 import { when } from "jest-when";
-import { invoke } from "@tauri-apps/api/tauri";
 import {
 	getPageElements,
 	renderWithProviders,
