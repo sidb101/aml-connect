@@ -298,7 +298,7 @@
             "attack_rates": {
                 "parameter_type": "string",
                 "description": "List of attack rates for the subband components",
-                "default": null,
+                "default": "",
                 "range_type": "interval",
                 "range": [null,null],
                 "unit": null,
@@ -307,7 +307,7 @@
             "decay_rates": {
                 "parameter_type": "string",
                 "description": "List of decay rates for the subband components",
-                "default": null,
+                "default": "",
                 "range_type": "interval",
                 "range": [null,null],
                 "unit": null,
@@ -315,10 +315,10 @@
             }
         }
     },
-    "GainOpAmp": {
-        "short_description": "GainOpAmp",
-        "long_description": "`GainOpAmp` is one of several ways to amplify signals. ",
-        "type_name": "GainOpAmp",
+    "GainOpamp": {
+        "short_description": "GainOpamp",
+        "long_description": "`GainOpamp` is one of several ways to amplify signals. ",
+        "type_name": "GainOpamp",
         "terminals": {
             "input": {
                 "description": "Input",
@@ -676,7 +676,7 @@
             "coefficients": {
                 "parameter_type": "string",
                 "description": "List of second order section coefficients",
-                "default": null,
+                "default": "",
                 "range_type": null,
                 "range": null,
                 "unit": null,
@@ -701,7 +701,7 @@
             "hardware_pin": {
                 "parameter_type": "string",
                 "description": "hardware pin",
-                "default": null,
+                "default": "",
                 "range_type": null,
                 "range": null,
                 "unit": null,

@@ -99,10 +99,10 @@ const remoteService = {
 	simulateNetwork: async (network: NetworkT, inputFile: InputFileMetaDataT): Promise<Record<string, number[]>> => {
 		//TODO: Perform the validations on network
 		const simulationRequest: SimulateNetworkRequest = remoteTransformer.createSimulateRequest(network, inputFile);
-
+		console.log(simulationRequest);
 		//eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-		const simulationResponse = { response: {} as Record<string, number[]> };
-		// const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);
+		// const simulationResponse = { response: {} as Record<string, number[]>, py_code_path: "", visualization_path: "" };
+		const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);
 		console.log(simulationResponse);
 
 		return remoteTransformer.parseSimulationResponse(simulationResponse);

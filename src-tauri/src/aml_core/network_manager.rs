@@ -55,7 +55,7 @@ pub struct SimulateNetworkResponse {
 pub struct Node {
     pub id: String,
     pub name: String,
-    pub parent_network_id: Option<u64>,
+    pub parent_network_id: Option<u32>,
     pub terminal_ids: Vec<String>,
 }
 
@@ -66,12 +66,12 @@ pub struct NetworkVO {
     //id is optional so that frontend doesn't need to send an id to backend
     //if backend notices id is null, this means backend needs to generate an
     //id for this network (and propagage to corresponding parent_network_id fields)
-    pub id: Option<u64>,
+    pub id: Option<u32>,
     pub name: String,
     pub elements: Vec<ElementVO>,
     pub nodes: Vec<Node>,
 
-    pub creator_id: u64,
+    pub creator_id: u32,
 }
 
 impl NetworkVO {
@@ -91,20 +91,20 @@ impl NetworkVO {
     }
 }
 
-//// Not exported dueto NetworkVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+//// Not exported due to NetworkVO
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Network {
     //id is optional so that frontend doesn't need to send an id to backend
     //if backend notices id is null, this means backend needs to generate an
     //id for this network (and propagage to corresponding parent_network_id fields)
-    pub id: Option<u64>,
+    pub id: Option<u32>,
     pub name: String,
     pub elements: Vec<Element>,
     pub nodes: Vec<Node>,
 
-    pub creator_id: u64,
+    pub creator_id: u32,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -112,7 +112,7 @@ pub struct Network {
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct ElementVO {
     pub id: String,
-    pub parent_network_id: Option<u64>,
+    pub parent_network_id: Option<u32>,
     pub name: String,
 
     pub type_name: String,
@@ -204,7 +204,7 @@ impl ElementVO {
             )?),
             &_ => {
                 return Err(RequestParseError::MalformedRequest(
-                    "Invalid element type".to_string(),
+                    format!("Invalid element type {}", self.type_name)
                 ))
             }
         };
@@ -222,12 +222,12 @@ impl ElementVO {
 }
 
 //// Not exported dueto ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Element {
     pub id: String,
-    pub parent_network_id: Option<u64>,
+    pub parent_network_id: Option<u32>,
     pub name: String,
 
     pub type_name: String,
@@ -241,8 +241,8 @@ pub struct Element {
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct Position {
-    pub x: i32,
-    pub y: i32,
+    pub x: f32,
+    pub y: f32,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -256,7 +256,7 @@ pub struct Terminal {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum Parameters {
@@ -278,7 +278,7 @@ pub enum Parameters {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct AcDiffParams {
@@ -316,7 +316,7 @@ impl AcDiffParams {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct AsymmetricIntegratorParams {
@@ -396,7 +396,7 @@ impl AsymmetricIntegratorParams {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct ComparatorParams {
@@ -434,7 +434,7 @@ impl ComparatorParams {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct FilterParams {
@@ -496,7 +496,7 @@ impl FilterParams {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct FilterbankParams {
@@ -509,6 +509,10 @@ pub struct FilterbankParams {
 fn parse_float_vector(input: &str) -> Option<Vec<f64>> {
     // Remove leading and trailing whitespaces and square brackets
     let trimmed_input = input.trim_start_matches('[').trim_end_matches(']');
+
+    if trimmed_input.len() == 0 {
+        return Some(vec![]);
+    }
 
     // Split the input string by commas
     let values: Vec<&str> = trimmed_input.split(',').collect();
@@ -525,6 +529,10 @@ fn parse_float_vector(input: &str) -> Option<Vec<f64>> {
 fn parse_int_vector(input: &str) -> Option<Vec<u64>> {
     // Remove leading and trailing whitespaces and square brackets
     let trimmed_input = input.trim_start_matches('[').trim_end_matches(']');
+
+    if trimmed_input.len() == 0 {
+        return Some(vec![]);
+    }
 
     // Split the input string by commas
     let values: Vec<&str> = trimmed_input.split(',').collect();
@@ -578,7 +586,7 @@ impl FilterbankParams {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct GainOpampParams {
@@ -620,7 +628,7 @@ impl GainOpampParams {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct LookupTableParams {
@@ -644,7 +652,7 @@ impl LookupTableParams {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct MultiplierParams {
@@ -673,6 +681,10 @@ fn parse_activation_function_vector(input: &str) -> Option<Vec<ActivationFunctio
     // Remove leading and trailing whitespaces and square brackets
     let trimmed_input = input.trim_start_matches('[').trim_end_matches(']');
 
+    if trimmed_input.len() == 0 {
+        return Some(vec![]);
+    }
+
     // Split the input string by commas
     let values: Vec<&str> = trimmed_input.split(',').collect();
 
@@ -692,7 +704,7 @@ fn parse_activation_function_vector(input: &str) -> Option<Vec<ActivationFunctio
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct NeuralNetParams {
@@ -772,7 +784,7 @@ impl NeuralNetParams {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct PeakDetectorParams {
@@ -850,7 +862,7 @@ impl PeakDetectorParams {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 #[allow(non_snake_case)]
@@ -905,6 +917,10 @@ fn parse_vector_vector_floats(input: &str) -> Option<Vec<Vec<f64>>> {
     // Remove leading and trailing whitespaces and square brackets
     let trimmed_input = input.trim_start_matches('[').trim_end_matches(']');
 
+    if trimmed_input.len() == 0 {
+        return Some(vec![]);
+    }
+
     // Split the input string by commas
     let values: Vec<&str> = trimmed_input.split("],[").collect();
 
@@ -915,7 +931,7 @@ fn parse_vector_vector_floats(input: &str) -> Option<Vec<Vec<f64>>> {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct SynthesizedFilterParams {
@@ -938,7 +954,7 @@ impl SynthesizedFilterParams {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct TerminalParams {
@@ -1004,7 +1020,7 @@ impl TerminalParams {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 #[allow(non_camel_case_types)]
@@ -1021,7 +1037,7 @@ pub enum CapacitorConfiguration{
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 #[allow(non_camel_case_types)]
@@ -1035,7 +1051,7 @@ pub enum FilterType {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 #[allow(non_camel_case_types)]
@@ -1050,7 +1066,7 @@ pub enum GainOpampMode {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 #[allow(non_camel_case_types)]
@@ -1061,7 +1077,7 @@ pub enum OpampType {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 #[allow(non_camel_case_types)]
@@ -1072,7 +1088,7 @@ pub enum ModelVersion {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 #[allow(non_camel_case_types)]
@@ -1083,11 +1099,10 @@ pub enum UpDownType {
 }
 
 //// NOTE: Not exported due to ElementVO
-// #[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize, PartialEq)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 #[allow(non_camel_case_types)]
-#[derive(PartialEq, Debug)]
 pub enum ActivationFunction {
     Tanh,
     Sigmoid,
@@ -1455,43 +1470,18 @@ mod tests {
 
     #[allow(non_snake_case)]
     #[test]
-    fn test_to_network() {
+    fn test_to_network_json_file() {
         // arrange
-        let mut params: HashMap<String, String> = HashMap::new();
-        params.insert("characteristic_frequency".to_string(), "1.0".to_string());
-        params.insert("quality_factor".to_string(), "2.0".to_string());
-        params.insert("filter_type".to_string(), "lpf1".to_string());        
+        let mut file_path = std::path::PathBuf::new();
+        file_path.push("src");
+        file_path.push("aml_core");
+        file_path.push("sample_request.json");
 
-        let mut filter_params: HashMap<String, HashMap<String, String>> = HashMap::new();
-        filter_params.insert("Filter".to_string(), params);
+        let req: SimulateNetworkRequest = serde_json::from_str(
+            &std::fs::read_to_string(file_path.clone()).unwrap(),
+        ).unwrap();
 
-        let sample_filter: ElementVO = ElementVO { 
-            id: "123".to_string(), 
-            parent_network_id: Some(5000), 
-            name: "Test ElementVO".to_string(), 
-            type_name: "Filter".to_string(), 
-            element_type_params: filter_params, 
-            terminals: vec![Terminal{
-                id: "2|reactflow__edge-1-2".to_string(),
-                parent_element_id: "2".to_string(),
-                type_name: "input".to_string(),
-                node_name: "reactflow__edge-1-2".to_string(),
-            }, Terminal{
-                id: "2|reactflow__edge-2-3".to_string(),
-                parent_element_id: "2".to_string(),
-                type_name: "output".to_string(),
-                node_name: "reactflow__edge-2-3".to_string(),
-            }], 
-            position: Position { x: 1, y: 1 } 
-        };
-
-        let nvo: NetworkVO = NetworkVO { 
-            id: Some(5000), 
-            name: "Test NetworkVO".to_string(), 
-            elements: vec![sample_filter], 
-            nodes: vec![], 
-            creator_id: 1u64, 
-        };
+        let nvo: NetworkVO = req.network;
 
         // act
         let result = nvo.to_network();

@@ -188,8 +188,8 @@ const remoteTransformer = {
 		const terminalMap: Map<string, Terminal[]> = getTerminalMap(network.edges);
 
 		const networkToSimulate: NetworkVO = {
-			id: BigInt(network.metaData.id),
-			creator_id: BigInt(USER_ID),
+			id: network.metaData.id,
+			creator_id: USER_ID,
 			name: network.metaData.name,
 			elements: network.nodes.map((node: Node<NodeDataT>) => {
 				//create the params object
@@ -201,7 +201,7 @@ const remoteTransformer = {
 				return {
 					id: node.id,
 					name: node.data.label,
-					parent_network_id: BigInt(network.metaData.id),
+					parent_network_id: network.metaData.id,
 					type_name: actualElementType,
 					element_type_params: params, //consider the given params object as Parameters
 					terminals: terminalMap.get(node.id) || [], //empty terminals in case the node is not connected anything
@@ -214,7 +214,7 @@ const remoteTransformer = {
 			nodes: network.edges.map((edge: Edge<EdgeDataT>) => ({
 				id: edge.id,
 				name: edge.id,
-				parent_network_id: BigInt(network.metaData.id),
+				parent_network_id: network.metaData.id,
 				terminal_ids: [getTerminalId(edge.source, edge.id), getTerminalId(edge.target, edge.id)], //source and target terminal ids
 			})),
 		};

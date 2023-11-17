@@ -2,4 +2,4 @@
 import type { Position } from "./Position";
 import type { Terminal } from "./Terminal";
 
-export interface ElementVO { id: string, parent_network_id: bigint | null, name: string, type_name: string, element_type_params: Record<string, Record<string, string>>, terminals: Array<Terminal>, position: Position, }
+export interface ElementVO { id: string, parent_network_id: number | null, name: string, type_name: string, element_type_params: Record<string, Record<string, string>>, terminals: Array<Terminal>, position: Position, }

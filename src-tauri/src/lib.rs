@@ -1,6 +1,8 @@
 pub mod aml_core;
 
 pub mod uicontroller {
+    use std::collections;
+
     use crate::aml_core::file_data_manager;
     use crate::aml_core::network_manager;
     use crate::aml_core::{element_repository, project_manager};
@@ -44,15 +46,27 @@ pub mod uicontroller {
     #[tauri::command]
     pub fn simulate_network(
         req: network_manager::SimulateNetworkRequest,
-    ) -> i32 {
-    // ) -> network_manager::SimulateNetworkResponse {
+    // ) -> i32 {
+    ) -> network_manager::SimulateNetworkResponse {
         let nvo: network_manager::NetworkVO = req.network;
         let _actual_network: network_manager::Network = nvo.to_network().unwrap();
         let _audio_path: String = req.audio_file_path;
 
+        let j = serde_json::to_string(&_actual_network).unwrap();
+
+        // Print, write to a file, or send to an HTTP server.
+        println!("{}", j);
+
         // call simulate network
         // network_manager::simulate_network(&actual_network, &audio_path);
-        42
+        // 42
+        let resp: collections::HashMap<String, Vec<f64>> = collections::HashMap::new();
+
+        network_manager::SimulateNetworkResponse {
+            response: resp,
+            visualization_path: "123".to_string(),
+            py_code_path: "345".to_string(),
+        }
     }
     
 }
