@@ -6,7 +6,6 @@ import remoteTransformer from "./RemoteTransformer";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import { type ElementT, type NetworkT } from "../../redux/slices/ModelCreationSlice";
 import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
-import { backendElements } from "../../tests/mockdata/allElementsMock";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
 
 /**
@@ -87,15 +86,19 @@ const remoteService = {
 		console.log("ESLINT doesn't like empty functions :(");
 	},
 
+	getAllProjects: async (): Promise<ShallowProjectDetails[]> => {
+		const getProjectsResponse = await remoteClient.getAllProjects();
+		return remoteTransformer.parseGetProjectsResponse(getProjectsResponse);
+	},
+
 	getAllElements: async (): Promise<Record<string, ElementT>> => {
-		// const getElementsResponse = await remoteClient.getAllElements();
-		return remoteTransformer.parseGetElementsResponse(backendElements);
+		const getElementsResponse = await remoteClient.getAllElements();
+		return remoteTransformer.parseGetElementsResponse(getElementsResponse);
 	},
 
 	simulateNetwork: async (network: NetworkT, inputFile: InputFileMetaDataT): Promise<Record<string, number[]>> => {
 		//TODO: Perform the validations on network
 		const simulationRequest: SimulateNetworkRequest = remoteTransformer.createSimulateRequest(network, inputFile);
-		console.log("Request:", simulationRequest);
 
 		//eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		const simulationResponse = { response: {} as Record<string, number[]> };

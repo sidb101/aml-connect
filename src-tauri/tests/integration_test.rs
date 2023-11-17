@@ -1,23 +1,36 @@
 use crate::aml_connect::aml_core::db_adapter::models::*;
-use std::{env, path::{Path, PathBuf}};
-use anyhow::Result;
-use std::fs;
 use aml_connect::{
     self,
-    aml_core::{db_adapter::{self, schema::projects}, file_data_manager::{FilesUploadRequest, FileUploadRequest, DataSet, self, GetFilesRequest}},
+    aml_core::{
+        db_adapter::{
+            self,
+            schema::{audio_files, input_data, projects},
+        },
+        file_data_manager::{
+            self, DataSet, FileUploadRequest, FilesUploadRequest, GetFilesRequest,
+        },
+    },
 };
+use anyhow::Result;
 use diesel::{
-    query_dsl::methods::FilterDsl, Connection, ExpressionMethods, RunQueryDsl, SelectableHelper,
+    delete,
+    query_dsl::methods::FilterDsl,
+    r2d2::{ConnectionManager, PooledConnection},
+    Connection, ExpressionMethods, RunQueryDsl, SelectableHelper, SqliteConnection,
 };
 use directories::BaseDirs;
 use log::info;
+use std::fs;
+use std::{
+    env,
+    path::{Path, PathBuf},
+};
 
-use aml_connect::aml_core::network_manager::{self, SimulatorError, NetworkSimulator};
+use aml_connect::aml_core::network_manager::{self, NetworkSimulator, SimulatorError};
 use serde_json::{self, Value};
 
-fn create_app_dir_if_not_exists() -> Result<PathBuf>{
-    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir())
-        .join("aml_connect");
+fn create_app_dir_if_not_exists() -> Result<PathBuf> {
+    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir()).join("aml_connect");
     if !app_dir.exists() {
         fs::create_dir_all(app_dir.clone())?;
     }
@@ -32,8 +45,16 @@ fn integration_test_setup(app_dir: PathBuf) {
 
     fs::create_dir_all(&destination_dir).unwrap();
 
-    fs::copy(PathBuf::from("./tests/bearing-faults.wav"), &destination_path1).unwrap();
-    fs::copy(PathBuf::from("./tests/rising-chirp.wav"), &destination_path2).unwrap();
+    fs::copy(
+        PathBuf::from("./tests/bearing-faults.wav"),
+        &destination_path1,
+    )
+    .unwrap();
+    fs::copy(
+        PathBuf::from("./tests/rising-chirp.wav"),
+        &destination_path2,
+    )
+    .unwrap();
     fs::copy(PathBuf::from("./tests/heart-rate.wav"), &destination_path3).unwrap();
 }
 
@@ -50,8 +71,7 @@ fn save_on_db() {
 fn test_list_elements_from_simulator() {
     let mut sc = network_manager::AmlSimulatorSidecar::new();
     sc.sidecar_name = String::from("../aspinity_wrapper");
-    let elements_json_str = network_manager::AmlSimulator::list_elements(&sc)
-        .unwrap();
+    let elements_json_str = network_manager::AmlSimulator::list_elements(&sc).unwrap();
     let elements_json: Value = serde_json::from_str(elements_json_str.as_str())
         .map_err(|e| SimulatorError::JsonParseError(e.to_string()))
         .unwrap();
@@ -59,7 +79,6 @@ fn test_list_elements_from_simulator() {
     // check that one of the keys "AcDiff" exist in elements_json
     assert!(elements_json["AcDiff"].is_object());
 }
-
 
 // #[ignore]
 #[test]
@@ -74,7 +93,7 @@ fn save_file_metadata() {
     if Path::new(&db_path).exists() {
         std::fs::remove_file(&db_path).unwrap();
     }
-    
+
     let conn_pool = db_adapter::establish_connection().unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
@@ -82,7 +101,8 @@ fn save_file_metadata() {
 
     use crate::aml_connect::aml_core::db_adapter::schema::projects;
     let new_project = NewProject {
-        description: Some("Test project".to_string()),
+        name: "Test project".to_string(),
+        description: Some("Test Project".to_string()),
         slug: "test_project".to_string(),
     };
 
@@ -132,12 +152,14 @@ fn save_file_metadata() {
         .first::<Project>(conn)
         .unwrap();
 
+    clear_db(conn);
+
     assert!(found_project.description == project.description);
 }
 
 // #[ignore]
 #[test]
-fn validate_file_and_save_metadata () {
+fn validate_file_and_save_metadata() {
     // set DATABASE_PATH env var
     let db_dir_path = "./tests";
     env::set_var("DATABASE_PATH", &db_dir_path);
@@ -159,34 +181,63 @@ fn validate_file_and_save_metadata () {
 
     let request = FilesUploadRequest {
         proj_slug: "test_project".to_string(),
-        input_files: vec![FileUploadRequest {
-           file_name: "bearing-faults.wav".to_string(),
-           dataset_type: DataSet::Training, 
-        },
-        FileUploadRequest {
-           file_name: "rising-chirp.wav".to_string(),
-           dataset_type: DataSet::Training, 
-        }], 
+        input_files: vec![
+            FileUploadRequest {
+                file_name: "bearing-faults.wav".to_string(),
+                dataset_type: DataSet::Training,
+            },
+            FileUploadRequest {
+                file_name: "rising-chirp.wav".to_string(),
+                dataset_type: DataSet::Training,
+            },
+        ],
     };
 
     let project_slug = "test_project";
     let dummy_project = NewProject {
+        name: "Test project".to_string(),
         slug: project_slug.to_owned(),
         description: Some("This is a test project".to_owned()),
     };
     diesel::insert_into(projects::table)
         .values(&dummy_project)
-        .execute(conn).unwrap();
+        .execute(conn)
+        .unwrap();
 
-    let file_upload_response = file_data_manager::put_files::save_input_files(&request, &app_dir, conn);
+    let file_upload_response =
+        file_data_manager::put_files::save_input_files(&request, &app_dir, conn);
 
-    println!("file_upload_response : {}", file_upload_response.as_ref().unwrap().succeeded);
+    println!(
+        "file_upload_response : {}",
+        file_upload_response.as_ref().unwrap().succeeded
+    );
 
+    clear_db(conn);
     assert!(file_upload_response.as_ref().is_ok());
-    assert!(file_upload_response.as_ref().unwrap().upload_success_files.len() == 2);
-    assert!(file_upload_response.as_ref().unwrap().upload_success_files[0].file_name == "bearing-faults.wav");
-    assert!(file_upload_response.as_ref().unwrap().upload_success_files[1].file_name == "rising-chirp.wav");
-    assert!(file_upload_response.as_ref().unwrap().upload_failed_files.len() == 0);
+    assert!(
+        file_upload_response
+            .as_ref()
+            .unwrap()
+            .upload_success_files
+            .len()
+            == 2
+    );
+    assert!(
+        file_upload_response.as_ref().unwrap().upload_success_files[0].file_name
+            == "bearing-faults.wav"
+    );
+    assert!(
+        file_upload_response.as_ref().unwrap().upload_success_files[1].file_name
+            == "rising-chirp.wav"
+    );
+    assert!(
+        file_upload_response
+            .as_ref()
+            .unwrap()
+            .upload_failed_files
+            .len()
+            == 0
+    );
     assert!(file_upload_response.as_ref().unwrap().attempted == 2);
     assert!(file_upload_response.as_ref().unwrap().succeeded == 2);
     assert!(file_upload_response.as_ref().unwrap().failed == 0);
@@ -194,7 +245,7 @@ fn validate_file_and_save_metadata () {
 
 // #[ignore]
 #[test]
-fn validate_file_and_save_metadata_check_exists () {
+fn validate_file_and_save_metadata_check_exists() {
     // set DATABASE_PATH env var
     let db_dir_path = "./tests";
     env::set_var("DATABASE_PATH", &db_dir_path);
@@ -213,41 +264,53 @@ fn validate_file_and_save_metadata_check_exists () {
 
     let request = FilesUploadRequest {
         proj_slug: "test_project".to_string(),
-        input_files: vec![FileUploadRequest {
-           file_name: "gaga.wav".to_string(),
-           dataset_type: DataSet::Training, 
-        },
-        FileUploadRequest {
-           file_name: "gaga_2.wav".to_string(),
-           dataset_type: DataSet::Training, 
-        }], 
+        input_files: vec![
+            FileUploadRequest {
+                file_name: "gaga.wav".to_string(),
+                dataset_type: DataSet::Training,
+            },
+            FileUploadRequest {
+                file_name: "gaga_2.wav".to_string(),
+                dataset_type: DataSet::Training,
+            },
+        ],
     };
 
     let project_slug = "test_project";
     let dummy_project = NewProject {
+        name: "Test project".to_string(),
         slug: project_slug.to_owned(),
         description: Some("This is a test project".to_owned()),
     };
     diesel::insert_into(projects::table)
         .values(&dummy_project)
-        .execute(conn).unwrap();
+        .execute(conn)
+        .unwrap();
 
     let app_dir = create_app_dir_if_not_exists().unwrap();
     integration_test_setup(app_dir.clone());
 
-    let file_upload_response = file_data_manager::put_files::save_input_files(&request, &app_dir, conn );
+    let file_upload_response =
+        file_data_manager::put_files::save_input_files(&request, &app_dir, conn);
     println!("file_upload_response : {:?}", file_upload_response);
+
+    clear_db(conn);
     assert!(file_upload_response.as_ref().is_ok());
-    assert!(file_upload_response.as_ref().unwrap().upload_failed_files.len() == 2);
+    assert!(
+        file_upload_response
+            .as_ref()
+            .unwrap()
+            .upload_failed_files
+            .len()
+            == 2
+    );
     assert!(file_upload_response.as_ref().unwrap().attempted == 2);
     assert!(file_upload_response.as_ref().unwrap().succeeded == 0);
     assert!(file_upload_response.as_ref().unwrap().failed == 2);
-
 }
 
 #[test]
-fn get_audio_files_invalid_request () {
-
+fn get_audio_files_invalid_request() {
     let db_dir_path = "./tests";
     env::set_var("DATABASE_PATH", &db_dir_path);
 
@@ -257,11 +320,11 @@ fn get_audio_files_invalid_request () {
     if Path::new(&db_path).exists() {
         std::fs::remove_file(&db_path).unwrap();
     }
-    
+
     let conn_pool = db_adapter::establish_connection().unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
-    
+
     let conn = &mut conn_pool.get().unwrap();
 
     let request = GetFilesRequest {
@@ -279,13 +342,12 @@ fn get_audio_files_invalid_request () {
     };
 
     let files = file_data_manager::get_files::get_input_files(&request, conn);
-
+    clear_db(conn);
     assert!(files.is_err());
-
 }
 
 #[test]
-fn get_non_existent_files () {
+fn get_non_existent_files() {
     let db_dir_path = "./tests";
     env::set_var("DATABASE_PATH", &db_dir_path);
 
@@ -295,7 +357,7 @@ fn get_non_existent_files () {
     if Path::new(&db_path).exists() {
         std::fs::remove_file(&db_path).unwrap();
     }
-    
+
     let conn_pool = db_adapter::establish_connection().unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
@@ -303,33 +365,38 @@ fn get_non_existent_files () {
 
     let request = FilesUploadRequest {
         proj_slug: "test_project".to_string(),
-        input_files: vec![FileUploadRequest {
-            file_name: "bearing-faults.wav".to_string(),
-            dataset_type: DataSet::Training, 
-         },
-         FileUploadRequest {
-            file_name: "heart-rate.wav".to_string(),
-            dataset_type: DataSet::Training, 
-         },
-         FileUploadRequest {
-            file_name: "rising-chirp.wav".to_string(),
-            dataset_type: DataSet::Training, 
-         }], 
+        input_files: vec![
+            FileUploadRequest {
+                file_name: "bearing-faults.wav".to_string(),
+                dataset_type: DataSet::Training,
+            },
+            FileUploadRequest {
+                file_name: "heart-rate.wav".to_string(),
+                dataset_type: DataSet::Training,
+            },
+            FileUploadRequest {
+                file_name: "rising-chirp.wav".to_string(),
+                dataset_type: DataSet::Training,
+            },
+        ],
     };
 
     let project_slug = "test_project";
     let dummy_project = NewProject {
+        name: "Test project".to_string(),
         slug: project_slug.to_owned(),
         description: Some("This is a test project".to_owned()),
     };
     diesel::insert_into(projects::table)
         .values(&dummy_project)
-        .execute(conn).unwrap();
+        .execute(conn)
+        .unwrap();
 
     let app_dir = create_app_dir_if_not_exists().unwrap();
     integration_test_setup(app_dir.clone());
 
-    let file_upload_response = file_data_manager::put_files::save_input_files(&request, &app_dir, conn);
+    let file_upload_response =
+        file_data_manager::put_files::save_input_files(&request, &app_dir, conn);
     println!("file_upload_response : {:?}", file_upload_response);
     assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_success_files.len() == 3);
@@ -339,14 +406,15 @@ fn get_non_existent_files () {
         dataset_type: Some(DataSet::Validation),
     };
 
-    let get_file_response = file_data_manager::get_files::get_input_files(&get_file_request, conn);   
+    let get_file_response = file_data_manager::get_files::get_input_files(&get_file_request, conn);
+    clear_db(conn);
     assert!(get_file_response.unwrap().files.len() == 0);
 }
 
 // ignore unless - youve created bearing-faults.wav, heart-rate.wav and rising-chirp.wav in ~/.local/share/aml_connect
 // #[ignore]
 #[test]
-fn put_files_then_check_get_files () {
+fn put_files_then_check_get_files() {
     let db_dir_path = "./tests";
     env::set_var("DATABASE_PATH", &db_dir_path);
 
@@ -356,7 +424,7 @@ fn put_files_then_check_get_files () {
     if Path::new(&db_path).exists() {
         std::fs::remove_file(&db_path).unwrap();
     }
-    
+
     let conn_pool = db_adapter::establish_connection().unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
@@ -364,33 +432,38 @@ fn put_files_then_check_get_files () {
 
     let request = FilesUploadRequest {
         proj_slug: "test_project".to_string(),
-        input_files: vec![FileUploadRequest {
-            file_name: "bearing-faults.wav".to_string(),
-            dataset_type: DataSet::Training, 
-         },
-         FileUploadRequest {
-            file_name: "heart-rate.wav".to_string(),
-            dataset_type: DataSet::Training, 
-         },
-         FileUploadRequest {
-            file_name: "rising-chirp.wav".to_string(),
-            dataset_type: DataSet::Training, 
-         }], 
+        input_files: vec![
+            FileUploadRequest {
+                file_name: "bearing-faults.wav".to_string(),
+                dataset_type: DataSet::Training,
+            },
+            FileUploadRequest {
+                file_name: "heart-rate.wav".to_string(),
+                dataset_type: DataSet::Training,
+            },
+            FileUploadRequest {
+                file_name: "rising-chirp.wav".to_string(),
+                dataset_type: DataSet::Training,
+            },
+        ],
     };
 
     let project_slug = "test_project";
     let dummy_project = NewProject {
+        name: "Test project".to_string(),
         slug: project_slug.to_owned(),
         description: Some("This is a test project".to_owned()),
     };
     diesel::insert_into(projects::table)
         .values(&dummy_project)
-        .execute(conn).unwrap();
+        .execute(conn)
+        .unwrap();
 
     let app_dir = create_app_dir_if_not_exists().unwrap();
     integration_test_setup(app_dir.clone());
 
-    let file_upload_response = file_data_manager::put_files::save_input_files(&request, &app_dir, conn);
+    let file_upload_response =
+        file_data_manager::put_files::save_input_files(&request, &app_dir, conn);
     println!("file_upload_response : {:?}", file_upload_response);
     assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_success_files.len() == 3);
@@ -401,11 +474,11 @@ fn put_files_then_check_get_files () {
     };
     let get_files_response = file_data_manager::get_files::get_input_files(&get_file_request, conn);
     assert!(get_files_response.unwrap().files.len() == 3);
-
+    clear_db(conn);
 }
 
 #[test]
-fn validate_file_and_save_metadata_check_extension () {
+fn validate_file_and_save_metadata_check_extension() {
     let db_dir_path = "./tests";
     env::set_var("DATABASE_PATH", &db_dir_path);
 
@@ -424,25 +497,36 @@ fn validate_file_and_save_metadata_check_extension () {
     let request = FilesUploadRequest {
         proj_slug: "test_project".to_string(),
         input_files: vec![FileUploadRequest {
-           file_name: "f2.txt".to_string(),
-           dataset_type: DataSet::Training, 
-        }], 
+            file_name: "f2.txt".to_string(),
+            dataset_type: DataSet::Training,
+        }],
     };
 
     let project_slug = "test_project";
     let dummy_project = NewProject {
+        name: "Test project".to_string(),
         slug: project_slug.to_owned(),
         description: Some("This is a test project".to_owned()),
     };
     diesel::insert_into(projects::table)
         .values(&dummy_project)
-        .execute(conn).unwrap();
+        .execute(conn)
+        .unwrap();
 
     let app_dir = create_app_dir_if_not_exists().unwrap();
     integration_test_setup(app_dir.clone());
 
-    let file_upload_response = file_data_manager::put_files::save_input_files(&request, &app_dir, conn);
+    let file_upload_response =
+        file_data_manager::put_files::save_input_files(&request, &app_dir, conn);
     println!("file_upload_response : {:?}", file_upload_response);
     assert!(file_upload_response.is_ok());
     assert!(file_upload_response.unwrap().upload_failed_files.len() == 1);
+    clear_db(conn);
+}
+
+fn clear_db(conn: &mut PooledConnection<ConnectionManager<SqliteConnection>>) {
+    // The order in which these databases is deleted is important since there are foreign key relations that must be kept consistent.
+    delete(audio_files::table).execute(conn).unwrap();
+    delete(input_data::table).execute(conn).unwrap();
+    delete(projects::table).execute(conn).unwrap();
 }

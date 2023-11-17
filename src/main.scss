@@ -39,59 +39,6 @@ Common Classes
 	border-radius: global.$border-radius;
 }
 
-/* -- Various kinds of containers -- */
-
-.content-container {
-	$left-offset: global.$sidebar-width + 2 * global.$nav-padding; /* This is the width of the sidebar with padding */
-	$top-offset: global.$header-height + 1 * global.$content-padding; /* This is the height of the header with top padding */
-	$bottom-offset: global.$footer-height + 2 * global.$panel-padding; /* This is the height of the footer with padding */
-
-	.body-content-container {
-		position: absolute; /* Absolute positioning will allow content to move underneath the header and sidebar */
-		margin-top: $top-offset; /* This should be the same as the height of the header */
-		margin-left: $left-offset; /* This should be the same as the width of the sidebar */
-		width: calc(100% - #{$left-offset} - 2 * #{global.$content-padding}); /* Subtract sidebar width and padding */
-		height: calc(100% - #{$top-offset}); /* Subtract header height and padding and footer height */
-		overflow: auto; /* Enable scrolling in both dimensions */
-		padding-left: global.$content-padding;
-		padding-right: global.$content-padding;
-	}
-
-	.body-content-container-with-header-btns-no-footer {
-		@extend .body-content-container;
-		$top-offset: global.$header-height + 2 * global.$content-padding; /* This is the height of the header with top padding */
-
-		margin-top: $top-offset;
-		height: calc(100% - #{$top-offset}); /* Subtract header height */
-	}
-
-	.body-content-container-no-header-btns-with-footer {
-		@extend .body-content-container;
-		$top-offset: global.$header-height + 1 * global.$content-padding; /* This is the height of the header with top padding */
-
-		height: calc(100% - #{$top-offset} - #{$bottom-offset}); /* Subtract header height and footer height */
-	}
-
-	.body-content-container-no-header-btns-no-footer {
-		@extend .body-content-container;
-		// Same as body-content-container
-	}
-
-	.body-content-container-with-header-btns-with-footer {
-		@extend .body-content-container;
-		$top-offset: global.$header-height + 2 * global.$content-padding; /* This is the height of the header with top padding */
-
-		margin-top: $top-offset;
-		height: calc(100% - #{$top-offset} - #{$bottom-offset}); /* Subtract header height and footer height */
-	}
-
-	.main-content-container {
-		position: absolute;
-		width: calc(100% - 2 * #{global.$content-padding});
-		z-index: 0;
-	}
-}
-
 /* -- Various kinds of texts -- */
 
 .brand-text {
@@ -106,7 +53,6 @@ Common Classes
 	font-family: global.$font-primary-bold;
 	font-size: global.$text-xxlarge;
 	line-height: 36px;
-	padding-bottom: 20px;
 	color: global.$color-dark-blue;
 }
 
@@ -209,7 +155,7 @@ Common Classes
 
 	&:hover {
 		background-color: global.$color-green;
-		color: global.$color-white;
+		color: global.$color-white !important; // Over-right the !important on "a" elements
 	}
 
 	&:active {

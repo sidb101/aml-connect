@@ -1,7 +1,6 @@
-use std::{collections::HashMap, path::PathBuf};
+use std::collections::HashMap;
 
 use anyhow::Result;
-use log::debug;
 use mockall::{automock, predicate::*};
 use serde::{Deserialize, Serialize};
 use tauri::api::process::Command;
@@ -854,6 +853,7 @@ impl PeakDetectorParams {
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+#[allow(non_snake_case)]
 pub struct PGAParams {
     pub Av1: f64,
     pub Av2: f64,
@@ -861,6 +861,7 @@ pub struct PGAParams {
 }
 
 impl PGAParams {
+    #[allow(non_snake_case)]
     fn from_hashmap(params: &HashMap<String, String>) -> Result<Self, RequestParseError> {
         let Av1 = params
             .get("Av1")
@@ -1006,8 +1007,9 @@ impl TerminalParams {
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+#[allow(non_camel_case_types)]
 #[derive(PartialEq)]
-pub enum CapacitorConfiguration {
+pub enum CapacitorConfiguration{
     Internal,
     Internal2x,
     Internal3x,
@@ -1022,6 +1024,7 @@ pub enum CapacitorConfiguration {
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+#[allow(non_camel_case_types)]
 #[derive(PartialEq)]
 pub enum FilterType {
     lpf1,
@@ -1035,6 +1038,7 @@ pub enum FilterType {
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+#[allow(non_camel_case_types)]
 #[derive(PartialEq)]
 pub enum GainOpampMode {
     Noninverting1x,
@@ -1049,6 +1053,7 @@ pub enum GainOpampMode {
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+#[allow(non_camel_case_types)]
 #[derive(PartialEq)]
 pub enum OpampType {
     StageZero,
@@ -1059,6 +1064,7 @@ pub enum OpampType {
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+#[allow(non_camel_case_types)]
 #[derive(PartialEq)]
 pub enum ModelVersion {
     FirstOrder,
@@ -1069,6 +1075,7 @@ pub enum ModelVersion {
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+#[allow(non_camel_case_types)]
 #[derive(PartialEq)]
 pub enum UpDownType {
     Rate,
@@ -1079,6 +1086,7 @@ pub enum UpDownType {
 // #[derive(Debug, Serialize, Deserialize, TS)]
 // #[ts(export)]
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+#[allow(non_camel_case_types)]
 #[derive(PartialEq, Debug)]
 pub enum ActivationFunction {
     Tanh,
@@ -1131,8 +1139,6 @@ impl NetworkSimulator for AmlSimulator {
 
 #[cfg(test)]
 mod tests {
-    use std::{env, fs::File, io::Read};
-
     use crate::aml_core::network_manager::*;
     use mockall::*;
 
@@ -1166,6 +1172,7 @@ mod tests {
         assert_eq!(Ok(expected_output), output);
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_AcDiffParams_from_hashmap() {
         // arrange
@@ -1182,6 +1189,7 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().bias.unwrap(), 2.0);
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_AsymmetricIntegratorParams_from_hashmap() {
         // arrange
@@ -1202,6 +1210,7 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().comparator_enable, true);
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_ComparatorParams_from_hashmap() {
         // arrange
@@ -1218,6 +1227,7 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().hysteresis_voltage.unwrap(), 2.0);
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_ComparatorParams_from_hashmap_withNone() {
         // arrange
@@ -1233,6 +1243,7 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().hysteresis_voltage, None);
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_FilterParams_from_hashmap() {
         // arrange
@@ -1251,6 +1262,7 @@ mod tests {
         assert!(result.as_ref().unwrap().filter_type == FilterType::lpf1);
     }
 
+    #[allow(non_snake_case)]    
     #[test]
     fn test_FilterbankParams_from_hashmap() {
         // arrange
@@ -1271,6 +1283,7 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().decay_rates, vec![1.0, 2.0, 3.0]);
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_GainOpampParams_from_hashmap() {
         // arrange
@@ -1287,6 +1300,7 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().feedback_cap_count, 2.0);
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_LookupTableParams_from_hashmap() {
         // arrange
@@ -1301,6 +1315,7 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().expression, "1.0".to_string());
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_MultiplierParams_from_hashmap() {
         // arrange
@@ -1315,6 +1330,7 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().slope, 1.0);
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_NeuralNetParams_from_hashmap() {
         // arrange
@@ -1348,6 +1364,7 @@ mod tests {
         );
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_PeakDetectorParams_from_hashmap() {
         // arrange
@@ -1370,6 +1387,7 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().parasitic_ratio, Some(1.0));
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_PGAParams_from_hashmap() {
         // arrange
@@ -1388,6 +1406,7 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().den, Some(1.0));
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_SynthesizedFilterParams_from_hashmap() {
         // arrange
@@ -1408,6 +1427,7 @@ mod tests {
         );
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_TerminalParams_from_hashmap() {
         // arrange
@@ -1433,6 +1453,7 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().is_extern, Some(true));
     }
 
+    #[allow(non_snake_case)]
     #[test]
     fn test_to_network() {
         // arrange
