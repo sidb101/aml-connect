@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import ReactFlow, {
 	Background,
 	BackgroundVariant,
@@ -13,7 +13,6 @@ import ReactFlow, {
 	type OnConnect,
 	type OnEdgesChange,
 	type OnNodesChange,
-	Position,
 } from "reactflow";
 
 import "reactflow/dist/style.css";
@@ -27,7 +26,7 @@ import {
 	selectCurrentNetwork,
 } from "../../../../../redux/slices/ModelCreationSlice";
 import Toolbar from "../Toolbar/Toolbar";
-import { newNode, newNodeId, newNodePosition } from "./canvasUtils";
+import { newNode } from "./canvasUtils";
 import NetworkElement from "./NetworkElement";
 import NetworkTerminal from "./NetworkTerminal";
 
@@ -50,8 +49,6 @@ export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps
 	const dispatch = useAppDispatch();
 	const currentNetwork = useAppSelector(selectCurrentNetwork);
 	const allElements = useAppSelector(selectAllElements);
-
-	// console.log(currentNetwork);
 
 	const onNodesChange: OnNodesChange = useCallback((changes: NodeChange[]) => {
 		dispatch(modelCreationActions.updateNodes({ nodeChanges: changes }));
@@ -87,8 +84,6 @@ export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps
 				connectionLineType={ConnectionLineType.Step}
 				nodeTypes={nodeTypes}
 				onNodeDoubleClick={(e: React.MouseEvent, node: Node<NodeDataT>) => {
-					//change the color of the node
-
 					onElementDoubleClick(node);
 				}}
 			>
