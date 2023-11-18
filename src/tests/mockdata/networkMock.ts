@@ -24,8 +24,8 @@ const mockNodes: Array<Node<NodeDataT>> = [
 	{
 		id: "2",
 		data: {
-			elementType: "Filterbank",
-			label: "Filterbank",
+			elementType: "Filter",
+			label: "Filter",
 		},
 		type: "networkElement",
 		position: { x: 250, y: 100 },
@@ -33,8 +33,8 @@ const mockNodes: Array<Node<NodeDataT>> = [
 	{
 		id: "3",
 		data: {
-			elementType: "Comparator",
-			label: "Comparator",
+			elementType: "Filter",
+			label: "Filter",
 		},
 		type: "networkElement",
 		position: { x: 450, y: 200 },
@@ -62,14 +62,14 @@ const mockEdges: Array<Edge<EdgeDataT>> = [
 		id: "edge__2-3",
 		source: "2",
 		target: "3",
-		sourceHandle: "handle__2-out_0",
-		data: { sourceTerminalType: "out_0", targetTerminalType: "positive" },
+		sourceHandle: "handle__2-output",
+		data: { sourceTerminalType: "output", targetTerminalType: "input" },
 	},
 	{
 		id: "edge__3-4",
 		source: "3",
 		target: "4",
-		sourceHandle: "handle__3-net",
+		sourceHandle: "handle__3-output",
 		data: { sourceTerminalType: "output", targetTerminalType: "net" },
 	},
 ];
@@ -116,10 +116,10 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			position: { x: 50, y: 200 },
 			terminals: [
 				{
-					id: "1|reactflow__edge-1-2",
+					id: "1|edge__1-2",
 					parent_element_id: "1",
-					type_name: "input",
-					node_name: "reactflow__edge-1-2",
+					type_name: "net",
+					node_name: "edge__1-2",
 				},
 			],
 			element_type_params: {
@@ -144,16 +144,16 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			position: { x: 250, y: 100 },
 			terminals: [
 				{
-					id: "2|reactflow__edge-1-2",
+					id: "2|edge__1-2",
 					parent_element_id: "2",
 					type_name: "input",
-					node_name: "reactflow__edge-1-2",
+					node_name: "edge__1-2",
 				},
 				{
-					id: "2|reactflow__edge-2-3",
+					id: "2|edge__2-3",
 					parent_element_id: "2",
 					type_name: "output",
-					node_name: "reactflow__edge-2-3",
+					node_name: "edge__2-3",
 				},
 			],
 		},
@@ -164,16 +164,16 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			type_name: "Filter",
 			terminals: [
 				{
-					id: "3|reactflow__edge-2-3",
+					id: "3|edge__2-3",
 					parent_element_id: "3",
 					type_name: "input",
-					node_name: "reactflow__edge-2-3",
+					node_name: "edge__2-3",
 				},
 				{
-					id: "3|reactflow__edge-3-4", //terminal ID
+					id: "3|edge__3-4", //terminal ID
 					parent_element_id: "3",
 					type_name: "output",
-					node_name: "reactflow__edge-3-4",
+					node_name: "edge__3-4",
 				},
 			],
 			position: { x: 450, y: 200 },
@@ -192,10 +192,10 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			type_name: "Terminal",
 			terminals: [
 				{
-					id: "4|reactflow__edge-3-4",
+					id: "4|edge__3-4",
 					parent_element_id: "4",
-					type_name: "output",
-					node_name: "reactflow__edge-3-4",
+					type_name: "net",
+					node_name: "edge__3-4",
 				},
 			],
 			position: { x: 650, y: 200 },
@@ -209,22 +209,22 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 	],
 	nodes: [
 		{
-			id: "reactflow__edge-1-2",
-			name: "reactflow__edge-1-2",
+			id: "edge__1-2",
+			name: "edge__1-2",
 			parent_network_id: MOCK_NETWORK_ID,
-			terminal_ids: ["1|reactflow__edge-1-2", "2|reactflow__edge-1-2"],
+			terminal_ids: ["1|edge__1-2", "2|edge__1-2"],
 		},
 		{
-			id: "reactflow__edge-2-3",
-			name: "reactflow__edge-2-3",
+			id: "edge__2-3",
+			name: "edge__2-3",
 			parent_network_id: MOCK_NETWORK_ID,
-			terminal_ids: ["2|reactflow__edge-2-3", "3|reactflow__edge-2-3"],
+			terminal_ids: ["2|edge__2-3", "3|edge__2-3"],
 		},
 		{
-			id: "reactflow__edge-3-4",
-			name: "reactflow__edge-3-4",
+			id: "edge__3-4",
+			name: "edge__3-4",
 			parent_network_id: MOCK_NETWORK_ID,
-			terminal_ids: ["3|reactflow__edge-3-4", "4|reactflow__edge-3-4"],
+			terminal_ids: ["3|edge__3-4", "4|edge__3-4"],
 		},
 	],
 };

@@ -169,7 +169,6 @@ const remoteTransformer = {
 	},
 
 	parseGetProjectsResponse(getProjectsResponse: GetProjectsResponse): ShallowProjectDetails[] {
-		console.log(getProjectsResponse);
 		const { projects } = getProjectsResponse;
 
 		return projects.map((project) => {
