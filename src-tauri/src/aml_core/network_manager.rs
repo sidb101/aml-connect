@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, path::Path};
 
 use anyhow::Result;
 use mockall::{automock, predicate::*};
@@ -22,6 +22,7 @@ pub enum SimulatorError {
     CommandExecutionError(String),
     #[error("Failed to parse sidecar output as JSON")]
     JsonParseError(String),
+    
 }
 
 #[derive(Error, Debug, Serialize, Deserialize, TS)]
@@ -37,6 +38,7 @@ pub enum RequestParseError {
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct SimulateNetworkRequest {
     pub network: NetworkVO,
+    pub project_slug: String,
     pub audio_file_path: String,
 }
 
@@ -203,9 +205,10 @@ impl ElementVO {
                 )?,
             )?),
             &_ => {
-                return Err(RequestParseError::MalformedRequest(
-                    format!("Invalid element type {}", self.type_name)
-                ))
+                return Err(RequestParseError::MalformedRequest(format!(
+                    "Invalid element type {}",
+                    self.type_name
+                )))
             }
         };
 
@@ -1025,7 +1028,7 @@ impl TerminalParams {
 // #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 #[allow(non_camel_case_types)]
 #[derive(PartialEq)]
-pub enum CapacitorConfiguration{
+pub enum CapacitorConfiguration {
     Internal,
     Internal2x,
     Internal3x,
@@ -1141,6 +1144,13 @@ impl ExecutableSidecar for AmlSimulatorSidecar {
 
 pub trait NetworkSimulator {
     fn list_elements<E: ExecutableSidecar>(sidecar: &E) -> Result<String, SimulatorError>;
+    fn simulate_network<E: ExecutableSidecar>(
+        project_slug: &str,
+        sidecar: &E,
+        network: &Network,
+        audio_file_path: &Path,
+        app_dir: &Path,
+    ) -> Result<SimulateNetworkResponse, SimulatorError>;
 }
 
 pub struct AmlSimulator {}
@@ -1149,6 +1159,29 @@ impl NetworkSimulator for AmlSimulator {
     fn list_elements<E: ExecutableSidecar>(sidecar: &E) -> Result<String, SimulatorError> {
         let params = vec!["--get_elements".to_string()];
         sidecar.get_output(params)
+    }
+
+    fn simulate_network<E: ExecutableSidecar>(
+        proejct_slug: &str,
+        sidecar: &E,
+        network: &Network,
+        audio_file_path: &Path,
+        app_dir: &Path,
+    ) -> Result<SimulateNetworkResponse, SimulatorError> {
+        // Create audio file path
+        let absolute_file_path = Path::new(app_dir).join(audio_file_path);
+
+        if !absolute_file_path.exists() {
+            return Err(SimulatorError::AudioFileNotFound(
+                absolute_file_path.to_str().unwrap().to_string(),
+            ));
+        }
+        absolute_file_path
+        // Validate presence of audio file
+        // Store network file to disk
+
+        // Call sidecar
+    
     }
 }
 
@@ -1277,7 +1310,7 @@ mod tests {
         assert!(result.as_ref().unwrap().filter_type == FilterType::lpf1);
     }
 
-    #[allow(non_snake_case)]    
+    #[allow(non_snake_case)]
     #[test]
     fn test_FilterbankParams_from_hashmap() {
         // arrange
@@ -1477,9 +1510,8 @@ mod tests {
         file_path.push("aml_core");
         file_path.push("sample_request.json");
 
-        let req: SimulateNetworkRequest = serde_json::from_str(
-            &std::fs::read_to_string(file_path.clone()).unwrap(),
-        ).unwrap();
+        let req: SimulateNetworkRequest =
+            serde_json::from_str(&std::fs::read_to_string(file_path.clone()).unwrap()).unwrap();
 
         let nvo: NetworkVO = req.network;
 

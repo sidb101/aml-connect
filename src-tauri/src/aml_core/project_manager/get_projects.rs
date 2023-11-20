@@ -30,7 +30,6 @@ pub fn get_projects(conn: &mut DbConn) -> GetProjectsResponseResult {
         }
     };
 
-    log::info!("get_projects response: {:?}", project_details);
     Ok(GetProjectsResponse {
         projects: project_details,
     })

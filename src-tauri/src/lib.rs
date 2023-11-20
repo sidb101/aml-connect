@@ -46,16 +46,17 @@ pub mod uicontroller {
     #[tauri::command]
     pub fn simulate_network(
         req: network_manager::SimulateNetworkRequest,
-    // ) -> i32 {
+        app_dir: State<std::path::PathBuf>,
     ) -> network_manager::SimulateNetworkResponse {
         let nvo: network_manager::NetworkVO = req.network;
         let _actual_network: network_manager::Network = nvo.to_network().unwrap();
-        let _audio_path: String = req.audio_file_path;
+        let audio_path: String = req.audio_file_path;
 
-        let j = serde_json::to_string(&_actual_network).unwrap();
+        println!("app dir: {}", app_dir.as_path().display());
+        let _j = serde_json::to_string(&_actual_network).unwrap();
 
         // Print, write to a file, or send to an HTTP server.
-        println!("{}", j);
+        println!("{}", audio_path);
 
         // call simulate network
         // network_manager::simulate_network(&actual_network, &audio_path);
