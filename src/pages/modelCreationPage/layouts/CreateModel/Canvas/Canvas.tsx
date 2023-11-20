@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import ReactFlow, {
 	Background,
 	BackgroundVariant,
@@ -6,6 +6,7 @@ import ReactFlow, {
 	ConnectionLineType,
 	Controls,
 	type DefaultEdgeOptions,
+	type Edge,
 	type EdgeChange,
 	type FitViewOptions,
 	type Node,
@@ -14,6 +15,7 @@ import ReactFlow, {
 	type OnEdgesChange,
 	type OnNodesChange,
 	Position,
+	useOnSelectionChange,
 } from "reactflow";
 
 import "reactflow/dist/style.css";
@@ -100,13 +102,44 @@ export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps
 		const currentNodes: Array<Node<NodeDataT>> = currentNetwork.nodes;
 		return {
 			x: currentNodes[currentNodes.length - 1].position.x - 25,
-			y: currentNodes[currentNodes.length - 1].position.y + 25,
+			y: currentNodes[currentNodes.length - 1].position.y + 2,
 		};
 	};
 
 	const newNodeId = () => {
 		return String(currentNetwork.nodes.length + 1);
 	};
+
+	// const onEdgeDoubleClick = (event: React.MouseEvent, edge: Edge) => {
+	// 	event.stopPropagation();
+	// 	console.log(`remove`, edge);
+	// 	dispatch(modelCreationActions.removeEdge({ edgeToRemove: edge }));
+	// };
+
+	const [selectedNodes, setSelectedNodes] = useState<Node[]>([]);
+	const [selectedEdges, setSelectedEdges] = useState<Edge[]>([]);
+
+	const onSelectionChange = (params: { nodes: Node[]; edges: Edge[] }) => {
+		// params.nodes.forEach((node) => console.log(node.id));
+		//params.edges.forEach((edge) => console.log(edge.id));
+		setSelectedNodes(params.nodes);
+		setSelectedEdges(params.edges);
+	};
+
+	const onKeyDown = (event) => {
+		if (event.key === "Delete" || event.key === "Backspace") {
+			selectedEdges.map((selectedEdge) => {
+				dispatch(modelCreationActions.removeEdge({ edgeToRemove: selectedEdge }));
+			});
+		}
+	};
+
+	useEffect(() => {
+		window.addEventListener("keydown", onKeyDown);
+		return () => {
+			window.removeEventListener("keydown", onKeyDown);
+		};
+	}, []);
 
 	return (
 		<div className={`Canvas_container`}>
@@ -115,6 +148,8 @@ export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps
 				edges={currentNetwork.edges}
 				onNodesChange={onNodesChange}
 				onEdgesChange={onEdgesChange}
+				// onEdgeDoubleClick={onEdgeDoubleClick}
+				onSelectionChange={onSelectionChange}
 				onConnect={onConnect}
 				fitView
 				fitViewOptions={fitViewOptions}

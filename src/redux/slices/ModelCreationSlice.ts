@@ -150,6 +150,12 @@ export const modelCreationSlice = createSlice({
 			state.selectedNetwork.edges = applyEdgeChanges(action.payload.edgeChanges, state.selectedNetwork.edges);
 		},
 
+		removeEdge: (state, action: PayloadAction<{ edgeToRemove: Edge }>) => {
+			const { edgeToRemove } = action.payload;
+			console.log(`remove`, edgeToRemove);
+			state.selectedNetwork.edges = state.selectedNetwork.edges.filter((edge) => edge.id !== edgeToRemove.id);
+		},
+
 		/**
 		 * To connect two nodes of the network.
 		 * @param state Model Creation State
