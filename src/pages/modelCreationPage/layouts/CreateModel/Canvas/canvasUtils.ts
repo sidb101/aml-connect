@@ -4,8 +4,9 @@
 import type { Node, XYPosition } from "reactflow";
 import type { ElementT, NetworkT, NodeDataT } from "../../../../../redux/slices/ModelCreationSlice";
 
-export const terminalSpacing = 40;
-export const nodeMinHeight = 60;
+/* eslint-disable  @typescript-eslint/naming-convention */
+export const TERMINAL_SPACING = 25;
+export const NODE_MIN_HEIGHT = TERMINAL_SPACING * 1.5;
 
 export const newNodePosition = (network: NetworkT): XYPosition => {
 	const currentNodes: Array<Node<NodeDataT>> = network.nodes;
@@ -32,7 +33,10 @@ export const newNode = (network: NetworkT, element: ElementT): Node<NodeDataT> =
 export const isSource = (node: NodeDataT): boolean => node.elementType === "Source";
 
 export const getNodeSpacings = (leftTerminalsCount: number, rightTerminalsCount: number) => {
-	const height = Math.max((Math.max(leftTerminalsCount, rightTerminalsCount) + 1) * terminalSpacing, nodeMinHeight);
+	const height = Math.max(
+		(Math.max(leftTerminalsCount, rightTerminalsCount) + 1) * TERMINAL_SPACING,
+		NODE_MIN_HEIGHT
+	);
 	const leftSpacing = height / (leftTerminalsCount + 1);
 	const rightSpacing = height / (rightTerminalsCount + 1);
 	return {
