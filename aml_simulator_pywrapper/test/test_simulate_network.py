@@ -10,14 +10,16 @@ def test_simulate_network():
     audio_file_path = os.path.join(
         parent_dir, "test_resources", "rising-chirp.wav")
     expected_keys = set(['vdd', 'filter_out_hpf', 'mid', '', '_lpf_pre_compress',
-                        'in', 'Gnd', 'filter_out_pre_compress', 'filter_out_bpf', 'out', 'filter_out'])
+                        'in', 'Gnd', 'filter_out_pre_compress', 'filter_out_bpf', 'filter_out'])
 
     # act
     d = wrapper.AspinitySimulatorWrapper.simulate_network(
         network_json_path, audio_file_path)
 
     # assert
-    assert set(d.keys()).difference(expected_keys) == set()
+    assert "response" in d
+    assert "visualization_path" in d
+    assert set(d["response"].keys()) == expected_keys
 
 
 def test_simulate_network_2():
@@ -34,7 +36,9 @@ def test_simulate_network_2():
     d = wrapper.AspinitySimulatorWrapper.simulate_network(
         network_json_path, audio_file_path)
     # assert
-    assert set(d.keys()).difference(expected_keys) == set()
+    assert "response" in d
+    assert "visualization_path" in d
+    assert set(d["response"].keys()) == expected_keys
 
 
 def test_simulate_network_3():
@@ -48,10 +52,15 @@ def test_simulate_network_3():
                         'noninverting', 'peak', 'inverting', 'detection_pos_offset', '_diff_output_pos'])
 
     # act
-    d = wrapper.AspinitySimulatorWrapper.simulate_network(
+    # d = wrapper.AspinitySimulatorWrapper.simulate_network(
+    #     network_json_path, audio_file_path)
+    d = wrapper.AspinitySimulatorWrapper.simulate_network_heartrate_network(
         network_json_path, audio_file_path)
+    
     # assert
-    assert set(d.keys()).difference(expected_keys) == set()
+    assert "response" in d
+    assert "visualization_path" in d
+    assert set(d["response"].keys()) == expected_keys
 
 def test_simulate_network_4():
     # arrange
@@ -67,4 +76,6 @@ def test_simulate_network_4():
     d = wrapper.AspinitySimulatorWrapper.simulate_network(
         network_json_path, audio_file_path)
     # assert
-    assert set(d.keys()).difference(expected_keys) == set()
+    assert "response" in d
+    assert "visualization_path" in d
+    assert set(d["response"].keys()) == expected_keys
