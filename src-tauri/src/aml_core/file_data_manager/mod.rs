@@ -142,8 +142,9 @@ pub fn create_app_dir_if_not_exists(path_resolver: &tauri::PathResolver) -> Resu
 
 pub fn create_project_dir(project_slug: &str, app_dir: &PathBuf) -> Result<()> {
     let project_dir = app_dir.join(project_slug).join("audio");
-    let network_dir = app_dir.join(project_slug).join("tmp").join("network");
+    let tmp_dir = app_dir.join(project_slug).join("tmp");
     fs::create_dir_all(project_dir)?;
+    fs::create_dir_all(tmp_dir)?;
     Ok(())
 }
 

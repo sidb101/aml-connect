@@ -1,3 +1,4 @@
+use std::path::PathBuf;
 use std::{collections::HashMap, path::Path};
 
 use anyhow::Result;
@@ -6,6 +7,8 @@ use serde::{Deserialize, Serialize};
 use tauri::api::process::Command;
 use ts_rs::TS;
 
+use std::fs;
+use std::io::Write;
 use thiserror::Error;
 
 pub struct AmlSimulatorSidecar {
@@ -22,7 +25,12 @@ pub enum SimulatorError {
     CommandExecutionError(String),
     #[error("Failed to parse sidecar output as JSON")]
     JsonParseError(String),
-    
+    #[error("Directory not found")]
+    DirectoryError(String),
+    #[error("File not found")]
+    FileError(String),
+    #[error("Unsuccessful serialization")]
+    SerializationError(String),
 }
 
 #[derive(Error, Debug, Serialize, Deserialize, TS)]
@@ -1116,7 +1124,7 @@ pub enum ActivationFunction {
 impl AmlSimulatorSidecar {
     pub fn new() -> Self {
         AmlSimulatorSidecar {
-            sidecar_name: String::from("aspinity_wrapper"),
+            sidecar_name: String::from("aspinity_wrapper"), // TODO: change this after Py Backend is merged
         }
     }
 
@@ -1153,6 +1161,33 @@ pub trait NetworkSimulator {
     ) -> Result<SimulateNetworkResponse, SimulatorError>;
 }
 
+fn save_network_to_dir(network: &Network, dir: &Path) -> Result<String, SimulatorError> {
+    fs::create_dir_all(dir).map_err(|e| SimulatorError::DirectoryError(e.to_string()))?;
+
+    let network_json = serde_json::to_string(&network).map_err(|e| {
+        SimulatorError::SerializationError(format!(
+            "Failed to serialize network to JSON: {}",
+            e.to_string()
+        ))
+    })?;
+
+    let file_path = dir.join("network.json");
+    let mut file = fs::OpenOptions::new()
+        .write(true)
+        .create(true)
+        .open(&file_path)
+        .map_err(|e| SimulatorError::FileError(e.to_string()))?;
+
+    file.write_all(network_json.as_bytes()).map_err(|e| {
+        SimulatorError::FileError(format!(
+            "Failed to write network JSON to file: {}",
+            e.to_string()
+        ))
+    })?;
+
+    Ok(file_path.as_os_str().to_str().unwrap().to_string())
+}
+
 pub struct AmlSimulator {}
 
 impl NetworkSimulator for AmlSimulator {
@@ -1162,26 +1197,51 @@ impl NetworkSimulator for AmlSimulator {
     }
 
     fn simulate_network<E: ExecutableSidecar>(
-        proejct_slug: &str,
+        project_slug: &str,
         sidecar: &E,
         network: &Network,
         audio_file_path: &Path,
         app_dir: &Path,
     ) -> Result<SimulateNetworkResponse, SimulatorError> {
-        // Create audio file path
-        let absolute_file_path = Path::new(app_dir).join(audio_file_path);
+        let absolute_file_path = Path::new(app_dir).join(project_slug).join(audio_file_path);
 
         if !absolute_file_path.exists() {
-            return Err(SimulatorError::AudioFileNotFound(
-                absolute_file_path.to_str().unwrap().to_string(),
-            ));
+            return Err(SimulatorError::FileError(format!(
+                "Audio file does not exist at path: {}",
+                absolute_file_path.to_str().unwrap().to_string()
+            )));
         }
-        absolute_file_path
-        // Validate presence of audio file
-        // Store network file to disk
 
-        // Call sidecar
-    
+        let tmp_dir = Path::new(app_dir).join(project_slug).join("tmp");
+        let network_file_path: String = save_network_to_dir(network, &tmp_dir)?;
+
+        let params = vec![
+            "--simulate".to_string(),
+            "--network".to_string(),
+            network_file_path,
+            "--audio".to_string(),
+            absolute_file_path.to_str().unwrap().to_string(),
+        ];
+
+        let output: SimulateNetworkResponse = serde_json::from_str(
+            sidecar
+                .get_output(params)
+                .map_err(|e| {
+                    SimulatorError::CommandExecutionError(format!(
+                        "Failed to execute sidecar: {}",
+                        e.to_string()
+                    ))
+                })?
+                .as_str(),
+        )
+        .map_err(|e| {
+            SimulatorError::SerializationError(format!(
+                "Failed to deserialize sidecar output: {}",
+                e.to_string()
+            ))
+        })?;
+
+        Ok(output)
     }
 }
 
