@@ -119,7 +119,6 @@ function ParameterForm({ defaultParams, parameterInfo, elementType, ...props }: 
 				onClick={() => {
 					const typedParams: Record<string, unknown> = {};
 					typedParams[elementType] = params;
-					console.log(typedParams);
 				}}
 			>
 				{" "}

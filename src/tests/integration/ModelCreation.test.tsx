@@ -66,9 +66,24 @@ describe("Testing the Model Creation navigation", () => {
 		const expectedPageHeadings = [
 			projects[0].name + " > Model Creation > " + expectedPageTabLabels[0],
 			projects[0].name + " > Model Creation > " + expectedPageTabLabels[1],
+			projects[0].name + " > Model Creation > " + expectedPageTabLabels[2],
+			projects[0].name + " > Model Creation > " + expectedPageTabLabels[3],
+			projects[0].name + " > Model Creation > " + expectedPageTabLabels[4],
 		];
-		const expectedPrevBtnTexts = ["Visualize Data", expectedPageTabLabels[0]];
-		const expectedNextBtnTexts = [expectedPageTabLabels[1], "Results"];
+		const expectedPrevBtnTexts = [
+			"Visualize Data",
+			expectedPageTabLabels[0],
+			expectedPageTabLabels[1],
+			expectedPageTabLabels[2],
+			expectedPageTabLabels[3],
+		];
+		const expectedNextBtnTexts = [
+			expectedPageTabLabels[1],
+			expectedPageTabLabels[2],
+			expectedPageTabLabels[3],
+			expectedPageTabLabels[4],
+			"Results Analysis",
+		];
 
 		let page: number;
 
@@ -93,65 +108,62 @@ describe("Testing the Model Creation navigation", () => {
 		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
 
 		// -----------------------------------------------------------------------------------
-		// ACT - 2: Click the "Neural Networks" in the page tabs up the top of the page
+		// ACT - 2: Click the page tabs up the top of the page
 		// -----------------------------------------------------------------------------------
-		page = 1;
-		fireEvent.click(actualPageTabLinks[page]);
 
-		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			await getPageElements());
+		for (let ii = 0; ii < 5; ii++) {
+			page = ii;
+			fireEvent.click(actualPageTabLinks[page]);
 
-		// ASSERT - 2
-		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
-		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
-		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
-		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
-		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
+			({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
+				//eslint-disable-next-line no-await-in-loop
+				await getPageElements());
+
+			// ASSERT - 2
+			verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
+			verifyPageTabLinkIsActive(actualPageTabLinks[page]);
+			verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
+			verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
+			verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
+		}
 
 		// -----------------------------------------------------------------------------------
-		// ACT - 3: Click the "Create Model" in the page tabs up the top of the page
+		// ACT - 3: Click the previous buttons in the footer of the pages
 		// -----------------------------------------------------------------------------------
-		page = 0;
-		fireEvent.click(actualPageTabLinks[page]);
-		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			await getPageElements());
 
-		// ASSERT - 3
-		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
-		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
-		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
-		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
-		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
+		for (let ii = 3; ii >= 0; ii--) {
+			fireEvent.click(screen.getByTestId(testIds.prevBtn));
+			({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
+				//eslint-disable-next-line no-await-in-loop
+				await getPageElements());
+
+			// ASSERT - 3
+			page = ii;
+			verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
+			verifyPageTabLinkIsActive(actualPageTabLinks[page]);
+			verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
+			verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
+			verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
+		}
 
 		// -----------------------------------------------------------------------------------
 		// ACT - 4: Click the next button in the footer of the page
 		// -----------------------------------------------------------------------------------
-		page = 1;
-		fireEvent.click(screen.getByTestId(testIds.nextBtn));
-		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			await getPageElements());
 
-		// ASSERT - 4
-		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
-		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
-		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
-		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
-		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
+		for (let ii = 1; ii < 5; ii++) {
+			fireEvent.click(screen.getByTestId(testIds.nextBtn));
+			({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
+				//eslint-disable-next-line no-await-in-loop
+				await getPageElements());
 
-		// -----------------------------------------------------------------------------------
-		// ACT - 5: Click the previous button in the footer of the page
-		// -----------------------------------------------------------------------------------
-		page = 0;
-		fireEvent.click(screen.getByTestId(testIds.prevBtn));
-		({ actualPageHeading, actualPageTabLinks, actualPageTabLabels, actualPrevBtn, actualNextBtn } =
-			await getPageElements());
-
-		// ASSERT - 5
-		verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
-		verifyPageTabLinkIsActive(actualPageTabLinks[page]);
-		verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
-		verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
-		verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
+			// ASSERT - 4
+			page = ii;
+			verifyPageHeading(expectedPageHeadings[page], actualPageHeading);
+			verifyPageTabLinkIsActive(actualPageTabLinks[page]);
+			verifyPageTabLabels(expectedPageTabLabels, actualPageTabLabels);
+			verifyFooterButtons(expectedPrevBtnTexts[page], actualPrevBtn);
+			verifyFooterButtons(expectedNextBtnTexts[page], actualNextBtn);
+		}
 	});
 });
 

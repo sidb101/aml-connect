@@ -2,7 +2,6 @@ import { describe } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/react";
 import { when } from "jest-when";
-import { invoke } from "@tauri-apps/api/tauri";
 import {
 	getPageElements,
 	renderWithProviders,
@@ -59,7 +58,7 @@ describe("Testing the Result Page navigation", () => {
 			projects[0].name + " > Results > " + expectedPageTabLabels[0],
 			projects[0].name + " > Results > " + expectedPageTabLabels[1],
 		];
-		const expectedPrevBtnTexts = ["Neural Networks", expectedPageTabLabels[0]];
+		const expectedPrevBtnTexts = ["Run Simulation", expectedPageTabLabels[0]];
 		const expectedNextBtnTexts = [expectedPageTabLabels[1], "Send To Hardware"];
 
 		let page: number;

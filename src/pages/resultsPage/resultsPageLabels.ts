@@ -1,4 +1,4 @@
-import { neuralNetworkRoute, resultsAnalysisRoute, resultsComparisonRoute, sendToHardwareRoute } from "../../routes";
+import { resultsAnalysisRoute, resultsComparisonRoute, runSimulationRoute, sendToHardwareRoute } from "../../routes";
 import type { PageTabT } from "../../components/pageTabs/PageTabs";
 import type { FooterBtnGroupT } from "../../components/footer/Footer";
 
@@ -17,7 +17,7 @@ export const getResultsPageTabs = (projectSlug: string): PageTabT[] => [
 
 export const getResultsPageFooters = (projectSlug: string): FooterBtnGroupT[] => [
 	{
-		prevBtn: { label: "Neural Networks", route: neuralNetworkRoute(projectSlug) },
+		prevBtn: { label: "Run Simulation", route: runSimulationRoute(projectSlug) },
 		nextBtn: { label: getResultsPageHeadings()[1], route: resultsComparisonRoute(projectSlug) },
 	},
 	{
