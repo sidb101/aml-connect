@@ -7,6 +7,7 @@ import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import { type ElementT, type NetworkT } from "../../redux/slices/ModelCreationSlice";
 import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
+import { mockProjects } from "../../tests/mockdata/allProjectsMock";
 
 /**
  * Object responsible for Transforming the UI Data to required Backend DTOs and then call the Backend using
@@ -85,8 +86,9 @@ const remoteService = {
 	},
 
 	getAllProjects: async (): Promise<ShallowProjectDetails[]> => {
-		const getProjectsResponse = await remoteClient.getAllProjects();
-		return remoteTransformer.parseGetProjectsResponse(getProjectsResponse);
+		return Promise.resolve(mockProjects);
+		//const getProjectsResponse = await remoteClient.getAllProjects();
+		//return remoteTransformer.parseGetProjectsResponse(getProjectsResponse);
 	},
 
 	getAllElements: async (): Promise<Record<string, ElementT>> => {

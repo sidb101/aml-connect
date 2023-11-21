@@ -117,7 +117,7 @@ export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps
 				edges={currentNetwork.edges}
 				onNodesChange={onNodesChange}
 				onEdgesChange={onEdgesChange}
-				deleteKeyCode={["Backspace", "Delete"]}
+				deleteKeyCode={["Delete"]}
 				onConnect={onConnect}
 				fitView
 				fitViewOptions={fitViewOptions}
