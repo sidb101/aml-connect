@@ -1,6 +1,7 @@
 import pytest
-from wrapper_components import *
 
+from wrapper_components import *
+import aspinity
 
 def test_AcDiff_constructor():
     elementJSON = {
@@ -27,7 +28,7 @@ def test_AcDiff_constructor():
         ],
     }
     ac_diff = AcDiff(elementJSON)
-    assert isinstance(ac_diff, AcDiff)
+    assert isinstance(ac_diff.orig_element, aspinity.AcDiff)
 
 
 def test_AsymmetricIntegrator_constructor():
@@ -53,7 +54,7 @@ def test_AsymmetricIntegrator_constructor():
         ],
     }
     asymmetric_integrator = AsymmetricIntegrator(elementJSON)
-    assert isinstance(asymmetric_integrator, AsymmetricIntegrator)
+    assert isinstance(asymmetric_integrator.orig_element, aspinity.AsymmetricIntegrator)
 
 
 def test_Comparator_constructor():
@@ -84,7 +85,7 @@ def test_Comparator_constructor():
         ],
     }
     comparator = Comparator(elementJSON)
-    assert isinstance(comparator, Comparator)
+    assert isinstance(comparator.orig_element, aspinity.Comparator)
 
 
 def test_Filter_constructor():
@@ -109,7 +110,7 @@ def test_Filter_constructor():
         ],
     }
     filter = Filter(elementJSON)
-    assert isinstance(filter, Filter)
+    assert isinstance(filter.orig_element, aspinity.Filter)
 
 
 def test_Filterbank_constructor():
@@ -163,7 +164,7 @@ def test_Filterbank_constructor():
         ],
     }
     filterbank = Filterbank(elementJSON)
-    assert isinstance(filterbank, Filterbank)
+    assert isinstance(filterbank.orig_element, aspinity.Filterbank)
 
 
 def test_GainOpamp_constructor():
@@ -188,7 +189,7 @@ def test_GainOpamp_constructor():
         ],
     }
     gain_opamp = GainOpamp(elementJSON)
-    assert isinstance(gain_opamp, GainOpamp)
+    assert isinstance(gain_opamp.orig_element, aspinity.GainOpamp)
 
 
 def test_LookupTable_constructor():
@@ -219,7 +220,7 @@ def test_LookupTable_constructor():
         ],
     }
     lookup_table = LookupTable(elementJSON)
-    assert isinstance(lookup_table, LookupTable)
+    assert isinstance(lookup_table.orig_element, aspinity.LookupTable)
 
 
 def test_DelayFlipFlop_constructor():
@@ -246,7 +247,7 @@ def test_DelayFlipFlop_constructor():
         ],
     }
     delay_flip_flop = DelayFlipFlop(elementJSON)
-    assert isinstance(delay_flip_flop, DelayFlipFlop)
+    assert isinstance(delay_flip_flop.orig_element, aspinity.DelayFlipFlop)
 
 
 def test_Multiplier_constructor():
@@ -281,7 +282,7 @@ def test_Multiplier_constructor():
         ],
     }
     multiplier = Multiplier(elementJSON)
-    assert isinstance(multiplier, Multiplier)
+    assert isinstance(multiplier.orig_element, aspinity.Multiplier)
 
 
 def test_Mux2_constructor():
@@ -308,7 +309,7 @@ def test_Mux2_constructor():
         ],
     }
     mux2 = Mux2(elementJSON)
-    assert isinstance(mux2, Mux2)
+    assert isinstance(mux2.orig_element, aspinity.Mux2)
 
 
 def test_NeuralNet_constructor():
@@ -421,7 +422,7 @@ def test_NeuralNet_constructor():
         ],
     }
     neural_net = NeuralNet(elementJSON)
-    assert isinstance(neural_net, NeuralNet)
+    assert isinstance(neural_net.orig_element, aspinity.NeuralNet)
 
 
 def test_PeakDetector_constructor():
@@ -446,7 +447,7 @@ def test_PeakDetector_constructor():
         ],
     }
     peak_detector = PeakDetector(elementJSON)
-    assert isinstance(peak_detector, PeakDetector)
+    assert isinstance(peak_detector.orig_element, aspinity.PeakDetector)
 
 
 def test_PGA_constructor():
@@ -482,7 +483,7 @@ def test_PGA_constructor():
         ],
     }
     pga = PGA(elementJSON)
-    assert isinstance(pga, PGA)
+    assert isinstance(pga.orig_element, aspinity.PGA)
 
 
 def test_SynthesizedFilter_constructor():
@@ -505,7 +506,7 @@ def test_SynthesizedFilter_constructor():
         ],
     }
     synthesized_filter = SynthesizedFilter(elementJSON)
-    assert isinstance(synthesized_filter, SynthesizedFilter)
+    assert isinstance(synthesized_filter.orig_element, aspinity.SynthesizedFilter)
 
 
 def test_Terminal_constructor():
@@ -528,4 +529,4 @@ def test_Terminal_constructor():
         ],
     }
     terminal = Terminal(elementJSON)
-    assert isinstance(terminal, Terminal)
+    assert isinstance(terminal.orig_element, aspinity.Terminal)
