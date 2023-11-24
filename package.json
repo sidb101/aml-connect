@@ -11,6 +11,7 @@
     "test": "jest --watchAll=false --maxWorkers=1",
     "lint": "eslint --ignore-path .gitignore --ext .ts,.tsx ./src",
     "lint-fix": "eslint --ignore-path .gitignore --ext .ts,.tsx --fix ./src",
+    "pycoverage": "cd aml_simulator_pywrapper && coverage run -m pytest  && coverage report && cd ..",
     "format": "prettier --write \"src/**/*{.ts,.tsx,.js,.jsx,.json}\""
   },
   "dependencies": {

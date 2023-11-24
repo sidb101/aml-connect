@@ -112,7 +112,7 @@ export const verifyPageTabLabels = (expectedPageTabLabels: string[], actualPageT
 };
 
 export const verifyFooterButtons = (expectedPrevBtnText: string, actualPrevBtn: HTMLElement) => {
-	expect(actualPrevBtn).toHaveTextContent(expectedPrevBtnText);
+	expect(actualPrevBtn.textContent).toBe(expectedPrevBtnText);
 };
 
 /******** Various testIds *******/

@@ -36,7 +36,6 @@ const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 			//add the successfully uploaded files in the redux state
 			if (inputFiles.length > 0) {
 				dispatch(dataHubActions.addInputFiles({ dataSet: DataSetT.TRAINING, inputFiles: inputFiles }));
-				// console.log("Updated The redux state.");
 			}
 		} catch (e) {
 			console.error(e);

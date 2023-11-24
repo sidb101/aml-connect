@@ -1,6 +1,5 @@
 import "./CreateModelView.scss";
-import React, { type ReactNode, useState } from "react";
-import ParameterFormView from "./ParameterForm/ParameterFormView";
+import React, { type ReactNode } from "react";
 
 export type CreateModelViewProps = {
 	canvas: ReactNode;
