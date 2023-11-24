@@ -1,6 +1,6 @@
 altgraph==0.17.3
 appdirs==1.4.4
-aspinity @ file://./aml_simulator_pywrapper/aspinity-0.7.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+aspinity==0.7.2
 astroid==2.15.6
 asttokens==2.4.0
 async-timeout==4.0.2

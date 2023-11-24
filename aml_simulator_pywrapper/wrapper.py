@@ -114,7 +114,8 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
         output_subplot.set_title("Output")
 
         # overwrite the file if it exists, there's no purge mechanism yet
-        file_path = os.path.join(self.project_tmp_dir, VISUALIZE_FILE_NAME)
+        file_name = f"nw{self.wrapped_network.network_id}_{VISUALIZE_FILE_NAME}"
+        file_path = os.path.join(self.project_tmp_dir, file_name)
 
         plt.savefig(file_path)
         plt.close()

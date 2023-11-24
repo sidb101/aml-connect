@@ -41,6 +41,7 @@ class Network:
     def __init__(self, network_json: dict):
         """Loads a network from a JSON dict"""
         self.orig_network = aspinity.Network()
+        self.network_id = network_json["id"]
         self.context = {"element_imports": [], "elements": []}
 
         for element_json in network_json["elements"]:
@@ -69,7 +70,8 @@ class Network:
         self.context["wav_file_path"] = wavfile_path
         template = env.get_template("network_template.py.j2")
 
-        output_file_path = os.path.join(output_dir, "Network.py")
+        output_file_path = os.path.join(output_dir, 
+            f"nw{self.network_id}_Network.py")
 
         # mode='w' overwrites the file if it exists
         with open(output_file_path, "w", encoding="utf-8") as output_file:
