@@ -1205,7 +1205,10 @@ impl NetworkSimulator for AmlSimulator {
         audio_file_path: &Path,
         app_dir: &PathBuf,
     ) -> Result<SimulateNetworkResponse, SimulatorError> {
-        let absolute_file_path = Path::new(app_dir).join(project_slug).join(audio_file_path);
+        let absolute_file_path = Path::new(app_dir)
+            .join(project_slug)
+            .join("audio")
+            .join(audio_file_path);
 
         if !absolute_file_path.exists() {
             return Err(SimulatorError::FileError(format!(
