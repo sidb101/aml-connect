@@ -1,10 +1,13 @@
 """Implementation of Wrapped Network class for the Aspinity AML simulator"""
 import importlib
+import os
 from jinja2 import Environment, FileSystemLoader
 
-import soundfile as sf
 import numpy as np
+import soundfile as sf
+
 import aspinity
+
 
 class WavFileManager:
     """For managing loading of wav file(s) from disk for passing to the network"""
@@ -22,15 +25,15 @@ class WavFileManager:
         return times, samples
 
 
-class Network():
-    """Handles the loading of a network from a JSON file, and exporting of 
+class Network:
+    """Handles the loading of a network from a JSON file, and exporting of
     dynamically generated source code for the network"""
+
     @staticmethod
     def __load_element(element_json: dict):
         """Loads an element from a JSON dict, returns element_class type object"""
         element_class = getattr(
-            importlib.import_module(
-                "wrapper_components"), element_json["type_name"]
+            importlib.import_module("wrapper_components"), element_json["type_name"]
         )
         element = element_class(element_json)
         return element
@@ -51,8 +54,9 @@ class Network():
         """Returns the context used for rendering the source code"""
         return self.context
 
-    def export_sourcecode(self, wavfile_path):
+    def export_sourcecode(self, wavfile_path, output_dir):
         """Exports the source code for the network to a file"""
+
         def get_type(var):
             return type(var).__name__
 
@@ -62,9 +66,14 @@ class Network():
         env = Environment(loader=FileSystemLoader("templates"))
         env.filters["get_type"] = get_type
         env.filters["get_items"] = get_items
-        self.context['wav_file_path'] = wavfile_path
+        self.context["wav_file_path"] = wavfile_path
         template = env.get_template("network_template.py.j2")
-        with open('output.py', 'w', encoding="utf-8") as output_file:
+
+        output_file_path = os.path.join(output_dir, "Network.py")
+
+        # mode='w' overwrites the file if it exists
+        with open(output_file_path, "w", encoding="utf-8") as output_file:
             output_file.write(template.render(self.context))
-        del self.context['wav_file_path']
-        return template.render(self.context)
+
+        del self.context["wav_file_path"]
+        return output_file_path

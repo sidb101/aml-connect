@@ -8,6 +8,11 @@ class AspinitySimulatorWrapperInterFace(metaclass=abc.ABCMeta):
     def __subclasshook__(cls, subclass):
         return hasattr(subclass, "get_elements") and callable(subclass.get_elements)
 
+    @abc.abstractmethod
+    def __init__(self, network_json_path: str, audio_file_path: str, project_tmp_dir: str):
+        """Initializes the wrapper"""
+        raise NotImplementedError
+
     @classmethod
     @abc.abstractmethod
     def get_elements(cls):
@@ -16,8 +21,7 @@ class AspinitySimulatorWrapperInterFace(metaclass=abc.ABCMeta):
         """
         raise NotImplementedError
 
-    @classmethod
     @abc.abstractmethod
-    def simulate_network(cls, network_json_path: str, audio_file_path: str) -> dict:
+    def simulate_network(self) -> dict:
         """Returns a simulated network's output dict as-is"""
         raise NotImplementedError
