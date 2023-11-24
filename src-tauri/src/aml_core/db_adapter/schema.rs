@@ -29,15 +29,14 @@ diesel::table! {
     projects (id) {
         id -> Integer,
         slug -> Text,
+        name -> Text,
         description -> Nullable<Text>,
+        modified_at -> Timestamp,
+        created_at -> Timestamp,
     }
 }
 
 diesel::joinable!(audio_files -> input_data (input_data_id));
 diesel::joinable!(input_data -> projects (project_id));
 
-diesel::allow_tables_to_appear_in_same_query!(
-    audio_files,
-    input_data,
-    projects,
-);
+diesel::allow_tables_to_appear_in_same_query!(audio_files, input_data, projects,);

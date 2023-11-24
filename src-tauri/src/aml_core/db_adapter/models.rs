@@ -1,12 +1,20 @@
 use diesel::prelude::*;
+use serde::{Deserialize, Serialize};
 
-#[derive(Queryable, Selectable, Debug)]
+use crate::aml_core::date_time::AMLDateTime;
+
+// use crate::aml_core::date_time::DateTime;
+
+#[derive(Queryable, Selectable, Debug, Serialize, Deserialize, Clone)]
 #[diesel(table_name = crate::aml_core::db_adapter::schema::projects)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Project {
     pub id: i32,
     pub slug: String,
+    pub name: String,
     pub description: Option<String>,
+    pub modified_at: AMLDateTime,
+    pub created_at: AMLDateTime,
 }
 
 #[derive(Insertable)]
@@ -14,6 +22,7 @@ pub struct Project {
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct NewProject {
     pub slug: String,
+    pub name: String,
     pub description: Option<String>,
 }
 
@@ -35,7 +44,7 @@ pub struct InputData {
 #[derive(Insertable)]
 #[diesel(table_name = crate::aml_core::db_adapter::schema::input_data)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
-pub struct NewInputData <'a> {
+pub struct NewInputData<'a> {
     pub file_name: Option<&'a str>,
     pub ml_dataset_type: Option<&'a str>,
     pub file_type: Option<&'a str>,
@@ -61,9 +70,10 @@ pub struct AudioFile {
 #[derive(Insertable)]
 #[diesel(table_name = crate::aml_core::db_adapter::schema::audio_files)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
-pub struct NewAudioFile <'a> {
+pub struct NewAudioFile<'a> {
     pub length: Option<i32>,
     pub category: Option<&'a str>,
     pub peak_frequency: Option<i32>,
     pub spi_level: Option<i32>,
-    pub input_data_id: i32,}
+    pub input_data_id: i32,
+}

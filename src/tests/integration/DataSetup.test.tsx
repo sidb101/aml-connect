@@ -6,8 +6,6 @@
  */
 
 import { routes as appRoutes } from "../../App";
-import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
-import { mockProjects } from "../mockdata/allProjectsMock";
 import { when } from "jest-when";
 import { BASE_ROUTE } from "../../routes";
 import { getExactText, renderWithProviders, testIds } from "../test-utils";
@@ -18,9 +16,13 @@ import type { InputFileDataT } from "../../redux/slices/DataHubSlice";
 import type { FilesUploadRequest } from "../../service/RemoteService/client/bindings/FilesUploadRequest";
 import remoteClient from "../../service/RemoteService/client/TauriApiClient";
 import storageClient from "../../service/StorageService/client/TauriFsClient";
+import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
+import { mockProjects } from "../mockdata/allProjectsMock";
+import remoteService from "../../service/RemoteService/RemoteService";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");
 jest.mock("../../service/StorageService/client/TauriFsClient");
+jest.mock("../../service/RemoteService/RemoteService");
 
 describe("Testing the Data Setup Functionality", () => {
 	//define the routing for given test suite
@@ -35,7 +37,8 @@ describe("Testing the Data Setup Functionality", () => {
 			const storeState = {};
 
 			//get the mock projects
-			const projects: BasicProjectDataT[] = mockProjects;
+			const projects: ShallowProjectDetails[] = mockProjects;
+			when(remoteService.getAllProjects).mockResolvedValue(projects);
 
 			//Need to start from the base route
 			const routeToRender = [BASE_ROUTE];
@@ -97,7 +100,7 @@ describe("Testing the Data Setup Functionality", () => {
 
 			//ACT - 1
 			//go to first project
-			const sideBarLinks = screen.getAllByTestId(testIds.projectLinks);
+			const sideBarLinks = await screen.findAllByTestId(testIds.projectLinks);
 			fireEvent.click(sideBarLinks[0]);
 
 			//go to the data hub page

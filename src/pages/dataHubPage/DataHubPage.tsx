@@ -1,83 +1,63 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
-import { Outlet, useLocation, useOutletContext, useParams } from "react-router-dom";
-import { projectOverviewRoute, dataVizRoute } from "../../routes";
+import { projectActions, selectCurrentProjectName, selectIsProjectOpen } from "../../redux/slices/ProjectSlice";
+import { Outlet, useLocation, useParams } from "react-router-dom";
 import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import "./DataHubPage.scss";
 import Header from "../../components/header/Header";
 import PageTabs, { getSelectedTabIndex, type PageTabT } from "../../components/pageTabs/PageTabs";
-import { getDataHubPageTabs } from "./dataHubPageTabs";
+import { getDataHubPageFooters, getDataHubPageHeadings, getDataHubPageTabs } from "./dataHubPageLabels";
+import View from "../../components/view/View";
 
-export type DataSetupPageT = {
-	data?: string;
-};
-
-export type DataHubContextT = {
-	setHeading: React.Dispatch<React.SetStateAction<string>>;
-	setFooter: React.Dispatch<React.SetStateAction<FooterBtnGroupT>>;
-};
-
-const DataHubPage = (props: DataSetupPageT) => {
-	const dispatch = useAppDispatch();
-	const { projectSlug = "" } = useParams();
-	const projectName = useAppSelector(selectCurrentProjectName);
-	const { pathname } = useLocation();
-
+function DataHubPage() {
 	const [heading, setHeading] = useState<string>("");
 	const [pageTabs, setPageTabs] = useState<PageTabT[]>([]);
 	const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
-	const [footer, setFooter] = useState<FooterBtnGroupT>({
-		prevBtn: { label: "Overview", route: projectOverviewRoute(projectSlug) },
-		nextBtn: { label: "Visualize Data", route: dataVizRoute(projectSlug) },
-	});
+	const [footer, setFooter] = useState<FooterBtnGroupT>({});
+
+	const { pathname } = useLocation();
+	const { projectSlug = "" } = useParams();
+
+	const dispatch = useAppDispatch();
+
+	const projectName = useAppSelector(selectCurrentProjectName);
+	const isProjectOpen = useAppSelector(selectIsProjectOpen);
 
 	//tasks to be done for the whole data hub page
 	useEffect(() => {
-		if (projectSlug) {
-			//Update the global state
-			dispatch(generalActions.openProject(projectSlug));
+		dispatch(projectActions.openProject(projectSlug));
+		if (isProjectOpen) {
 			setPageTabs(getDataHubPageTabs(projectSlug));
 		} else {
 			console.error("projectSlug not present in the URL.");
 		}
-	}, [projectSlug]);
+	}, [projectSlug, isProjectOpen]);
 
 	useEffect(() => {
 		setSelectedTabIndex(getSelectedTabIndex(pageTabs, pathname));
 	}, [pageTabs, pathname]);
 
-	return (
-		projectSlug && (
-			<>
-				<Header headerTitle={`${projectName || "Undefined Project"} > Data Hub > ${heading}`} />
-				<div className={`body-content-container-no-header-btns-with-footer DataHub_bodyContainer`}>
-					<div className={"DataHub_bodyRow1"}>
-						<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
-					</div>
-					<div className={"DataHub_bodyRow2"}>
-						{/* The outlet would render with given context from the parent */}
-						<Outlet
-							context={
-								{
-									setHeading,
-									setFooter,
-								} satisfies DataHubContextT
-							}
-						/>
-					</div>
-				</div>
-				<Footer footerBtnGroup={footer} />
-			</>
-		)
-	);
-};
+	useEffect(() => {
+		if (isProjectOpen) {
+			setHeading(getDataHubPageHeadings()[selectedTabIndex]);
+			setFooter(getDataHubPageFooters(projectSlug)[selectedTabIndex]);
+		}
+	}, [selectedTabIndex, isProjectOpen]);
 
-/**
- * Hook to use the data hub context passed to the Outlets.
- */
-export function useDataHubContext() {
-	return useOutletContext<DataHubContextT>();
+	const header = <Header headerTitle={`${projectName || "Undefined Project"} > Data Hub > ${heading}`} />;
+	const main = (
+		<div className={`DataHub_bodyContainer`}>
+			<div className={"DataHub_bodyRow1"}>
+				<PageTabs pageTabs={pageTabs} selectedTabIndex={selectedTabIndex} />
+			</div>
+			<div className={"DataHub_bodyRow2"}>
+				<Outlet />
+			</div>
+		</div>
+	);
+	const footerElem = <Footer footerBtnGroup={footer} />;
+
+	return projectSlug && <View header={header} main={main} footer={footerElem} />;
 }
 
 export default DataHubPage;

@@ -36,7 +36,7 @@ const ImportDataWidget = ({ widgetHeight }: ImportDataWidgetProps) => {
 	//Render only when widgetHeight is specified
 	return (
 		widgetHeight && (
-			<Accordion bodyMaxHeight={widgetHeight} header={<>Add or Merge Data</>}>
+			<Accordion maxBodyHeight={widgetHeight} header={<>Add or Merge Data</>}>
 				<ImportDataView dataType={dataType} onDataTypeChange={setDataType} onLocalImport={handleLocalImport} />
 				{dataSource === DataSourceT.LOCAL && <ImportLocalData onClose={closeDataSource} />}
 			</Accordion>

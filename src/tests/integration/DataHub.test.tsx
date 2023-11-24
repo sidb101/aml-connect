@@ -3,8 +3,6 @@ import { describe } from "@jest/globals";
 import "@testing-library/jest-dom";
 import { fireEvent, screen } from "@testing-library/react";
 import { when } from "jest-when";
-import { invoke } from "@tauri-apps/api/tauri";
-import type { BasicProjectDataT } from "../../redux/slices/GeneralSlice";
 import {
 	getPageElements,
 	renderWithProviders,
@@ -16,15 +14,17 @@ import {
 } from "../test-utils";
 import { routes as appRoutes } from "../../App";
 import { BASE_ROUTE } from "../../routes";
-import { mockProjects } from "../mockdata/allProjectsMock";
 import React from "react";
-import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageTabs";
 import remoteClient from "../../service/RemoteService/client/TauriApiClient";
+import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
+import { mockProjects } from "../mockdata/allProjectsMock";
+import { getDataHubPageTabs } from "../../pages/dataHubPage/dataHubPageLabels";
+import remoteService from "../../service/RemoteService/RemoteService";
 
 jest.mock("../../service/RemoteService/client/TauriApiClient");
+jest.mock("../../service/RemoteService/RemoteService");
 
 describe("Testing the Data Hub navigation", () => {
-	const mockInvoke = invoke as jest.MockedFunction<typeof invoke>;
 	const routes = appRoutes;
 
 	test("Data Hub: Test 1: Testing the data hub page exists, and the page tabs exist on the data hub page", async () => {
@@ -32,10 +32,10 @@ describe("Testing the Data Hub navigation", () => {
 
 		// -> should start with empty store
 		const storeState = {};
-		const projects: BasicProjectDataT[] = mockProjects;
+		const projects: ShallowProjectDetails[] = mockProjects;
 
 		// -> mock the response from backend
-		when(mockInvoke).calledWith("getProjects").mockResolvedValue(projects);
+		when(remoteService.getAllProjects).mockResolvedValue(projects);
 		when(remoteClient.getInputFiles)
 			.expectCalledWith({
 				dataset_type: "Training",
@@ -54,7 +54,7 @@ describe("Testing the Data Hub navigation", () => {
 		// -> Get all the project links in the sidebar with a given test ID
 		// NOTE: getAllByTestId() does not need the await keyword
 		// NOTE: DO NOT WRITE testIDs everywhere, only where needed
-		const sideBarLinks = screen.getAllByTestId(testIds.projectLinks);
+		const sideBarLinks = await screen.findAllByTestId(testIds.projectLinks);
 
 		// -> Click the first sidebar link
 		fireEvent.click(sideBarLinks[0]);

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { useParams } from "react-router-dom";
-import { generalActions, selectCurrentProjectName } from "../../redux/slices/GeneralSlice";
+import { projectActions, selectCurrentProjectName } from "../../redux/slices/ProjectSlice";
 import SendToHardwareView from "./layouts/SendToHardwareView";
 
 export type SendToHardwarePageT = {
@@ -15,7 +15,7 @@ const SendToHardwarePage = (props: SendToHardwarePageT) => {
 
 	useEffect(() => {
 		projectSlug
-			? dispatch(generalActions.openProject(projectSlug))
+			? dispatch(projectActions.openProject(projectSlug))
 			: console.error("projectSlug not present in the URL.");
 	}, [projectSlug]);
 

@@ -1,21 +1,18 @@
 import "./DatasetWidget.scss";
 import AudioFileTable from "../AudioFileTable";
 import Accordion from "../../../../../components/accordion/Accordion";
-import { type ReactNode, useState } from "react";
+import { type ReactNode } from "react";
 import { dataHubActions, DataSetT, selectInputFiles } from "../../../../../redux/slices/DataHubSlice";
 import { useAppDispatch, useAppSelector } from "../../../../../hooks";
-import {
-	generalActions,
-	selectCurrentAudioPath,
-	selectCurrentProjectSlug,
-} from "../../../../../redux/slices/GeneralSlice";
+import { selectCurrentAudioPath, selectCurrentProjectSlug } from "../../../../../redux/slices/ProjectSlice";
 import remoteService from "../../../../../service/RemoteService/RemoteService";
 import storageService from "../../../../../service/StorageService/StorageService";
+import { generalActions } from "../../../../../redux/slices/GeneralSlice";
 
 export type DatasetWidgetProps = {
 	widgetHeight?: string;
 	datasetType: DataSetT;
-	header?: ReactNode | ReactNode[];
+	header?: ReactNode;
 	defaultIsOpen: boolean;
 };
 
@@ -55,12 +52,9 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 
 			//get the files data along with content from the given metadata
 			const inputFiles = await storageService.readFilesFromStorage(inputFilesMetaData, audioPath);
-			console.log("Read the files: ", inputFiles);
 
 			//update it in the redux state
 			dispatch(dataHubActions.setInputFiles({ dataSet, inputFiles }));
-
-			console.log("Set input files in the redux state");
 		} catch (e) {
 			console.error("Error in getting files");
 		}
@@ -71,11 +65,10 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 	return (
 		widgetHeight && (
 			<Accordion
-				bodyMaxHeight={widgetHeight}
+				maxBodyHeight={widgetHeight}
 				header={header}
 				onOpen={() => {
 					handleAccordionOpen();
-					console.log(datasetType + " Opened");
 				}}
 				defaultIsOpen={defaultIsOpen}
 			>
