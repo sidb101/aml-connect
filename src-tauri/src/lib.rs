@@ -1,10 +1,9 @@
 pub mod aml_core;
 
 pub mod uicontroller {
-    use std::collections;
 
     use crate::aml_core::file_data_manager;
-    use crate::aml_core::network_manager;
+    use crate::aml_core::network_manager::{self, NetworkSimulator};
     use crate::aml_core::{element_repository, project_manager};
     use diesel::r2d2::{ConnectionManager, Pool};
     use diesel::SqliteConnection;
@@ -41,33 +40,37 @@ pub mod uicontroller {
     ) -> project_manager::GetProjectsResponseResult {
         let conn = &mut db_conn.get().expect("Unable to get db connection");
         project_manager::get_projects::get_projects(conn)
-    }    
+    }
 
     #[tauri::command]
     pub fn simulate_network(
         req: network_manager::SimulateNetworkRequest,
         app_dir: State<std::path::PathBuf>,
-    ) -> network_manager::SimulateNetworkResponse {
+    ) -> Result<network_manager::SimulateNetworkResponse, network_manager::SimulatorError> {
         let nvo: network_manager::NetworkVO = req.network;
-        let _actual_network: network_manager::Network = nvo.to_network().unwrap();
-        let audio_path: String = req.audio_file_path;
+        let project_slug: String = req.project_slug;
+        let sc = network_manager::AmlSimulatorSidecar::new();
+        let actual_network: network_manager::Network = nvo.to_network().unwrap();
+        let audio_path_str: String = req.audio_file_path;
+        let audio_path = std::path::Path::new(&audio_path_str);
 
-        println!("app dir: {}", app_dir.as_path().display());
-        let _j = serde_json::to_string(&_actual_network).unwrap();
+        // println!("app dir: {}", app_dir.as_path().display());
+        // let _j = serde_json::to_string(&_actual_network).unwrap();
 
         // Print, write to a file, or send to an HTTP server.
-        println!("{}", audio_path);
+        // println!("{}", audio_path);
 
         // call simulate network
-        // network_manager::simulate_network(&actual_network, &audio_path);
-        // 42
-        let resp: collections::HashMap<String, Vec<f64>> = collections::HashMap::new();
+        let audio_path = std::path::Path::new(&audio_path);
+        let resp: network_manager::SimulateNetworkResponse =
+            network_manager::AmlSimulator::sidecar_simulate_network(
+                &project_slug,
+                &sc,
+                &actual_network,
+                &audio_path,
+                &app_dir,
+            )?;
 
-        network_manager::SimulateNetworkResponse {
-            response: resp,
-            visualization_path: "123".to_string(),
-            py_code_path: "345".to_string(),
-        }
+        Ok(resp)
     }
-    
 }

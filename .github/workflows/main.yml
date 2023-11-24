@@ -73,7 +73,7 @@ jobs:
       - name: Create Aspinity Wrapper Binary
         run: |
           cd aml_simulator_pywrapper && 
-          pyinstaller --clean -F wrapper.py --distpath ../src-tauri/binaries/ -n aspinity_wrapper-x86_64-unknown-linux-gnu
+          pyinstaller --clean -F wrapper.py --hidden-import='PIL._tkinter_finder' --distpath ../src-tauri/binaries/ -n aspinity_wrapper-x86_64-unknown-linux-gnu
 
       # Setup Rust
       - name: Rust setup

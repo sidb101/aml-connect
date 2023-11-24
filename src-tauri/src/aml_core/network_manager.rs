@@ -54,7 +54,9 @@ pub struct SimulateNetworkRequest {
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct SimulateNetworkResponse {
-    pub response: HashMap<String, Vec<f64>>,
+    //// Not exported because of the size of the HashMap (2MB+)
+    //// Also, the frontend doesn't need this data yet
+    // pub response: HashMap<String, Vec<f64>>,
     pub py_code_path: String,
     pub visualization_path: String,
 }
@@ -1152,12 +1154,12 @@ impl ExecutableSidecar for AmlSimulatorSidecar {
 
 pub trait NetworkSimulator {
     fn list_elements<E: ExecutableSidecar>(sidecar: &E) -> Result<String, SimulatorError>;
-    fn simulate_network<E: ExecutableSidecar>(
+    fn sidecar_simulate_network<E: ExecutableSidecar>(
         project_slug: &str,
         sidecar: &E,
         network: &Network,
         audio_file_path: &Path,
-        app_dir: &Path,
+        app_dir: &PathBuf,
     ) -> Result<SimulateNetworkResponse, SimulatorError>;
 }
 
@@ -1196,12 +1198,12 @@ impl NetworkSimulator for AmlSimulator {
         sidecar.get_output(params)
     }
 
-    fn simulate_network<E: ExecutableSidecar>(
+    fn sidecar_simulate_network<E: ExecutableSidecar>(
         project_slug: &str,
         sidecar: &E,
         network: &Network,
         audio_file_path: &Path,
-        app_dir: &Path,
+        app_dir: &PathBuf,
     ) -> Result<SimulateNetworkResponse, SimulatorError> {
         let absolute_file_path = Path::new(app_dir).join(project_slug).join(audio_file_path);
 
@@ -1217,10 +1219,12 @@ impl NetworkSimulator for AmlSimulator {
 
         let params = vec![
             "--simulate".to_string(),
-            "--network".to_string(),
+            "-network".to_string(),
             network_file_path,
-            "--audio".to_string(),
+            "-wavfile".to_string(),
             absolute_file_path.to_str().unwrap().to_string(),
+            "-tmp_dir".to_string(),
+            tmp_dir.to_str().unwrap().to_string(),
         ];
 
         let output: SimulateNetworkResponse = serde_json::from_str(
