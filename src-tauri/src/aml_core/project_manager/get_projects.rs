@@ -11,7 +11,6 @@ use super::{
 };
 
 pub fn get_projects(conn: &mut DbConn) -> GetProjectsResponseResult {
-    log::info!("get_projects request received");
     let projects = projects::table
         .load::<Project>(conn)
         .map_err(|e| ProjectManagerError::InternalError(e.to_string()));

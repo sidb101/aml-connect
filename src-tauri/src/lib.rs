@@ -29,7 +29,6 @@ pub mod uicontroller {
         req: file_data_manager::GetFilesRequest,
         db_conn: State<Pool<ConnectionManager<SqliteConnection>>>,
     ) -> file_data_manager::GetFilesResponseResult {
-        log::info!("get_files request: {:?}", req);
         let conn = &mut db_conn.get().expect("Unable to get db connection");
         file_data_manager::get_files::get_input_files(&req, conn)
     }

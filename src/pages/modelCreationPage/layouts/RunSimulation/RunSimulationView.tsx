@@ -40,16 +40,16 @@ function RunSimulationView({ audioFiles, onSimulate }: RunSimulationViewProps) {
 								onChange={(event) => {
 									onFileSelect(event.target.value);
 								}}
-								style={{ cursor: !selectedFile ? "not-allowed" : "default" }}
+								style={{ cursor: selectedFile ? "default" : "not-allowed" }}
 							>
-								{!selectedFile ? (
-									<option> No Input Files Uploaded </option>
-								) : (
+								{selectedFile ? (
 									audioFiles.map((audioFile, index) => (
 										<option key={index} value={audioFile.metadata.name}>
 											{audioFile.metadata.name}
 										</option>
 									))
+								) : (
+									<option> No Input Files Uploaded </option>
 								)}
 							</select>
 						</span>

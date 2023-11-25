@@ -7,6 +7,7 @@ import { mockExpectedNetworkTransform, mockNetwork } from "../mockdata/networkMo
 import { audioFilesMock } from "../mockdata/audioFilesMock";
 import type { ShallowProjectDetails } from "redux/slices/ProjectSlice";
 import { returnedProjects, transformedProjects } from "../mockdata/allProjectsMock";
+/* eslint-disable @typescript-eslint/naming-convention */
 
 describe("Testing parseGetElementsResponse()", () => {
 	test("Happy Path test", () => {
@@ -24,8 +25,6 @@ describe("Testing createSimulateRequest()", () => {
 		const expectedTransformation: SimulateNetworkRequest = {
 			network: mockExpectedNetworkTransform,
 			project_slug: "test_project",
-
-			//eslint-disable-next-line @typescript-eslint/naming-convention
 			audio_file_path: audioFilesMock[0].metadata.name,
 		};
 
