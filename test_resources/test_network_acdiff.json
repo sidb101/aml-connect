@@ -1,0 +1,114 @@
+{
+    "id": 5000,
+    "name": "sample_network",
+    "elements": [
+        {
+            "id": 100,
+            "parent_network_id": 5000,
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "hardware_pin": "A0",
+                    "is_input": true,
+                    "is_output": false,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "id": 1,
+                    "parent_element_id": 100,
+                    "type_name": "net",
+                    "node_name": "in"
+                }
+            ],
+            "position": {
+                "x": 0,
+                "y": 0
+            }
+        },
+        {
+            "id": 101,
+            "parent_network_id": 5000,
+            "type_name": "AcDiff",
+            "element_type_params": {
+                "AcDiff": {
+                    "gain": 9.0,
+                    "bias": -0.0135
+                }
+            },
+            "terminals": [
+                {
+                    "id": 2,
+                    "parent_element_id": 101,
+                    "type_name": "pos",
+                    "node_name": "noninverting-input"
+                },
+                {
+                    "id": 3,
+                    "parent_element_id": 101,
+                    "type_name": "neg",
+                    "node_name": "inverting-input"
+                },
+                {
+                    "id": 4,
+                    "parent_element_id": 101,
+                    "type_name": "output",
+                    "node_name": "out"
+                }
+            ],
+            "position": {
+                "x": 100,
+                "y": -100
+            }
+        },
+        {
+            "id": 102,
+            "parent_network_id": 5000,
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "hardware_pin": "D0",
+                    "is_input": false,
+                    "is_output": true,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "id": 5,
+                    "parent_element_id": 102,
+                    "type_name": "net",
+                    "node_name": "out"
+                }
+            ],
+            "position": {
+                "x": 500,
+                "y": 0
+            }
+        }
+    ],
+    "nodes": [
+        {
+            "id": 2300,
+            "name": "in",
+            "parent_network_id": 5000,
+            "terminal_ids": [
+                1,
+                2
+            ]
+        },
+        {
+            "id": 2301,
+            "name": "acdiff_out",
+            "parent_network_id": 5000,
+            "terminal_ids": [
+                3,
+                4
+            ]
+        }
+    ],
+    "creator_id": 12345
+}
