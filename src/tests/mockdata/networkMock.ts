@@ -307,6 +307,7 @@ const demoEdges: Array<Edge<EdgeDataT>> = [
 		source: "1",
 		target: "2",
 		sourceHandle: "handle__1-net",
+		targetHandle: "handle__2-input",
 		data: { sourceTerminalType: "net", targetTerminalType: "input" },
 	},
 	{
@@ -314,6 +315,7 @@ const demoEdges: Array<Edge<EdgeDataT>> = [
 		source: "2",
 		target: "3",
 		sourceHandle: "handle__2-output",
+		targetHandle: "handle__3-positive",
 		data: { sourceTerminalType: "output", targetTerminalType: "positive" },
 	},
 	{
@@ -321,6 +323,7 @@ const demoEdges: Array<Edge<EdgeDataT>> = [
 		source: "2",
 		target: "6",
 		sourceHandle: "handle__2-output",
+		targetHandle: "handle__6-net",
 		data: { sourceTerminalType: "output", targetTerminalType: "net" },
 	},
 	{
@@ -328,6 +331,7 @@ const demoEdges: Array<Edge<EdgeDataT>> = [
 		source: "2",
 		target: "4",
 		sourceHandle: "handle__2-output",
+		targetHandle: "handle__4-input",
 		data: { sourceTerminalType: "output", targetTerminalType: "input" },
 	},
 	{
@@ -335,6 +339,7 @@ const demoEdges: Array<Edge<EdgeDataT>> = [
 		source: "3",
 		target: "7",
 		sourceHandle: "handle__3-output",
+		targetHandle: "handle__7-net",
 		data: { sourceTerminalType: "output", targetTerminalType: "net" },
 	},
 	{
@@ -342,6 +347,7 @@ const demoEdges: Array<Edge<EdgeDataT>> = [
 		source: "4",
 		target: "3",
 		sourceHandle: "handle__4-output",
+		targetHandle: "handle__3-negative",
 		data: { sourceTerminalType: "output", targetTerminalType: "negative" },
 	},
 	{
@@ -349,6 +355,7 @@ const demoEdges: Array<Edge<EdgeDataT>> = [
 		source: "4",
 		target: "5",
 		sourceHandle: "handle__4-output",
+		targetHandle: "handle__5-net",
 		data: { sourceTerminalType: "output", targetTerminalType: "net" },
 	},
 ];
