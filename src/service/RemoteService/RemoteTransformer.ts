@@ -22,7 +22,7 @@ import type { Terminal } from "./client/bindings/Terminal";
 import type { Edge, Node } from "reactflow";
 import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
 import type { NetworkVO } from "./client/bindings/NetworkVO";
-import { USER_ID } from "../../constants";
+import { AUDIO_DIR, USER_ID } from "../../constants";
 import type { ShallowProjectDetails } from "redux/slices/ProjectSlice";
 import type { GetProjectsResponse } from "./client/bindings/GetProjectsResponse";
 /* eslint-disable  @typescript-eslint/naming-convention */
@@ -181,14 +181,18 @@ const remoteTransformer = {
 		});
 	},
 
-	createSimulateRequest(network: NetworkT, inputFile: InputFileMetaDataT): SimulateNetworkRequest {
+	createSimulateRequest(
+		network: NetworkT,
+		projectSlug: string,
+		inputFile: InputFileMetaDataT
+	): SimulateNetworkRequest {
 		//TODO: Perform the validations on network
 
 		const terminalMap: Map<string, Terminal[]> = getTerminalMap(network.edges);
 
 		const networkToSimulate: NetworkVO = {
-			id: BigInt(network.metaData.id),
-			creator_id: BigInt(USER_ID),
+			id: network.metaData.id,
+			creator_id: USER_ID,
 			name: network.metaData.name,
 			elements: network.nodes.map((node: Node<NodeDataT>) => {
 				//create the params object
@@ -200,7 +204,7 @@ const remoteTransformer = {
 				return {
 					id: node.id,
 					name: node.data.label,
-					parent_network_id: BigInt(network.metaData.id),
+					parent_network_id: network.metaData.id,
 					type_name: actualElementType,
 					element_type_params: params, //consider the given params object as Parameters
 					terminals: terminalMap.get(node.id) || [], //empty terminals in case the node is not connected anything
@@ -213,18 +217,22 @@ const remoteTransformer = {
 			nodes: network.edges.map((edge: Edge<EdgeDataT>) => ({
 				id: edge.id,
 				name: edge.id,
-				parent_network_id: BigInt(network.metaData.id),
+				parent_network_id: network.metaData.id,
 				terminal_ids: [getTerminalId(edge.source, edge.id), getTerminalId(edge.target, edge.id)], //source and target terminal ids
 			})),
 		};
 		return {
 			network: networkToSimulate,
+			project_slug: projectSlug,
 			audio_file_path: inputFile.name,
 		};
 	},
 
-	parseSimulationResponse(simulateNetworkResponse: SimulateNetworkResponse): Record<string, number[]> {
-		return simulateNetworkResponse.response;
+	parseSimulationResponse(simulateNetworkResponse: SimulateNetworkResponse): Record<string, string> {
+		return {
+			code: simulateNetworkResponse.py_code_path,
+			viz: simulateNetworkResponse.visualization_path,
+		};
 	},
 };
 

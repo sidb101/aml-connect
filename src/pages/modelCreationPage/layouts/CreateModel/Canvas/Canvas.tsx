@@ -40,12 +40,11 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 
 type CanvasProps = {
 	onElementDoubleClick: (node: Node<NodeDataT>) => void;
-	onSimulate: () => void;
 };
 
 const nodeTypes = { networkElement: NetworkElement, networkTerminal: NetworkTerminal };
 
-export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps) {
+export default function Canvas({ onElementDoubleClick }: CanvasProps) {
 	const dispatch = useAppDispatch();
 	const currentNetwork = useAppSelector(selectCurrentNetwork);
 	const allElements = useAppSelector(selectAllElements);
@@ -87,11 +86,7 @@ export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps
 					onElementDoubleClick(node);
 				}}
 			>
-				<Toolbar
-					allElements={Object.values(allElements)}
-					handleAddElement={onAdd}
-					handleSimulate={onSimulate}
-				/>
+				<Toolbar allElements={Object.values(allElements)} handleAddElement={onAdd} />
 				<Controls className={`Canvas_controls`} />
 				{/* <MiniMap /> */}
 				<Background variant={BackgroundVariant.Dots} gap={12} size={1} />

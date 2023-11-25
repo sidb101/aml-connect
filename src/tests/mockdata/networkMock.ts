@@ -4,10 +4,10 @@ import type { EdgeDataT, NetworkMetaDataT, NetworkT, NodeDataT } from "../../red
 import type { NetworkVO } from "../../service/RemoteService/client/bindings/NetworkVO";
 import { USER_ID } from "../../constants";
 
-const MOCK_NETWORK_ID = BigInt(5000);
+const MOCK_NETWORK_ID = 5000;
 
 export const mockNetworkMetaData: NetworkMetaDataT = {
-	id: Number(MOCK_NETWORK_ID),
+	id: MOCK_NETWORK_ID,
 	name: "sample_network",
 };
 
@@ -106,7 +106,7 @@ export const mockNetwork: NetworkT = {
 export const mockExpectedNetworkTransform: NetworkVO = {
 	id: MOCK_NETWORK_ID,
 	name: "sample_network",
-	creator_id: BigInt(USER_ID),
+	creator_id: USER_ID,
 	elements: [
 		{
 			id: "1",

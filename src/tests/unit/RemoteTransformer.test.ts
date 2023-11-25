@@ -23,6 +23,7 @@ describe("Testing createSimulateRequest()", () => {
 	test("Happy Path Test", () => {
 		const expectedTransformation: SimulateNetworkRequest = {
 			network: mockExpectedNetworkTransform,
+			project_slug: "test_project",
 
 			//eslint-disable-next-line @typescript-eslint/naming-convention
 			audio_file_path: audioFilesMock[0].metadata.name,
@@ -30,6 +31,7 @@ describe("Testing createSimulateRequest()", () => {
 
 		const actualTransformation: SimulateNetworkRequest = remoteTransformer.createSimulateRequest(
 			mockNetwork,
+			"test_project",
 			audioFilesMock[0].metadata
 		);
 
