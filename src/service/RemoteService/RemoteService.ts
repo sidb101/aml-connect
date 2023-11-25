@@ -108,8 +108,8 @@ const remoteService = {
 		);
 		console.log(simulationRequest);
 		//eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-		const simulationResponse = {} as SimulateNetworkResponse;
-		// const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);
+		// const simulationResponse = {} as SimulateNetworkResponse;
+		const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);
 		console.log(simulationResponse);
 
 		return remoteTransformer.parseSimulationResponse(simulationResponse);

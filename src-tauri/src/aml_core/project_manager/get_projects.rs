@@ -60,7 +60,6 @@ pub fn get_project(proj_id: i32, conn: &mut DbConn) -> Result<Project, ProjectMa
 pub fn project_exists(proj_id: i32, db_conn: &mut DbConn) -> Result<bool, ProjectManagerError> {
     let found_project = projects::table.find(proj_id).first::<Project>(db_conn);
 
-    print!("Found project: {:?}", found_project);
     match found_project {
         Ok(_) => Ok(true),
         Err(NotFound) => Ok(false),
@@ -96,7 +95,6 @@ pub fn project_exists_by_slug(
         .filter(projects::slug.eq(proj_slug))
         .first::<Project>(db_conn);
 
-    print!("Found project: {:?}", found_project);
     match found_project {
         Ok(_) => Ok(true),
         Err(NotFound) => Ok(false),

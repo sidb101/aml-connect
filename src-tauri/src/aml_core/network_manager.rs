@@ -1126,7 +1126,7 @@ pub enum ActivationFunction {
 impl AmlSimulatorSidecar {
     pub fn new() -> Self {
         AmlSimulatorSidecar {
-            sidecar_name: String::from("aspinity_wrapper"), // TODO: change this after Py Backend is merged
+            sidecar_name: String::from("aspinity_wrapper"),
         }
     }
 
@@ -1177,6 +1177,7 @@ fn save_network_to_dir(network: &Network, dir: &Path) -> Result<String, Simulato
     let mut file = fs::OpenOptions::new()
         .write(true)
         .create(true)
+        .truncate(true)
         .open(&file_path)
         .map_err(|e| SimulatorError::FileError(e.to_string()))?;
 
@@ -1186,6 +1187,10 @@ fn save_network_to_dir(network: &Network, dir: &Path) -> Result<String, Simulato
             e.to_string()
         ))
     })?;
+
+    // Flush the file buffer and sync all metadata to disk
+    file.flush().map_err(|e| SimulatorError::FileError(e.to_string()))?;
+    file.sync_all().map_err(|e| SimulatorError::FileError(e.to_string()))?;
 
     Ok(file_path.as_os_str().to_str().unwrap().to_string())
 }
@@ -1221,7 +1226,7 @@ impl NetworkSimulator for AmlSimulator {
         let network_file_path: String = save_network_to_dir(network, &tmp_dir)?;
 
         let params = vec![
-            "--simulate".to_string(),
+            "--simulate_network".to_string(),
             "-network".to_string(),
             network_file_path,
             "-wavfile".to_string(),
@@ -1232,14 +1237,15 @@ impl NetworkSimulator for AmlSimulator {
 
         let output: SimulateNetworkResponse = serde_json::from_str(
             sidecar
-                .get_output(params)
-                .map_err(|e| {
-                    SimulatorError::CommandExecutionError(format!(
-                        "Failed to execute sidecar: {}",
-                        e.to_string()
-                    ))
-                })?
-                .as_str(),
+            .get_output(params)
+            .map_err(|e| {
+                SimulatorError::CommandExecutionError(format!(
+                    "Failed to execute sidecar: {}",
+                    e.to_string()
+                ))
+            })?
+            .replace("\'", "\"")
+            .as_str()
         )
         .map_err(|e| {
             SimulatorError::SerializationError(format!(

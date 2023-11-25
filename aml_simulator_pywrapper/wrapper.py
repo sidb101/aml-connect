@@ -170,22 +170,25 @@ if __name__ == "__main__":  # pragma: no cover
 
     ARGS = PARSER.parse_args()
 
-    if ARGS.get_elements:
-        print(AspinitySimulatorWrapper.get_elements())
-    elif ARGS.simulate_network:
-        network_path = ARGS.network
-        wavfile_path = ARGS.wavfile
-        tmp_dir = ARGS.tmp_dir
-        sim_wrapper = AspinitySimulatorWrapper(network_path, wavfile_path, tmp_dir)
-        ret = sim_wrapper.simulate_network()
+    try:
+        if ARGS.get_elements:
+            print(AspinitySimulatorWrapper.get_elements())
+        elif ARGS.simulate_network:
+            network_path = ARGS.network
+            wavfile_path = ARGS.wavfile
+            tmp_dir = ARGS.tmp_dir
+            sim_wrapper = AspinitySimulatorWrapper(network_path, wavfile_path, tmp_dir)
+            ret = sim_wrapper.simulate_network()
 
-        ## Option 1 - convert the response values to lists, and store 2MB+ data
-        ## in a file, and return the file instead [[future]]
-        # ret["response"] = {key: list(value) for key, value in ret["response"].items()}
-        # output_json = json.dumps(ret, indent=4)
-        # with open(os.path.join(tmp_dir, "response.json"), "w", encoding="utf-8") as f:
-        #     f.write(output_json)
+            ## Option 1 - convert the response values to lists, and store 2MB+ data
+            ## in a file, and return the file instead [[future]]
+            # ret["response"] = {key: list(value) for key, value in ret["response"].items()}
+            # output_json = json.dumps(ret, indent=4)
+            # with open(os.path.join(tmp_dir, "response.json"), "w", encoding="utf-8") as f:
+            #     f.write(output_json)
 
-        ## Option 2 - remove the response key, as it is not needed yet [[current]]
-        del ret["response"]
-        print(ret)
+            ## Option 2 - remove the response key, as it is not needed yet [[current]]
+            del ret["response"]
+            print(ret)
+    except Exception as e:
+        print(f"Error while executing python wrapper: {e}")
