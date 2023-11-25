@@ -64,7 +64,11 @@ class Network:
         def get_items(var):
             return var.items()
 
-        env = Environment(loader=FileSystemLoader("templates"))
+        # Get the absolute path of the directory of the current script
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+
+        # Use the absolute path to correctly locate the "templates" directory
+        env = Environment(loader=FileSystemLoader(os.path.join(dir_path, "templates")))
         env.filters["get_type"] = get_type
         env.filters["get_items"] = get_items
         self.context["wav_file_path"] = wavfile_path
