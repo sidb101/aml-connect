@@ -70,8 +70,7 @@ class Network:
         self.context["wav_file_path"] = wavfile_path
         template = env.get_template("network_template.py.j2")
 
-        output_file_path = os.path.join(output_dir, 
-            f"nw{self.network_id}_Network.py")
+        output_file_path = os.path.join(output_dir, f"nw{self.network_id}_Network.py")
 
         # mode='w' overwrites the file if it exists
         with open(output_file_path, "w", encoding="utf-8") as output_file:
