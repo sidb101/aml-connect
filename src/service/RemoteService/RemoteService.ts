@@ -4,10 +4,11 @@ import { DataSetT } from "../../redux/slices/DataHubSlice";
 import type { FilesUploadRequest } from "./client/bindings/FilesUploadRequest";
 import remoteTransformer from "./RemoteTransformer";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
-import { type ElementT, type NetworkT, type SimulationResultT } from "../../redux/slices/ModelCreationSlice";
+import { type ElementT, type NetworkT } from "../../redux/slices/ModelCreationSlice";
 import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
 import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
+import type { SimulationResultT } from "../../redux/slices/ResultSlice";
 
 /**
  * Object responsible for Transforming the UI Data to required Backend DTOs and then call the Backend using
