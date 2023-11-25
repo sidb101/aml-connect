@@ -16,7 +16,7 @@ export const newNodePosition = (network: NetworkT): XYPosition => {
 	};
 };
 
-export const newNodeId = (network: NetworkT): string => String(network.nodes.length + 1);
+export const newNodeId = (network: NetworkT): string => String(Date.now());
 export const newEdgeId = (sourceNodeId: string, destNodeId: string) => `edge__${sourceNodeId}-${destNodeId}`;
 export const newHandleId = (nodeId: string, handleType: string) => `handle__${nodeId}-${handleType}`;
 
