@@ -25,8 +25,8 @@ export const newNodeId = (network: NetworkT): string => {
 
 	return String(parseInt(maxNodeId, 10) + 1);
 };
-export const newEdgeId = (sourceHandle: string, targetHandle: string) => `edge__${sourceHandle}|${targetHandle}`;
-export const newHandleId = (nodeId: string, handleType: string) => `handle__${nodeId}~${handleType}`;
+export const newEdgeId = (sourceHandle: string, targetHandle: string) => `${sourceHandle}|${targetHandle}`;
+export const newHandleId = (nodeId: string, handleType: string) => `${nodeId}~${handleType}`;
 //eslint-disable-next-line @typescript-eslint/ban-types
 export const getTerminalType = (handleId: string | undefined | null) =>
 	handleId?.includes("~") ? handleId.split("~")[1] : "";
