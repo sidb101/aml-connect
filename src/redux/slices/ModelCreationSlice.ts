@@ -6,9 +6,9 @@
  */
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { type RootState } from "../store";
-import type { Connection, Edge, EdgeChange, Node, NodeAddChange, NodeChange } from "reactflow";
+import type { Edge, EdgeChange, Node, NodeChange } from "reactflow";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
-import { demoNetwork, demoNetworkMetaData, mockNetwork, mockNetworkMetaData } from "../../tests/mockdata/networkMock";
+import { mockNetwork, mockNetworkMetaData } from "../../tests/mockdata/networkMock";
 
 /*** Types for  Possible Network Elements ***/
 
@@ -93,7 +93,7 @@ export type NetworkMetaDataT = {
 export type NetworkT = {
 	metaData: NetworkMetaDataT;
 	nodes: Array<Node<NodeDataT>>;
-	edges: Array<Edge<EdgeDataT>>;
+	edges: Array<Edge>;
 	params: Record<string, Record<string, string>>; //<NodeId -> Parameter Object having key value>
 };
 
@@ -105,14 +105,6 @@ export type NodeDataT = {
 	label: string;
 };
 
-/**
- * Type to describe data to be stored for a particular edge
- */
-export type EdgeDataT = {
-	sourceTerminalType: string;
-	targetTerminalType: string;
-};
-
 type ModelCreationState = {
 	allNetworks: NetworkMetaDataT[]; //Used to show all available networks of user to choose from
 	allElements: Record<string, ElementT>; //information about all the elements that can be used to create the network
@@ -120,9 +112,9 @@ type ModelCreationState = {
 };
 
 const initialState: ModelCreationState = {
-	allNetworks: [demoNetworkMetaData],
+	allNetworks: [mockNetworkMetaData],
 	allElements: {},
-	selectedNetwork: demoNetwork,
+	selectedNetwork: mockNetwork,
 };
 
 /**
@@ -155,8 +147,8 @@ export const modelCreationSlice = createSlice({
 		 * @param state Model Creation State
 		 * @param action The action would have the connection needed to be applied
 		 */
-		connectNodes: (state, action: PayloadAction<{ connection: Connection }>) => {
-			state.selectedNetwork.edges = addEdge(action.payload.connection, state.selectedNetwork.edges);
+		connectNodes: (state, action: PayloadAction<{ edge: Edge }>) => {
+			state.selectedNetwork.edges = addEdge(action.payload.edge, state.selectedNetwork.edges);
 		},
 
 		/**

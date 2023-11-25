@@ -26,7 +26,7 @@ import {
 	selectCurrentNetwork,
 } from "../../../../../redux/slices/ModelCreationSlice";
 import Toolbar from "../Toolbar/Toolbar";
-import { newNode } from "./canvasUtils";
+import { newEdge, newNode } from "./canvasUtils";
 import NetworkElement from "./NetworkElement";
 import NetworkTerminal from "./NetworkTerminal";
 
@@ -58,7 +58,8 @@ export default function Canvas({ onElementDoubleClick }: CanvasProps) {
 	}, []);
 
 	const onConnect: OnConnect = useCallback((connection: Connection) => {
-		dispatch(modelCreationActions.connectNodes({ connection: connection }));
+		const edge = newEdge(connection);
+		dispatch(modelCreationActions.connectNodes({ edge }));
 	}, []);
 
 	const onAdd = useCallback(
@@ -82,6 +83,8 @@ export default function Canvas({ onElementDoubleClick }: CanvasProps) {
 				defaultEdgeOptions={defaultEdgeOptions}
 				connectionLineType={ConnectionLineType.Step}
 				nodeTypes={nodeTypes}
+				proOptions={{ hideAttribution: true }}
+				maxZoom={4}
 				onNodeDoubleClick={(e: React.MouseEvent, node: Node<NodeDataT>) => {
 					onElementDoubleClick(node);
 				}}

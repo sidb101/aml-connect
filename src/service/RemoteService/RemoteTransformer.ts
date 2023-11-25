@@ -6,7 +6,6 @@ import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import type { GetFilesResponse } from "./client/bindings/GetFilesResponse";
 import {
 	DirectionT,
-	type EdgeDataT,
 	type ElementT,
 	type NetworkT,
 	type NodeDataT,
@@ -22,9 +21,10 @@ import type { Terminal } from "./client/bindings/Terminal";
 import type { Edge, Node } from "reactflow";
 import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
 import type { NetworkVO } from "./client/bindings/NetworkVO";
-import { AUDIO_DIR, USER_ID } from "../../constants";
+import { USER_ID } from "../../constants";
 import type { ShallowProjectDetails } from "redux/slices/ProjectSlice";
 import type { GetProjectsResponse } from "./client/bindings/GetProjectsResponse";
+import { getTerminalType } from "../../pages/modelCreationPage/layouts/CreateModel/Canvas/canvasUtils";
 /* eslint-disable  @typescript-eslint/naming-convention */
 
 /***
@@ -214,11 +214,11 @@ const remoteTransformer = {
 					},
 				};
 			}),
-			nodes: network.edges.map((edge: Edge<EdgeDataT>) => ({
+			nodes: network.edges.map((edge: Edge) => ({
 				id: edge.id,
 				name: edge.id,
 				parent_network_id: network.metaData.id,
-				terminal_ids: [getTerminalId(edge.source, edge.id), getTerminalId(edge.target, edge.id)], //source and target terminal ids
+				terminal_ids: [edge.sourceHandle || "", edge.targetHandle || ""], //source and target terminal ids
 			})),
 		};
 		return {
@@ -262,20 +262,11 @@ function getEnumValue<T extends Record<string, string>>(myEnum: T, value: string
 }
 
 /**
- * To get the Terminal Id for a given nodeId and edgeId
- * @param nodeId : Node whose part is the current terminal
- * @param edgeId: Edge emanating from the terminal
- */
-function getTerminalId(nodeId: string, edgeId: string) {
-	return nodeId + "|" + edgeId;
-}
-
-/**
  * Would generate a map having List of Terminals for every node.
  * @param edges Representing connection between nodes
  * @return Map having key as nodeId and value as list of Terminals for that nodeId
  */
-function getTerminalMap(edges: Array<Edge<EdgeDataT>>): Map<string, Terminal[]> {
+function getTerminalMap(edges: Edge[]): Map<string, Terminal[]> {
 	const terminalMap: Map<string, Terminal[]> = new Map<string, Terminal[]>();
 
 	edges.forEach((edge) => {
@@ -283,9 +274,9 @@ function getTerminalMap(edges: Array<Edge<EdgeDataT>>): Map<string, Terminal[]> 
 		const sourceNode = edge.source;
 		const sourceTerminals: Terminal[] = terminalMap.get(sourceNode) || new Array<Terminal>();
 		sourceTerminals.push({
-			id: getTerminalId(sourceNode, edge.id),
+			id: edge.sourceHandle || "",
 			parent_element_id: sourceNode,
-			type_name: edge.data?.sourceTerminalType || "",
+			type_name: getTerminalType(edge.sourceHandle) || "",
 			node_name: edge.id,
 		});
 		terminalMap.set(sourceNode, sourceTerminals);
@@ -294,9 +285,9 @@ function getTerminalMap(edges: Array<Edge<EdgeDataT>>): Map<string, Terminal[]> 
 		const targetNode = edge.target;
 		const targetTerminals: Terminal[] = terminalMap.get(targetNode) || new Array<Terminal>();
 		targetTerminals.push({
-			id: getTerminalId(targetNode, edge.id),
+			id: edge.targetHandle || "",
 			parent_element_id: targetNode,
-			type_name: edge.data?.targetTerminalType || "",
+			type_name: getTerminalType(edge.targetHandle) || "",
 			node_name: edge.id,
 		});
 		terminalMap.set(targetNode, targetTerminals);

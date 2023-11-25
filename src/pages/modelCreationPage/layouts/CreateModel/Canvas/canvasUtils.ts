@@ -1,7 +1,7 @@
 /***
  * Certain Util Functions to help with the interaction with the network through canvas
  */
-import type { Node, XYPosition } from "reactflow";
+import type { Connection, Edge, Node, XYPosition } from "reactflow";
 import type { ElementT, NetworkT, NodeDataT } from "../../../../../redux/slices/ModelCreationSlice";
 
 /* eslint-disable  @typescript-eslint/naming-convention */
@@ -16,9 +16,18 @@ export const newNodePosition = (network: NetworkT): XYPosition => {
 	};
 };
 
-export const newNodeId = (network: NetworkT): string => String(Date.now());
-export const newEdgeId = (sourceNodeId: string, destNodeId: string) => `edge__${sourceNodeId}-${destNodeId}`;
-export const newHandleId = (nodeId: string, handleType: string) => `handle__${nodeId}-${handleType}`;
+export const newNodeId = (network: NetworkT): string => {
+	//get the maximum is assigned to any node
+	const maxNodeId =
+		network.nodes.reduce((prev, current) => (prev && parseInt(prev.id) > parseInt(current.id) ? prev : current))
+			.id || "0";
+
+	return String(parseInt(maxNodeId) + 1);
+};
+export const newEdgeId = (sourceHandle: string, targetHandle: string) => `edge__${sourceHandle}|${targetHandle}`;
+export const newHandleId = (nodeId: string, handleType: string) => `handle__${nodeId}~${handleType}`;
+export const getTerminalType = (handleId: string | undefined | null) =>
+	handleId && handleId.includes("~") ? handleId.split("~")[1] : "";
 
 export const newNode = (network: NetworkT, element: ElementT): Node<NodeDataT> => {
 	const label = element.typeName;
@@ -27,6 +36,17 @@ export const newNode = (network: NetworkT, element: ElementT): Node<NodeDataT> =
 		type: label === "Source" || label === "Sink" ? "networkTerminal" : "networkElement",
 		data: { label: label, elementType: label },
 		position: newNodePosition(network),
+	};
+};
+
+export const newEdge = (connection: Connection): Edge => {
+	const { source, target, sourceHandle, targetHandle } = connection;
+	return {
+		id: newEdgeId(sourceHandle || "", targetHandle || ""),
+		sourceHandle: sourceHandle,
+		targetHandle: targetHandle,
+		source: source || "",
+		target: target || "",
 	};
 };
 
