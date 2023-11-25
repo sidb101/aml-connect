@@ -8,7 +8,7 @@ import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolki
 import { type RootState } from "../store";
 import type { Connection, Edge, EdgeChange, Node, NodeAddChange, NodeChange } from "reactflow";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
-import { mockNetwork, mockNetworkMetaData } from "../../tests/mockdata/networkMock";
+import { demoNetwork, demoNetworkMetaData, mockNetwork, mockNetworkMetaData } from "../../tests/mockdata/networkMock";
 
 /*** Types for  Possible Network Elements ***/
 
@@ -120,9 +120,9 @@ type ModelCreationState = {
 };
 
 const initialState: ModelCreationState = {
-	allNetworks: [mockNetworkMetaData],
+	allNetworks: [demoNetworkMetaData],
 	allElements: {},
-	selectedNetwork: mockNetwork,
+	selectedNetwork: demoNetwork,
 };
 
 /**

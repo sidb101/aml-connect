@@ -228,3 +228,162 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 		},
 	],
 };
+
+/***** For Demo ****/
+export const demoNetworkMetaData: NetworkMetaDataT = {
+	id: MOCK_NETWORK_ID,
+	name: "demo_network",
+};
+
+const demoNodes: Array<Node<NodeDataT>> = [
+	{
+		id: "1",
+		type: "networkTerminal",
+		data: {
+			elementType: "Source",
+			label: "Source",
+		},
+		position: { x: -192.89334108322325, y: 14.258033289299902 },
+	},
+	{
+		id: "2",
+		data: {
+			elementType: "PeakDetector",
+			label: "PeakDetector",
+		},
+		type: "networkElement",
+		position: { x: -67.1790478203435, y: 15.172102509907518 },
+	},
+	{
+		id: "3",
+		data: {
+			elementType: "Comparator",
+			label: "Comparator",
+		},
+		type: "networkElement",
+		position: { x: 393.3637157199475, y: -9.63277357992078 },
+	},
+	{
+		id: "4",
+		data: {
+			elementType: "Filter",
+			label: "Filter",
+		},
+		type: "networkElement",
+		position: { x: 197.81003540290646, y: 339.5152253632761 },
+	},
+	{
+		id: "5",
+		type: "networkTerminal",
+		data: {
+			elementType: "Sink",
+			label: "Sink",
+		},
+		position: { x: 444.61224834874497, y: 339.3064750330251 },
+	},
+	{
+		id: "6",
+		type: "networkTerminal",
+		data: {
+			elementType: "Sink",
+			label: "Sink",
+		},
+		position: { x: -44.197768031703845, y: 285.0502742404228 },
+	},
+	{
+		id: "7",
+		type: "networkTerminal",
+		data: {
+			elementType: "Sink",
+			label: "Sink",
+		},
+		position: { x: 680.914020607662, y: 14.470509907529788 },
+	},
+];
+
+const demoEdges: Array<Edge<EdgeDataT>> = [
+	{
+		id: "edge__1-2",
+		source: "1",
+		target: "2",
+		sourceHandle: "handle__1-net",
+		data: { sourceTerminalType: "net", targetTerminalType: "input" },
+	},
+	{
+		id: "edge__2-3",
+		source: "2",
+		target: "3",
+		sourceHandle: "handle__2-output",
+		data: { sourceTerminalType: "output", targetTerminalType: "positive" },
+	},
+	{
+		id: "edge__2-6",
+		source: "2",
+		target: "6",
+		sourceHandle: "handle__2-output",
+		data: { sourceTerminalType: "output", targetTerminalType: "net" },
+	},
+	{
+		id: "edge__2-4",
+		source: "2",
+		target: "4",
+		sourceHandle: "handle__2-output",
+		data: { sourceTerminalType: "output", targetTerminalType: "input" },
+	},
+	{
+		id: "edge__3-7",
+		source: "3",
+		target: "7",
+		sourceHandle: "handle__3-output",
+		data: { sourceTerminalType: "output", targetTerminalType: "net" },
+	},
+	{
+		id: "edge__4-3",
+		source: "4",
+		target: "3",
+		sourceHandle: "handle__4-output",
+		data: { sourceTerminalType: "output", targetTerminalType: "negative" },
+	},
+	{
+		id: "edge__4-5",
+		source: "4",
+		target: "5",
+		sourceHandle: "handle__4-output",
+		data: { sourceTerminalType: "output", targetTerminalType: "net" },
+	},
+];
+
+const demoParams: Record<string, Record<string, string>> = {
+	"1": {
+		is_input: "true",
+		is_output: "false",
+		hardware_pin: "A0",
+	},
+	"2": {
+		atk: "20000",
+		dec: "100",
+		model_version: "SecondOrder",
+	},
+	"3": { threshold: "0.09" },
+	"4": { characteristic_frequency: "20", filter_type: "lpf1", quality_factor: "2" },
+	"5": {
+		is_input: "false",
+		is_output: "true",
+	},
+	"6": {
+		is_input: "false",
+		is_output: "true",
+	},
+	"7": {
+		is_input: "false",
+		is_output: "true",
+		hardware_pin: "D3",
+	},
+};
+
+export const demoNetwork: NetworkT = {
+	metaData: demoNetworkMetaData,
+	nodes: demoNodes,
+	edges: demoEdges,
+	params: demoParams,
+};
