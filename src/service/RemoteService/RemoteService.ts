@@ -4,7 +4,7 @@ import { DataSetT } from "../../redux/slices/DataHubSlice";
 import type { FilesUploadRequest } from "./client/bindings/FilesUploadRequest";
 import remoteTransformer from "./RemoteTransformer";
 import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
-import { type ElementT, type NetworkT } from "../../redux/slices/ModelCreationSlice";
+import { type ElementT, type NetworkT, type SimulationResultT } from "../../redux/slices/ModelCreationSlice";
 import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
 import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
@@ -99,7 +99,7 @@ const remoteService = {
 		network: NetworkT,
 		projectSlug: string,
 		inputFile: InputFileMetaDataT
-	): Promise<Record<string, string>> => {
+	): Promise<SimulationResultT> => {
 		//TODO: Perform the validations on network
 		const simulationRequest: SimulateNetworkRequest = remoteTransformer.createSimulateRequest(
 			network,
@@ -108,7 +108,10 @@ const remoteService = {
 		);
 		console.log(simulationRequest);
 		//eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-		const simulationResponse = {} as SimulateNetworkResponse;
+		const simulationResponse: SimulateNetworkResponse = {
+			visualization_path: "nw5000_Network_Visual.png",
+			py_code_path: "nw5000_Network.py",
+		};
 		// const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);
 		console.log(simulationResponse);
 

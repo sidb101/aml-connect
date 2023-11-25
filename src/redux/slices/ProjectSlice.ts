@@ -6,7 +6,7 @@
 
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { AUDIO_DIR } from "../../constants";
+import { AUDIO_DIR, TEMP_DIR } from "../../constants";
 
 export type ShallowProjectDetails = {
 	id: number;
@@ -147,6 +147,11 @@ export const selectCurrentProjectSlug = createSelector(
 export const selectCurrentAudioPath = createSelector(
 	(state: RootState) => state.project,
 	({ projectSlug }) => `${projectSlug}/${AUDIO_DIR}`
+);
+
+export const selectCurrentTempPath = createSelector(
+	(state: RootState) => state.project,
+	({ projectSlug }) => `${projectSlug}/${TEMP_DIR}`
 );
 
 export const selectAllProjects = createSelector(

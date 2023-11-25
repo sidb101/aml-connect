@@ -9,11 +9,14 @@ import {
 import { useEffect } from "react";
 import { generalActions } from "../../../../redux/slices/GeneralSlice";
 import remoteService from "../../../../service/RemoteService/RemoteService";
-import { selectCurrentAudioPath, selectCurrentProjectSlug } from "../../../../redux/slices/ProjectSlice";
+import {
+	selectCurrentAudioPath,
+	selectCurrentProjectSlug,
+	selectCurrentTempPath,
+} from "../../../../redux/slices/ProjectSlice";
 import storageService from "../../../../service/StorageService/StorageService";
-import { audioFilesMock } from "../../../../tests/mockdata/audioFilesMock";
 import { selectCurrentNetwork } from "../../../../redux/slices/ModelCreationSlice";
-import { AUDIO_DIR } from "../../../../constants";
+import { initialState as resultInitialState, resultActions } from "../../../../redux/slices/ResultSlice";
 
 function RunSimulation() {
 	//get the audio files for current project
@@ -22,7 +25,9 @@ function RunSimulation() {
 	const validationAudioFiles = useAppSelector((state) => selectInputFiles(state, DataSetT.VALIDATION));
 	const projectSlug = useAppSelector(selectCurrentProjectSlug);
 	const audioPath = useAppSelector(selectCurrentAudioPath);
+	const tmpPath = useAppSelector(selectCurrentTempPath);
 	const currentNetwork = useAppSelector(selectCurrentNetwork);
+	const simulationResult = useAppSelector((state) => state.result.simulationResult);
 
 	const dispatch = useAppDispatch();
 
@@ -86,15 +91,33 @@ function RunSimulation() {
 		//get the metadata from the server
 		const inputFilesMetaData = await remoteService.getFilesMetaData(projectSlug, dataSet);
 		//get the files data along with content from the given metadata
-		const inputFiles = await storageService.readFilesFromStorage(inputFilesMetaData, audioPath);
+		const inputFiles = await storageService.readInputFilesFromStorage(inputFilesMetaData, audioPath);
 		//update it in the redux state
 		dispatch(dataHubActions.setInputFiles({ dataSet, inputFiles }));
 	};
 
-	const simulateNetwork = (selectedFile: InputFileMetaDataT) => {
-		remoteService.simulateNetwork(currentNetwork, projectSlug, selectedFile).catch((e) => {
-			console.error("Couldn't simulate", e);
-		});
+	const simulateNetwork = async (selectedFile: InputFileMetaDataT) => {
+		try {
+			//get the response from backend
+			const simulationResult = await remoteService.simulateNetwork(currentNetwork, projectSlug, selectedFile);
+
+			//read the necessary files and fill the data content
+			const imageFile = await storageService.readImageFileFromStorage(simulationResult.vizFile.metadata, tmpPath);
+
+			//update the redux store with the result
+			dispatch(
+				resultActions.setSimulationResult({
+					simulationResult: { ...simulationResult, vizFile: imageFile },
+				})
+			);
+		} catch (e) {
+			console.error("Couldn't get simulation result", e);
+		}
+	};
+
+	const handleInputFileChange = (selectedFile: InputFileMetaDataT) => {
+		//reset the simulation result
+		dispatch(resultActions.setSimulationResult({ simulationResult: resultInitialState.simulationResult }));
 	};
 
 	return (
@@ -102,6 +125,8 @@ function RunSimulation() {
 			<RunSimulationView
 				audioFiles={[...trainingAudioFiles, ...testingAudioFiles, ...validationAudioFiles]}
 				onSimulate={simulateNetwork}
+				onInputFileChange={handleInputFileChange}
+				simulationResult={simulationResult}
 			/>
 		</>
 	);

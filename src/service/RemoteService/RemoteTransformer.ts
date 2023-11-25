@@ -25,6 +25,7 @@ import { USER_ID } from "../../constants";
 import type { ShallowProjectDetails } from "redux/slices/ProjectSlice";
 import type { GetProjectsResponse } from "./client/bindings/GetProjectsResponse";
 import { getTerminalType } from "../../pages/modelCreationPage/layouts/CreateModel/Canvas/canvasUtils";
+import type { SimulationResultT } from "../../redux/slices/ResultSlice";
 /* eslint-disable  @typescript-eslint/naming-convention */
 
 /***
@@ -228,10 +229,27 @@ const remoteTransformer = {
 		};
 	},
 
-	parseSimulationResponse(simulateNetworkResponse: SimulateNetworkResponse): Record<string, string> {
+	parseSimulationResponse(simulateNetworkResponse: SimulateNetworkResponse): SimulationResultT {
+		const vizExtension = getFileExtension(simulateNetworkResponse.visualization_path);
+		const codeExtension = getFileExtension(simulateNetworkResponse.py_code_path);
 		return {
-			code: simulateNetworkResponse.py_code_path,
-			viz: simulateNetworkResponse.visualization_path,
+			ranSimulation: true,
+			vizFile: {
+				metadata: {
+					name: simulateNetworkResponse.visualization_path,
+					mediaType: `image/${vizExtension}`,
+					extension: vizExtension,
+				},
+				dataUrl: "",
+			},
+			codeFile: {
+				metadata: {
+					name: simulateNetworkResponse.py_code_path,
+					mediaType: `text/x-python`,
+					extension: codeExtension,
+				},
+				dataUrl: "",
+			},
 		};
 	},
 };
