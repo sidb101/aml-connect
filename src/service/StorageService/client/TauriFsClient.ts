@@ -25,8 +25,8 @@ class TauriFsClient implements StorageClient {
 	 * @param path: Relative path from LocalAppDir (should have trailing '/')
 	 */
 	async readInputFileFromStorage(fileMetaData: InputFileMetaDataT, path: string): Promise<InputFileDataT> {
-		// const fileData = await readBinaryFile(path + fileMetaData.name, { dir: BaseDirectory.AppLocalData });
-		const fileData = new Uint8Array();
+		const fileData = await readBinaryFile(path + fileMetaData.name, { dir: BaseDirectory.AppLocalData });
+		// const fileData = new Uint8Array();
 		const dataUrl = uInt8ArrayToDataUrl(fileData, fileMetaData.mediaType);
 
 		return { metadata: fileMetaData, dataUrl };

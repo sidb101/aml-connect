@@ -80,10 +80,13 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
         py_code_path = self._generate_source_code()
         visual_file_path = self._visualize_response(response)
 
+        py_code_ret_path = py_code_path.split(os.sep)[-1]
+        visual_file_ret_path = visual_file_path.split(os.sep)[-1]
+
         output = {
             SIMULATOR_RESPONSE_KEY: response,
-            PY_CODE_KEY: py_code_path,
-            VISUALIZE_KEY: visual_file_path,
+            PY_CODE_KEY: py_code_ret_path,
+            VISUALIZE_KEY: visual_file_ret_path,
         }
 
         return output
