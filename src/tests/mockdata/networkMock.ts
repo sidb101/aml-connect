@@ -78,53 +78,53 @@ const mockNodes: Array<Node<NodeDataT>> = [
 
 const mockEdges: Array<Edge> = [
 	{
-		id: "edge__handle__1~net|handle__2~input",
+		id: "1~net|2~input",
 		source: "1",
 		target: "2",
-		sourceHandle: "handle__1~net",
-		targetHandle: "handle__2~input",
+		sourceHandle: "1~net",
+		targetHandle: "2~input",
 	},
 	{
-		id: "edge__handle__2~output|handle__3~positive",
+		id: "2~output|3~positive",
 		source: "2",
 		target: "3",
-		sourceHandle: "handle__2~output",
-		targetHandle: "handle__3~positive",
+		sourceHandle: "2~output",
+		targetHandle: "3~positive",
 	},
 	{
-		id: "edge__handle__2~output|handle__6~net",
+		id: "2~output|6~net",
 		source: "2",
 		target: "6",
-		sourceHandle: "handle__2~output",
-		targetHandle: "handle__6~net",
+		sourceHandle: "2~output",
+		targetHandle: "6~net",
 	},
 	{
-		id: "edge__handle__2~output|handle__4~input",
+		id: "2~output|4~input",
 		source: "2",
 		target: "4",
-		sourceHandle: "handle__2~output",
-		targetHandle: "handle__4~input",
+		sourceHandle: "2~output",
+		targetHandle: "4~input",
 	},
 	{
-		id: "edge__handle__3~output|handle__7~net",
+		id: "3~output|7~net",
 		source: "3",
 		target: "7",
-		sourceHandle: "handle__3~output",
-		targetHandle: "handle__7~net",
+		sourceHandle: "3~output",
+		targetHandle: "7~net",
 	},
 	{
-		id: "edge__handle__4~output|handle__3~negative",
+		id: "4~output|3~negative",
 		source: "4",
 		target: "3",
-		sourceHandle: "handle__4~output",
-		targetHandle: "handle__3~negative",
+		sourceHandle: "4~output",
+		targetHandle: "3~negative",
 	},
 	{
-		id: "edge__handle__4~output|handle__5~net",
+		id: "4~output|5~net",
 		source: "4",
 		target: "5",
-		sourceHandle: "handle__4~output",
-		targetHandle: "handle__5~net",
+		sourceHandle: "4~output",
+		targetHandle: "5~net",
 	},
 ];
 
@@ -177,10 +177,10 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			position: { x: -192.89334108322325, y: 14.258033289299902 },
 			terminals: [
 				{
-					id: "handle__1~net",
+					id: "1~net",
 					parent_element_id: "1",
 					type_name: "net",
-					node_name: "edge__handle__1~net|handle__2~input",
+					node_name: "1~net",
 				},
 			],
 			element_type_params: {
@@ -206,28 +206,16 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			position: { x: -67.1790478203435, y: 15.172102509907518 },
 			terminals: [
 				{
-					id: "handle__2~input",
+					id: "2~input",
 					parent_element_id: "2",
 					type_name: "input",
-					node_name: "edge__handle__1~net|handle__2~input",
+					node_name: "1~net",
 				},
 				{
-					id: "handle__2~output",
+					id: "2~output",
 					parent_element_id: "2",
 					type_name: "output",
-					node_name: "edge__handle__2~output|handle__3~positive",
-				},
-				{
-					id: "handle__2~output",
-					parent_element_id: "2",
-					type_name: "output",
-					node_name: "edge__handle__2~output|handle__6~net",
-				},
-				{
-					id: "handle__2~output",
-					parent_element_id: "2",
-					type_name: "output",
-					node_name: "edge__handle__2~output|handle__4~input",
+					node_name: "2~output",
 				},
 			],
 		},
@@ -238,22 +226,22 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			type_name: "Comparator",
 			terminals: [
 				{
-					id: "handle__3~positive",
+					id: "3~positive",
 					parent_element_id: "3",
 					type_name: "positive",
-					node_name: "edge__handle__2~output|handle__3~positive",
+					node_name: "2~output",
 				},
 				{
-					id: "handle__3~output", //terminal ID
+					id: "3~output", //terminal ID
 					parent_element_id: "3",
 					type_name: "output",
-					node_name: "edge__handle__3~output|handle__7~net",
+					node_name: "3~output",
 				},
 				{
-					id: "handle__3~negative", //terminal ID
+					id: "3~negative", //terminal ID
 					parent_element_id: "3",
 					type_name: "negative",
-					node_name: "edge__handle__4~output|handle__3~negative",
+					node_name: "4~output",
 				},
 			],
 			position: { x: 393.3637157199475, y: -9.63277357992078 },
@@ -268,22 +256,16 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			type_name: "Filter",
 			terminals: [
 				{
-					id: "handle__4~input",
+					id: "4~input",
 					parent_element_id: "4",
 					type_name: "input",
-					node_name: "edge__handle__2~output|handle__4~input",
+					node_name: "2~output",
 				},
 				{
-					id: "handle__4~output",
+					id: "4~output",
 					parent_element_id: "4",
 					type_name: "output",
-					node_name: "edge__handle__4~output|handle__3~negative",
-				},
-				{
-					id: "handle__4~output",
-					parent_element_id: "4",
-					type_name: "output",
-					node_name: "edge__handle__4~output|handle__5~net",
+					node_name: "4~output",
 				},
 			],
 			position: { x: 197.81003540290646, y: 339.5152253632761 },
@@ -298,10 +280,10 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			type_name: "Terminal",
 			terminals: [
 				{
-					id: "handle__5~net",
+					id: "5~net",
 					parent_element_id: "5",
 					type_name: "net",
-					node_name: "edge__handle__4~output|handle__5~net",
+					node_name: "4~output",
 				},
 			],
 			position: { x: 444.61224834874497, y: 339.3064750330251 },
@@ -319,10 +301,10 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			type_name: "Terminal",
 			terminals: [
 				{
-					id: "handle__6~net",
+					id: "6~net",
 					parent_element_id: "6",
 					type_name: "net",
-					node_name: "edge__handle__2~output|handle__6~net",
+					node_name: "2~output",
 				},
 			],
 			position: { x: -44.197768031703845, y: 285.0502742404228 },
@@ -340,10 +322,10 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 			type_name: "Terminal",
 			terminals: [
 				{
-					id: "handle__7~net",
+					id: "7~net",
 					parent_element_id: "7",
 					type_name: "net",
-					node_name: "edge__handle__3~output|handle__7~net",
+					node_name: "3~output",
 				},
 			],
 			position: { x: 680.914020607662, y: 14.470509907529788 },
@@ -358,46 +340,28 @@ export const mockExpectedNetworkTransform: NetworkVO = {
 	],
 	nodes: [
 		{
-			id: "edge__handle__1~net|handle__2~input",
-			name: "edge__handle__1~net|handle__2~input",
+			id: "1~net",
+			name: "1~net",
 			parent_network_id: MOCK_NETWORK_ID,
-			terminal_ids: ["handle__1~net", "handle__2~input"],
+			terminal_ids: ["1~net", "2~input"],
 		},
 		{
-			id: "edge__handle__2~output|handle__3~positive",
-			name: "edge__handle__2~output|handle__3~positive",
+			id: "2~output",
+			name: "2~output",
 			parent_network_id: MOCK_NETWORK_ID,
-			terminal_ids: ["handle__2~output", "handle__3~positive"],
+			terminal_ids: ["2~output", "3~positive", "6~net", "4~input"],
 		},
 		{
-			id: "edge__handle__2~output|handle__6~net",
-			name: "edge__handle__2~output|handle__6~net",
+			id: "3~output",
+			name: "3~output",
 			parent_network_id: MOCK_NETWORK_ID,
-			terminal_ids: ["handle__2~output", "handle__6~net"],
+			terminal_ids: ["3~output", "7~net"],
 		},
 		{
-			id: "edge__handle__2~output|handle__4~input",
-			name: "edge__handle__2~output|handle__4~input",
+			id: "4~output",
+			name: "4~output",
 			parent_network_id: MOCK_NETWORK_ID,
-			terminal_ids: ["handle__2~output", "handle__4~input"],
-		},
-		{
-			id: "edge__handle__3~output|handle__7~net",
-			name: "edge__handle__3~output|handle__7~net",
-			parent_network_id: MOCK_NETWORK_ID,
-			terminal_ids: ["handle__3~output", "handle__7~net"],
-		},
-		{
-			id: "edge__handle__4~output|handle__3~negative",
-			name: "edge__handle__4~output|handle__3~negative",
-			parent_network_id: MOCK_NETWORK_ID,
-			terminal_ids: ["handle__4~output", "handle__3~negative"],
-		},
-		{
-			id: "edge__handle__4~output|handle__5~net",
-			name: "edge__handle__4~output|handle__5~net",
-			parent_network_id: MOCK_NETWORK_ID,
-			terminal_ids: ["handle__4~output", "handle__5~net"],
+			terminal_ids: ["4~output", "3~negative", "5~net"],
 		},
 	],
 };

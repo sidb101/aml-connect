@@ -97,6 +97,7 @@ function RunSimulation() {
 	};
 
 	const simulateNetwork = async (selectedFile: InputFileMetaDataT) => {
+		dispatch(generalActions.markLoading(true));
 		try {
 			//get the response from backend
 			const simulationResult = await remoteService.simulateNetwork(currentNetwork, projectSlug, selectedFile);
@@ -113,6 +114,7 @@ function RunSimulation() {
 		} catch (e) {
 			console.error("Couldn't get simulation result", e);
 		}
+		dispatch(generalActions.markLoading(false));
 	};
 
 	const handleInputFileChange = (selectedFile: InputFileMetaDataT) => {
