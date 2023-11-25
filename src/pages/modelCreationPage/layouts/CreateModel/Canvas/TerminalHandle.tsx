@@ -28,12 +28,11 @@ const TerminalHandle = ({ connectionLimit, children, ...props }: PropsWithChildr
 					return edge.sourceHandle === props.id || edge.targetHandle === props.id;
 				});
 				return connectedEdges.length < connectionLimit;
-			} else {
-				return true;
 			}
-		} else {
 			return true;
 		}
+
+		return true;
 	}, [nodeInternals, edges, nodeId, connectionLimit, props.id]);
 
 	return (

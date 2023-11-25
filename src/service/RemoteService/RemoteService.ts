@@ -108,9 +108,10 @@ const remoteService = {
 			inputFile
 		);
 		console.log(simulationRequest);
-		//eslint-disable-next-line @typescript-eslint/consistent-type-assertions
 		const simulationResponse: SimulateNetworkResponse = {
+			//eslint-disable-next-line @typescript-eslint/naming-convention
 			visualization_path: "nw5000_Network_Visual.png",
+			//eslint-disable-next-line @typescript-eslint/naming-convention
 			py_code_path: "nw5000_Network.py",
 		};
 		// const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);

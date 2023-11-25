@@ -19,15 +19,17 @@ export const newNodePosition = (network: NetworkT): XYPosition => {
 export const newNodeId = (network: NetworkT): string => {
 	//get the maximum is assigned to any node
 	const maxNodeId =
-		network.nodes.reduce((prev, current) => (prev && parseInt(prev.id) > parseInt(current.id) ? prev : current))
-			.id || "0";
+		network.nodes.reduce((prev, current) =>
+			prev && parseInt(prev.id, 10) > parseInt(current.id, 10) ? prev : current
+		).id || "0";
 
-	return String(parseInt(maxNodeId) + 1);
+	return String(parseInt(maxNodeId, 10) + 1);
 };
 export const newEdgeId = (sourceHandle: string, targetHandle: string) => `edge__${sourceHandle}|${targetHandle}`;
 export const newHandleId = (nodeId: string, handleType: string) => `handle__${nodeId}~${handleType}`;
+//eslint-disable-next-line @typescript-eslint/ban-types
 export const getTerminalType = (handleId: string | undefined | null) =>
-	handleId && handleId.includes("~") ? handleId.split("~")[1] : "";
+	handleId?.includes("~") ? handleId.split("~")[1] : "";
 
 export const newNode = (network: NetworkT, element: ElementT): Node<NodeDataT> => {
 	const label = element.typeName;

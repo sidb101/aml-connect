@@ -93,7 +93,7 @@ export type NetworkMetaDataT = {
 export type NetworkT = {
 	metaData: NetworkMetaDataT;
 	nodes: Array<Node<NodeDataT>>;
-	edges: Array<Edge>;
+	edges: Edge[];
 	params: Record<string, Record<string, string>>; //<NodeId -> Parameter Object having key value>
 };
 
