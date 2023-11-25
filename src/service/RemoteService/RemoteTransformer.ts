@@ -22,7 +22,7 @@ import type { Terminal } from "./client/bindings/Terminal";
 import type { Edge, Node } from "reactflow";
 import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
 import type { NetworkVO } from "./client/bindings/NetworkVO";
-import { USER_ID } from "../../constants";
+import { AUDIO_DIR, USER_ID } from "../../constants";
 import type { ShallowProjectDetails } from "redux/slices/ProjectSlice";
 import type { GetProjectsResponse } from "./client/bindings/GetProjectsResponse";
 /* eslint-disable  @typescript-eslint/naming-convention */
@@ -169,7 +169,6 @@ const remoteTransformer = {
 	},
 
 	parseGetProjectsResponse(getProjectsResponse: GetProjectsResponse): ShallowProjectDetails[] {
-		console.log(getProjectsResponse);
 		const { projects } = getProjectsResponse;
 
 		return projects.map((project) => {
@@ -182,7 +181,11 @@ const remoteTransformer = {
 		});
 	},
 
-	createSimulateRequest(network: NetworkT, inputFile: InputFileMetaDataT): SimulateNetworkRequest {
+	createSimulateRequest(
+		network: NetworkT,
+		projectSlug: string,
+		inputFile: InputFileMetaDataT
+	): SimulateNetworkRequest {
 		//TODO: Perform the validations on network
 
 		const terminalMap: Map<string, Terminal[]> = getTerminalMap(network.edges);
@@ -220,12 +223,16 @@ const remoteTransformer = {
 		};
 		return {
 			network: networkToSimulate,
+			project_slug: projectSlug,
 			audio_file_path: inputFile.name,
 		};
 	},
 
-	parseSimulationResponse(simulateNetworkResponse: SimulateNetworkResponse): Record<string, number[]> {
-		return simulateNetworkResponse.response;
+	parseSimulationResponse(simulateNetworkResponse: SimulateNetworkResponse): Record<string, string> {
+		return {
+			code: simulateNetworkResponse.py_code_path,
+			viz: simulateNetworkResponse.visualization_path,
+		};
 	},
 };
 

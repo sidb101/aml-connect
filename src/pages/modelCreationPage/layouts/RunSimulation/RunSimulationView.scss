@@ -1,0 +1,21 @@
+@use "../../../../global";
+
+.RunSimulationView_inputContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+
+	.RunSimulationView_audioFilesContainer {
+		flex-grow: 5;
+	}
+
+	.RunSimulationView_selectInputContainer {
+		width: 50%;
+		.RunSimulationView_selectInput {
+			margin-left: 10px;
+			padding: 10px;
+			border-radius: global.$border-radius;
+		}
+	}
+}

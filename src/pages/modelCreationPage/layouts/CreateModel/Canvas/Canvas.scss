@@ -6,40 +6,6 @@
 	box-sizing: border-box;
 	border: 2px solid black;
 }
-.Canvas_input {
-	color: white;
-	background: global.$color-grey-5;
-	border: 1px solid black;
-	border-radius: 100%;
-	width: 50px;
-	height: 50px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.Canvas_node {
-	background: global.$color-grey-3;
-	border: 1px solid black;
-	border-radius: global.$border-radius;
-	width: fit-content;
-	height: 50px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-
-.Canvas_output {
-	color: white;
-	background: global.$color-grey-5;
-	border: 1px solid black;
-	border-radius: 100%;
-	width: 50px;
-	height: 50px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
 
 .Canvas_controls {
 	button {

@@ -7,6 +7,7 @@ import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import { type ElementT, type NetworkT } from "../../redux/slices/ModelCreationSlice";
 import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRequest";
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
+import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
 
 /**
  * Object responsible for Transforming the UI Data to required Backend DTOs and then call the Backend using
@@ -94,13 +95,21 @@ const remoteService = {
 		return remoteTransformer.parseGetElementsResponse(getElementsResponse);
 	},
 
-	simulateNetwork: async (network: NetworkT, inputFile: InputFileMetaDataT): Promise<Record<string, number[]>> => {
+	simulateNetwork: async (
+		network: NetworkT,
+		projectSlug: string,
+		inputFile: InputFileMetaDataT
+	): Promise<Record<string, string>> => {
 		//TODO: Perform the validations on network
-		const simulationRequest: SimulateNetworkRequest = remoteTransformer.createSimulateRequest(network, inputFile);
+		const simulationRequest: SimulateNetworkRequest = remoteTransformer.createSimulateRequest(
+			network,
+			projectSlug,
+			inputFile
+		);
 		console.log(simulationRequest);
 		//eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-		// const simulationResponse = { response: {} as Record<string, number[]>, py_code_path: "", visualization_path: "" };
-		const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);
+		const simulationResponse = {} as SimulateNetworkResponse;
+		// const simulationResponse = await remoteClient.simulateNetwork(simulationRequest);
 		console.log(simulationResponse);
 
 		return remoteTransformer.parseSimulationResponse(simulationResponse);
