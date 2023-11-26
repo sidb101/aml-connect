@@ -15,9 +15,17 @@ const storageService = {
 		);
 	},
 
-	readImageFileFromStorage: async (imageFile: OutputFileMetaDataT, path: string): Promise<OutputFileDataT> => {
+	readImageFileFromStorage: async (
+		imageFileMetadata: OutputFileMetaDataT,
+		path: string
+	): Promise<OutputFileDataT> => {
 		//get the image along with content from given metadata
-		return storageClient.readImageFileFromStorage(imageFile, path);
+		return storageClient.readImageFileFromStorage(imageFileMetadata, path);
+	},
+
+	readCodeFileFromStorage: async (codeFileMetaData: OutputFileMetaDataT, path: string): Promise<OutputFileDataT> => {
+		//get the code along with content from given metadata
+		return storageClient.readCodeFileFromStorage(codeFileMetaData, path);
 	},
 };
 

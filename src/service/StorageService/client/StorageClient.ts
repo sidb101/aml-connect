@@ -30,4 +30,11 @@ export interface StorageClient {
 	 * @param path: Appropriate Path of directory where file is present.
 	 */
 	readImageFileFromStorage(fileMetaData: OutputFileMetaDataT, path: string): Promise<OutputFileDataT>;
+
+	/**
+	 * This method would read the code file from the path relative to local app dir.
+	 * @param fileMetaData: Metadata of the binary file to be read
+	 * @param path: Relative path from LocalAppDir (should have trailing '/')
+	 */
+	readCodeFileFromStorage(fileMetaData: OutputFileMetaDataT, path: string): Promise<OutputFileDataT>;
 }

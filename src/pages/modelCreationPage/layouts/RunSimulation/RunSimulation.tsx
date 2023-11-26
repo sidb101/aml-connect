@@ -46,7 +46,6 @@ function RunSimulation() {
 	 * filesystem
 	 */
 	const getAllInputFiles = async () => {
-		console.log("Getting all files..");
 		dispatch(generalActions.markLoading(true));
 
 		//Get all the required files asynchronously
@@ -78,7 +77,6 @@ function RunSimulation() {
 		]);
 
 		dispatch(generalActions.markLoading(false));
-		console.log("Marked Unloading");
 	};
 
 	/**
@@ -87,7 +85,6 @@ function RunSimulation() {
 	 * @param dataSet: The type of input files to be fetched.
 	 */
 	const getInputFiles = async (dataSet: DataSetT) => {
-		console.log("Getting audio files for : ", dataSet);
 		//get the metadata from the server
 		const inputFilesMetaData = await remoteService.getFilesMetaData(projectSlug, dataSet);
 		//get the files data along with content from the given metadata
@@ -103,12 +100,15 @@ function RunSimulation() {
 			const simulationResult = await remoteService.simulateNetwork(currentNetwork, projectSlug, selectedFile);
 
 			//read the necessary files and fill the data content
-			const imageFile = await storageService.readImageFileFromStorage(simulationResult.vizFile.metadata, tmpPath);
+			const [imageFile, codeFile] = await Promise.all([
+				storageService.readImageFileFromStorage(simulationResult.vizFile.metadata, tmpPath),
+				storageService.readCodeFileFromStorage(simulationResult.codeFile.metadata, tmpPath),
+			]);
 
 			//update the redux store with the result
 			dispatch(
 				resultActions.setSimulationResult({
-					simulationResult: { ...simulationResult, vizFile: imageFile },
+					simulationResult: { ...simulationResult, vizFile: imageFile, codeFile: codeFile },
 				})
 			);
 		} catch (e) {

@@ -58,9 +58,14 @@ function ModelCreationPage() {
 
 	const fetchAllElements = async () => {
 		dispatch(generalActions.markLoading(true));
-		const allElements = await remoteService.getAllElements();
-		dispatch(modelCreationActions.setAllElements({ allElements }));
-		dispatch(generalActions.markLoading(false));
+		try{
+			const allElements = await remoteService.getAllElements();
+			dispatch(modelCreationActions.setAllElements({ allElements }));
+		} catch(e) {
+			throw e
+		} finally {
+			dispatch(generalActions.markLoading(false));
+		}
 	};
 
 	const header = <Header headerTitle={`${projectName || "Undefined Project"} > Model Creation > ${heading}`} />;

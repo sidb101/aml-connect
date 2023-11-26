@@ -19,3 +19,29 @@
 		}
 	}
 }
+
+.RunSimulationView_outputContainer {
+	display: grid;
+	grid-template-columns: 50% 50%;
+	height: 100%;
+	padding-top: 20px;
+
+	.RunSimulationView_imageContainer {
+		.RunSimulationView_imageTitle {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
+	.RunSimulationView_codeContainer {
+		height: 65vh;
+		padding-right: 40px;
+
+		.RunSimulationView_codeTitle {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+}

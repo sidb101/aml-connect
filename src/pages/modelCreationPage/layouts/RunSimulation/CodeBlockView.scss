@@ -1,0 +1,13 @@
+@use "../../../../global";
+
+.CodeBlockView_container {
+	padding-top: 20px;
+	height: calc(100% - 20px);
+
+	.CodeBlockView_codeBlockContainer {
+		height: calc(100% - 20px);
+		overflow-y: scroll;
+		font-size: 12px;
+		font-family: monospace, sans-serif;
+	}
+}

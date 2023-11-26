@@ -4,6 +4,8 @@ import DisplayPanel from "../../../../components/displayPanel/DisplayPanel";
 import type { InputFileDataT, InputFileMetaDataT } from "../../../../redux/slices/DataHubSlice";
 import { useEffect, useState } from "react";
 import type { SimulationResultT } from "../../../../redux/slices/ResultSlice";
+import CodeBlockView from "./CodeBlockView";
+import { PYTHON_LANG } from "../../../../constants";
 
 type RunSimulationViewProps = {
 	audioFiles: InputFileDataT[];
@@ -13,20 +15,20 @@ type RunSimulationViewProps = {
 };
 
 function RunSimulationView({ audioFiles, onSimulate, onInputFileChange, simulationResult }: RunSimulationViewProps) {
-	const [selectedFile, setSelectedFile] = useState<InputFileDataT | undefined>(
-		audioFiles.length <= 0 ? undefined : audioFiles[0]
-	);
+	const [selectedFile, setSelectedFile] = useState<InputFileDataT | undefined>();
 
 	useEffect(() => {
-		setSelectedFile(audioFiles.length <= 0 ? undefined : audioFiles[0]);
+		if (!selectedFile) {
+			setSelectedFile(audioFiles.length <= 0 ? undefined : audioFiles[0]);
+		}
 	}, [audioFiles]);
 
 	const onFileSelect = (fileName: string) => {
 		const selectedFile = audioFiles.find((file) => file.metadata.name === fileName);
-		setSelectedFile(selectedFile);
 		if (selectedFile) {
 			onInputFileChange(selectedFile.metadata);
 		}
+		setSelectedFile(selectedFile);
 	};
 
 	const onSimulateClick = () => {
@@ -47,6 +49,7 @@ function RunSimulationView({ audioFiles, onSimulate, onInputFileChange, simulati
 									onFileSelect(event.target.value);
 								}}
 								style={{ cursor: selectedFile ? "default" : "not-allowed" }}
+								value={selectedFile?.metadata.name}
 							>
 								{selectedFile ? (
 									audioFiles.map((audioFile, index) => (
@@ -68,7 +71,18 @@ function RunSimulationView({ audioFiles, onSimulate, onInputFileChange, simulati
 				</div>
 				{simulationResult.ranSimulation && (
 					<div className={`RunSimulationView_outputContainer`}>
-						<img src={simulationResult.vizFile.dataUrl} width="50%" />
+						<div className={`RunSimulationView_imageContainer`}>
+							<div className={`green-text section-heading-text RunSimulationView_imageTitle`}>
+								Simulation Response
+							</div>
+							<img src={simulationResult.vizFile.dataUrl} width={"100%"} />
+						</div>
+						<div className={`RunSimulationView_codeContainer`}>
+							<div className={`green-text section-heading-text RunSimulationView_codeTitle`}>
+								Generated Source Code
+							</div>
+							<CodeBlockView codeFile={simulationResult.codeFile} codeLanguage={PYTHON_LANG} />
+						</div>
 					</div>
 				)}
 			</DisplayPanel>

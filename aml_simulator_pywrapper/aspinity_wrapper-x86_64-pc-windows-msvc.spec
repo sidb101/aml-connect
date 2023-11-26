@@ -5,11 +5,11 @@ block_cipher = None
 
 
 a = Analysis(
-    ['simulator_wrapper.py'],
+    ['wrapper.py'],
     pathex=[],
     binaries=[],
-    datas=[],
-    hiddenimports=[],
+    datas=[('templates/network_template.py.j2', 'templates')],
+    hiddenimports=['PIL._tkinter_finder'],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
