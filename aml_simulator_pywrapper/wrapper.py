@@ -63,12 +63,24 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
             self.wrapped_network = Network(network_json)
             self.times, self.samples = WavFileManager.load_wav(audio_file_path)
 
+    def replace_tabs_with_spaces(self, filename):
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+
+        with open(filename, 'w') as file:
+            for line in lines:
+                line = line.replace('\t', ' ' * 4)
+                file.write(line)
+
     def _generate_source_code(self) -> str:
         """Returns the source code for the network"""
 
-        return self.wrapped_network.export_sourcecode(
+        fpath = self.wrapped_network.export_sourcecode(
             self.audio_file_path, self.project_tmp_dir
         )
+
+        self.replace_tabs_with_spaces(fpath)
+        return fpath
 
     def simulate_network(self) -> dict:
         """Returns a dictionary containing the simulated network's output,
