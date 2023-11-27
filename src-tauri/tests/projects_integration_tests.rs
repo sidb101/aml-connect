@@ -1,4 +1,5 @@
 use std::env;
+use std::path::PathBuf;
 
 use aml_connect::aml_core::db_adapter::models::NewProject;
 use aml_connect::aml_core::db_adapter::schema::projects;
@@ -11,7 +12,7 @@ use log::{info, warn};
 #[test]
 fn test_get_all_projects() {
     env::set_var("DATABASE_PATH", "./tests");
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     let mut conn = conn_pool.get().unwrap();
     conn.begin_test_transaction().unwrap();
@@ -19,10 +20,7 @@ fn test_get_all_projects() {
     // Create some test projects
     add_dummy_projects(&conn_pool);
 
-    let res = project_manager::get_projects::get_projects(
-        &mut conn,
-    )
-    .unwrap();
+    let res = project_manager::get_projects::get_projects(&mut conn).unwrap();
 
     // Check that the returned projects match the inserted projects
     assert_eq!(res.projects.len(), 5);
