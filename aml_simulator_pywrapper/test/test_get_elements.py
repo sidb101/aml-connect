@@ -1,5 +1,6 @@
-import simulator_wrapper
+import wrapper
 import json
+
 
 def test_all_library_types_exist():
     # arrange
@@ -17,10 +18,11 @@ def test_all_library_types_exist():
                   "PeakDetector",
                   "PGA",
                   "SynthesizedFilter"])
-    check = lambda x: x in lookup
+
+    def check(x): return x in lookup
 
     # act
-    elements = json.loads(simulator_wrapper.AspinitySimulatorWrapper.get_elements())
+    elements = json.loads(wrapper.AspinitySimulatorWrapper.get_elements())
 
     # assert
     assert all(map(check, elements.keys()))

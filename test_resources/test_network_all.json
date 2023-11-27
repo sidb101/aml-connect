@@ -1,0 +1,344 @@
+{
+    "id": 5000,
+    "name": "sample_network",
+    "elements": [
+        {
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "is_input": true,
+                    "is_output": false
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "net",
+                    "node_name": "one"
+                }
+            ]
+        },
+        {
+            "type_name": "AcDiff",
+            "element_type_params": {
+                "AcDiff": {
+                    "gain": 9.0
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "pos",
+                    "node_name": "one"
+                },
+                {
+                    "type_name": "neg",
+                    "node_name": null
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "two"
+                }
+            ]
+        },
+        {
+            "type_name": "AsymmetricIntegrator",
+            "element_type_params": {
+                "AsymmetricIntegrator": {
+                    "up": 100,
+                    "down": 10,
+                    "up_down_type": "Rate",
+                    "comparator_enable": true
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "input",
+                    "node_name": "two"
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "three"
+                }
+            ]
+        },
+        {
+            "type_name": "Comparator",
+            "element_type_params": {
+                "Comparator": {
+                    "threshold": 0.1
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "positive",
+                    "node_name": "three"
+                },
+                {
+                    "type_name": "negative",
+                    "node_name": null
+                },
+                {
+                    "type_name": "vdd",
+                    "node_name": null
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "fourth"
+                }
+            ]
+        },
+        {
+            "type_name": "Filter",
+            "element_type_params": {
+                "Filter": {
+                    "characteristic_frequency": 1e3,
+                    "quality_factor": 2,
+                    "filter_type": "lpf2"
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "input",
+                    "node_name": "fourth"
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "fourth2"
+                }
+            ]
+        },
+        {
+            "type_name": "Filterbank",
+            "element_type_params": {
+                "Filterbank": {
+                    "band_frequencies": [100, 200, 500, 1000],
+                    "quality_factor": [1, 2, 1, 1],
+                    "attack_rates": null,
+                    "decay_rates": null
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "input",
+                    "node_name": "fourth"
+                },
+                {
+                    "type_name": "out_0",
+                    "node_name": "fifth"
+                },
+                {
+                    "type_name": "out_7",
+                    "node_name": "sixth"
+                }
+            ]
+        },
+        {
+            "type_name": "GainOpamp",
+            "element_type_params": {
+                "GainOpamp": {
+                    "feedback_cap_count": 2,
+                    "gain_mode": "Inverting4x"
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "input",
+                    "node_name": "fifth"
+                },
+                {
+                    "type_name": "reference",
+                    "node_name": "sixth"
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "eighth"
+                }
+            ]
+        },
+        {
+            "type_name": "LookupTable",
+            "element_type_params": {
+                "LookupTable": {
+                    "expression": "(A and not B) or C"
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "A",
+                    "node_name": "eigth"
+                },
+                {
+                    "type_name": "B",
+                    "node_name": null
+                },
+                {
+                    "type_name": "C",
+                    "node_name": null
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "ninth"
+                }
+            ]
+        },
+        {
+            "type_name": "DelayFlipFlop",
+            "terminals": [
+                {
+                    "type_name": "input",
+                    "node_name": "ninth"
+                },
+                {
+                    "type_name": "clock",
+                    "node_name": null
+                },
+                {
+                    "type_name": "reset",
+                    "node_name": null
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "tenth"
+                }
+            ]
+        },
+        {
+            "type_name": "Multiplier",
+            "element_type_params": {
+                "Multiplier": {
+                    "slope": 1
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "x_pos",
+                    "node_name": "tenth"
+                },
+                {
+                    "type_name": "x_neg",
+                    "node_name": null
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "eleventh"
+                }
+            ]
+        },
+        {
+            "type_name": "Mux2",
+            "terminals": [
+                {
+                    "type_name": "in0",
+                    "node_name": "eleventh"
+                },
+                {
+                    "type_name": "select",
+                    "node_name": null
+                },
+                {
+                    "type_name": "in1",
+                    "node_name": "null"
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "twelveth"
+                }
+            ]
+        },
+        {
+            "type_name": "NeuralNet",
+            "element_type_params": {
+                "NeuralNet": {
+                    "weights": [0.1, 0.2, 0.3, 0.4],
+                    "biases": [0.1, 0.2, 0.3, 0.4],
+                    "activation_function": ["Tanh", "Sigmoid", "ReLU", "Linear"]
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "pos_0",
+                    "node_name": "twelveth"
+                },
+                {
+                    "type_name": "out_0",
+                    "node_name": "thirteenth"
+                }
+            ]
+        },
+        {
+            "type_name": "PeakDetector",
+            "element_type_params": {
+                "PeakDetector": {
+                    "atk": 1e3,
+                    "dec": 10,
+                    "model_version": "FirstOrder"
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "input",
+                    "node_name": "thirteenth"
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "fourteenth"
+                }
+            ]
+        },
+        {
+            "type_name": "PGA",
+            "element_type_params": {
+                "PGA": {
+                    "Av1": 2,
+                    "Av2": 0.5
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "pos1",
+                    "node_name": "thirteenth"
+                },
+                {
+                    "type_name": "neg1",
+                    "node_name": null
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "fifteenth"
+                }
+            ]
+        },
+        {
+            "type_name": "SynthesizedFilter",
+            "element_type_params": {
+                "SynthesizedFilter": {
+                    "coefficients": [[0.0, 0.2, 0.3, 1.2]]
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "input",
+                    "node_name": "fifteenth"
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "sixteenth"
+                }
+            ]
+        },
+        {
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "is_input": false,
+                    "is_output": true
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "net",
+                    "node_name": "sixteenth"
+                }
+            ]
+        }
+    ]
+}

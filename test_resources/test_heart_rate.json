@@ -1,0 +1,143 @@
+{
+    "id": 5000,
+    "name": "Heart rate detector - example from Aspinity",
+    "elements": [
+        {
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "hardware_pin": "A0",
+                    "is_input": true,
+                    "is_output": false,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "net",
+                    "node_name": "noninverting"
+                }
+            ]
+        },
+        {
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "hardware_pin": "A2",
+                    "is_input": true,
+                    "is_output": false,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "net",
+                    "node_name": "inverting"
+                }
+            ]
+        },
+        {
+            "type_name": "AcDiff",
+            "element_type_params": {
+                "AcDiff": {
+                    "gain": 9.0
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "pos",
+                    "node_name": "noninverting"
+                },
+                {
+                    "type_name": "neg",
+                    "node_name": "inverting"
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "diff_output"
+                }
+            ]
+        },
+        {
+            "type_name": "PeakDetector",
+            "element_type_params": {
+                "PeakDetector": {
+                    "atk": 500,
+                    "dec": 10
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "input",
+                    "node_name": "diff_output"
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "peak"
+                }
+            ]
+        },
+        {
+            "type_name": "Comparator",
+            "element_type_params": {
+                "Comparator": {
+                    "threshold": 0.03
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "positive",
+                    "node_name": "peak"
+                },
+                {
+                    "type_name": "negative",
+                    "node_name": "diff_output"
+                },
+                {
+                    "type_name": "output",
+                    "node_name": "detection"
+                }
+            ]
+        },
+        {
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "hardware_pin": "A3",
+                    "is_input": false,
+                    "is_output": true,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "net",
+                    "node_name": "peak"
+                }
+            ]
+        },
+        {
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "hardware_pin": "D3",
+                    "is_input": false,
+                    "is_output": true,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "type_name": "net",
+                    "node_name": "detection"
+                }
+            ]
+        }
+    ],
+    "nodes": [],
+    "creator_id": 12345
+}

@@ -31,7 +31,7 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 	const onTextBoxInputChange = (event: React.ChangeEvent<HTMLInputElement>, parameterName: string) => {
 		setParamData((oldData) => {
 			const newData = { ...oldData, params: { ...oldData.params } };
-			newData.params[parameterName] = event.target.value;
+			newData.params[parameterName] = event.target.value || "";
 			return newData;
 		});
 	};
