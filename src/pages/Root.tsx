@@ -13,7 +13,6 @@ import Sidebar from "../components/sideBar/Sidebar";
 import { generalActions, selectLoading } from "../redux/slices/GeneralSlice";
 import ProjectsRegion from "../components/sideBar/projectRegion/ProjectsRegion";
 import remoteService from "../service/RemoteService/RemoteService";
-import ErrorPage from "./errorPage/ErrorPage";
 
 function Root() {
 	const [openProjectNavLinks, setOpenProjectNavLinks] = useState<NavLinkT[]>([]);

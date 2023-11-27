@@ -8,6 +8,7 @@ import {
 	selectCurrentProjectDescription,
 	selectCurrentProjectName,
 	selectCurrentProjectStatus,
+	selectIsProjectOpen,
 } from "../../redux/slices/ProjectSlice";
 import { dataSetupRoute } from "../../routes";
 import OverviewView from "./layouts/OverviewView";
@@ -31,6 +32,7 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 	const currentProjectStatus = useAppSelector(selectCurrentProjectStatus);
 	const currentProjectName = useAppSelector(selectCurrentProjectName);
 	const currentProjectDescription = useAppSelector(selectCurrentProjectDescription);
+	const isProjectOpen = useAppSelector(selectIsProjectOpen);
 
 	useEffect(() => {
 		if (allProjects.length > 0) {
@@ -45,7 +47,7 @@ const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
 	}, [currentProjectStatus]);
 
 	return (
-		currentProjectStatus === ProjectStatus.OPEN && (
+		isProjectOpen && (
 			<View
 				header={<Header headerTitle={`${currentProjectName} > Overview`} />}
 				main={

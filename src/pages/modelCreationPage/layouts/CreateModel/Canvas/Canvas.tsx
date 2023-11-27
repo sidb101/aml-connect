@@ -6,7 +6,6 @@ import ReactFlow, {
 	ConnectionLineType,
 	Controls,
 	type DefaultEdgeOptions,
-	type Edge,
 	type EdgeChange,
 	type FitViewOptions,
 	type Node,
@@ -15,7 +14,6 @@ import ReactFlow, {
 	type OnEdgesChange,
 	type OnNodesChange,
 	Position,
-	useOnSelectionChange,
 } from "reactflow";
 
 import "reactflow/dist/style.css";

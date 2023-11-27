@@ -73,7 +73,7 @@ function DataHubPage() {
 	);
 	const footerElem = <Footer footerBtnGroup={footer} />;
 
-	return projectSlug && <View header={header} main={main} footer={footerElem} />;
+	return isProjectOpen && <View header={header} main={main} footer={footerElem} />;
 }
 
 export default DataHubPage;

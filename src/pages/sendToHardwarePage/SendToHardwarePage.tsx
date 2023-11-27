@@ -7,6 +7,7 @@ import {
 	selectAllProjects,
 	selectCurrentProjectName,
 	selectCurrentProjectStatus,
+	selectIsProjectOpen,
 } from "../../redux/slices/ProjectSlice";
 import SendToHardwareView from "./layouts/SendToHardwareView";
 
@@ -21,6 +22,7 @@ const SendToHardwarePage = (props: SendToHardwarePageT) => {
 	const allProjects = useAppSelector(selectAllProjects);
 	const currentProjectStatus = useAppSelector(selectCurrentProjectStatus);
 	const currentProjectName = useAppSelector(selectCurrentProjectName);
+	const isProjectOpen = useAppSelector(selectIsProjectOpen);
 
 	useEffect(() => {
 		if (allProjects.length > 0) {
@@ -35,7 +37,7 @@ const SendToHardwarePage = (props: SendToHardwarePageT) => {
 	}, [currentProjectStatus]);
 
 	return (
-		currentProjectStatus === ProjectStatus.OPEN && (
+		isProjectOpen && (
 			<SendToHardwareView title={`${currentProjectName} > Send to Hardware`} projectSlug={projectSlug} />
 		)
 	);
