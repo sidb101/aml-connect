@@ -63,7 +63,8 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
             self.wrapped_network = Network(network_json)
             self.times, self.samples = WavFileManager.load_wav(audio_file_path)
 
-    def replace_tabs_with_spaces(self, filename):
+    def _replace_tabs_with_spaces(self, filename):
+        """ Replaces tabs with 4 spaces in a src code file """
         with open(filename, 'r') as file:
             lines = file.readlines()
 
@@ -79,7 +80,7 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
             self.audio_file_path, self.project_tmp_dir
         )
 
-        self.replace_tabs_with_spaces(fpath)
+        self._replace_tabs_with_spaces(fpath)
         return fpath
 
     def simulate_network(self) -> dict:

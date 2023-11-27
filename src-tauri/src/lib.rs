@@ -10,8 +10,13 @@ pub mod uicontroller {
     use tauri::State;
 
     #[tauri::command]
-    pub fn get_elements() -> element_repository::GetElementsResponseResult {
-        element_repository::list_elements_from_simulator()
+    pub fn get_elements(handle: tauri::AppHandle) -> element_repository::GetElementsResponseResult {
+        let resource_path = handle.path_resolver()
+            .resolve_resource("resources/elements.json")
+            .ok_or(element_repository::GetElementsError::FileError(
+                "Could not load elements.json".to_string()
+            ))?;
+        element_repository::list_elements_from_simulator(&resource_path)
     }
 
     #[tauri::command]
@@ -52,12 +57,6 @@ pub mod uicontroller {
         let actual_network: network_manager::Network = nvo.to_network().unwrap();
         let audio_path_str: String = req.audio_file_path;
         let audio_path = std::path::Path::new(&audio_path_str);
-
-        // println!("app dir: {}", app_dir.as_path().display());
-        // let _j = serde_json::to_string(&_actual_network).unwrap();
-
-        // Print, write to a file, or send to an HTTP server.
-        // println!("{}", audio_path);
 
         // call simulate network
         let audio_path = std::path::Path::new(&audio_path);

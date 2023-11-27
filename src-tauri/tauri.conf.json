@@ -31,7 +31,7 @@
         ]
       },
       "fs": {
-        "scope": ["$APPLOCALDATA/**"],
+        "scope": ["$APPLOCALDATA/**", "$RESOURCE/*"],
         "readFile": true,
         "writeFile": true,
         "readDir": true,
@@ -56,6 +56,9 @@
       "targets": "all",
       "externalBin": [
         "binaries/aspinity_wrapper"
+      ],
+      "resources": [
+        "resources/elements.json"
       ]
     },
     "security": {

@@ -1,12 +1,11 @@
-
+use serde::{Deserialize, Serialize};
 use serde_json;
 use std::collections::HashMap;
-use serde::{Deserialize, Serialize};
-use ts_rs::TS;
 use std::fs::File;
 use std::io::BufReader;
-use std::env;
+use std::path::PathBuf;
 use thiserror::Error;
+use ts_rs::TS;
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
@@ -16,7 +15,7 @@ pub struct ElementMetadata {
     pub long_description: String,
     pub type_name: String,
     pub terminals: HashMap<String, TerminalMetadata>,
-    pub parameters: Option<HashMap<String, ParameterMetadata>>
+    pub parameters: Option<HashMap<String, ParameterMetadata>>,
 }
 
 #[derive(Debug, Serialize, Deserialize, TS)]
@@ -32,7 +31,7 @@ pub enum TerminalDirection {
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct TerminalMetadata{
+pub struct TerminalMetadata {
     pub description: String,
     pub direction: Option<TerminalDirection>,
     pub default: Option<String>,
@@ -77,14 +76,14 @@ pub enum UIComponentType {
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
-pub struct ParameterMetadata{
+pub struct ParameterMetadata {
     pub parameter_type: ParameterType,
     pub description: String,
     pub default: Option<String>,
     pub range_type: Option<RangeType>,
     pub range: Option<Vec<Option<String>>>,
     pub unit: Option<String>,
-    pub ui_component: UIComponentType
+    pub ui_component: UIComponentType,
 }
 
 #[derive(Error, Debug, Serialize, Deserialize, TS)]
@@ -92,22 +91,17 @@ pub struct ParameterMetadata{
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub enum GetElementsError {
     #[error("Problem with directory or file access")]
-    OSError,
+    FileError(String),
     #[error("Element JSON is malformed")]
     MalformedJSON(String),
 }
 
 pub type GetElementsResponseResult = Result<HashMap<String, ElementMetadata>, GetElementsError>;
 
-pub fn list_elements_from_simulator() -> GetElementsResponseResult {
-    let current_dir = env::current_dir().map_err(|_| GetElementsError::OSError)?;
-    let file_path = current_dir.join("src")
-        .join("aml_core")
-        .join("elements.json");
-    let file = File::open(file_path).map_err(|_| GetElementsError::OSError)?;
+pub fn list_elements_from_simulator(file_path: &PathBuf) -> GetElementsResponseResult {
+    let file = File::open(file_path).map_err(|e| GetElementsError::FileError(e.to_string()))?;
     let reader = BufReader::new(file);
-    let res: HashMap<String, ElementMetadata> = 
-        serde_json::from_reader(reader)
+    let res: HashMap<String, ElementMetadata> = serde_json::from_reader(reader)
         .map_err(|e| GetElementsError::MalformedJSON(e.to_string()))?;
     Ok(res)
 }
@@ -120,12 +114,15 @@ mod tests {
     #[test]
     fn test_metadata_load_from_json() {
         // arrange
-        // act
-        let el_json_res = list_elements_from_simulator();
-        
-        // assert
-        assert!( el_json_res.is_ok() );
-        // println!("{}", serde_json::to_string_pretty(&el_json_res.unwrap()).unwrap());        
-    }
+        let mut file_path = std::path::PathBuf::new();
+        file_path.push("resources");
+        file_path.push("elements.json");
 
+        // act
+        let el_json_res = list_elements_from_simulator(&file_path);
+
+        // assert
+        assert!(el_json_res.is_ok());
+        // println!("{}", serde_json::to_string_pretty(&el_json_res.unwrap()).unwrap());
+    }
 }
