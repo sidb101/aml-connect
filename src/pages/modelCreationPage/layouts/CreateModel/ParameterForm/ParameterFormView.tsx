@@ -1,6 +1,7 @@
 import "./ParameterFormView.scss";
 import React, { type ReactNode, useEffect, useState } from "react";
 import { type ParameterT, ParamTypeT, UIComponentT } from "../../../../../redux/slices/ModelCreationSlice";
+import Input from "../../../../../components/formElements/input/Input";
 
 type ParameterFormViewProps = {
 	elementType?: string;
@@ -57,12 +58,13 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 		switch (param.uiComponent) {
 			case UIComponentT.TEXTBOX:
 				return (
-					<input
+					<Input
 						type={`${param.parameterType === ParamTypeT.NUMBER ? "number" : "text"}`}
 						value={params[paramName] || ""}
 						onChange={(e) => {
 							onTextBoxInputChange(e, paramName);
 						}}
+						className={`general-padding`}
 					/>
 				);
 
@@ -119,6 +121,7 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 						</div>
 					))}
 					<button
+						className={`btn btn-outline`}
 						onClick={() => {
 							onParameterSave?.(paramData.params);
 						}}

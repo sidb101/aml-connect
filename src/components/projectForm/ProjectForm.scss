@@ -19,10 +19,6 @@
 	flex-direction: column;
 	gap: global.$general-padding;
 
-	input {
-		padding: global.$panel-padding;
-	}
-
 	textarea {
 		height: 100%;
 		padding: global.$panel-padding;
