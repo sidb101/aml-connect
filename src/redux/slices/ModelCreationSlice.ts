@@ -188,6 +188,16 @@ export const modelCreationSlice = createSlice({
 		setParameters: (state, action: PayloadAction<{ nodeId: string; params: Record<string, string> }>) => {
 			state.selectedNetwork.params[action.payload.nodeId] = action.payload.params;
 		},
+
+		/**
+		 * To reset the state when the project is closed.
+		 * @param state: Data hub State
+		 * @param action: Empty Action
+		 */
+		resetState: (state) => {
+			state.selectedNetwork = initialState.selectedNetwork;
+			state.allNetworks = initialState.allNetworks;
+		},
 	},
 });
 

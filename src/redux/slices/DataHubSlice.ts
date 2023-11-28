@@ -56,6 +56,17 @@ export const dataHubSlice = createSlice({
 			//TODO: Handle the duplicate file names. If a file already exists, then overwrite that file.
 			state[action.payload.dataSet] = [...state[action.payload.dataSet], ...action.payload.inputFiles];
 		},
+
+		/**
+		 * To reset the state when the project is closed.
+		 * @param state: Data hub State
+		 * @param action: Empty Action
+		 */
+		resetState: (state) => {
+			state.Testing = initialState.Testing;
+			state.Training = initialState.Training;
+			state.Validation = initialState.Validation;
+		},
 	},
 });
 

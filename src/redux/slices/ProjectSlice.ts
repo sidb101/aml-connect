@@ -87,6 +87,7 @@ export const projectSlice = createSlice({
 
 		/**
 		 * To declare to app to update status to align with a closed state.
+		 * This would reset the current project state
 		 * @param state: General state
 		 */
 		closeProject: (state) => {
