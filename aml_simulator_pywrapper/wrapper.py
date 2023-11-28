@@ -65,10 +65,10 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
 
     def _replace_tabs_with_spaces(self, filename):
         """ Replaces tabs with 4 spaces in a src code file """
-        with open(filename, 'r') as file:
+        with open(filename, 'r', encoding="utf-8") as file:
             lines = file.readlines()
 
-        with open(filename, 'w') as file:
+        with open(filename, 'w', encoding="utf-8") as file:
             for line in lines:
                 line = line.replace('\t', ' ' * 4)
                 file.write(line)
@@ -202,9 +202,10 @@ if __name__ == "__main__":  # pragma: no cover
             # output_json = json.dumps(ret, indent=4)
             # with open(os.path.join(tmp_dir, "response.json"), "w", encoding="utf-8") as f:
             #     f.write(output_json)
+            # ret["response"] = "response.json"
 
             ## Option 2 - remove the response key, as it is not needed yet [[current]]
             del ret["response"]
             print(ret)
-    except Exception as e:
+    except Exception as e: # pylint: disable=W
         print(f"Error while executing python wrapper: {e}")
