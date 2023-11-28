@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { projectActions, selectCurrentProjectName, selectIsProjectOpen } from "../../redux/slices/ProjectSlice";
-import { Outlet, useLocation, useParams } from "react-router-dom";
+import {
+	projectActions,
+	ProjectStatus,
+	selectAllProjects,
+	selectCurrentProjectName,
+	selectCurrentProjectStatus,
+	selectIsProjectOpen,
+} from "../../redux/slices/ProjectSlice";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import Footer, { type FooterBtnGroupT } from "../../components/footer/Footer";
 import "./DataHubPage.scss";
 import Header from "../../components/header/Header";
@@ -15,21 +22,24 @@ function DataHubPage() {
 	const [selectedTabIndex, setSelectedTabIndex] = useState<number>(0);
 	const [footer, setFooter] = useState<FooterBtnGroupT>({});
 
-	const { pathname } = useLocation();
+	const navigate = useNavigate();
 	const { projectSlug = "" } = useParams();
-
 	const dispatch = useAppDispatch();
-
-	const projectName = useAppSelector(selectCurrentProjectName);
+	const allProjects = useAppSelector(selectAllProjects);
+	const currentProjectStatus = useAppSelector(selectCurrentProjectStatus);
+	const currentProjectName = useAppSelector(selectCurrentProjectName);
 	const isProjectOpen = useAppSelector(selectIsProjectOpen);
+	const { pathname } = useLocation();
 
 	//tasks to be done for the whole data hub page
 	useEffect(() => {
 		dispatch(projectActions.openProject(projectSlug));
 		if (isProjectOpen) {
 			setPageTabs(getDataHubPageTabs(projectSlug));
-		} else {
-			console.error("projectSlug not present in the URL.");
+		}
+
+		if (projectSlug && currentProjectStatus === ProjectStatus.ERROR) {
+			navigate("/error-page", { replace: true });
 		}
 	}, [projectSlug, isProjectOpen]);
 
@@ -44,7 +54,13 @@ function DataHubPage() {
 		}
 	}, [selectedTabIndex, isProjectOpen]);
 
-	const header = <Header headerTitle={`${projectName || "Undefined Project"} > Data Hub > ${heading}`} />;
+	useEffect(() => {
+		if (allProjects.length > 0) {
+			dispatch(projectActions.openProject(projectSlug));
+		}
+	}, [allProjects.length, projectSlug]);
+
+	const header = <Header headerTitle={`${currentProjectName} > Data Hub > ${heading}`} />;
 	const main = (
 		<div className={`DataHub_bodyContainer`}>
 			<div className={"DataHub_bodyRow1"}>
@@ -57,7 +73,7 @@ function DataHubPage() {
 	);
 	const footerElem = <Footer footerBtnGroup={footer} />;
 
-	return projectSlug && <View header={header} main={main} footer={footerElem} />;
+	return isProjectOpen && <View header={header} main={main} footer={footerElem} />;
 }
 
 export default DataHubPage;

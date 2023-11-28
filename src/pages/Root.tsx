@@ -77,6 +77,13 @@ function Root() {
 			};
 		}
 
+		if (projectStatus === ProjectStatus.ERROR) {
+			return {
+				heading: "Error loading project",
+				region: <div>Error loading project</div>,
+			};
+		}
+
 		throw new Error("Unknown project status.");
 	};
 
