@@ -28,6 +28,7 @@ export enum ProjectStatus {
 	NEW, // When a new project is to be created
 	OPEN, // When a project is already  opened
 	NOT_OPEN, // When no project is open (mostly at the homepage of the app)
+	ERROR, // When an error occurs
 }
 
 const initialState: ProjectState = {
@@ -62,7 +63,7 @@ export const projectSlice = createSlice({
 					state.projectDescription = projectToOpen.description;
 				} else {
 					console.error(`Project with slug: ${action.payload} does not exist.`);
-					state.projectStatus = ProjectStatus.NOT_OPEN;
+					state.projectStatus = ProjectStatus.ERROR;
 				}
 			}
 		},
@@ -123,6 +124,11 @@ export const projectSlice = createSlice({
 /**
  * Different App Selectors
  */
+
+export const selectCurrentProjectStatus = createSelector(
+	(state: RootState) => state.project,
+	({ projectStatus }) => projectStatus
+);
 
 /**
  * Gets the project name from the corresponding project slug using given project array
