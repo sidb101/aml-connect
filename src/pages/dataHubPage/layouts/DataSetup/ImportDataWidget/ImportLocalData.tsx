@@ -8,14 +8,16 @@ import storageService from "../../../../../service/StorageService/StorageService
 import { generalActions } from "../../../../../redux/slices/GeneralSlice";
 
 export type ImportLocalDataT = {
+	dataSet: DataSetT;
 	onClose: () => void;
 };
 /**
  * Module to handle all the functionalities regarding importing the data from local file system,
  * and providing a view for that
+ * @param dataSet Category where the uploaded data should be placed
  * @param onClose: Method called when this component needs to be unmounted
  */
-const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
+const ImportLocalData = ({ dataSet, onClose }: ImportLocalDataT) => {
 	const projectSlug = useAppSelector(selectCurrentProjectSlug);
 	const audioPath = useAppSelector(selectCurrentAudioPath);
 
@@ -31,11 +33,11 @@ const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 			await storageService.sendFilesToStorage(files, audioPath);
 
 			//Send the metadata to the server
-			const inputFiles = await remoteService.sendFilesMetaData(projectSlug, files, DataSetT.TRAINING);
+			const inputFiles = await remoteService.sendFilesMetaData(projectSlug, files, dataSet);
 
 			//add the successfully uploaded files in the redux state
 			if (inputFiles.length > 0) {
-				dispatch(dataHubActions.addInputFiles({ dataSet: DataSetT.TRAINING, inputFiles: inputFiles }));
+				dispatch(dataHubActions.addInputFiles({ dataSet, inputFiles }));
 			}
 		} catch (e) {
 			console.error(e);

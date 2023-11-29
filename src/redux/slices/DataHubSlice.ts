@@ -8,6 +8,10 @@ import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolki
 import { type RootState } from "../store";
 
 export type DataHubState = {
+	inputDataFiles: InputFilesT;
+};
+
+export type InputFilesT = {
 	[dataSet in DataSetT]: InputFileDataT[];
 };
 
@@ -30,11 +34,15 @@ export enum DataSetT {
 	TRAINING = "Training",
 }
 
-const initialState: DataHubState = {
+const initialInputFiles: InputFilesT = {
 	//These attributes are consistent with the Enum Values of DataSetT
 	Testing: [] /* eslint-disable-line @typescript-eslint/naming-convention */,
 	Validation: [] /* eslint-disable-line @typescript-eslint/naming-convention */,
 	Training: [] /* eslint-disable-line @typescript-eslint/naming-convention */,
+};
+
+const initialState: DataHubState = {
+	inputDataFiles: initialInputFiles,
 };
 
 /**
@@ -45,7 +53,7 @@ export const dataHubSlice = createSlice({
 	initialState, // the type of this slice of the state would be inferred from the type of initial state
 	reducers: {
 		setInputFiles: (state, action: PayloadAction<{ dataSet: DataSetT; inputFiles: InputFileDataT[] }>) => {
-			state[action.payload.dataSet] = action.payload.inputFiles;
+			state.inputDataFiles[action.payload.dataSet] = action.payload.inputFiles;
 		},
 		/**
 		 * To add the input files into appropriate data set.
@@ -53,8 +61,9 @@ export const dataHubSlice = createSlice({
 		 * @param action: The action would have dataSet and input files to be added
 		 */
 		addInputFiles: (state, action: PayloadAction<{ dataSet: DataSetT; inputFiles: InputFileDataT[] }>) => {
+			const { dataSet, inputFiles } = action.payload;
 			//TODO: Handle the duplicate file names. If a file already exists, then overwrite that file.
-			state[action.payload.dataSet] = [...state[action.payload.dataSet], ...action.payload.inputFiles];
+			state.inputDataFiles[dataSet] = [...state.inputDataFiles[dataSet], ...inputFiles];
 		},
 
 		/**
@@ -63,17 +72,20 @@ export const dataHubSlice = createSlice({
 		 * @param action: Empty Action
 		 */
 		resetState: (state) => {
-			state.Testing = initialState.Testing;
-			state.Training = initialState.Training;
-			state.Validation = initialState.Validation;
+			state.inputDataFiles = initialInputFiles;
 		},
 	},
 });
 
 export const selectInputFiles = createSelector(
 	[(state: RootState) => state.dataHub, (_, dataSet: DataSetT) => dataSet],
-	(state, dataSet) => {
-		return state[dataSet];
+	(state, dataSet) => state.inputDataFiles[dataSet]
+);
+
+export const selectAllInputFiles = createSelector(
+	(state: RootState) => state.dataHub,
+	(state) => {
+		return state.inputDataFiles;
 	}
 );
 
