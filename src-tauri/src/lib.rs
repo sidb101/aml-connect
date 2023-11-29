@@ -39,4 +39,14 @@ pub mod uicontroller {
         let conn = &mut db_conn.get().expect("Unable to get db connection");
         project_manager::get_projects::get_projects(conn)
     }
+
+    #[tauri::command]
+    pub fn create_project(
+        req: project_manager::CreateProjectRequest,
+        app_dir: State<std::path::PathBuf>,
+        db_conn: State<Pool<ConnectionManager<SqliteConnection>>>,
+    ) -> project_manager::CreateProjectResponseResult {
+        let conn = &mut db_conn.get().expect("Unable to get db connection");
+        project_manager::create_project::create_project(&req, &app_dir, conn)
+    }
 }

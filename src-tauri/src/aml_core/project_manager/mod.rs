@@ -5,7 +5,7 @@ use ts_rs::TS;
 use super::{date_time::AMLDateTime, AppError};
 
 pub mod get_projects;
-pub mod create_projects;
+pub mod create_project;
 
 #[derive(Debug, Serialize, Deserialize,TS)]
 #[ts(export)]
@@ -24,7 +24,6 @@ pub struct ProjectDetails {
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct CreateProjectRequest {
     pub name: String,
-    pub slug: String,
     pub description: Option<String>,
 }
 

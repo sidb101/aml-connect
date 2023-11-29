@@ -36,7 +36,7 @@ pub fn get_projects(conn: &mut DbConn) -> GetProjectsResponseResult {
     })
 }
 
-fn transform_project_for_response(db_project: Project) -> ProjectDetails {
+pub fn transform_project_for_response(db_project: Project) -> ProjectDetails {
     ProjectDetails {
         id: db_project.id,
         slug: db_project.slug,
