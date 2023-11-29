@@ -5,8 +5,9 @@ use ts_rs::TS;
 use super::{date_time::AMLDateTime, AppError};
 
 pub mod get_projects;
+pub mod create_projects;
 
-#[derive(Debug, Serialize, Deserialize, TS)]
+#[derive(Debug, Serialize, Deserialize,TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct ProjectDetails {
@@ -26,6 +27,15 @@ pub struct CreateProjectRequest {
     pub slug: String,
     pub description: Option<String>,
 }
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+pub struct CreateProjectResponse {
+    pub project: ProjectDetails,
+}
+
+pub type CreateProjectResponseResult = Result<CreateProjectResponse, AppError>;
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
@@ -54,6 +64,9 @@ pub type GetProjectsResponseResult = Result<GetProjectsResponse, AppError>;
 pub enum ProjectManagerError {
     #[error("project not found")]
     ProjectNotFound(String),
+    #[error("project already exists")]
+    ProjectExists(String),
     #[error("internal error")]
     InternalError(String),
+    
 }
