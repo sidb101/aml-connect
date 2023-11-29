@@ -60,7 +60,6 @@ export const dataHubSlice = createSlice({
 		/**
 		 * To reset the state when the project is closed.
 		 * @param state: Data hub State
-		 * @param action: Empty Action
 		 */
 		resetState: (state) => {
 			state.Testing = initialState.Testing;
