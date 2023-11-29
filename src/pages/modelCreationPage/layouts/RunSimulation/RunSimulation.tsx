@@ -47,9 +47,7 @@ function RunSimulation() {
 	 * filesystem
 	 */
 	const getAllInputFiles = async () => {
-		console.log("Fetching Files..");
 		dispatch(generalActions.markLoading(true));
-		console.log("Marked Loading...");
 
 		//Get all the required files asynchronously
 		await Promise.all([
@@ -57,7 +55,6 @@ function RunSimulation() {
 				// console.log("Checking audio files for Training", trainingAudioFiles);
 				if (trainingAudioFiles.length <= 0) {
 					await getInputFiles(DataSetT.TRAINING).catch((e) => {
-						console.log("Error in getting Training Files", e);
 					});
 				}
 			})(),
@@ -65,7 +62,6 @@ function RunSimulation() {
 				// console.log("Checking audio files for Validation", validationAudioFiles);
 				if (validationAudioFiles.length <= 0) {
 					await getInputFiles(DataSetT.VALIDATION).catch((e) => {
-						console.log("Error in getting Validation Files", e);
 					});
 				}
 			})(),
@@ -73,13 +69,11 @@ function RunSimulation() {
 				// console.log("Checking audio files for Testing", testingAudioFiles);
 				if (testingAudioFiles.length <= 0) {
 					await getInputFiles(DataSetT.TESTING).catch((e) => {
-						console.log("Error in getting Testing Files", e);
 					});
 				}
 			})(),
 		]);
 
-		console.log("Marked Unloading...");
 		dispatch(generalActions.markLoading(false));
 	};
 
