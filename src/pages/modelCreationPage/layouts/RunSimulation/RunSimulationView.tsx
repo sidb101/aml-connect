@@ -21,7 +21,7 @@ function RunSimulationView({ audioFiles, onSimulate, onInputFileChange, simulati
 		if (!selectedFile) {
 			setSelectedFile(audioFiles.length <= 0 ? undefined : audioFiles[0]);
 		}
-	}, [audioFiles]);
+	}, [audioFiles, selectedFile]);
 
 	const onFileSelect = (fileName: string) => {
 		const selectedFile = audioFiles.find((file) => file.metadata.name === fileName);

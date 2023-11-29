@@ -7,7 +7,7 @@ import {
 	selectInputFiles,
 } from "../../../../redux/slices/DataHubSlice";
 import { useEffect } from "react";
-import { generalActions } from "../../../../redux/slices/GeneralSlice";
+import { generalActions, selectLoading } from "../../../../redux/slices/GeneralSlice";
 import remoteService from "../../../../service/RemoteService/RemoteService";
 import {
 	selectCurrentAudioPath,
@@ -28,6 +28,7 @@ function RunSimulation() {
 	const tmpPath = useAppSelector(selectCurrentTempPath);
 	const currentNetwork = useAppSelector(selectCurrentNetwork);
 	const simulationResult = useAppSelector((state) => state.result.simulationResult);
+	const isLoading = useAppSelector(selectLoading);
 
 	const dispatch = useAppDispatch();
 
@@ -46,7 +47,9 @@ function RunSimulation() {
 	 * filesystem
 	 */
 	const getAllInputFiles = async () => {
+		console.log("Fetching Files..");
 		dispatch(generalActions.markLoading(true));
+		console.log("Marked Loading...");
 
 		//Get all the required files asynchronously
 		await Promise.all([
@@ -76,6 +79,7 @@ function RunSimulation() {
 			})(),
 		]);
 
+		console.log("Marked Unloading...");
 		dispatch(generalActions.markLoading(false));
 	};
 

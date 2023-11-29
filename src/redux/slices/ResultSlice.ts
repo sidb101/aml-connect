@@ -71,9 +71,4 @@ export const resultSlice = createSlice({
 	},
 });
 
-// export const selectNodeParams = createSelector(
-// 	[(state: RootState) => state.modelCreation, (_, nodeId: string) => nodeId],
-// 	(state, nodeId) => state.selectedNetwork.params[nodeId]
-// );
-
 export const { reducer: resultReducer, actions: resultActions } = resultSlice;
