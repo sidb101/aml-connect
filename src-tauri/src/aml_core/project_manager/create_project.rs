@@ -1,8 +1,6 @@
 use std::path::PathBuf;
 
-use diesel::{result::Error::NotFound, ExpressionMethods, QueryDsl, RunQueryDsl};
-
-use anyhow::Context;
+use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 
 use crate::aml_core::{
     db_adapter::{models::NewProject, models::Project, schema::projects, DbConn},

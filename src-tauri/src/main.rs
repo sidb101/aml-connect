@@ -8,11 +8,14 @@ use log::{info, warn};
 use simple_logger::SimpleLogger;
 use std::path::PathBuf;
 
-use aml_connect::aml_core::db_adapter;
+use aml_connect::aml_core::{db_adapter, project_manager};
 use aml_connect::aml_core::db_adapter::models::NewProject;
 use aml_connect::aml_core::db_adapter::schema::projects;
 use aml_connect::aml_core::file_data_manager;
 use aml_connect::uicontroller;
+
+
+use aml_connect::aml_core::project_manager::create_project::create_project;
 
 fn main() {
     info!("Starting AML Connect...");
@@ -51,6 +54,24 @@ fn init_db(app_dir: PathBuf) -> Pool<ConnectionManager<SqliteConnection>> {
 
     // TODO: Remove this
     add_dummy_projects(&db_conn_pool, &app_dir);
+
+    // TODO: Remove this
+    let request = project_manager::CreateProjectRequest {
+        name: "Henk Project".to_owned(),
+        description: Some("A description that no one actually expected".to_owned()),
+    };
+    let conn_res = &mut db_conn_pool
+        .get()
+        .with_context(|| "failed to get db connection to add dummy project");
+
+    match conn_res {
+        Ok(conn) => {
+            let response = create_project(&request, &app_dir, conn);
+            info!("CreateProjectResponse: {:?}", response);
+        }
+        Err(_) => todo!(),
+    
+    }
 
     db_conn_pool
 }
