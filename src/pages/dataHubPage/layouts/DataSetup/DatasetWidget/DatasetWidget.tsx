@@ -56,7 +56,7 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 			//update it in the redux state
 			dispatch(dataHubActions.setInputFiles({ dataSet, inputFiles }));
 		} catch (e) {
-			console.error("Error in getting files");
+			console.error("Error in getting files", e);
 		}
 
 		dispatch(generalActions.markLoading(false));

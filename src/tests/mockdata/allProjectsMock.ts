@@ -9,7 +9,7 @@ export const returnedProjects: ProjectDetails[] = [
 		description:
 			"We are developing a smart device for in-home surveillance. This device would detect the sounds of glass breaking to help trigger a security alert within our system.",
 		modified_at: new Date(Date.now()),
-		created_at: new Date(Date.now()), 
+		created_at: new Date(Date.now()),
 	},
 	{
 		id: 1,
@@ -17,9 +17,9 @@ export const returnedProjects: ProjectDetails[] = [
 		name: "Dog Bark Detection",
 		description: null,
 		modified_at: new Date(Date.now()),
-		created_at: new Date(Date.now()), 
+		created_at: new Date(Date.now()),
 	},
-]
+];
 
 export const transformedProjects: ShallowProjectDetails[] = [
 	{
