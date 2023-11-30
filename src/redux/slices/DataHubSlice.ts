@@ -78,6 +78,16 @@ export const dataHubSlice = createSlice({
 
 			state[dataSet] = [...state[dataSet], ...inputFiles];
 		},
+
+		/**
+		 * To reset the state when the project is closed.
+		 * @param state: Data hub State
+		 */
+		resetState: (state) => {
+			state.Testing = initialState.Testing;
+			state.Training = initialState.Training;
+			state.Validation = initialState.Validation;
+		},
 	},
 });
 
