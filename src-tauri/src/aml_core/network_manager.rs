@@ -11,6 +11,9 @@ use std::fs;
 use std::io::Write;
 use thiserror::Error;
 
+use crate::aml_core::db_adapter::DbConn;
+use crate::aml_core::project_manager::get_projects;
+
 pub struct AmlSimulatorSidecar {
     pub sidecar_name: String,
 }
@@ -31,6 +34,8 @@ pub enum SimulatorError {
     FileError(String),
     #[error("Unsuccessful serialization")]
     SerializationError(String),
+    #[error("Project Not Found")]
+    ProjectNotFoundError(String),
 }
 
 #[derive(Error, Debug, Serialize, Deserialize, TS)]
@@ -1160,6 +1165,7 @@ pub trait NetworkSimulator {
         network: &Network,
         audio_file_path: &Path,
         app_dir: &PathBuf,
+        db_conn: &mut DbConn,
     ) -> Result<SimulateNetworkResponse, SimulatorError>;
 }
 
@@ -1189,8 +1195,10 @@ fn save_network_to_dir(network: &Network, dir: &Path) -> Result<String, Simulato
     })?;
 
     // Flush the file buffer and sync all metadata to disk
-    file.flush().map_err(|e| SimulatorError::FileError(e.to_string()))?;
-    file.sync_all().map_err(|e| SimulatorError::FileError(e.to_string()))?;
+    file.flush()
+        .map_err(|e| SimulatorError::FileError(e.to_string()))?;
+    file.sync_all()
+        .map_err(|e| SimulatorError::FileError(e.to_string()))?;
 
     Ok(file_path.as_os_str().to_str().unwrap().to_string())
 }
@@ -1209,7 +1217,24 @@ impl NetworkSimulator for AmlSimulator {
         network: &Network,
         audio_file_path: &Path,
         app_dir: &PathBuf,
+        db_conn: &mut DbConn,
     ) -> Result<SimulateNetworkResponse, SimulatorError> {
+        let found: bool =
+            get_projects::project_exists_by_slug(project_slug, db_conn).map_err(|e| {
+                SimulatorError::ProjectNotFoundError(format!(
+                    "Error: Could not query project_slug={} in database due to {}",
+                    project_slug,
+                    e.to_string()
+                ))
+            })?;
+
+        if !found {
+            return Err(SimulatorError::ProjectNotFoundError(format!(
+                "Error: Could not find project_slug={} in database",
+                project_slug
+            )));
+        }
+
         let absolute_file_path = Path::new(app_dir)
             .join(project_slug)
             .join("audio")
@@ -1235,24 +1260,25 @@ impl NetworkSimulator for AmlSimulator {
             tmp_dir.to_str().unwrap().to_string(),
         ];
 
-        let output: SimulateNetworkResponse = serde_json::from_str(
-            sidecar
-            .get_output(params)
+        let binding = sidecar
+            .get_output(params.clone())
             .map_err(|e| {
                 SimulatorError::CommandExecutionError(format!(
                     "Failed to execute sidecar: {}",
                     e.to_string()
                 ))
             })?
-            .replace("\'", "\"")
-            .as_str()
-        )
-        .map_err(|e| {
-            SimulatorError::SerializationError(format!(
-                "Failed to deserialize sidecar output: {}",
-                e.to_string()
-            ))
-        })?;
+            .replace("\'", "\"");
+
+        let simulator_output = binding.as_str();
+
+        let output: SimulateNetworkResponse =
+            serde_json::from_str(simulator_output).map_err(|_| {
+                SimulatorError::SerializationError(format!(
+                    "Failed to deserialize sidecar output: {}",
+                    simulator_output
+                ))
+            })?;
 
         Ok(output)
     }
@@ -1260,6 +1286,8 @@ impl NetworkSimulator for AmlSimulator {
 
 #[cfg(test)]
 mod tests {
+    use std::env;
+
     use crate::aml_core::network_manager::*;
     use mockall::*;
 
@@ -1578,14 +1606,11 @@ mod tests {
     #[test]
     fn test_to_network_json_file() {
         // arrange
-        let mut file_path = std::path::PathBuf::new();
-        file_path.push("src");
-        file_path.push("aml_core");
-        file_path.push("sample_request.json");
-
+        let mut test_resources_dir = env::current_dir().unwrap().parent().unwrap().to_path_buf();
+        test_resources_dir.push("test_resources");
+        let file_path = test_resources_dir.join("sample_request.json");
         let req: SimulateNetworkRequest =
-            serde_json::from_str(&std::fs::read_to_string(file_path.clone()).unwrap()).unwrap();
-
+            serde_json::from_str(&std::fs::read_to_string(file_path).unwrap()).unwrap();
         let nvo: NetworkVO = req.network;
 
         // act
@@ -1593,5 +1618,24 @@ mod tests {
 
         // assert
         assert_eq!(result.is_ok(), true);
+    }
+
+    #[test]
+    fn test_save_network_to_dir() {
+        // arrange
+        let mut test_resources_dir = env::current_dir().unwrap().parent().unwrap().to_path_buf();
+        test_resources_dir.push("test_resources");
+        let file_path = test_resources_dir.join("sample_request.json");
+        let req: SimulateNetworkRequest =
+            serde_json::from_str(&std::fs::read_to_string(file_path.clone()).unwrap()).unwrap();
+        let nvo: NetworkVO = req.network;
+        let tmp_dir = std::env::temp_dir().join("aml_simulator_test");
+
+        // act
+        let result = save_network_to_dir(&nvo.to_network().unwrap(), &tmp_dir);
+
+        // assert
+        assert_eq!(result.is_ok(), true);
+        assert!(tmp_dir.join("network.json").exists());
     }
 }

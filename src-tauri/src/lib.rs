@@ -50,7 +50,10 @@ pub mod uicontroller {
     pub fn simulate_network(
         req: network_manager::SimulateNetworkRequest,
         app_dir: State<std::path::PathBuf>,
+        db_conn: State<Pool<ConnectionManager<SqliteConnection>>>
     ) -> Result<network_manager::SimulateNetworkResponse, network_manager::SimulatorError> {
+        let conn = &mut db_conn.get().expect("Unable to get db connection");
+
         let nvo: network_manager::NetworkVO = req.network;
         let project_slug: String = req.project_slug;
         let sc = network_manager::AmlSimulatorSidecar::new();
@@ -67,6 +70,7 @@ pub mod uicontroller {
                 &actual_network,
                 &audio_path,
                 &app_dir,
+                conn
             )?;
 
         Ok(resp)
