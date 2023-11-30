@@ -25,6 +25,7 @@ const ImportDataWidget = ({ widgetHeight }: ImportDataWidgetProps) => {
 	const [dataSource, setDataSource] = useState<DataSourceT>(DataSourceT.NONE);
 	const [dataType, setDataType] = useState<DataSetT>(DataSetT.TRAINING);
 
+	/*** Handlers when user chooses various data sources ***/
 	const handleLocalImport = () => {
 		setDataSource(DataSourceT.LOCAL);
 	};
@@ -38,7 +39,8 @@ const ImportDataWidget = ({ widgetHeight }: ImportDataWidgetProps) => {
 		widgetHeight && (
 			<Accordion maxBodyHeight={widgetHeight} header={<>Add or Merge Data</>}>
 				<ImportDataView dataType={dataType} onDataTypeChange={setDataType} onLocalImport={handleLocalImport} />
-				{dataSource === DataSourceT.LOCAL && <ImportLocalData onClose={closeDataSource} />}
+				{/* Render components based on the source chosen by the user in ImportDataView */}
+				{dataSource === DataSourceT.LOCAL && <ImportLocalData dataSet={dataType} onClose={closeDataSource} />}
 			</Accordion>
 		)
 	);

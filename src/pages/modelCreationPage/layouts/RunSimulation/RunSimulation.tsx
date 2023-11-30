@@ -52,23 +52,23 @@ function RunSimulation() {
 		//Get all the required files asynchronously
 		await Promise.all([
 			(async () => {
-				// console.log("Checking audio files for Training", trainingAudioFiles);
 				if (trainingAudioFiles.length <= 0) {
 					await getInputFiles(DataSetT.TRAINING).catch((e) => {
+						console.log("Error in getting Training Files", e);
 					});
 				}
 			})(),
 			(async () => {
-				// console.log("Checking audio files for Validation", validationAudioFiles);
 				if (validationAudioFiles.length <= 0) {
 					await getInputFiles(DataSetT.VALIDATION).catch((e) => {
+						console.log("Error in getting Validation Files", e);
 					});
 				}
 			})(),
 			(async () => {
-				// console.log("Checking audio files for Testing", testingAudioFiles);
 				if (testingAudioFiles.length <= 0) {
 					await getInputFiles(DataSetT.TESTING).catch((e) => {
+						console.log("Error in getting Testing Files", e);
 					});
 				}
 			})(),
