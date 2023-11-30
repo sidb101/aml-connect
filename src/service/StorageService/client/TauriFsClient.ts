@@ -1,9 +1,9 @@
 //This module will transform all the tauri specific API calls related to File System, to the current system
 
-import { BaseDirectory, readBinaryFile, writeBinaryFile } from "@tauri-apps/api/fs";
+import { BaseDirectory, readBinaryFile, readTextFile, writeBinaryFile } from "@tauri-apps/api/fs";
 import type { StorageClient } from "./StorageClient";
 import type { InputFileDataT, InputFileMetaDataT } from "../../../redux/slices/DataHubSlice";
-import { audioFilesMock } from "../../../tests/mockdata/audioFilesMock";
+import type { OutputFileDataT, OutputFileMetaDataT } from "../../../redux/slices/ResultSlice";
 
 class TauriFsClient implements StorageClient {
 	/**
@@ -28,6 +28,30 @@ class TauriFsClient implements StorageClient {
 		const dataUrl = uInt8ArrayToDataUrl(fileData, fileMetaData.mediaType);
 
 		return { metadata: fileMetaData, dataUrl };
+	}
+
+	/**
+	 * This method would read the binary file into the path relative to local app dir.
+	 * @param fileMetaData: Metadata of the binary file to be read
+	 * @param path: Relative path from LocalAppDir (should have trailing '/')
+	 */
+	//TODO: Try to make a general FileData type for both input and output files (allowing some extra specifications).
+	// This would leverage lot of re-usability in terms of read and write
+	async readImageFileFromStorage(fileMetaData: OutputFileMetaDataT, path: string): Promise<OutputFileDataT> {
+		const fileData = await readBinaryFile(path + fileMetaData.name, { dir: BaseDirectory.AppLocalData });
+		const dataUrl = uInt8ArrayToDataUrl(fileData, fileMetaData.mediaType);
+
+		return { metadata: fileMetaData, dataUrl };
+	}
+
+	/**
+	 * This method would read the code file from the path relative to local app dir.
+	 * @param fileMetaData: Metadata of the binary file to be read
+	 * @param path: Relative path from LocalAppDir (should have trailing '/')
+	 */
+	async readCodeFileFromStorage(fileMetaData: OutputFileMetaDataT, path: string): Promise<OutputFileDataT> {
+		const fileData = await readTextFile(path + fileMetaData.name, { dir: BaseDirectory.AppLocalData });
+		return { metadata: fileMetaData, dataUrl: fileData };
 	}
 }
 

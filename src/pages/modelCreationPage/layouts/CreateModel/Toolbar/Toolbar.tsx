@@ -6,10 +6,9 @@ import ElementMenu from "../ElementMenu/ElementMenu";
 type ToolbarProps = {
 	allElements: ElementT[];
 	handleAddElement?: (element: ElementT) => void;
-	handleSimulate: () => void;
 };
 
-const Toolbar = ({ handleAddElement, handleSimulate, allElements }: ToolbarProps) => {
+const Toolbar = ({ handleAddElement, allElements }: ToolbarProps) => {
 	const [showElementMenu, setShowElementMenu] = useState<boolean>(false);
 
 	const toolBarRef = useRef<HTMLDivElement>(null);
@@ -49,7 +48,6 @@ const Toolbar = ({ handleAddElement, handleSimulate, allElements }: ToolbarProps
 						>
 							Add
 						</button>
-						<button onClick={handleSimulate}>Sim</button>
 					</div>
 				</div>
 				{/* <div className={`Toolbar_sideContainer`}> */}

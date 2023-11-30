@@ -73,7 +73,8 @@ jobs:
       - name: Create Aspinity Wrapper Binary
         run: |
           cd aml_simulator_pywrapper && 
-          pyinstaller --clean -F wrapper.py --distpath ../src-tauri/binaries/ -n aspinity_wrapper-x86_64-unknown-linux-gnu
+          pyinstaller --clean -F wrapper.py --hidden-import='PIL._tkinter_finder' --add-data "templates/network_template.py.j2:templates" --distpath ../src-tauri/binaries/ -n aspinity_wrapper-x86_64-unknown-linux-gnu &&
+          cd ..
 
       # Setup Rust
       - name: Rust setup
@@ -111,7 +112,12 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run Rust backend integration tests
-        run: cd src-tauri && cargo test --test integration_test -- --test-threads 1 && cd ..
+        run: |
+          cd src-tauri && 
+          cargo test --test integration_test -- --test-threads 1 && 
+          cargo test --test projects_integration_tests -- --test-threads 1 &&
+          cargo test --test network_integration_tests -- --test-threads 1 &&
+          cd ..
 
       # Run tauri-action build
       - name: Build the app using Tauri Action

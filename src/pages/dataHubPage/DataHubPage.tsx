@@ -33,7 +33,11 @@ function DataHubPage() {
 
 	//tasks to be done for the whole data hub page
 	useEffect(() => {
-		dispatch(projectActions.openProject(projectSlug));
+		if (allProjects.length > 0) {
+			dispatch(projectActions.openProject(projectSlug));
+		}
+	}, [allProjects.length, projectSlug]);
+	useEffect(() => {
 		if (isProjectOpen) {
 			setPageTabs(getDataHubPageTabs(projectSlug));
 		}
@@ -53,12 +57,6 @@ function DataHubPage() {
 			setFooter(getDataHubPageFooters(projectSlug)[selectedTabIndex]);
 		}
 	}, [selectedTabIndex, isProjectOpen]);
-
-	useEffect(() => {
-		if (allProjects.length > 0) {
-			dispatch(projectActions.openProject(projectSlug));
-		}
-	}, [allProjects.length, projectSlug]);
 
 	const header = <Header headerTitle={`${currentProjectName} > Data Hub > ${heading}`} />;
 	const main = (

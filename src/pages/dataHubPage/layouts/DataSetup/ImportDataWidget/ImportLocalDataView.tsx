@@ -4,7 +4,7 @@ import { faArrowUpFromBracket } from "@fortawesome/free-solid-svg-icons/faArrowU
 import { useState } from "react";
 import CenterModal from "../../../../../components/modal/CenterModal";
 import { useFilePicker } from "use-file-picker";
-import { SUPPORTED_FILE_TYPES } from "../../../../../constants";
+import { SUPPORTED_AUDIO_FILE_TYPES } from "../../../../../constants";
 import type { InputFileDataT } from "../../../../../redux/slices/DataHubSlice";
 import AudioFileTable from "../AudioFileTable";
 import { testIds } from "../../../../../tests/test-utils";
@@ -24,7 +24,7 @@ const ImportLocalDataView = ({ onFilesImport, onClose }: ImportDataViewT) => {
 
 	//Get the file picker component
 	const [openFileSelector] = useFilePicker({
-		accept: SUPPORTED_FILE_TYPES,
+		accept: SUPPORTED_AUDIO_FILE_TYPES,
 		readAs: "DataURL",
 		onFilesSuccessfulySelected: ({ filesContent }) => {
 			const chosenFiles: InputFileDataT[] = filesContent.map((file) => {

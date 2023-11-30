@@ -72,7 +72,7 @@ describe("Testing the Data Setup Functionality", () => {
 				.mockResolvedValue([]);
 
 			//Mock the writing of files once they are uploaded
-			when(storageService.readFilesFromStorage)
+			when(storageService.readInputFilesFromStorage)
 				.calledWith([], `${projects[0].slug}/audio/`)
 				.mockResolvedValue([])
 				.calledWith(mockTrainingInputFileMetaData, `${projects[0].slug}/audio/`)

@@ -52,8 +52,23 @@ export const dataHubSlice = createSlice({
 	name: "dataHub",
 	initialState, // the type of this slice of the state would be inferred from the type of initial state
 	reducers: {
+		/**
+		 * To set the input files for appropriate data set.
+		 * @param state: Data hub State
+		 * @param action: The action would have dataSet and input files to be set
+		 */
 		setInputFiles: (state, action: PayloadAction<{ dataSet: DataSetT; inputFiles: InputFileDataT[] }>) => {
 			state.inputDataFiles[action.payload.dataSet] = action.payload.inputFiles;
+		},
+		/**
+		 * To set the input files for all the data sets.
+		 * @param state: Data hub State
+		 * @param action: The action would have dataSet mapped to input files to be set
+		 */
+		setAllInputFiles: (state, action: PayloadAction<Map<DataSetT, InputFileDataT[]>>) => {
+			state.inputDataFiles.Training = action.payload.get(DataSetT.TRAINING) || [];
+			state.inputDataFiles.Validation = action.payload.get(DataSetT.VALIDATION) || [];
+			state.inputDataFiles.Testing = action.payload.get(DataSetT.TESTING) || [];
 		},
 		/**
 		 * To add the input files into appropriate data set.
@@ -62,7 +77,13 @@ export const dataHubSlice = createSlice({
 		 */
 		addInputFiles: (state, action: PayloadAction<{ dataSet: DataSetT; inputFiles: InputFileDataT[] }>) => {
 			const { dataSet, inputFiles } = action.payload;
-			//TODO: Handle the duplicate file names. If a file already exists, then overwrite that file.
+
+			//Handle the duplicate file names. If a file already exists, then overwrite that file.
+			//Remove the old files of same name from the state
+			state.inputDataFiles[dataSet] = state.inputDataFiles[dataSet].filter((stateFile) =>
+				inputFiles.some((inputFile) => stateFile.metadata.name !== inputFile.metadata.name)
+			);
+
 			state.inputDataFiles[dataSet] = [...state.inputDataFiles[dataSet], ...inputFiles];
 		},
 
