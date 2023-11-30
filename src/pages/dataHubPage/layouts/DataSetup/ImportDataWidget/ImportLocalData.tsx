@@ -28,7 +28,7 @@ const ImportLocalData = ({ onClose }: ImportLocalDataT) => {
 		dispatch(generalActions.markLoading(true));
 		try {
 			//Write the files
-			await storageService.sendFilesToStorage(files, audioPath);
+			await storageService.sendInputFilesToStorage(files, audioPath);
 
 			//Send the metadata to the server
 			const inputFiles = await remoteService.sendFilesMetaData(projectSlug, files, DataSetT.TRAINING);

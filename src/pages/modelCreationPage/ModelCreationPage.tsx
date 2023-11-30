@@ -40,7 +40,12 @@ function ModelCreationPage() {
 
 	//tasks to be done for the whole model creation page
 	useEffect(() => {
-		dispatch(projectActions.openProject(projectSlug));
+		if (allProjects.length > 0) {
+			dispatch(projectActions.openProject(projectSlug));
+		}
+	}, [allProjects.length, projectSlug]);
+
+	useEffect(() => {
 		if (isProjectOpen) {
 			setPageTabs(getModelCreationPageTabs(projectSlug));
 		}
@@ -61,12 +66,6 @@ function ModelCreationPage() {
 		}
 	}, [selectedTabIndex, isProjectOpen]);
 
-	useEffect(() => {
-		if (allProjects.length > 0) {
-			dispatch(projectActions.openProject(projectSlug));
-		}
-	}, [allProjects.length, projectSlug]);
-
 	/** Get all the elements to create the simulation network and persist them in the global state **/
 	useEffect(() => {
 		fetchAllElements().catch((e) => {
@@ -76,9 +75,12 @@ function ModelCreationPage() {
 
 	const fetchAllElements = async () => {
 		dispatch(generalActions.markLoading(true));
-		const allElements = await remoteService.getAllElements();
-		dispatch(modelCreationActions.setAllElements({ allElements }));
-		dispatch(generalActions.markLoading(false));
+		try {
+			const allElements = await remoteService.getAllElements();
+			dispatch(modelCreationActions.setAllElements({ allElements }));
+		} finally {
+			dispatch(generalActions.markLoading(false));
+		}
 	};
 
 	const header = <Header headerTitle={`${currentProjectName} > Model Creation > ${heading}`} />;

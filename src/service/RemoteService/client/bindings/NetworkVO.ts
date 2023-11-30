@@ -2,4 +2,4 @@
 import type { ElementVO } from "./ElementVO";
 import type { Node } from "./Node";
 
-export interface NetworkVO { id: bigint | null, name: string, elements: Array<ElementVO>, nodes: Array<Node>, creator_id: bigint, }
+export interface NetworkVO { id: number | null, name: string, elements: Array<ElementVO>, nodes: Array<Node>, creator_id: number, }

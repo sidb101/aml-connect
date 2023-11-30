@@ -1,15 +1,21 @@
 import "./NetworkTerminal.scss";
-import { Handle, type NodeProps, Position } from "reactflow";
+import { type NodeProps, Position } from "reactflow";
 import type { NodeDataT } from "../../../../../redux/slices/ModelCreationSlice";
-import { isSource } from "./canvasUtils";
+import { isSource, newHandleId } from "./canvasUtils";
+import TerminalHandle from "./TerminalHandle";
 
-const NetworkTerminal = ({ data }: NodeProps<NodeDataT>) => {
+const NetworkTerminal = ({ id, data }: NodeProps<NodeDataT>) => {
 	return (
 		<div className={"NetworkTerminal_node"}>
 			{isSource(data) ? (
-				<Handle type={"source"} position={Position.Right} />
+				<TerminalHandle id={newHandleId(id, "net")} type={"source"} position={Position.Right} />
 			) : (
-				<Handle type={"target"} position={Position.Left} />
+				<TerminalHandle
+					id={newHandleId(id, "net")}
+					type={"target"}
+					position={Position.Left}
+					connectionLimit={1}
+				/>
 			)}
 			<div className={`NetworkTerminal_nodeLabel`}>{data.label}</div>
 		</div>

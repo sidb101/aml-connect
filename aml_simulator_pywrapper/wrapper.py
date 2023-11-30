@@ -63,12 +63,25 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
             self.wrapped_network = Network(network_json)
             self.times, self.samples = WavFileManager.load_wav(audio_file_path)
 
+    def _replace_tabs_with_spaces(self, filename):
+        """ Replaces tabs with 4 spaces in a src code file """
+        with open(filename, 'r', encoding="utf-8") as file:
+            lines = file.readlines()
+
+        with open(filename, 'w', encoding="utf-8") as file:
+            for line in lines:
+                line = line.replace('\t', ' ' * 4)
+                file.write(line)
+
     def _generate_source_code(self) -> str:
         """Returns the source code for the network"""
 
-        return self.wrapped_network.export_sourcecode(
+        fpath = self.wrapped_network.export_sourcecode(
             self.audio_file_path, self.project_tmp_dir
         )
+
+        self._replace_tabs_with_spaces(fpath)
+        return fpath
 
     def simulate_network(self) -> dict:
         """Returns a dictionary containing the simulated network's output,
@@ -80,10 +93,13 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
         py_code_path = self._generate_source_code()
         visual_file_path = self._visualize_response(response)
 
+        py_code_ret_path = py_code_path.split(os.sep)[-1]
+        visual_file_ret_path = visual_file_path.split(os.sep)[-1]
+
         output = {
             SIMULATOR_RESPONSE_KEY: response,
-            PY_CODE_KEY: py_code_path,
-            VISUALIZE_KEY: visual_file_path,
+            PY_CODE_KEY: py_code_ret_path,
+            VISUALIZE_KEY: visual_file_ret_path,
         }
 
         return output
@@ -114,7 +130,8 @@ class AspinitySimulatorWrapper(AspinitySimulatorWrapperInterFace):
         output_subplot.set_title("Output")
 
         # overwrite the file if it exists, there's no purge mechanism yet
-        file_path = os.path.join(self.project_tmp_dir, VISUALIZE_FILE_NAME)
+        file_name = f"nw{self.wrapped_network.network_id}_{VISUALIZE_FILE_NAME}"
+        file_path = os.path.join(self.project_tmp_dir, file_name)
 
         plt.savefig(file_path)
         plt.close()
@@ -169,21 +186,26 @@ if __name__ == "__main__":  # pragma: no cover
 
     ARGS = PARSER.parse_args()
 
-    if ARGS.get_elements:
-        print(AspinitySimulatorWrapper.get_elements())
-    elif ARGS.simulate_network:
-        network_path = ARGS.network
-        wavfile_path = ARGS.wavfile
-        tmp_dir = ARGS.tmp_dir
-        sim_wrapper = AspinitySimulatorWrapper(network_path, wavfile_path, tmp_dir)
-        ret = sim_wrapper.simulate_network()
-        ret["response"] = {key: list(value) for key, value in ret["response"].items()}
+    try:
+        if ARGS.get_elements:
+            print(AspinitySimulatorWrapper.get_elements())
+        elif ARGS.simulate_network:
+            network_path = ARGS.network
+            wavfile_path = ARGS.wavfile
+            tmp_dir = ARGS.tmp_dir
+            sim_wrapper = AspinitySimulatorWrapper(network_path, wavfile_path, tmp_dir)
+            ret = sim_wrapper.simulate_network()
 
-        output_json = json.dumps(ret, indent=4)
+            ## Option 1 - convert the response values to lists, and store 2MB+ data
+            ## in a file, and return the file instead [[future]]
+            # ret["response"] = {key: list(value) for key, value in ret["response"].items()}
+            # output_json = json.dumps(ret, indent=4)
+            # with open(os.path.join(tmp_dir, "response.json"), "w", encoding="utf-8") as f:
+            #     f.write(output_json)
+            # ret["response"] = "response.json"
 
-        ## Option 1 - write to disk and return the filepath
-        # with open(os.path.join(tmp_dir, "response.json"), "w") as f:
-        #     f.write(tmp_json)
-
-        ## Option 2 - print the json string, for rust to parse [current]
-        print(output_json)
+            ## Option 2 - remove the response key, as it is not needed yet [[current]]
+            del ret["response"]
+            print(ret)
+    except Exception as e: # pylint: disable=W
+        print(f"Error while executing python wrapper: {e}")
