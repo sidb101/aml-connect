@@ -146,5 +146,12 @@ pub fn create_project_dir(project_slug: &str, app_dir: &PathBuf) -> Result<()> {
     Ok(())
 }
 
+pub fn update_project_dir(old_project_slug: &str, new_project_slug: &str, app_dir: &PathBuf) -> Result<()> {
+    let old = app_dir.join(old_project_slug);
+    let new: PathBuf = app_dir.join(new_project_slug);
+    fs::rename(old, new)?;
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {}
