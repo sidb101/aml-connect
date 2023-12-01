@@ -7,6 +7,7 @@ use super::{date_time::AMLDateTime, AppError};
 pub mod create_project;
 pub mod delete_project;
 pub mod get_projects;
+pub mod update_project;
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
@@ -36,6 +37,26 @@ pub struct CreateProjectResponse {
 }
 
 pub type CreateProjectResponseResult = Result<CreateProjectResponse, AppError>;
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+pub struct UpdateProjectRequest {
+    pub id: i32,
+    pub name: Option<String>,
+    pub description: Option<String>,
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+pub struct UpdateProjectResponse {
+    pub project: ProjectDetails,
+}
+
+pub type UpdateProjectResponseResult = Result<UpdateProjectResponse, AppError>;
+
+
 
 #[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]

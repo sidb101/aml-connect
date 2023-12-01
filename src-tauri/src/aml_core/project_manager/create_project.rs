@@ -15,8 +15,8 @@ use super::{
 
 pub fn create_project(
     req: &CreateProjectRequest,
-    app_dir: &PathBuf, //stored in the application state
-    conn: &mut DbConn,
+    app_dir: &PathBuf,
+    conn: &mut DbConn
 ) -> CreateProjectResponseResult {
     log::info!("create_project request received");
 
