@@ -10,18 +10,20 @@ import aspinity
 
 
 class WavFileManager:
-    """For managing loading of wav file(s) from disk for passing to the network"""
-
-    def __init__(self):
-        # pylint: disable=W
-        # TODO: implement with a JSON paramater
-        pass
+    """For managing loading of wav file(s) from disk for passing to the aspinity.simulate_network"""
 
     @staticmethod
     def load_wav(file_path: str):
         """loads the wav file at file_path, returns times and samples as np arrays"""
         samples, sample_rate = sf.read(file_path)
         times = np.arange(len(samples)) / sample_rate
+        # reduce from stereo to mono i.e. from (m, n) to (m, )
+        #   m is the number of samples, n is the number of channels
+        if len(samples.shape) == 2:
+            samples = samples[:, 0] # pick channel 0
+        # else if samples.shape is higher than 2-d (m, n, k, ....) 
+        elif len(samples.shape) > 2:
+            raise ValueError("Unidentified wav file format")
         return times, samples
 
 
