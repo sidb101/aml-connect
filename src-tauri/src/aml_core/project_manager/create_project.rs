@@ -4,18 +4,19 @@ use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 
 use crate::aml_core::{
     db_adapter::{models::NewProject, models::Project, schema::projects, DbConn},
-    AppError, file_data_manager,
+    file_data_manager, AppError,
 };
 
 use super::{
+    get_projects::{project_exists_by_slug, transform_project_for_response},
     CreateProjectRequest, CreateProjectResponse, CreateProjectResponseResult, ProjectDetails,
-    ProjectManagerError, get_projects::{transform_project_for_response, project_exists_by_slug}, 
+    ProjectManagerError,
 };
 
 pub fn create_project(
     req: &CreateProjectRequest,
     app_dir: &PathBuf, //stored in the application state
-    conn: &mut DbConn
+    conn: &mut DbConn,
 ) -> CreateProjectResponseResult {
     log::info!("create_project request received");
 
@@ -23,12 +24,14 @@ pub fn create_project(
         .filter(projects::name.eq(req.name.as_str()))
         .count()
         .get_result::<i64>(conn);
-    
+
     match match_count {
         Ok(count) => {
             if count >= 1 {
                 let error_message = format!("Project with name '{}' already exists", req.name);
-                return Err(AppError::ProjectManagerError(ProjectManagerError::ProjectExists(error_message.into())));
+                return Err(AppError::ProjectManagerError(
+                    ProjectManagerError::ProjectAlreadyExists(error_message.into()),
+                ));
             } else {
                 log::info!("project doesnt exist, can create");
                 let new_slug_result = generate_unique_slug(&req.name, conn);
@@ -39,7 +42,7 @@ pub fn create_project(
                             name: req.name.to_owned(),
                             description: req.description.as_ref().map(|desc| desc.clone()),
                         };
-                        
+
                         let insertion_result = diesel::insert_into(projects::table)
                             .values(&new_project)
                             .returning((
@@ -62,27 +65,30 @@ pub fn create_project(
                                 created_at,
                             },
                             Err(error) => {
-                                return Err(AppError::ProjectManagerError(ProjectManagerError::InternalError(
-                                    error.to_string(),
-                                )));
+                                return Err(AppError::ProjectManagerError(
+                                    ProjectManagerError::InternalError(error.to_string()),
+                                ));
                             }
                         };
-        
-                        let project_details: ProjectDetails = transform_project_for_response(project);
-                    
-                        
-                        let _ =file_data_manager::create_project_dir(&new_slug, app_dir)
-                            .map_err(|error| {
-                                AppError::ProjectManagerError(ProjectManagerError::ProjectExists(error.to_string()))
-                            });
-        
-                            //panic!("Could not create project dir :{:?}", e); //TODO: return error instead of panic
-                    
+
+                        let project_details: ProjectDetails =
+                            transform_project_for_response(project);
+
+                        let _ = file_data_manager::create_project_dir(&new_slug, app_dir).map_err(
+                            |error| {
+                                AppError::ProjectManagerError(
+                                    ProjectManagerError::ProjectAlreadyExists(error.to_string()),
+                                )
+                            },
+                        );
+
+                        //panic!("Could not create project dir :{:?}", e); //TODO: return error instead of panic
+
                         log::info!("create_project response: {:?}", project_details);
-                        
-                        return Ok(CreateProjectResponse{
-                                    project: project_details
-                                })
+
+                        return Ok(CreateProjectResponse {
+                            project: project_details,
+                        });
                     }
                     Err(error) => {
                         return Err(AppError::ProjectManagerError(error));
@@ -90,16 +96,17 @@ pub fn create_project(
                 }
             }
         }
-        Err(e) => {
-            Err(AppError::InternalError(e.to_string()))
-        }
+        Err(e) => Err(AppError::InternalError(e.to_string())),
     }
 }
 
 //slug generation logic
 //trim leading / trailing whitespace, convert to lowercase, and use hyphenate
 //will add -<counter> to project_slug until its unique
-pub fn generate_unique_slug(project_name: &str, conn: &mut DbConn) -> Result<String, ProjectManagerError> {
+pub fn generate_unique_slug(
+    project_name: &str,
+    conn: &mut DbConn,
+) -> Result<String, ProjectManagerError> {
     let base_slug = project_name.trim().to_lowercase().replace(" ", "-");
     let mut new_slug = base_slug.clone();
 

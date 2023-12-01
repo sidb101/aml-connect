@@ -49,4 +49,14 @@ pub mod uicontroller {
         let conn = &mut db_conn.get().expect("Unable to get db connection");
         project_manager::create_project::create_project(&req, &app_dir, conn)
     }
+
+    #[tauri::command]
+    pub fn delete_project(
+        req: project_manager::DeleteProjectRequest,
+        app_dir: State<std::path::PathBuf>,
+        db_conn: State<Pool<ConnectionManager<SqliteConnection>>>,
+    ) -> project_manager::DeleteProjectResponseResult {
+        let conn = &mut db_conn.get().expect("Unable to get db connection");
+        project_manager::delete_project::delete_project(&req, &app_dir, conn)
+    }
 }

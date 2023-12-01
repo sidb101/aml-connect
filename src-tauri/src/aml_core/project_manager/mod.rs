@@ -4,10 +4,11 @@ use ts_rs::TS;
 
 use super::{date_time::AMLDateTime, AppError};
 
-pub mod get_projects;
 pub mod create_project;
+pub mod delete_project;
+pub mod get_projects;
 
-#[derive(Debug, Serialize, Deserialize,TS)]
+#[derive(Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
 pub struct ProjectDetails {
@@ -57,6 +58,20 @@ pub struct GetProjectsResponse {
 
 pub type GetProjectsResponseResult = Result<GetProjectsResponse, AppError>;
 
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+pub struct DeleteProjectRequest {
+    pub id: i32,
+}
+
+#[derive(Debug, Serialize, Deserialize, TS)]
+#[ts(export)]
+#[ts(export_to = "../src/service/RemoteService/client/bindings/")]
+pub struct DeleteProjectResponse {}
+
+pub type DeleteProjectResponseResult = Result<DeleteProjectResponse, AppError>;
+
 #[derive(Error, Debug, Serialize, Deserialize, TS)]
 #[ts(export)]
 #[ts(export_to = "../src/service/RemoteService/client/bindings/")]
@@ -64,8 +79,7 @@ pub enum ProjectManagerError {
     #[error("project not found")]
     ProjectNotFound(String),
     #[error("project already exists")]
-    ProjectExists(String),
+    ProjectAlreadyExists(String),
     #[error("internal error")]
     InternalError(String),
-    
 }
