@@ -36,11 +36,11 @@ pub fn delete_project(
     match diesel::delete(&project).execute(conn) {
         Ok(_) => {
             log::info!("project deleted");
-
+            // TODO: delete audio file metadata if needed from DB
             match file_data_manager::delete_project_dir(&project.slug, app_dir) {
                 Ok(_) => log::info!("project directory deleted for {}", &project.slug),
                 Err(e) => {
-                    log::error!("error deleting project files: {}", e);
+                    log::error!("error deleting project files - disk might not be in sync with database: {}", e);
                     return Err(AppError::ProjectManagerError(
                         ProjectManagerError::InternalError(e.to_string()),
                     ));
@@ -50,11 +50,6 @@ pub fn delete_project(
         }
         Err(error) => {
             log::error!("error deleting project: {}", error);
-            if error == diesel::result::Error::NotFound {
-                return Err(AppError::ProjectManagerError(
-                    ProjectManagerError::ProjectNotFound(error.to_string()),
-                ));
-            }
             Err(AppError::ProjectManagerError(
                 ProjectManagerError::InternalError(error.to_string()),
             ))
