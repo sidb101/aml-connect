@@ -146,5 +146,11 @@ pub fn create_project_dir(project_slug: &str, app_dir: &PathBuf) -> Result<()> {
     Ok(())
 }
 
+pub fn delete_project_dir(project_slug: &str, app_dir: &PathBuf) -> Result<()> {
+    let project_dir = app_dir.join(project_slug);
+    fs::remove_dir_all(project_dir)?;
+    Ok(())
+}
+
 #[cfg(test)]
 mod tests {}
