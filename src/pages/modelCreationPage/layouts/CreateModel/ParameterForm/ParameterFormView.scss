@@ -4,3 +4,21 @@
 	padding: global.$panel-padding;
 	height: calc(100% - 2 * #{global.$panel-padding});
 }
+
+.ParameterForm_headingContainer {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ParameterForm_paramContainer {
+	display: flex;
+	flex-direction: column;
+	margin: 0 0 global.$panel-padding;
+	gap: global.$general-padding;
+
+	label {
+		white-space: nowrap;
+	}
+}

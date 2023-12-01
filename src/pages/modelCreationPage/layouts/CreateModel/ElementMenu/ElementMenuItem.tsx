@@ -27,8 +27,8 @@ function ElementMenuItem({ element, onItemClick }: ElementMenuItemProps) {
 			{element.typeName}
 			{isHovering && (
 				<>
-					<div className={`ElementMenuItem_hoverDescriptionTriangle`}></div>
-					<div className={`small-text ElementMenuItem_hoverDescription`}>{element.longDescription}</div>
+					<div className={`ElementMenuItem_hoverDescriptionTriangle`}> JHello</div>
+					{/*<div className={`small-text ElementMenuItem_hoverDescription`}>{element.longDescription}</div>*/}
 				</>
 			)}
 		</div>

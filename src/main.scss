@@ -133,6 +133,10 @@ Common Classes
 
 /* -- Various kinds of Buttons -- */
 
+.radioBtn {
+	accent-color: global.$color-green;
+}
+
 .btn {
 	font-size: global.$text-small;
 	font-family: global.$font-primary-light;

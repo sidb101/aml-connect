@@ -2,6 +2,10 @@ import "./ParameterFormView.scss";
 import React, { type ReactNode, useEffect, useState } from "react";
 import { type ParameterT, ParamTypeT, UIComponentT } from "../../../../../redux/slices/ModelCreationSlice";
 import Input from "../../../../../components/formElements/input/Input";
+import Checkbox from "../../../../../components/formElements/checkbox/Checkbox";
+import Select from "../../../../../components/formElements/select/Select";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons/faTimes";
 
 type ParameterFormViewProps = {
 	elementType?: string;
@@ -70,7 +74,8 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 
 			case UIComponentT.CHECKBOX:
 				return (
-					<input
+					<Checkbox
+						className={`general-padding`}
 						type={"checkbox"}
 						checked={JSON.parse(params[paramName]) as boolean}
 						onChange={(e) => {
@@ -80,15 +85,16 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 				);
 			case UIComponentT.DROPDOWN:
 				return (
-					<select
+					<Select
 						onChange={(e) => {
 							onSelectInputChange(e, paramName);
 						}}
 						value={params[paramName]}
+						className={`general-padding`}
 					>
 						{param.range?.map((option, key) =>
 							option ? (
-								<option value={option} key={key}>
+								<option value={option} key={key} className={``}>
 									{" "}
 									{option}{" "}
 								</option>
@@ -96,7 +102,7 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 								<></>
 							)
 						)}
-					</select>
+					</Select>
 				);
 
 			default:
@@ -108,16 +114,17 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 		<>
 			{elementType ? (
 				<div className={`white-panel ParameterForm_container`}>
-					<div className={`section-subheading-text`}>{elementType} Parameters</div>
+					<div className={`section-subheading-text ParameterForm_headingContainer`}>
+						<div>{elementType} Parameters</div>
+						<FontAwesomeIcon icon={faTimes} />
+					</div>
 					<br />
 					{Object.entries(paramData.parameterInfo).map(([parameterName, val], key) => (
-						<div key={key}>
+						<div key={key} className={`ParameterForm_paramContainer`}>
 							<label title={val.description}>
 								{parameterName} {val.unit ? `(${val.unit})` : ""}:
 							</label>{" "}
 							{getInput(parameterName, val)}
-							<br />
-							<br />
 						</div>
 					))}
 					<button
