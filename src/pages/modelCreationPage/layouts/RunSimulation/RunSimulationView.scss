@@ -1,0 +1,47 @@
+@use "../../../../global";
+
+.RunSimulationView_inputContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+
+	.RunSimulationView_audioFilesContainer {
+		flex-grow: 5;
+	}
+
+	.RunSimulationView_selectInputContainer {
+		width: 50%;
+		.RunSimulationView_selectInput {
+			margin-left: 10px;
+			padding: 10px;
+			border-radius: global.$border-radius;
+		}
+	}
+}
+
+.RunSimulationView_outputContainer {
+	display: grid;
+	grid-template-columns: 50% 50%;
+	height: 100%;
+	padding-top: 20px;
+
+	.RunSimulationView_imageContainer {
+		.RunSimulationView_imageTitle {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+
+	.RunSimulationView_codeContainer {
+		height: 65vh;
+		padding-right: 40px;
+
+		.RunSimulationView_codeTitle {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	}
+}

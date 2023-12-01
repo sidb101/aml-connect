@@ -26,7 +26,7 @@ import {
 	selectCurrentNetwork,
 } from "../../../../../redux/slices/ModelCreationSlice";
 import Toolbar from "../Toolbar/Toolbar";
-import { newNode } from "./canvasUtils";
+import { newEdge, newNode } from "./canvasUtils";
 import NetworkElement from "./NetworkElement";
 import NetworkTerminal from "./NetworkTerminal";
 
@@ -40,12 +40,11 @@ const defaultEdgeOptions: DefaultEdgeOptions = {
 
 type CanvasProps = {
 	onElementDoubleClick: (node: Node<NodeDataT>) => void;
-	onSimulate: () => void;
 };
 
 const nodeTypes = { networkElement: NetworkElement, networkTerminal: NetworkTerminal };
 
-export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps) {
+export default function Canvas({ onElementDoubleClick }: CanvasProps) {
 	const dispatch = useAppDispatch();
 	const currentNetwork = useAppSelector(selectCurrentNetwork);
 	const allElements = useAppSelector(selectAllElements);
@@ -59,7 +58,8 @@ export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps
 	}, []);
 
 	const onConnect: OnConnect = useCallback((connection: Connection) => {
-		dispatch(modelCreationActions.connectNodes({ connection: connection }));
+		const edge = newEdge(connection);
+		dispatch(modelCreationActions.connectNodes({ edge }));
 	}, []);
 
 	const onAdd = useCallback(
@@ -77,21 +77,20 @@ export default function Canvas({ onElementDoubleClick, onSimulate }: CanvasProps
 				edges={currentNetwork.edges}
 				onNodesChange={onNodesChange}
 				onEdgesChange={onEdgesChange}
+				deleteKeyCode={["Delete"]}
 				onConnect={onConnect}
 				fitView
 				fitViewOptions={fitViewOptions}
 				defaultEdgeOptions={defaultEdgeOptions}
 				connectionLineType={ConnectionLineType.Step}
 				nodeTypes={nodeTypes}
+				proOptions={{ hideAttribution: true }}
+				maxZoom={4}
 				onNodeDoubleClick={(e: React.MouseEvent, node: Node<NodeDataT>) => {
 					onElementDoubleClick(node);
 				}}
 			>
-				<Toolbar
-					allElements={Object.values(allElements)}
-					handleAddElement={onAdd}
-					handleSimulate={onSimulate}
-				/>
+				<Toolbar allElements={Object.values(allElements)} handleAddElement={onAdd} />
 				<Controls className={`Canvas_controls`} />
 				{/* <MiniMap /> */}
 				<Background variant={BackgroundVariant.Dots} gap={12} size={1} />

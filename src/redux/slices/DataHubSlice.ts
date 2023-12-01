@@ -8,6 +8,10 @@ import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolki
 import { type RootState } from "../store";
 
 export type DataHubState = {
+	inputDataFiles: InputFilesT;
+};
+
+export type InputFilesT = {
 	[dataSet in DataSetT]: InputFileDataT[];
 };
 
@@ -30,11 +34,15 @@ export enum DataSetT {
 	TRAINING = "Training",
 }
 
-const initialState: DataHubState = {
+const initialInputFiles: InputFilesT = {
 	//These attributes are consistent with the Enum Values of DataSetT
 	Testing: [] /* eslint-disable-line @typescript-eslint/naming-convention */,
 	Validation: [] /* eslint-disable-line @typescript-eslint/naming-convention */,
 	Training: [] /* eslint-disable-line @typescript-eslint/naming-convention */,
+};
+
+const initialState: DataHubState = {
+	inputDataFiles: initialInputFiles,
 };
 
 /**
@@ -44,8 +52,23 @@ export const dataHubSlice = createSlice({
 	name: "dataHub",
 	initialState, // the type of this slice of the state would be inferred from the type of initial state
 	reducers: {
+		/**
+		 * To set the input files for appropriate data set.
+		 * @param state: Data hub State
+		 * @param action: The action would have dataSet and input files to be set
+		 */
 		setInputFiles: (state, action: PayloadAction<{ dataSet: DataSetT; inputFiles: InputFileDataT[] }>) => {
-			state[action.payload.dataSet] = action.payload.inputFiles;
+			state.inputDataFiles[action.payload.dataSet] = action.payload.inputFiles;
+		},
+		/**
+		 * To set the input files for all the data sets.
+		 * @param state: Data hub State
+		 * @param action: The action would have dataSet mapped to input files to be set
+		 */
+		setAllInputFiles: (state, action: PayloadAction<Map<DataSetT, InputFileDataT[]>>) => {
+			state.inputDataFiles.Training = action.payload.get(DataSetT.TRAINING) || [];
+			state.inputDataFiles.Validation = action.payload.get(DataSetT.VALIDATION) || [];
+			state.inputDataFiles.Testing = action.payload.get(DataSetT.TESTING) || [];
 		},
 		/**
 		 * To add the input files into appropriate data set.
@@ -53,16 +76,36 @@ export const dataHubSlice = createSlice({
 		 * @param action: The action would have dataSet and input files to be added
 		 */
 		addInputFiles: (state, action: PayloadAction<{ dataSet: DataSetT; inputFiles: InputFileDataT[] }>) => {
-			//TODO: Handle the duplicate file names. If a file already exists, then overwrite that file.
-			state[action.payload.dataSet] = [...state[action.payload.dataSet], ...action.payload.inputFiles];
+			const { dataSet, inputFiles } = action.payload;
+
+			//Handle the duplicate file names. If a file already exists, then overwrite that file.
+			//Remove the old files of same name from the state
+			state.inputDataFiles[dataSet] = state.inputDataFiles[dataSet].filter((stateFile) =>
+				inputFiles.some((inputFile) => stateFile.metadata.name !== inputFile.metadata.name)
+			);
+
+			state.inputDataFiles[dataSet] = [...state.inputDataFiles[dataSet], ...inputFiles];
+		},
+
+		/**
+		 * To reset the state when the project is closed.
+		 * @param state: Data hub State
+		 */
+		resetState: (state) => {
+			state.inputDataFiles = initialInputFiles;
 		},
 	},
 });
 
 export const selectInputFiles = createSelector(
 	[(state: RootState) => state.dataHub, (_, dataSet: DataSetT) => dataSet],
-	(state, dataSet) => {
-		return state[dataSet];
+	(state, dataSet) => state.inputDataFiles[dataSet]
+);
+
+export const selectAllInputFiles = createSelector(
+	(state: RootState) => state.dataHub,
+	(state) => {
+		return state.inputDataFiles;
 	}
 );
 

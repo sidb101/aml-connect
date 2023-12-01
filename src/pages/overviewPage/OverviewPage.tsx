@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { type Params, redirect, useLocation, useParams } from "react-router-dom";
+import { type Params, redirect, useNavigate, useParams } from "react-router-dom";
 import {
 	projectActions,
+	ProjectStatus,
+	selectAllProjects,
 	selectCurrentProjectDescription,
 	selectCurrentProjectName,
+	selectCurrentProjectStatus,
+	selectIsProjectOpen,
 } from "../../redux/slices/ProjectSlice";
 import { dataSetupRoute } from "../../routes";
 import OverviewView from "./layouts/OverviewView";
@@ -21,18 +25,29 @@ export type OverviewT = {
 };
 
 const OverviewPage = ({ isNewProject = false, ...props }: OverviewT) => {
-	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
 	const { projectSlug = "" } = useParams();
+	const dispatch = useAppDispatch();
+	const allProjects = useAppSelector(selectAllProjects);
+	const currentProjectStatus = useAppSelector(selectCurrentProjectStatus);
 	const currentProjectName = useAppSelector(selectCurrentProjectName);
 	const currentProjectDescription = useAppSelector(selectCurrentProjectDescription);
+	const isProjectOpen = useAppSelector(selectIsProjectOpen);
 
 	useEffect(() => {
-		dispatch(projectActions.openProject(projectSlug));
-	}, [projectSlug]);
+		if (allProjects.length > 0) {
+			dispatch(projectActions.openProject(projectSlug));
+		}
+	}, [allProjects.length, projectSlug]);
+
+	useEffect(() => {
+		if (currentProjectStatus === ProjectStatus.ERROR) {
+			navigate("/error-page", { replace: true });
+		}
+	}, [currentProjectStatus]);
 
 	return (
-		projectSlug &&
-		currentProjectName && (
+		isProjectOpen && (
 			<View
 				header={<Header headerTitle={`${currentProjectName} > Overview`} />}
 				main={

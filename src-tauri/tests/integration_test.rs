@@ -30,7 +30,7 @@ use aml_connect::aml_core::network_manager::{self, NetworkSimulator, SimulatorEr
 use serde_json::{self, Value};
 
 fn create_app_dir_if_not_exists() -> Result<PathBuf> {
-    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir()).join("aml_connect");
+    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir()).join("com.aml-connect.aspinity");
     if !app_dir.exists() {
         fs::create_dir_all(app_dir.clone())?;
     }
@@ -38,28 +38,20 @@ fn create_app_dir_if_not_exists() -> Result<PathBuf> {
 }
 
 fn integration_test_setup(app_dir: PathBuf) {
-    let destination_dir: PathBuf = app_dir.clone().join("test_project/audio/");
-    let destination_path1 = destination_dir.join("bearing-faults.wav");
-    let destination_path2 = destination_dir.join("rising-chirp.wav");
-    let destination_path3 = destination_dir.join("heart-rate.wav");
-
+    let destination_dir = app_dir.join("test_project").join("audio");
     fs::create_dir_all(&destination_dir).unwrap();
 
-    fs::copy(
-        PathBuf::from("../test_resources/bearing-faults.wav"),
-        &destination_path1,
-    )
-    .unwrap();
-    fs::copy(
-        PathBuf::from("../test_resources/bearing-faults.wav"),
-        &destination_path2,
-    )
-    .unwrap();
-    fs::copy(
-        PathBuf::from("../test_resources/bearing-faults.wav"),
-        &destination_path3,
-    )
-    .unwrap();
+    let mut source_dir = env::current_dir().unwrap().parent().unwrap().to_path_buf();
+    source_dir.push("test_resources");
+
+    let files_to_copy = ["bearing-faults.wav", "rising-chirp.wav", "heart-rate.wav"];
+
+    for file_name in &files_to_copy {
+        let source_path = source_dir.join(file_name);
+        let destination_path = destination_dir.join(file_name);
+
+        fs::copy(&source_path, &destination_path).unwrap();
+    }
 }
 
 #[test]
