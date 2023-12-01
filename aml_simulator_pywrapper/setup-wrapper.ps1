@@ -7,8 +7,8 @@ python -m venv ..\.venv
  #install .whl inside the venv, change the `aspinity_pkg` to wherever you downloaded and unzipped
 pip install "..\..\aspinity-dev-env-0.6.2\aspinity-0.6.2-cp38-abi3-win_amd64.whl"
 
-# install pyinstaller
-python -m pip install pyinstaller
+# install dependencies
+python -m pip install -r requirements.txt
 
 deactivate
 

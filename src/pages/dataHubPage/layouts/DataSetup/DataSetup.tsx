@@ -1,6 +1,5 @@
 import DataSetupView from "./DataSetupView";
-import React, { useEffect, useState } from "react";
-import { dataVizRoute, projectOverviewRoute } from "../../../../routes";
+import React, { useState } from "react";
 import { DataSetT } from "../../../../redux/slices/DataHubSlice";
 import DatasetWidget from "./DatasetWidget/DatasetWidget";
 import LabelDataWidget from "./LabelDataWidget/LabelDataWidget";

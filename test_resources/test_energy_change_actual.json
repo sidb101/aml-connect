@@ -1,0 +1,234 @@
+{
+    "id": 5000,
+    "name": "demo_network",
+    "elements": [
+        {
+            "id": "1",
+            "parent_network_id": 5000,
+            "name": "Source",
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "hardware_pin": "A0",
+                    "is_input": true,
+                    "is_output": false,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "id": "1|edge__1-2",
+                    "parent_element_id": "1",
+                    "type_name": "net",
+                    "node_name": "edge__1-2"
+                }
+            ],
+            "position": {
+                "x": -192.89334,
+                "y": 14.258034
+            }
+        },
+        {
+            "id": "2",
+            "parent_network_id": 5000,
+            "name": "PeakDetector",
+            "type_name": "PeakDetector",
+            "element_type_params": {
+                "PeakDetector": {
+                    "atk": 20000.0,
+                    "dec": 100.0,
+                    "model_version": "SecondOrder",
+                    "buff": null,
+                    "parasitic_ratio": null
+                }
+            },
+            "terminals": [
+                {
+                    "id": "2|edge__1-2",
+                    "parent_element_id": "2",
+                    "type_name": "input",
+                    "node_name": "edge__1-2"
+                },
+                {
+                    "id": "2|edge__2-3",
+                    "parent_element_id": "2",
+                    "type_name": "output",
+                    "node_name": "edge__2-3"
+                },
+                {
+                    "id": "2|edge__2-6",
+                    "parent_element_id": "2",
+                    "type_name": "output",
+                    "node_name": "edge__2-6"
+                },
+                {
+                    "id": "2|edge__2-4",
+                    "parent_element_id": "2",
+                    "type_name": "output",
+                    "node_name": "edge__2-4"
+                }
+            ],
+            "position": {
+                "x": -67.17905,
+                "y": 15.172103
+            }
+        },
+        {
+            "id": "3",
+            "parent_network_id": 5000,
+            "name": "Comparator",
+            "type_name": "Comparator",
+            "element_type_params": {
+                "Comparator": {
+                    "threshold": 0.09,
+                    "hysteresis_voltage": null
+                }
+            },
+            "terminals": [
+                {
+                    "id": "3|edge__2-3",
+                    "parent_element_id": "3",
+                    "type_name": "positive",
+                    "node_name": "edge__2-3"
+                },
+                {
+                    "id": "3|edge__3-7",
+                    "parent_element_id": "3",
+                    "type_name": "output",
+                    "node_name": "edge__3-7"
+                },
+                {
+                    "id": "3|edge__4-3",
+                    "parent_element_id": "3",
+                    "type_name": "negative",
+                    "node_name": "edge__4-3"
+                }
+            ],
+            "position": {
+                "x": 393.3637,
+                "y": -9.632773
+            }
+        },
+        {
+            "id": "4",
+            "parent_network_id": 5000,
+            "name": "Filter",
+            "type_name": "Filter",
+            "element_type_params": {
+                "Filter": {
+                    "characteristic_frequency": 20.0,
+                    "quality_factor": 2.0,
+                    "filter_type": "lpf1"
+                }
+            },
+            "terminals": [
+                {
+                    "id": "4|edge__2-4",
+                    "parent_element_id": "4",
+                    "type_name": "input",
+                    "node_name": "edge__2-4"
+                },
+                {
+                    "id": "4|edge__4-3",
+                    "parent_element_id": "4",
+                    "type_name": "output",
+                    "node_name": "edge__4-3"
+                },
+                {
+                    "id": "4|edge__4-5",
+                    "parent_element_id": "4",
+                    "type_name": "output",
+                    "node_name": "edge__4-5"
+                }
+            ],
+            "position": {
+                "x": 197.81003,
+                "y": 339.51523
+            }
+        },
+        {
+            "id": "5",
+            "parent_network_id": 5000,
+            "name": "Sink",
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "hardware_pin": null,
+                    "is_input": false,
+                    "is_output": true,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "id": "5|edge__4-5",
+                    "parent_element_id": "5",
+                    "type_name": "net",
+                    "node_name": "edge__4-5"
+                }
+            ],
+            "position": {
+                "x": 444.61224,
+                "y": 339.3065
+            }
+        },
+        {
+            "id": "6",
+            "parent_network_id": 5000,
+            "name": "Sink",
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "hardware_pin": null,
+                    "is_input": false,
+                    "is_output": true,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "id": "6|edge__2-6",
+                    "parent_element_id": "6",
+                    "type_name": "net",
+                    "node_name": "edge__2-6"
+                }
+            ],
+            "position": {
+                "x": -44.19777,
+                "y": 285.05026
+            }
+        },
+        {
+            "id": "7",
+            "parent_network_id": 5000,
+            "name": "Sink",
+            "type_name": "Terminal",
+            "element_type_params": {
+                "Terminal": {
+                    "hardware_pin": "D3",
+                    "is_input": false,
+                    "is_output": true,
+                    "is_ac_coupled": null,
+                    "is_extern": null
+                }
+            },
+            "terminals": [
+                {
+                    "id": "7|edge__3-7",
+                    "parent_element_id": "7",
+                    "type_name": "net",
+                    "node_name": "edge__3-7"
+                }
+            ],
+            "position": {
+                "x": 680.914,
+                "y": 14.47051
+            }
+        }
+    ],
+    "nodes": [],
+    "creator_id": 1
+}

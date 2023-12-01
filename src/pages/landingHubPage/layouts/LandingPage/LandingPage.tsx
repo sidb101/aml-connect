@@ -8,14 +8,19 @@ import { projectActions, selectAllProjects } from "../../../../redux/slices/Proj
 import remoteService from "../../../../service/RemoteService/RemoteService";
 import { appStore } from "../../../../redux/store";
 import { useEffect } from "react";
+import { dataHubActions } from "../../../../redux/slices/DataHubSlice";
+import { modelCreationActions } from "../../../../redux/slices/ModelCreationSlice";
 
 function LandingPage() {
 	const projects = useAppSelector(selectAllProjects);
 
 	const dispatch = useAppDispatch();
 
+	//Close any opened project and flush the state so that new project can load its own data when visited
 	useEffect(() => {
 		dispatch(projectActions.closeProject());
+		dispatch(dataHubActions.resetState());
+		dispatch(modelCreationActions.resetState());
 	}, []);
 
 	return <LandingView projects={projects} />;
@@ -26,7 +31,7 @@ function LandingPage() {
  * a user wishes to delete a project.
  * @param request The request.
  */
-export async function landingPageAction({ request, params }: { request: Request; params: Params }) {
+export async function landingPageAction({ request }: { request: Request }) {
 	if (request.method === "DELETE") {
 		const formData = await request.formData();
 		const data = Object.fromEntries(formData) as DisplayCardFormT;

@@ -4,6 +4,7 @@ import { projectReducer } from "./slices/ProjectSlice";
 import { dataHubReducer } from "./slices/DataHubSlice";
 import { generalReducer } from "./slices/GeneralSlice";
 import { modelCreationReducer } from "./slices/ModelCreationSlice";
+import { resultReducer } from "./slices/ResultSlice";
 
 // Create the root reducer separately so we can extract the RootState type
 const rootReducer = combineReducers({
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
 	project: projectReducer,
 	dataHub: dataHubReducer,
 	modelCreation: modelCreationReducer,
+	result: resultReducer,
 });
 
 /** To set up store from a preloaded state, to facilitate testing with various

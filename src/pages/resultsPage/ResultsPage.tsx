@@ -33,7 +33,12 @@ function ResultsPage() {
 	const { pathname } = useLocation();
 
 	useEffect(() => {
-		dispatch(projectActions.openProject(projectSlug));
+		if (allProjects.length > 0) {
+			dispatch(projectActions.openProject(projectSlug));
+		}
+	}, [allProjects.length, projectSlug]);
+
+	useEffect(() => {
 		if (isProjectOpen) {
 			setPageTabs(getResultsPageTabs(projectSlug));
 		}
@@ -55,12 +60,6 @@ function ResultsPage() {
 			setFooter(getResultsPageFooters(projectSlug)[selectedTabIndex]);
 		}
 	}, [selectedTabIndex, currentProjectStatus]);
-
-	useEffect(() => {
-		if (allProjects.length > 0) {
-			dispatch(projectActions.openProject(projectSlug));
-		}
-	}, [allProjects.length, projectSlug]);
 
 	const header = <Header headerTitle={`${currentProjectName} > Results > ${heading}`} />;
 	const main = (

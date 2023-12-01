@@ -39,7 +39,11 @@ const Accordion: React.FC<React.PropsWithChildren<AccordionProps>> = ({
 
 	return (
 		<div className={`white-panel Accordion_container ${className} ${active}`} data-testid={testIds.accordion}>
-			<div className={`Accordion_headerContainer ${active}`} onClick={onTitleClick}>
+			<div
+				className={`Accordion_headerContainer ${active}`}
+				data-testid={testIds.accordionHeaderContainer}
+				onClick={onTitleClick}
+			>
 				<div className={`section-heading-text Accordion_header`} data-testid={testIds.accordionHeader}>
 					{header}
 				</div>
@@ -47,7 +51,11 @@ const Accordion: React.FC<React.PropsWithChildren<AccordionProps>> = ({
 					<FontAwesomeIcon icon={faAngleDown} />
 				</i>
 			</div>
-			<div className={`Accordion_bodyContainer ${active}`} style={isActive ? { maxHeight: maxBodyHeight } : {}}>
+			<div
+				className={`Accordion_bodyContainer ${active}`}
+				style={isActive ? { maxHeight: maxBodyHeight } : {}}
+				data-testid={testIds.accordionBody}
+			>
 				<div>{children}</div>
 			</div>
 		</div>

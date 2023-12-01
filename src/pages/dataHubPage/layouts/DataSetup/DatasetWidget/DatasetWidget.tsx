@@ -51,12 +51,12 @@ const DatasetWidget = ({ widgetHeight, datasetType, header, defaultIsOpen }: Dat
 			const inputFilesMetaData = await remoteService.getFilesMetaData(projectSlug, dataSet);
 
 			//get the files data along with content from the given metadata
-			const inputFiles = await storageService.readFilesFromStorage(inputFilesMetaData, audioPath);
+			const inputFiles = await storageService.readInputFilesFromStorage(inputFilesMetaData, audioPath);
 
 			//update it in the redux state
 			dispatch(dataHubActions.setInputFiles({ dataSet, inputFiles }));
 		} catch (e) {
-			console.error("Error in getting files");
+			console.error("Error in getting files", e);
 		}
 
 		dispatch(generalActions.markLoading(false));

@@ -5,6 +5,7 @@ import { DirectionT } from "../../../../../redux/slices/ModelCreationSlice";
 import { useAppSelector } from "../../../../../hooks";
 import { getNodeSpacings, newHandleId } from "./canvasUtils";
 import { useMemo } from "react";
+import TerminalHandle from "./TerminalHandle";
 
 const NetworkElement = ({ id, data }: NodeProps<NodeDataT>) => {
 	const elementData = useAppSelector((state) => state.modelCreation.allElements[data.elementType]);
@@ -43,7 +44,7 @@ const NetworkElement = ({ id, data }: NodeProps<NodeDataT>) => {
 		elementData && (
 			<div className={`NetworkElement_node`} style={{ height: height }}>
 				{leftTerminals.map(([terminalKey, terminal], key) => (
-					<Handle
+					<TerminalHandle
 						key={key}
 						type={"target"}
 						id={newHandleId(id, terminalKey)}
@@ -51,13 +52,14 @@ const NetworkElement = ({ id, data }: NodeProps<NodeDataT>) => {
 						style={{ top: (key + 1) * leftSpacing }}
 						title={terminalKey}
 						className={`NetworkElement_handle`}
+						connectionLimit={1}
 					>
 						{terminalKey}
-					</Handle>
+					</TerminalHandle>
 				))}
 				<div className={`NetworkElement_nodeLabel`}>{data.label}</div>
 				{rightTerminals.map(([terminalKey, terminal], key) => (
-					<Handle
+					<TerminalHandle
 						key={key}
 						type={"source"}
 						id={newHandleId(id, terminalKey)}
@@ -67,7 +69,7 @@ const NetworkElement = ({ id, data }: NodeProps<NodeDataT>) => {
 						className={`NetworkElement_handle`}
 					>
 						{terminalKey}
-					</Handle>
+					</TerminalHandle>
 				))}
 			</div>
 		)
