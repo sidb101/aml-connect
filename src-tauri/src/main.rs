@@ -71,7 +71,7 @@ fn init_db(app_dir: PathBuf) -> Pool<ConnectionManager<SqliteConnection>> {
             let response = create_project(&request, &app_dir, conn);
             info!("CreateProjectResponse: {:?}", response);
 
-            match(response){
+            match response{
                 Ok(success) => {
                     // Testing update_project (with name)
                     let update_request: project_manager::UpdateProjectRequest = project_manager::UpdateProjectRequest {
