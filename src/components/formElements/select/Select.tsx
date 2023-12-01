@@ -6,7 +6,7 @@ type SelectProps = {
 	className?: string;
 };
 
-function Select({ onChange, value, className, children }: PropsWithChildren<SelectProps>) {
+function Select({ onChange, value, className = "", children }: PropsWithChildren<SelectProps>) {
 	return (
 		<select
 			onChange={onChange}
