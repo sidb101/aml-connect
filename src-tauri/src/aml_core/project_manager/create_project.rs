@@ -34,7 +34,7 @@ pub fn create_project(
                 ));
             } else {
                 log::info!("project doesnt exist, can create");
-                let new_slug_result = generate_unique_slug(&req.name, conn);
+                let new_slug_result = generate_unique_slug(&req.name, app_dir, conn);
                 match new_slug_result {
                     Ok(new_slug) => {
                         let new_project: NewProject = NewProject {
@@ -102,19 +102,29 @@ pub fn create_project(
 
 //slug generation logic
 //trim leading / trailing whitespace, convert to lowercase, and use hyphenate
+//check both database and local file system whether slug exists
 //will add -<counter> to project_slug until its unique
 pub fn generate_unique_slug(
     project_name: &str,
+    app_dir: &PathBuf,
     conn: &mut DbConn,
 ) -> Result<String, ProjectManagerError> {
     let base_slug = project_name.trim().to_lowercase().replace(" ", "-");
     let mut new_slug = base_slug.clone();
 
     let mut counter = 1;
-    while project_exists_by_slug(&new_slug, conn)? {
+    while project_exists_by_slug(&new_slug, conn)? { //|| project_exists_in_fs(app_dir, &new_slug) {
         new_slug = format!("{}-{}", base_slug, counter);
         counter += 1;
     }
 
     Ok(new_slug)
+}
+
+fn project_exists_in_fs(app_dir: &PathBuf, project_slug: &str) -> bool {
+    let project_dir_path = app_dir.join(project_slug);
+
+    std::fs::metadata(&project_dir_path)
+        .map(|metadata| metadata.is_dir())
+        .unwrap_or(false)
 }

@@ -58,47 +58,47 @@ fn init_db(app_dir: PathBuf) -> Pool<ConnectionManager<SqliteConnection>> {
 
     // TODO: Remove this
     // Testing create_project
-    let request = project_manager::CreateProjectRequest {
-        name: "Henk Create Project".to_owned(),
-        description: Some("A description that no one actually expected".to_owned()),
-    };
-    let conn_res = &mut db_conn_pool
-        .get()
-        .with_context(|| "failed to get db connection to add dummy project");
+    // let request = project_manager::CreateProjectRequest {
+    //     name: "Henk Create Project".to_owned(),
+    //     description: Some("A description that no one actually expected".to_owned()),
+    // };
+    // let conn_res = &mut db_conn_pool
+    //     .get()
+    //     .with_context(|| "failed to get db connection to add dummy project");
 
-    match conn_res {
-        Ok(conn) => {
-            let response = create_project(&request, &app_dir, conn);
-            info!("CreateProjectResponse: {:?}", response);
+    // match conn_res {
+    //     Ok(conn) => {
+    //         let response = create_project(&request, &app_dir, conn);
+    //         info!("CreateProjectResponse: {:?}", response);
 
-            match response{
-                Ok(success) => {
-                    // Testing update_project (with name)
-                    let update_request: project_manager::UpdateProjectRequest = project_manager::UpdateProjectRequest {
-                        id: success.project.id,
-                        name: Some("Henk Update Project".to_owned()),
-                        description: None
-                    };
+    //         match response{
+    //             Ok(success) => {
+    //                 // Testing update_project (with name)
+    //                 let update_request: project_manager::UpdateProjectRequest = project_manager::UpdateProjectRequest {
+    //                     id: success.project.id,
+    //                     name: Some("Henk Update Project".to_owned()),
+    //                     description: None
+    //                 };
 
-                    let update_response = update_project(&update_request, &app_dir, conn);
-                    info!("UpdateProjectResponse: {:?}", update_response);
+    //                 let update_response = update_project(&update_request, &app_dir, conn);
+    //                 info!("UpdateProjectResponse: {:?}", update_response);
 
-                    // Updating project with just description
-                    let update_request: project_manager::UpdateProjectRequest = project_manager::UpdateProjectRequest {
-                        id: success.project.id,
-                        name: None,
-                        description: Some("I have changed the description".to_owned())
-                    };
+    //                 // Updating project with just description
+    //                 let update_request: project_manager::UpdateProjectRequest = project_manager::UpdateProjectRequest {
+    //                     id: success.project.id,
+    //                     name: None,
+    //                     description: Some("I have changed the description".to_owned())
+    //                 };
 
-                    let update_response = update_project(&update_request, &app_dir, conn);
-                    info!("UpdateProjectResponse: {:?}", update_response);
-                }
-                Err(_) => todo!(),
-            }
+    //                 let update_response = update_project(&update_request, &app_dir, conn);
+    //                 info!("UpdateProjectResponse: {:?}", update_response);
+    //             }
+    //             Err(_) => todo!(),
+    //         }
             
-        }
-        Err(_) => todo!(),
-    }
+    //     }
+    //     Err(_) => todo!(),
+    // }
 
     
     

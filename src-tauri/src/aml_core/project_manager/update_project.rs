@@ -3,7 +3,7 @@ use std::path::PathBuf;
 use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl};
 
 use crate::aml_core::{
-    db_adapter::{models::NewProject, models::Project, schema::projects, DbConn},
+    db_adapter::{models::Project, schema::projects, DbConn},
     file_data_manager, AppError,
 };
 
@@ -31,7 +31,7 @@ pub fn update_project(
                 Some(name) => {
                     let old_slug = project.slug;
                     let new_slug_result: Result<String, ProjectManagerError> =
-                        generate_unique_slug(&name, conn);
+                        generate_unique_slug(&name, app_dir, conn);
 
                     match new_slug_result {
                         Err(error) => {
@@ -91,7 +91,8 @@ pub fn update_project(
                                 AppError::ProjectManagerError(
                                     ProjectManagerError::ProjectAlreadyExists(error.to_string()),
                                 )
-                            });
+                            })?;
+                            
                             log::info!("update_project response: {:?}", project_details);
                             return Ok(UpdateProjectResponse {
                                 project: project_details,
