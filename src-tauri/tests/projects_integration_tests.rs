@@ -4,14 +4,12 @@ use std::env;
 use std::path::PathBuf;
 
 use aml_connect::aml_core::db_adapter::models::NewProject;
-use aml_connect::aml_core::db_adapter::models::Project;
 use aml_connect::aml_core::db_adapter::schema::projects;
 use aml_connect::aml_core::project_manager::create_project;
 use aml_connect::aml_core::project_manager::delete_project;
 use aml_connect::aml_core::project_manager::get_projects::get_project;
 use aml_connect::aml_core::project_manager::update_project;
 use aml_connect::aml_core::project_manager::ProjectManagerError;
-use aml_connect::aml_core::AppError;
 use aml_connect::aml_core::{db_adapter, project_manager};
 use anyhow::Context;
 use diesel::r2d2::{ConnectionManager, Pool};

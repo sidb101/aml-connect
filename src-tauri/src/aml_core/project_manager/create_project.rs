@@ -113,7 +113,7 @@ pub fn generate_unique_slug(
     let mut new_slug = base_slug.clone();
 
     let mut counter = 1;
-    while project_exists_by_slug(&new_slug, conn)? { //|| project_exists_in_fs(app_dir, &new_slug) {
+    while project_exists_by_slug(&new_slug, conn)? || project_exists_in_fs(app_dir, &new_slug) {
         new_slug = format!("{}-{}", base_slug, counter);
         counter += 1;
     }

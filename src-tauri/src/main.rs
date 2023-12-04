@@ -1,22 +1,17 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use anyhow::Context;
 use diesel::r2d2::{ConnectionManager, Pool};
-use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl, SqliteConnection};
+use diesel::SqliteConnection;
 use log::{info, warn};
 use simple_logger::SimpleLogger;
 use std::path::PathBuf;
 
-use aml_connect::aml_core::{db_adapter, project_manager};
-use aml_connect::aml_core::db_adapter::models::NewProject;
-use aml_connect::aml_core::db_adapter::schema::projects;
+use aml_connect::aml_core::db_adapter;
 use aml_connect::aml_core::file_data_manager;
 use aml_connect::uicontroller;
 
 
-use aml_connect::aml_core::project_manager::create_project::create_project;
-use aml_connect::aml_core::project_manager::update_project::update_project;
 
 fn main() {
     info!("Starting AML Connect...");
@@ -42,7 +37,7 @@ fn main() {
         .expect("error while running tauri application");
 }
 
-fn init_db(app_dir: PathBuf) -> Pool<ConnectionManager<SqliteConnection>> {
+fn init_db(_: PathBuf) -> Pool<ConnectionManager<SqliteConnection>> {
     let db_conn_pool = db_adapter::establish_connection().unwrap_or_else(|e| {
         panic!("Could not establish connection to database :{:?}", e);
     });
