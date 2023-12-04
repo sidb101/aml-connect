@@ -16,6 +16,11 @@ from aspinity import (
 def load_wav():
     samples, sample_rate = sf.read(r"{{ wav_file_path }}")
     times = np.arange(len(samples)) / sample_rate
+    # reduce from stereo to mono i.e. from (m, n) to (m, )
+    if len(samples.shape) == 2:
+        samples = samples[:, 0] # pick channel 0
+    elif len(samples.shape) > 2:
+        raise ValueError("Unidentified wav file format")
     return times, samples
 
 network = Network()
