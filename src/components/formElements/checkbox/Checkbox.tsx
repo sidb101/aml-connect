@@ -2,9 +2,7 @@ import React from "react";
 import "./Checkbox.scss";
 
 type CheckboxProps = {
-	type?: string;
 	name?: string;
-	placeholder?: string;
 	value?: string;
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	required?: boolean;
@@ -13,24 +11,13 @@ type CheckboxProps = {
 	checked?: boolean;
 };
 
-function Checkbox({
-	type,
-	name,
-	placeholder,
-	value,
-	onChange,
-	required,
-	className = "",
-	testId,
-	checked,
-}: CheckboxProps) {
+function Checkbox({ name, value, onChange, required, className = "", testId, checked }: CheckboxProps) {
 	return (
-		<label className={"custom-checkbox"}>
+		<label className={"Checkbox_label"}>
 			<input
-				type={type}
+				type="checkbox"
 				checked={checked}
 				name={name}
-				placeholder={placeholder}
 				value={value}
 				onChange={onChange}
 				{...(required ? { required: true } : {})}

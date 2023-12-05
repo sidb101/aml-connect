@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import DisplayPanel from "../displayPanel/DisplayPanel";
 import { testIds } from "../../tests/test-utils";
-import Input from "../formElements/input/Input";
+import TextInput from "../formElements/textInput/TextInput";
 
 export type ProjectFormT = {
 	projectName: string;
@@ -46,7 +46,7 @@ function ProjectForm({ heading, projectName, projectDescription, buttonText }: P
 						<label className={`green-text section-heading-text`} htmlFor="projectName">
 							Project Name
 						</label>
-						<Input
+						<TextInput
 							type="text"
 							name="projectName"
 							placeholder="Enter the project name here."

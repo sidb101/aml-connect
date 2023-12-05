@@ -1,7 +1,7 @@
 import React from "react";
 
 type InputProps = {
-	type?: string;
+	type: "text" | "number";
 	name?: string;
 	placeholder?: string;
 	value?: string;
@@ -11,7 +11,7 @@ type InputProps = {
 	testId?: string;
 };
 
-function Input({ type, name, placeholder, value, onChange, required, className = "", testId }: InputProps) {
+function TextInput({ type, name, placeholder, value, onChange, required, className = "", testId }: InputProps) {
 	return (
 		<input
 			type={type}
@@ -26,4 +26,4 @@ function Input({ type, name, placeholder, value, onChange, required, className =
 	);
 }
 
-export default Input;
+export default TextInput;

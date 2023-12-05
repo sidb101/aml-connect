@@ -1,11 +1,11 @@
 import "./ParameterFormView.scss";
 import React, { type ReactNode, useEffect, useState } from "react";
 import { type ParameterT, ParamTypeT, UIComponentT } from "../../../../../redux/slices/ModelCreationSlice";
-import Input from "../../../../../components/formElements/input/Input";
 import Checkbox from "../../../../../components/formElements/checkbox/Checkbox";
 import Select from "../../../../../components/formElements/select/Select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons/faTimes";
+import TextInput from "../../../../../components/formElements/textInput/TextInput";
 
 type ParameterFormViewProps = {
 	elementType?: string;
@@ -69,7 +69,7 @@ function ParameterFormView({
 		switch (param.uiComponent) {
 			case UIComponentT.TEXTBOX:
 				return (
-					<Input
+					<TextInput
 						type={`${param.parameterType === ParamTypeT.NUMBER ? "number" : "text"}`}
 						value={params[paramName] || ""}
 						onChange={(e) => {
@@ -83,7 +83,6 @@ function ParameterFormView({
 				return (
 					<Checkbox
 						className={`general-padding`}
-						type={"checkbox"}
 						checked={JSON.parse(params[paramName]) as boolean}
 						onChange={(e) => {
 							onCheckBoxInputChange(e, paramName);
