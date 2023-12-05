@@ -12,6 +12,7 @@ type ParameterFormViewProps = {
 	initialParamData: ParameterDataT;
 	onParameterSave?: (params: Record<string, string>) => void;
 	onSimulate?: () => void;
+	onClose?: () => void;
 };
 
 type ParameterDataT = {
@@ -19,7 +20,13 @@ type ParameterDataT = {
 	params: Record<string, string>; //would be determined on runtime
 };
 
-function ParameterFormView({ initialParamData, elementType, onParameterSave, onSimulate }: ParameterFormViewProps) {
+function ParameterFormView({
+	initialParamData,
+	elementType,
+	onParameterSave,
+	onSimulate,
+	onClose,
+}: ParameterFormViewProps) {
 	const [paramData, setParamData] = useState<ParameterDataT>({
 		parameterInfo: initialParamData.parameterInfo,
 		params: initialParamData.params,
@@ -116,7 +123,14 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 				<div className={`white-panel ParameterForm_container`}>
 					<div className={`section-subheading-text ParameterForm_headingContainer`}>
 						<div>{elementType} Parameters</div>
-						<FontAwesomeIcon icon={faTimes} />
+						<FontAwesomeIcon
+							icon={faTimes}
+							onClick={() => {
+								if (onClose) {
+									onClose();
+								}
+							}}
+						/>
 					</div>
 					<br />
 					{Object.entries(paramData.parameterInfo).map(([parameterName, val], key) => (
@@ -131,6 +145,9 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 						className={`btn btn-outline`}
 						onClick={() => {
 							onParameterSave?.(paramData.params);
+							if (onClose) {
+								onClose();
+							}
 						}}
 					>
 						{" "}
