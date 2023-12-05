@@ -6,7 +6,7 @@
 
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { AUDIO_DIR } from "../../constants";
+import { AUDIO_DIR, TEMP_DIR } from "../../constants";
 
 export type ShallowProjectDetails = {
 	id: number;
@@ -28,6 +28,7 @@ export enum ProjectStatus {
 	NEW, // When a new project is to be created
 	OPEN, // When a project is already  opened
 	NOT_OPEN, // When no project is open (mostly at the homepage of the app)
+	ERROR, // When an error occurs
 }
 
 const initialState: ProjectState = {
@@ -62,7 +63,7 @@ export const projectSlice = createSlice({
 					state.projectDescription = projectToOpen.description;
 				} else {
 					console.error(`Project with slug: ${action.payload} does not exist.`);
-					state.projectStatus = ProjectStatus.NOT_OPEN;
+					state.projectStatus = ProjectStatus.ERROR;
 				}
 			}
 		},
@@ -86,6 +87,7 @@ export const projectSlice = createSlice({
 
 		/**
 		 * To declare to app to update status to align with a closed state.
+		 * This would reset the current project state
 		 * @param state: General state
 		 */
 		closeProject: (state) => {
@@ -124,6 +126,11 @@ export const projectSlice = createSlice({
  * Different App Selectors
  */
 
+export const selectCurrentProjectStatus = createSelector(
+	(state: RootState) => state.project,
+	({ projectStatus }) => projectStatus
+);
+
 /**
  * Gets the project name from the corresponding project slug using given project array
  * @return ProjectName if the slug is present in the state, else null
@@ -147,6 +154,11 @@ export const selectCurrentProjectSlug = createSelector(
 export const selectCurrentAudioPath = createSelector(
 	(state: RootState) => state.project,
 	({ projectSlug }) => `${projectSlug}/${AUDIO_DIR}`
+);
+
+export const selectCurrentTempPath = createSelector(
+	(state: RootState) => state.project,
+	({ projectSlug }) => `${projectSlug}/${TEMP_DIR}`
 );
 
 export const selectAllProjects = createSelector(

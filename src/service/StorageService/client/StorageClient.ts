@@ -7,6 +7,7 @@
  * Right now, TauriFS is implementing this interface.
  */
 import type { InputFileDataT, InputFileMetaDataT } from "../../../redux/slices/DataHubSlice";
+import type { OutputFileDataT, OutputFileMetaDataT } from "../../../redux/slices/ResultSlice";
 
 export interface StorageClient {
 	/**
@@ -22,4 +23,18 @@ export interface StorageClient {
 	 * @param path: Appropriate Path of directory where file is present.
 	 */
 	readInputFileFromStorage(fileMetaData: InputFileMetaDataT, path: string): Promise<InputFileDataT>;
+
+	/**
+	 * Used for reading given image file present in given path in storage.
+	 * @param fileMetaData: Metadata of the file to be read
+	 * @param path: Appropriate Path of directory where file is present.
+	 */
+	readImageFileFromStorage(fileMetaData: OutputFileMetaDataT, path: string): Promise<OutputFileDataT>;
+
+	/**
+	 * This method would read the code file from the path relative to local app dir.
+	 * @param fileMetaData: Metadata of the binary file to be read
+	 * @param path: Relative path from LocalAppDir (should have trailing '/')
+	 */
+	readCodeFileFromStorage(fileMetaData: OutputFileMetaDataT, path: string): Promise<OutputFileDataT>;
 }

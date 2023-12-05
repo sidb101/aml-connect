@@ -10,18 +10,20 @@ import aspinity
 
 
 class WavFileManager:
-    """For managing loading of wav file(s) from disk for passing to the network"""
-
-    def __init__(self):
-        # pylint: disable=W
-        # TODO: implement with a JSON paramater
-        pass
+    """For managing loading of wav file(s) from disk for passing to the aspinity.simulate_network"""
 
     @staticmethod
     def load_wav(file_path: str):
         """loads the wav file at file_path, returns times and samples as np arrays"""
         samples, sample_rate = sf.read(file_path)
         times = np.arange(len(samples)) / sample_rate
+        # reduce from stereo to mono i.e. from (m, n) to (m, )
+        #   m is the number of samples, n is the number of channels
+        if len(samples.shape) == 2:
+            samples = samples[:, 0] # pick channel 0
+        # else if samples.shape is higher than 2-d (m, n, k, ....)
+        elif len(samples.shape) > 2:
+            raise ValueError("Unidentified wav file format")
         return times, samples
 
 
@@ -41,6 +43,7 @@ class Network:
     def __init__(self, network_json: dict):
         """Loads a network from a JSON dict"""
         self.orig_network = aspinity.Network()
+        self.network_id = network_json["id"]
         self.context = {"element_imports": [], "elements": []}
 
         for element_json in network_json["elements"]:
@@ -63,13 +66,17 @@ class Network:
         def get_items(var):
             return var.items()
 
-        env = Environment(loader=FileSystemLoader("templates"))
+        # Get the absolute path of the directory of the current script
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+
+        # Use the absolute path to correctly locate the "templates" directory
+        env = Environment(loader=FileSystemLoader(os.path.join(dir_path, "templates")))
         env.filters["get_type"] = get_type
         env.filters["get_items"] = get_items
         self.context["wav_file_path"] = wavfile_path
         template = env.get_template("network_template.py.j2")
 
-        output_file_path = os.path.join(output_dir, "Network.py")
+        output_file_path = os.path.join(output_dir, f"nw{self.network_id}_Network.py")
 
         # mode='w' overwrites the file if it exists
         with open(output_file_path, "w", encoding="utf-8") as output_file:

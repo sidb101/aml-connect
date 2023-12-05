@@ -7,13 +7,15 @@
 
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
+import { Simulate } from "react-dom/test-utils";
+import load = Simulate.load;
 
 type GeneralState = {
-	isLoading: boolean; //To show spinner when app has to wait for any kind of call
+	loadCount: number; //Count of number of api calls for which the app is waiting. To show spinner when app has to wait for any kind of call
 };
 
 const initialState: GeneralState = {
-	isLoading: false,
+	loadCount: 0,
 };
 
 /**
@@ -31,7 +33,7 @@ export const generalSlice = createSlice({
 		 * @param action: Boolean specifying whether the app has to be marked as loading or not
 		 */
 		markLoading: (state, action: PayloadAction<boolean>) => {
-			state.isLoading = action.payload;
+			action.payload ? state.loadCount++ : state.loadCount--;
 		},
 	},
 });
@@ -40,9 +42,10 @@ export const generalSlice = createSlice({
  * Different App Selectors
  */
 
+//Returns true if the app is waiting for any kind of Loading
 export const selectLoading = createSelector(
 	(state: RootState) => state.general,
-	({ isLoading }) => isLoading
+	({ loadCount }) => loadCount > 0
 );
 
 export const { name: generalSliceKey, reducer: generalReducer, actions: generalActions } = generalSlice;

@@ -1,14 +1,9 @@
 import CreateModelView from "./CreateModelView";
 import React, { useState } from "react";
-import { useAppSelector } from "../../../../hooks";
 import Canvas from "./Canvas/Canvas";
 import type { NodeDataT } from "../../../../redux/slices/ModelCreationSlice";
 import type { Node } from "reactflow";
 import ParameterForm from "./ParameterForm/ParameterForm";
-import remoteService from "../../../../service/RemoteService/RemoteService";
-import { audioFilesMock } from "../../../../tests/mockdata/audioFilesMock";
-import { selectCurrentNetwork } from "../../../../redux/slices/ModelCreationSlice";
-import { selectCurrentProjectSlug } from "../../../../redux/slices/ProjectSlice";
 
 type ModelFormOptions = {
 	showForm: boolean;
@@ -16,9 +11,6 @@ type ModelFormOptions = {
 };
 
 const CreateModel = () => {
-	const projectSlug = useAppSelector(selectCurrentProjectSlug);
-	const currentNetwork = useAppSelector(selectCurrentNetwork);
-
 	const [formOptions, setFormOptions] = useState<ModelFormOptions>({
 		showForm: false,
 	});
@@ -39,12 +31,6 @@ const CreateModel = () => {
 		}
 	};
 
-	const simulateNetwork = () => {
-		remoteService.simulateNetwork(currentNetwork, audioFilesMock[0].metadata).catch((e) => {
-			console.error("Couldn't simulate", e);
-		});
-	};
-
 	return (
 		<>
 			<CreateModelView
@@ -53,11 +39,10 @@ const CreateModel = () => {
 						onElementDoubleClick={(node) => {
 							handleElementDoubleClick(node);
 						}}
-						onSimulate={simulateNetwork}
 					/>
 				}
 				showSideForm={formOptions.showForm}
-				form={<ParameterForm node={formOptions.selectedNode} onSimulate={simulateNetwork} />}
+				form={<ParameterForm node={formOptions.selectedNode} />}
 			/>
 		</>
 	);

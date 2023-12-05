@@ -29,17 +29,9 @@ const ImportDataView = ({ dataType, onLocalImport, onDataTypeChange }: ImportDat
 						value={DataSetT.TRAINING}
 						checked={dataType === DataSetT.TRAINING}
 						onChange={handleOptionChange}
+						data-testid={testIds.trainingRadioBtn}
 					/>
-					Training Dataset
-				</label>
-				<label>
-					<input
-						type="radio"
-						value={DataSetT.VALIDATION}
-						checked={dataType === DataSetT.VALIDATION}
-						onChange={handleOptionChange}
-					/>
-					Validation Dataset
+					Training
 				</label>
 				<label>
 					<input
@@ -47,8 +39,19 @@ const ImportDataView = ({ dataType, onLocalImport, onDataTypeChange }: ImportDat
 						value={DataSetT.TESTING}
 						checked={dataType === DataSetT.TESTING}
 						onChange={handleOptionChange}
+						data-testid={testIds.testingRadioBtn}
 					/>
-					Testing Dataset
+					Testing
+				</label>
+				<label>
+					<input
+						type="radio"
+						value={DataSetT.VALIDATION}
+						checked={dataType === DataSetT.VALIDATION}
+						onChange={handleOptionChange}
+						data-testid={testIds.validationRadioBtn}
+					/>
+					Validation
 				</label>
 			</div>
 

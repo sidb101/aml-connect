@@ -6,7 +6,6 @@ import type { GetFilesRequest } from "./client/bindings/GetFilesRequest";
 import type { GetFilesResponse } from "./client/bindings/GetFilesResponse";
 import {
 	DirectionT,
-	type EdgeDataT,
 	type ElementT,
 	type NetworkT,
 	type NodeDataT,
@@ -22,9 +21,12 @@ import type { Terminal } from "./client/bindings/Terminal";
 import type { Edge, Node } from "reactflow";
 import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
 import type { NetworkVO } from "./client/bindings/NetworkVO";
+import type { Node as Hub } from "./client/bindings/Node";
 import { USER_ID } from "../../constants";
 import type { ShallowProjectDetails } from "redux/slices/ProjectSlice";
 import type { GetProjectsResponse } from "./client/bindings/GetProjectsResponse";
+import { getTerminalType } from "../../pages/modelCreationPage/layouts/CreateModel/Canvas/canvasUtils";
+import type { SimulationResultT } from "../../redux/slices/ResultSlice";
 /* eslint-disable  @typescript-eslint/naming-convention */
 
 /***
@@ -181,14 +183,30 @@ const remoteTransformer = {
 		});
 	},
 
-	createSimulateRequest(network: NetworkT, inputFile: InputFileMetaDataT): SimulateNetworkRequest {
+	createSimulateRequest(
+		network: NetworkT,
+		projectSlug: string,
+		inputFile: InputFileMetaDataT
+	): SimulateNetworkRequest {
 		//TODO: Perform the validations on network
 
 		const terminalMap: Map<string, Terminal[]> = getTerminalMap(network.edges);
+		const hubMap: Map<string, string[]> = getHubMap(network.edges);
+
+		//Create the hubs (Aspinity Nodes)
+		const hubs = new Array<Hub>();
+		for (const [hubId, connectedTerminals] of hubMap) {
+			hubs.push({
+				id: hubId,
+				name: hubId,
+				parent_network_id: network.metaData.id,
+				terminal_ids: connectedTerminals,
+			});
+		}
 
 		const networkToSimulate: NetworkVO = {
-			id: BigInt(network.metaData.id),
-			creator_id: BigInt(USER_ID),
+			id: network.metaData.id,
+			creator_id: USER_ID,
 			name: network.metaData.name,
 			elements: network.nodes.map((node: Node<NodeDataT>) => {
 				//create the params object
@@ -200,7 +218,7 @@ const remoteTransformer = {
 				return {
 					id: node.id,
 					name: node.data.label,
-					parent_network_id: BigInt(network.metaData.id),
+					parent_network_id: network.metaData.id,
 					type_name: actualElementType,
 					element_type_params: params, //consider the given params object as Parameters
 					terminals: terminalMap.get(node.id) || [], //empty terminals in case the node is not connected anything
@@ -210,21 +228,37 @@ const remoteTransformer = {
 					},
 				};
 			}),
-			nodes: network.edges.map((edge: Edge<EdgeDataT>) => ({
-				id: edge.id,
-				name: edge.id,
-				parent_network_id: BigInt(network.metaData.id),
-				terminal_ids: [getTerminalId(edge.source, edge.id), getTerminalId(edge.target, edge.id)], //source and target terminal ids
-			})),
+			nodes: hubs,
 		};
 		return {
 			network: networkToSimulate,
+			project_slug: projectSlug,
 			audio_file_path: inputFile.name,
 		};
 	},
 
-	parseSimulationResponse(simulateNetworkResponse: SimulateNetworkResponse): Record<string, number[]> {
-		return simulateNetworkResponse.response;
+	parseSimulationResponse(simulateNetworkResponse: SimulateNetworkResponse): SimulationResultT {
+		const vizExtension = getFileExtension(simulateNetworkResponse.visualization_path);
+		const codeExtension = getFileExtension(simulateNetworkResponse.py_code_path);
+		return {
+			ranSimulation: true,
+			vizFile: {
+				metadata: {
+					name: simulateNetworkResponse.visualization_path,
+					mediaType: `image/${vizExtension}`,
+					extension: vizExtension,
+				},
+				dataUrl: "",
+			},
+			codeFile: {
+				metadata: {
+					name: simulateNetworkResponse.py_code_path,
+					mediaType: `text/x-python`,
+					extension: codeExtension,
+				},
+				dataUrl: "",
+			},
+		};
 	},
 };
 
@@ -254,47 +288,70 @@ function getEnumValue<T extends Record<string, string>>(myEnum: T, value: string
 }
 
 /**
- * To get the Terminal Id for a given nodeId and edgeId
- * @param nodeId : Node whose part is the current terminal
- * @param edgeId: Edge emanating from the terminal
- */
-function getTerminalId(nodeId: string, edgeId: string) {
-	return nodeId + "|" + edgeId;
-}
-
-/**
  * Would generate a map having List of Terminals for every node.
  * @param edges Representing connection between nodes
  * @return Map having key as nodeId and value as list of Terminals for that nodeId
  */
-function getTerminalMap(edges: Array<Edge<EdgeDataT>>): Map<string, Terminal[]> {
+function getTerminalMap(edges: Edge[]): Map<string, Terminal[]> {
 	const terminalMap: Map<string, Terminal[]> = new Map<string, Terminal[]>();
 
 	edges.forEach((edge) => {
-		//Add a terminal for the source node
-		const sourceNode = edge.source;
-		const sourceTerminals: Terminal[] = terminalMap.get(sourceNode) || new Array<Terminal>();
-		sourceTerminals.push({
-			id: getTerminalId(sourceNode, edge.id),
-			parent_element_id: sourceNode,
-			type_name: edge.data?.sourceTerminalType || "",
-			node_name: edge.id,
-		});
-		terminalMap.set(sourceNode, sourceTerminals);
+		if (edge.sourceHandle && edge.targetHandle) {
+			//Add a terminal for the source node
+			const sourceNode = edge.source;
+			const sourceTerminals: Terminal[] = terminalMap.get(sourceNode) || new Array<Terminal>();
+			//it would act as output terminal, and since multiple edges can come out of output terminal, duplicate check is needed
+			const sourceTerminalPresent = sourceTerminals.some((terminal) => terminal.id === edge.sourceHandle);
+			if (!sourceTerminalPresent) {
+				sourceTerminals.push({
+					id: edge.sourceHandle,
+					parent_element_id: sourceNode,
+					type_name: getTerminalType(edge.sourceHandle),
+					node_name: edge.sourceHandle,
+				});
+				terminalMap.set(sourceNode, sourceTerminals);
+			}
 
-		//Add a terminal for the target node
-		const targetNode = edge.target;
-		const targetTerminals: Terminal[] = terminalMap.get(targetNode) || new Array<Terminal>();
-		targetTerminals.push({
-			id: getTerminalId(targetNode, edge.id),
-			parent_element_id: targetNode,
-			type_name: edge.data?.targetTerminalType || "",
-			node_name: edge.id,
-		});
-		terminalMap.set(targetNode, targetTerminals);
+			//Add a terminal for the target node
+			const targetNode = edge.target;
+			const targetTerminals: Terminal[] = terminalMap.get(targetNode) || new Array<Terminal>();
+			//Since it would act as input terminal, there would never be duplicate terminals from different edges, so not duplicate check
+			targetTerminals.push({
+				id: edge.targetHandle,
+				parent_element_id: targetNode,
+				type_name: getTerminalType(edge.targetHandle),
+				node_name: edge.sourceHandle,
+			});
+			terminalMap.set(targetNode, targetTerminals);
+		}
 	});
-
 	return terminalMap;
+}
+
+/**
+ * Would generate a map having TerminalIds for given output terminal id.
+ * @param edges Representing connection between nodes
+ * @return Map having key as hubId (outputTerminalId) and value as List of handleIds connected to that hub
+ */
+function getHubMap(edges: Edge[]): Map<string, string[]> {
+	const hubMap: Map<string, string[]> = new Map<string, string[]>();
+
+	edges.forEach((edge) => {
+		if (edge.sourceHandle && edge.targetHandle) {
+			//Add a terminal for the source node
+			const hubId = edge.sourceHandle;
+			const connectedTerminalIds: string[] = hubMap.get(hubId) || new Array<string>();
+			//it would act as output terminal, and since multiple edges can come out of output terminal, duplicate check is needed
+			const hubIdPresent = connectedTerminalIds.some((terminalId) => terminalId === hubId);
+			if (!hubIdPresent) {
+				connectedTerminalIds.push(hubId);
+			}
+			//Since it would act as input terminal, there would never be duplicate terminals from different edges, so not duplicate check
+			connectedTerminalIds.push(edge.targetHandle);
+			hubMap.set(hubId, connectedTerminalIds);
+		}
+	});
+	return hubMap;
 }
 
 export default remoteTransformer;

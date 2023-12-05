@@ -128,11 +128,16 @@ export const testIds = {
 	contentHeading: "content-heading",
 	errorPage: "error-page",
 
+	//Data Setup
 	accordion: "accordion-test",
+	accordionHeaderContainer: "accordion-head-container",
 	accordionHeader: "accordion-head",
 	accordionBody: "accordion-body",
 	audioTableBody: "audio-table-body",
 
+	trainingRadioBtn: "training-radio-btn",
+	testingRadioBtn: "testing-radio-btn",
+	validationRadioBtn: "validation-radio-btn",
 	importFilesBtn: "import-files-btn",
 	importModalBody: "import-modal-body",
 	browsePcLink: "browse-pc-link",

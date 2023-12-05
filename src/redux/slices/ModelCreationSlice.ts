@@ -6,7 +6,7 @@
  */
 import { createSelector, createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { type RootState } from "../store";
-import type { Connection, Edge, EdgeChange, Node, NodeAddChange, NodeChange } from "reactflow";
+import type { Edge, EdgeChange, Node, NodeChange } from "reactflow";
 import { addEdge, applyEdgeChanges, applyNodeChanges } from "reactflow";
 import { mockNetwork, mockNetworkMetaData } from "../../tests/mockdata/networkMock";
 
@@ -93,7 +93,7 @@ export type NetworkMetaDataT = {
 export type NetworkT = {
 	metaData: NetworkMetaDataT;
 	nodes: Array<Node<NodeDataT>>;
-	edges: Array<Edge<EdgeDataT>>;
+	edges: Edge[];
 	params: Record<string, Record<string, string>>; //<NodeId -> Parameter Object having key value>
 };
 
@@ -103,14 +103,6 @@ export type NetworkT = {
 export type NodeDataT = {
 	elementType: string;
 	label: string;
-};
-
-/**
- * Type to describe data to be stored for a particular edge
- */
-export type EdgeDataT = {
-	sourceTerminalType: string;
-	targetTerminalType: string;
 };
 
 type ModelCreationState = {
@@ -155,8 +147,8 @@ export const modelCreationSlice = createSlice({
 		 * @param state Model Creation State
 		 * @param action The action would have the connection needed to be applied
 		 */
-		connectNodes: (state, action: PayloadAction<{ connection: Connection }>) => {
-			state.selectedNetwork.edges = addEdge(action.payload.connection, state.selectedNetwork.edges);
+		connectNodes: (state, action: PayloadAction<{ edge: Edge }>) => {
+			state.selectedNetwork.edges = addEdge(action.payload.edge, state.selectedNetwork.edges);
 		},
 
 		/**
@@ -187,6 +179,15 @@ export const modelCreationSlice = createSlice({
 
 		setParameters: (state, action: PayloadAction<{ nodeId: string; params: Record<string, string> }>) => {
 			state.selectedNetwork.params[action.payload.nodeId] = action.payload.params;
+		},
+
+		/**
+		 * To reset the state when the project is closed.
+		 * @param state: Data hub State
+		 */
+		resetState: (state) => {
+			state.selectedNetwork = initialState.selectedNetwork;
+			state.allNetworks = initialState.allNetworks;
 		},
 	},
 });
