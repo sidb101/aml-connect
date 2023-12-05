@@ -48,18 +48,17 @@ const Toolbar = ({ handleAddElement, allElements }: ToolbarProps) => {
 						Add
 					</button>
 				</div>
-				{ showElementMenu && 
+				{showElementMenu && (
 					<div className={`Toolbar_sideNodeMenuContainer`}>
-							<ElementMenu
-								elements={allElements}
-								onMenuItemClick={addElementClick}
-								onClose={() => {
-									setShowElementMenu(false);
-								}}
-							/>
-						
+						<ElementMenu
+							elements={allElements}
+							onMenuItemClick={addElementClick}
+							onClose={() => {
+								setShowElementMenu(false);
+							}}
+						/>
 					</div>
-				}
+				)}
 			</div>
 		</>
 	);
