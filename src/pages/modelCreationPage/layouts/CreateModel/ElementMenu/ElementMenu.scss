@@ -1,7 +1,16 @@
 @use "../../../../../global";
 
 .ElementMenu_container {
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	background-color: global.$color-white;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	overflow-y: auto;
+	overflow-x: hidden;
+	border-radius: 5px;
+}
+
+.ElementMenu_trackY {
+	width: 5px !important;
 }

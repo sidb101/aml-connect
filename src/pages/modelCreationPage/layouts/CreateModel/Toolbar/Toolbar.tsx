@@ -39,30 +39,27 @@ const Toolbar = ({ handleAddElement, allElements }: ToolbarProps) => {
 	return (
 		<>
 			<div className={`Toolbar_container`} ref={toolBarRef}>
-				<div className={`Toolbar_sideContainer`}>
-					<div className={`Toolbar_sideBtnContainer`}>
-						<button
-							onClick={() => {
-								setShowElementMenu((s) => !s);
-							}}
-						>
-							Add
-						</button>
+				<div className={`Toolbar_sideBtnContainer`}>
+					<button
+						onClick={() => {
+							setShowElementMenu((s) => !s);
+						}}
+					>
+						Add
+					</button>
+				</div>
+				{ showElementMenu && 
+					<div className={`Toolbar_sideNodeMenuContainer`}>
+							<ElementMenu
+								elements={allElements}
+								onMenuItemClick={addElementClick}
+								onClose={() => {
+									setShowElementMenu(false);
+								}}
+							/>
+						
 					</div>
-				</div>
-				{/* <div className={`Toolbar_sideContainer`}> */}
-				<div className={`Toolbar_sideNodeMenuContainer`}>
-					{showElementMenu && (
-						<ElementMenu
-							elements={allElements}
-							onMenuItemClick={addElementClick}
-							onClose={() => {
-								setShowElementMenu(false);
-							}}
-						/>
-					)}
-				</div>
-				{/* </div> */}
+				}
 			</div>
 		</>
 	);
