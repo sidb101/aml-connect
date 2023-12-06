@@ -11,14 +11,10 @@ type CheckboxProps = {
 	checked?: boolean;
 };
 
-function Checkbox(props : CheckboxProps) {
+function Checkbox(props: CheckboxProps) {
 	return (
 		<label className={"Checkbox_label"}>
-			<input
-				{...props}
-				type="checkbox"
-				className={`${props.className}`}
-			/>
+			<input {...props} type="checkbox" className={props.className} />
 			<span className={`light-grey-panel`}></span>
 		</label>
 	);

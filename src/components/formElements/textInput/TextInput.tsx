@@ -14,12 +14,8 @@ type InputProps = {
 	step?: string;
 };
 
-function TextInput(props : InputProps) {
-	return (
-		<input {...props}
-			className={`regular-text  light-grey-panel ${props.className}`}
-		/>
-	);
+function TextInput(props: InputProps) {
+	return <input {...props} className={`regular-text  light-grey-panel ${props.className || ""}`} />;
 }
 
 export default TextInput;

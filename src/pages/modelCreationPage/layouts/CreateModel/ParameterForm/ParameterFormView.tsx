@@ -77,18 +77,21 @@ function ParameterFormView({
 						}}
 						className={`general-padding`}
 						min={`${
-						(param.parameterType === ParamTypeT.NUMBER 
-							&& param.rangeType === RangeT.INTERVAL
-							&& param.range?.length == 2
-						 	&& param.range[0] != null) ? param.range[0] : undefined
-						 }`
-						 }
-						 max={`${
-						 	(param.parameterType === ParamTypeT.NUMBER 
-						 	&& param.rangeType === RangeT.INTERVAL
-						 	&& param.range?.length == 2
-						 	&& param.range[1] != null) ? param.range[1] : undefined
-						 }`}
+							param.parameterType === ParamTypeT.NUMBER &&
+							param.rangeType === RangeT.INTERVAL &&
+							param.range?.length === 2 &&
+							param.range[0] !== null
+								? param.range[0]
+								: ""
+						}`}
+						max={`${
+							param.parameterType === ParamTypeT.NUMBER &&
+							param.rangeType === RangeT.INTERVAL &&
+							param.range?.length === 2 &&
+							param.range[1] !== null
+								? param.range[1]
+								: ""
+						}`}
 						//TODO: Figure out the required step size dynamically from the corresponding component
 						step="0.0001"
 					/>
@@ -140,7 +143,7 @@ function ParameterFormView({
 						<FontAwesomeIcon
 							icon={faTimes}
 							onClick={() => {
-								onClose?.()
+								onClose?.();
 								// if (onClose) {
 								// 	onClose();
 								// }
@@ -148,28 +151,27 @@ function ParameterFormView({
 						/>
 					</div>
 					<br />
-					<form onSubmit={() => {
+					<form
+						onSubmit={() => {
 							onParameterSave?.(paramData.params);
-							onClose?.()
+							onClose?.();
 							// if (onClose) {
 							// 	onClose();
 							// }
-						}}>
-					{Object.entries(paramData.parameterInfo).map(([parameterName, val], key) => (
-						<div key={key} className={`ParameterForm_paramContainer`}>
-							<label title={val.description}>
-								{parameterName} {val.unit ? `(${val.unit})` : ""}:
-							</label>{" "}
-							{getInput(parameterName, val)}
-						</div>
-					))}
-					<button
-						className={`btn btn-outline`}
-						type="submit"
+						}}
 					>
-						{" "}
-						Submit{" "}
-					</button>
+						{Object.entries(paramData.parameterInfo).map(([parameterName, val], key) => (
+							<div key={key} className={`ParameterForm_paramContainer`}>
+								<label title={val.description}>
+									{parameterName} {val.unit ? `(${val.unit})` : ""}:
+								</label>{" "}
+								{getInput(parameterName, val)}
+							</div>
+						))}
+						<button className={`btn btn-outline`} type="submit">
+							{" "}
+							Submit{" "}
+						</button>
 					</form>
 				</div>
 			) : (
