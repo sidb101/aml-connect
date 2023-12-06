@@ -4,7 +4,7 @@ import type { ElementT } from "../../../../../redux/slices/ModelCreationSlice";
 import ElementMenuItem from "./ElementMenuItem";
 
 type ElementMenuProps = {
-	childRef: React.RefObject<HTMLDivElement>
+	childRef: React.RefObject<HTMLDivElement>;
 	elements: ElementT[];
 	onMenuItemClick: (element: ElementT) => void;
 	onClose: () => void;
@@ -12,10 +12,7 @@ type ElementMenuProps = {
 
 const ElementMenu: React.FC<ElementMenuProps> = ({ elements, onMenuItemClick, childRef, onClose }) => {
 	return (
-		<div
-			ref={childRef}
-			className={`ElementMenu_container`}
-		>
+		<div ref={childRef} className={`ElementMenu_container`}>
 			{elements.map((element, index) => (
 				<ElementMenuItem key={index} element={element} onItemClick={onMenuItemClick} />
 			))}

@@ -42,8 +42,8 @@ const Toolbar = ({ handleAddElement, allElements }: ToolbarProps) => {
 				<div className={`Toolbar_sideBtnContainer`}>
 					<button
 						onClick={(e) => {
-							e.preventDefault()
-							e.stopPropagation()
+							e.preventDefault();
+							e.stopPropagation();
 							setShowElementMenu((s) => !s);
 						}}
 					>
@@ -57,7 +57,7 @@ const Toolbar = ({ handleAddElement, allElements }: ToolbarProps) => {
 							elements={allElements}
 							onMenuItemClick={addElementClick}
 							onClose={() => {
-								console.log("OnClopaw")
+								console.log("OnClopaw");
 								setShowElementMenu(false);
 							}}
 						/>
