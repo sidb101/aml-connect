@@ -11,7 +11,7 @@ function Select({ onChange, value, className = "", children }: PropsWithChildren
 		<select
 			onChange={onChange}
 			value={value}
-			className={`regular-text light-grey-text light-grey-panel ${className}`}
+			className={`regular-text light-grey-panel ${className}`}
 		>
 			{children}
 		</select>

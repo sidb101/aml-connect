@@ -9,19 +9,15 @@ type InputProps = {
 	required?: boolean;
 	className?: string;
 	testId?: string;
+	min?: string;
+	max?: string;
+	step?: string;
 };
 
-function TextInput({ type, name, placeholder, value, onChange, required, className = "", testId }: InputProps) {
+function TextInput(props : InputProps) {
 	return (
-		<input
-			type={type}
-			name={name}
-			placeholder={placeholder}
-			value={value}
-			onChange={onChange}
-			{...(required ? { required: true } : {})}
-			className={`regular-text light-grey-text light-grey-panel ${className}`}
-			data-testid={testId}
+		<input {...props}
+			className={`regular-text  light-grey-panel ${props.className}`}
 		/>
 	);
 }

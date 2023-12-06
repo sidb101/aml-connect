@@ -67,7 +67,7 @@ function ProjectForm({ heading, projectName, projectDescription, buttonText }: P
 							placeholder={descriptionPlaceholder}
 							value={description}
 							onChange={handleDescriptionChange}
-							className={`regular-text light-grey-text light-grey-panel`}
+							className={`regular-text light-grey-panel`}
 							data-testid={testIds.projectDescriptionInput}
 						/>
 					</div>

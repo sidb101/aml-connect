@@ -11,18 +11,13 @@ type CheckboxProps = {
 	checked?: boolean;
 };
 
-function Checkbox({ name, value, onChange, required, className = "", testId, checked }: CheckboxProps) {
+function Checkbox(props : CheckboxProps) {
 	return (
 		<label className={"Checkbox_label"}>
 			<input
+				{...props}
 				type="checkbox"
-				checked={checked}
-				name={name}
-				value={value}
-				onChange={onChange}
-				{...(required ? { required: true } : {})}
-				className={`${className}`}
-				data-testid={testId}
+				className={`${props.className}`}
 			/>
 			<span className={`light-grey-panel`}></span>
 		</label>
