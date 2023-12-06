@@ -21,7 +21,7 @@ class WavFileManager:
         #   m is the number of samples, n is the number of channels
         if len(samples.shape) == 2:
             samples = samples[:, 0] # pick channel 0
-        # else if samples.shape is higher than 2-d (m, n, k, ....) 
+        # else if samples.shape is higher than 2-d (m, n, k, ....)
         elif len(samples.shape) > 2:
             raise ValueError("Unidentified wav file format")
         return times, samples

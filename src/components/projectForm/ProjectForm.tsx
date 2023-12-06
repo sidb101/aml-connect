@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Form, useNavigation } from "react-router-dom";
 import DisplayPanel from "../displayPanel/DisplayPanel";
 import { testIds } from "../../tests/test-utils";
+import TextInput from "../formElements/textInput/TextInput";
 
 export type ProjectFormT = {
 	projectName: string;
@@ -45,14 +46,14 @@ function ProjectForm({ heading, projectName, projectDescription, buttonText }: P
 						<label className={`green-text section-heading-text`} htmlFor="projectName">
 							Project Name
 						</label>
-						<input
+						<TextInput
 							type="text"
 							name="projectName"
 							placeholder="Enter the project name here."
 							value={name}
 							onChange={handleNameChange}
-							required
-							className={`regular-text light-grey-text light-grey-panel`}
+							required={true}
+							className={`panel-padding`}
 							data-testid={testIds.projectNameInput}
 						/>
 					</div>

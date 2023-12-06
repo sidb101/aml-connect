@@ -7,9 +7,10 @@ import { useAppDispatch, useAppSelector } from "../../../../../hooks";
 type ParameterFormProps = {
 	node?: Node<NodeDataT>;
 	onSimulate?: () => void;
+	onClose?: () => void;
 };
 
-const ParameterForm = ({ node, onSimulate }: ParameterFormProps) => {
+const ParameterForm = ({ node, onSimulate, onClose }: ParameterFormProps) => {
 	if (node) {
 		const dispatch = useAppDispatch();
 
@@ -33,6 +34,7 @@ const ParameterForm = ({ node, onSimulate }: ParameterFormProps) => {
 				elementType={node.data.elementType}
 				onParameterSave={handleParameterSave}
 				onSimulate={node.data.elementType === "Sink" ? onSimulate : undefined}
+				onClose={onClose}
 			/>
 		) : (
 			<></>
