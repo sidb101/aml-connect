@@ -89,7 +89,7 @@ function ParameterFormView({
 						 	&& param.range?.length == 2
 						 	&& param.range[1] != null) ? param.range[1] : undefined
 						 }`}
-
+						//TODO: Figure out the required step size dynamically from the corresponding component
 						step="0.0001"
 					/>
 				);

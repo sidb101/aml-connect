@@ -20,7 +20,7 @@
 .ElementMenuItem_hoverDescription {
 	width: 50%;
 	padding: global.$panel-padding;
-	background-color: white;
+	background-color: global.$color-white;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	overflow-y: auto;
 }
@@ -30,5 +30,5 @@
 	left: -20px;
 	border-top: 10px solid transparent;
 	border-bottom: 10px solid transparent;
-	border-right: 20px solid white;
+	border-right: 20px solid global.$color-white;
 }
