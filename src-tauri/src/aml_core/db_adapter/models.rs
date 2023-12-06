@@ -5,7 +5,7 @@ use crate::aml_core::date_time::AMLDateTime;
 
 // use crate::aml_core::date_time::DateTime;
 
-#[derive(Queryable, Selectable, Debug, Serialize, Deserialize, Clone)]
+#[derive(Queryable, Selectable, Identifiable, Debug, Serialize, Deserialize, Clone)]
 #[diesel(table_name = crate::aml_core::db_adapter::schema::projects)]
 #[diesel(check_for_backend(diesel::sqlite::Sqlite))]
 pub struct Project {
