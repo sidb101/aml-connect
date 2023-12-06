@@ -68,6 +68,14 @@ export const resultSlice = createSlice({
 		setSimulationResult: (state, action: PayloadAction<{ simulationResult: SimulationResultT }>) => {
 			state.simulationResult = action.payload.simulationResult;
 		},
+
+		/**
+		 * To reset the state when the project is closed.
+		 * @param state: Data hub State
+		 */
+		resetState: (state) => {
+			state.simulationResult = initialState.simulationResult;
+		},
 	},
 });
 

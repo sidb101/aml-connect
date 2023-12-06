@@ -1,12 +1,18 @@
 import "./ParameterFormView.scss";
 import React, { type ReactNode, useEffect, useState } from "react";
 import { type ParameterT, ParamTypeT, UIComponentT } from "../../../../../redux/slices/ModelCreationSlice";
+import Checkbox from "../../../../../components/formElements/checkbox/Checkbox";
+import Select from "../../../../../components/formElements/select/Select";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons/faTimes";
+import TextInput from "../../../../../components/formElements/textInput/TextInput";
 
 type ParameterFormViewProps = {
 	elementType?: string;
 	initialParamData: ParameterDataT;
 	onParameterSave?: (params: Record<string, string>) => void;
 	onSimulate?: () => void;
+	onClose?: () => void;
 };
 
 type ParameterDataT = {
@@ -14,7 +20,13 @@ type ParameterDataT = {
 	params: Record<string, string>; //would be determined on runtime
 };
 
-function ParameterFormView({ initialParamData, elementType, onParameterSave, onSimulate }: ParameterFormViewProps) {
+function ParameterFormView({
+	initialParamData,
+	elementType,
+	onParameterSave,
+	onSimulate,
+	onClose,
+}: ParameterFormViewProps) {
 	const [paramData, setParamData] = useState<ParameterDataT>({
 		parameterInfo: initialParamData.parameterInfo,
 		params: initialParamData.params,
@@ -57,19 +69,20 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 		switch (param.uiComponent) {
 			case UIComponentT.TEXTBOX:
 				return (
-					<input
+					<TextInput
 						type={`${param.parameterType === ParamTypeT.NUMBER ? "number" : "text"}`}
 						value={params[paramName] || ""}
 						onChange={(e) => {
 							onTextBoxInputChange(e, paramName);
 						}}
+						className={`general-padding`}
 					/>
 				);
 
 			case UIComponentT.CHECKBOX:
 				return (
-					<input
-						type={"checkbox"}
+					<Checkbox
+						className={`general-padding`}
 						checked={JSON.parse(params[paramName]) as boolean}
 						onChange={(e) => {
 							onCheckBoxInputChange(e, paramName);
@@ -78,15 +91,16 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 				);
 			case UIComponentT.DROPDOWN:
 				return (
-					<select
+					<Select
 						onChange={(e) => {
 							onSelectInputChange(e, paramName);
 						}}
 						value={params[paramName]}
+						className={`general-padding`}
 					>
 						{param.range?.map((option, key) =>
 							option ? (
-								<option value={option} key={key}>
+								<option value={option} key={key} className={``}>
 									{" "}
 									{option}{" "}
 								</option>
@@ -94,7 +108,7 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 								<></>
 							)
 						)}
-					</select>
+					</Select>
 				);
 
 			default:
@@ -106,21 +120,33 @@ function ParameterFormView({ initialParamData, elementType, onParameterSave, onS
 		<>
 			{elementType ? (
 				<div className={`white-panel ParameterForm_container`}>
-					<div className={`section-subheading-text`}>{elementType} Parameters</div>
+					<div className={`section-subheading-text ParameterForm_headingContainer`}>
+						<div>{elementType} Parameters</div>
+						<FontAwesomeIcon
+							icon={faTimes}
+							onClick={() => {
+								if (onClose) {
+									onClose();
+								}
+							}}
+						/>
+					</div>
 					<br />
 					{Object.entries(paramData.parameterInfo).map(([parameterName, val], key) => (
-						<div key={key}>
+						<div key={key} className={`ParameterForm_paramContainer`}>
 							<label title={val.description}>
 								{parameterName} {val.unit ? `(${val.unit})` : ""}:
 							</label>{" "}
 							{getInput(parameterName, val)}
-							<br />
-							<br />
 						</div>
 					))}
 					<button
+						className={`btn btn-outline`}
 						onClick={() => {
 							onParameterSave?.(paramData.params);
+							if (onClose) {
+								onClose();
+							}
 						}}
 					>
 						{" "}
