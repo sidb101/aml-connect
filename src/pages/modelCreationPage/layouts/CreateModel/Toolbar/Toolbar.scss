@@ -40,6 +40,8 @@
 }
 
 .Toolbar_sideNodeMenuContainer {
-	height: 60%;
+	height: 100%;
 	z-index: 6; // 1 more than the canvas controls
+	display: flex;
+	align-items: center;
 }

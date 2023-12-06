@@ -11,14 +11,14 @@ type ToolbarProps = {
 const Toolbar = ({ handleAddElement, allElements }: ToolbarProps) => {
 	const [showElementMenu, setShowElementMenu] = useState<boolean>(false);
 
-	const toolBarRef = useRef<HTMLDivElement>(null);
+	const childRef = useRef<HTMLDivElement>(null);
 
 	/**
 	 * To close toolbar when clicked outside
 	 */
 	useEffect(() => {
 		const handleClickOutside = (event: any) => {
-			if (toolBarRef.current && !toolBarRef.current.contains(event.target as Node)) {
+			if (childRef.current && !childRef.current.contains(event.target as Node)) {
 				setShowElementMenu(false);
 			}
 		};
@@ -38,10 +38,12 @@ const Toolbar = ({ handleAddElement, allElements }: ToolbarProps) => {
 
 	return (
 		<>
-			<div className={`Toolbar_container`} ref={toolBarRef}>
+			<div className={`Toolbar_container`}>
 				<div className={`Toolbar_sideBtnContainer`}>
 					<button
-						onClick={() => {
+						onClick={(e) => {
+							e.preventDefault()
+							e.stopPropagation()
 							setShowElementMenu((s) => !s);
 						}}
 					>
@@ -51,9 +53,11 @@ const Toolbar = ({ handleAddElement, allElements }: ToolbarProps) => {
 				{showElementMenu && (
 					<div className={`Toolbar_sideNodeMenuContainer`}>
 						<ElementMenu
+							childRef={childRef}
 							elements={allElements}
 							onMenuItemClick={addElementClick}
 							onClose={() => {
+								console.log("OnClopaw")
 								setShowElementMenu(false);
 							}}
 						/>
