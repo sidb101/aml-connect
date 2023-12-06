@@ -9,6 +9,9 @@ import type { SimulateNetworkRequest } from "./client/bindings/SimulateNetworkRe
 import type { ShallowProjectDetails } from "../../redux/slices/ProjectSlice";
 import type { SimulateNetworkResponse } from "./client/bindings/SimulateNetworkResponse";
 import type { SimulationResultT } from "../../redux/slices/ResultSlice";
+import type { DeleteProjectRequest } from "./client/bindings/DeleteProjectRequest";
+import type { CreateProjectRequest } from "./client/bindings/CreateProjectRequest";
+import type { UpdateProjectRequest } from "./client/bindings/UpdateProjectRequest";
 
 /**
  * Object responsible for Transforming the UI Data to required Backend DTOs and then call the Backend using
@@ -47,48 +50,42 @@ const remoteService = {
 		return inputFilesMetaData;
 	},
 
-	// TODO: Update once backend is implemented
-	createProject: async (
-		length: number,
-		projectName: string,
-		projectDescription?: string
-	): Promise<ShallowProjectDetails> => {
-		const newProject: ShallowProjectDetails = {
-			id: length + 1,
-			slug: `new_project_${length + 1}`,
-			name: projectName,
-			description: projectDescription,
-		};
+	createProject: async (projectName: string, projectDescription?: string): Promise<ShallowProjectDetails> => {
+		const createProjectRequest: CreateProjectRequest = remoteTransformer.createProjectRequest(
+			projectName,
+			projectDescription
+		);
 
-		return Promise.resolve(newProject);
+		const createProjectResponse = await remoteClient.createProject(createProjectRequest);
+
+		return remoteTransformer.parseCreateProjectResponse(createProjectResponse);
 	},
 
-	// TODO: Update once backend is implemented
 	updateProject: async (
-		projectSlug: string,
+		projectId: number,
 		projectName: string,
 		projectDescription?: string
 	): Promise<ShallowProjectDetails> => {
-		// TODO: Remove when backend is implemented
-		const dummyUpdatedProject: ShallowProjectDetails = {
-			id: -1, // TODO: Use the id provided by the backend
-			slug: projectSlug,
-			name: projectName,
-			description: projectDescription,
-		};
+		const updateProjectRequest: UpdateProjectRequest = remoteTransformer.createUpdateProjectRequest(
+			projectId,
+			projectName,
+			projectDescription
+		);
 
-		return Promise.resolve(dummyUpdatedProject);
-	},
+		const updateProjectResponse = await remoteClient.updateProject(updateProjectRequest);
 
-	// TODO: Update once backend is implemented
-	deleteProject: async (projectSlug: string): Promise<void> => {
-		// TODO: Delete the console.log(), only here as ESLINT doesn't like empty functions
-		console.log("ESLINT doesn't like empty functions :(");
+		return remoteTransformer.parseUpdateProjectResponse(updateProjectResponse);
 	},
 
 	getAllProjects: async (): Promise<ShallowProjectDetails[]> => {
 		const getProjectsResponse = await remoteClient.getAllProjects();
 		return remoteTransformer.parseGetProjectsResponse(getProjectsResponse);
+	},
+
+	deleteProject: async (projectId: number): Promise<void> => {
+		const deleteProjectRequest: DeleteProjectRequest = remoteTransformer.createDeleteProjectRequest(projectId);
+
+		const deleteProjectResponse = await remoteClient.deleteProject(deleteProjectRequest);
 	},
 
 	getAllElements: async (): Promise<Record<string, ElementT>> => {

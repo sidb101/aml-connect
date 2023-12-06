@@ -27,6 +27,11 @@ import type { ShallowProjectDetails } from "redux/slices/ProjectSlice";
 import type { GetProjectsResponse } from "./client/bindings/GetProjectsResponse";
 import { getTerminalType } from "../../pages/modelCreationPage/layouts/CreateModel/Canvas/canvasUtils";
 import type { SimulationResultT } from "../../redux/slices/ResultSlice";
+import type { DeleteProjectRequest } from "./client/bindings/DeleteProjectRequest";
+import type { CreateProjectRequest } from "./client/bindings/CreateProjectRequest";
+import type { CreateProjectResponse } from "./client/bindings/CreateProjectResponse";
+import type { UpdateProjectRequest } from "./client/bindings/UpdateProjectRequest";
+import type { UpdateProjectResponse } from "./client/bindings/UpdateProjectResponse";
 /* eslint-disable  @typescript-eslint/naming-convention */
 
 /***
@@ -170,6 +175,24 @@ const remoteTransformer = {
 		return allElements;
 	},
 
+	createProjectRequest(projectName: string, projectDescription?: string): CreateProjectRequest {
+		return {
+			name: projectName,
+			description: projectDescription ? projectDescription : null,
+		};
+	},
+
+	parseCreateProjectResponse(createProjectResponse: CreateProjectResponse): ShallowProjectDetails {
+		const projectDetails = createProjectResponse.project;
+
+		return {
+			id: projectDetails.id,
+			slug: projectDetails.slug,
+			name: projectDetails.name,
+			description: projectDetails.description ? projectDetails.description : undefined,
+		};
+	},
+
 	parseGetProjectsResponse(getProjectsResponse: GetProjectsResponse): ShallowProjectDetails[] {
 		const { projects } = getProjectsResponse;
 
@@ -181,6 +204,35 @@ const remoteTransformer = {
 				description: project.description === null ? undefined : project.description,
 			};
 		});
+	},
+
+	createUpdateProjectRequest(
+		projectId: number,
+		projectName: string,
+		projectDescription?: string
+	): UpdateProjectRequest {
+		return {
+			id: projectId,
+			name: projectName,
+			description: projectDescription ? projectDescription : null,
+		};
+	},
+
+	parseUpdateProjectResponse(updateProjectResponse: UpdateProjectResponse): ShallowProjectDetails {
+		const projectDetails = updateProjectResponse.project;
+
+		return {
+			id: projectDetails.id,
+			slug: projectDetails.slug,
+			name: projectDetails.name,
+			description: projectDetails.description ? projectDetails.description : undefined,
+		};
+	},
+
+	createDeleteProjectRequest(projectId: number): DeleteProjectRequest {
+		return {
+			id: projectId,
+		};
 	},
 
 	createSimulateRequest(

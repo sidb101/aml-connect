@@ -25,7 +25,7 @@ function LandingView({ projects }: LandingPageViewProps) {
 					route: projectOverviewRoute(project.slug),
 					deletable: {
 						showCross: true,
-						projectSlug: project.slug,
+						projectId: project.id,
 					},
 				};
 

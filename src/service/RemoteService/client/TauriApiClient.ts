@@ -11,7 +11,13 @@ import type { GetFilesResponse } from "./bindings/GetFilesResponse";
 import type { SimulateNetworkRequest } from "./bindings/SimulateNetworkRequest";
 import type { SimulateNetworkResponse } from "./bindings/SimulateNetworkResponse";
 import type { ElementMetadata } from "./bindings/ElementMetadata";
+import type { CreateProjectRequest } from "./bindings/CreateProjectRequest";
+import type { CreateProjectResponse } from "./bindings/CreateProjectResponse";
 import type { GetProjectsResponse } from "./bindings/GetProjectsResponse";
+import type { UpdateProjectRequest } from "./bindings/UpdateProjectRequest";
+import type { UpdateProjectResponse } from "./bindings/UpdateProjectResponse";
+import type { DeleteProjectRequest } from "./bindings/DeleteProjectRequest";
+import type { DeleteProjectResponse } from "./bindings/DeleteProjectResponse";
 
 class TauriApiClient implements RemoteClient {
 	/**
@@ -61,11 +67,38 @@ class TauriApiClient implements RemoteClient {
 		}
 	}
 
+	async createProject(createProjectRequest: CreateProjectRequest): Promise<CreateProjectResponse> {
+		try {
+			return await invoke("create_project", { req: createProjectRequest });
+		} catch (e) {
+			console.error("Couldn't create project in the backend", e);
+			return Promise.reject(e);
+		}
+	}
+
 	async getAllProjects(): Promise<GetProjectsResponse> {
 		try {
 			return await invoke("get_projects");
 		} catch (e) {
 			console.error("Couldn't get all projets from backend", e);
+			return Promise.reject(e);
+		}
+	}
+
+	async updateProject(updateProjectRequest: UpdateProjectRequest): Promise<UpdateProjectResponse> {
+		try {
+			return await invoke("update_project", { req: updateProjectRequest });
+		} catch (e) {
+			console.error("Couldn't get update the project in the backend", e);
+			return Promise.reject(e);
+		}
+	}
+
+	async deleteProject(deleteProjectRequest: DeleteProjectRequest): Promise<DeleteProjectResponse> {
+		try {
+			return await invoke("delete_project", { req: deleteProjectRequest });
+		} catch (e) {
+			console.error("Couldn't delete project from the backend", e);
 			return Promise.reject(e);
 		}
 	}

@@ -17,6 +17,7 @@ export type ShallowProjectDetails = {
 
 type ProjectState = {
 	projectStatus: ProjectStatus;
+	projectId: number;
 	projectSlug: string;
 	projectName: string;
 	projectDescription?: string;
@@ -33,6 +34,7 @@ export enum ProjectStatus {
 
 const initialState: ProjectState = {
 	projectStatus: ProjectStatus.NOT_OPEN,
+	projectId: -1,
 	projectSlug: "",
 	projectName: "",
 	allProjects: [],
@@ -57,6 +59,7 @@ export const projectSlice = createSlice({
 				const projectToOpen = state.allProjects.find((project) => project.slug === action.payload);
 
 				if (projectToOpen) {
+					state.projectId = projectToOpen.id;
 					state.projectStatus = ProjectStatus.OPEN;
 					state.projectSlug = action.payload;
 					state.projectName = projectToOpen.name;
@@ -92,6 +95,7 @@ export const projectSlice = createSlice({
 		 */
 		closeProject: (state) => {
 			state.projectStatus = ProjectStatus.NOT_OPEN;
+			state.projectId = -1;
 			state.projectSlug = "";
 			state.projectName = "";
 			state.projectDescription = undefined;
@@ -110,7 +114,6 @@ export const projectSlice = createSlice({
 		updateProject: (state, action: PayloadAction<ShallowProjectDetails>) => {
 			state.projectName = action.payload.name;
 			state.projectDescription = action.payload.description;
-			// TODO: Only need the below once backend is implemented
 			state.allProjects = state.allProjects.map((project) => {
 				return project.slug === action.payload.slug ? action.payload : project;
 			});
