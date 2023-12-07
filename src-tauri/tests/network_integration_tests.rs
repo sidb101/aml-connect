@@ -1,16 +1,24 @@
 use aml_connect::aml_core::{
-    db_adapter::{self, models::{NewProject, Project}, schema::{projects, audio_files, input_data}},
+    db_adapter::{
+        self,
+        models::{NewProject, Project},
+        schema::{audio_files, input_data, projects},
+    },
     network_manager::{self, NetworkSimulator},
 };
 use anyhow::Result;
-use diesel::{SelectableHelper, RunQueryDsl, r2d2::{PooledConnection, ConnectionManager}, SqliteConnection};
+use diesel::{
+    r2d2::{ConnectionManager, PooledConnection},
+    RunQueryDsl, SelectableHelper, SqliteConnection,
+};
 use directories::BaseDirs;
 use serde_json;
 use std::path::Path;
 use std::{env, fs, path::PathBuf};
 
 fn create_app_dir_if_not_exists() -> Result<PathBuf> {
-    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir()).join("com.aml-connect.aspinity");
+    let app_dir =
+        PathBuf::from(BaseDirs::new().unwrap().data_local_dir()).join("com.aml-connect.aspinity");
     if !app_dir.exists() {
         fs::create_dir_all(app_dir.clone())?;
     }
@@ -28,7 +36,8 @@ fn test_sidecar_simulate_network() {
         std::fs::remove_file(&db_path).unwrap();
     }
 
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool =
+        db_adapter::establish_connection(&create_app_dir_if_not_exists().unwrap()).unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
 
@@ -83,7 +92,8 @@ fn test_sidecar_simulate_network_invalid_project_slug() {
         std::fs::remove_file(&db_path).unwrap();
     }
 
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool =
+        db_adapter::establish_connection(&create_app_dir_if_not_exists().unwrap()).unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
 
