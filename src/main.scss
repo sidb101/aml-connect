@@ -123,7 +123,19 @@ Common Classes
 	font-weight: bold;
 }
 
+.general-padding {
+	padding: global.$general-padding;
+}
+
+.panel-padding {
+	padding: global.$panel-padding;
+}
+
 /* -- Various kinds of Buttons -- */
+
+.radioBtn {
+	accent-color: global.$color-green;
+}
 
 .btn {
 	font-size: global.$text-small;
@@ -150,7 +162,7 @@ Common Classes
 
 .btn-outline {
 	background: none;
-	border: global.$color-green solid 1px;
+	border: global.$color-green solid 1.5px;
 	color: global.$color-green;
 
 	&:hover {

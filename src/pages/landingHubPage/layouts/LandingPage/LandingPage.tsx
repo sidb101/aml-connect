@@ -10,6 +10,7 @@ import { appStore } from "../../../../redux/store";
 import { useEffect } from "react";
 import { dataHubActions } from "../../../../redux/slices/DataHubSlice";
 import { modelCreationActions } from "../../../../redux/slices/ModelCreationSlice";
+import { resultActions } from "../../../../redux/slices/ResultSlice";
 
 function LandingPage() {
 	const projects = useAppSelector(selectAllProjects);
@@ -21,6 +22,7 @@ function LandingPage() {
 		dispatch(projectActions.closeProject());
 		dispatch(dataHubActions.resetState());
 		dispatch(modelCreationActions.resetState());
+		dispatch(resultActions.resetState());
 	}, []);
 
 	return <LandingView projects={projects} />;

@@ -1,18 +1,17 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use anyhow::Context;
 use diesel::r2d2::{ConnectionManager, Pool};
-use diesel::{ExpressionMethods, QueryDsl, RunQueryDsl, SqliteConnection};
+use diesel::SqliteConnection;
 use log::{info, warn};
 use simple_logger::SimpleLogger;
 use std::path::PathBuf;
 
 use aml_connect::aml_core::db_adapter;
-use aml_connect::aml_core::db_adapter::models::NewProject;
-use aml_connect::aml_core::db_adapter::schema::projects;
 use aml_connect::aml_core::file_data_manager;
 use aml_connect::uicontroller;
+
+
 
 fn main() {
     info!("Starting AML Connect...");
@@ -32,7 +31,10 @@ fn main() {
             uicontroller::put_files,
             uicontroller::get_files,
             uicontroller::get_projects,
-            uicontroller::simulate_network,
+            uicontroller::create_project,
+            uicontroller::delete_project,
+            uicontroller::update_project,
+            uicontroller::simulate_network,  
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
@@ -49,91 +51,7 @@ fn init_db(app_dir: PathBuf) -> Pool<ConnectionManager<SqliteConnection>> {
         ()
     });
 
-    // TODO: Remove this
-    add_dummy_projects(&db_conn_pool, &app_dir);
-
     db_conn_pool
-}
-
-// TODO: Remove this when create projects is implemented
-fn add_dummy_projects(db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>, app_dir: &PathBuf) {
-    add_dummy_project("test_project", "Glass Break Detection", "We are developing a smart device for in-home surveillance. This device would detect the sounds of glass breaking to help trigger a security alert within our system.", db_conn_pool, app_dir).unwrap_or_else(|e| {
-        warn!(
-            "Failed to add dummy project OR project already exists:{:?}",
-            e
-        );
-        ()
-    });
-
-    add_dummy_project("test_project1", "Dog Bark Detection", "We are developing a smart device for home pet monitoring. This device would detect the sounds of dog barking to notify the owners or take necessary actions.", db_conn_pool, app_dir).unwrap_or_else(|e| {
-        warn!(
-            "Failed to add dummy project OR project already exists:{:?}",
-            e
-        );
-        ()
-    });
-    add_dummy_project("test_project2", "Alexa Workword Detection", "We are improving the sensitivity of Alexa's wakeword detection. By increasing its detection accuracy, we aim to make the user interaction with the device more smooth and efficient.", db_conn_pool, app_dir).unwrap_or_else(|e| {
-        warn!(
-            "Failed to add dummy project OR project already exists:{:?}",
-            e
-        );
-        ()
-    });
-    add_dummy_project("test_project3", "Vibration Detection", "We are developing a smart device that detects abnormal vibrations. The device can be used in various contexts such as industrial machinery monitoring or building stability assessment.", db_conn_pool, app_dir).unwrap_or_else(|e| {
-        warn!(
-            "Failed to add dummy project OR project already exists:{:?}",
-            e
-        );
-        ()
-    });
-    add_dummy_project("test_project4", "Irregular Heartbeat Detection", "We are creating a wearable device that helps to monitor heart rhythms. The device aims to detect irregular heartbeat patterns to provide early warnings of potential health issues.",  db_conn_pool, app_dir).unwrap_or_else(|e| {
-        warn!(
-            "Failed to add dummy project OR project already exists:{:?}",
-            e
-        );
-        ()
-    });
-}
-
-// This method changes the state on the system. It adds projects to database and creates file system directories
-fn add_dummy_project(
-    project_slug: &str,
-    project_name: &str,
-    project_description: &str,
-    db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>,
-    app_dir: &PathBuf,
-) -> anyhow::Result<()> {
-    let conn = &mut db_conn_pool
-        .get()
-        .with_context(|| "failed to get db connection to add dummy project")?;
-
-    let match_count = projects::table
-        .filter(projects::slug.eq(project_slug))
-        .count()
-        .get_result::<i64>(conn)
-        .with_context(|| format!("failed to get count of projects with slug : {project_slug}"))?;
-
-    if match_count == 1 {
-        info!("Dummy project already exists");
-        Ok(())
-    } else {
-        info!("Adding dummy project");
-        let dummy_project = NewProject {
-            slug: project_slug.to_owned(),
-            name: project_name.to_owned(),
-            description: Some(project_description.to_owned()),
-        };
-        diesel::insert_into(projects::table)
-            .values(&dummy_project)
-            .execute(conn)
-            .with_context(|| format!("failed to insert dummy project : {project_slug}"))?;
-
-        file_data_manager::create_project_dir(project_slug, app_dir).unwrap_or_else(|e| {
-            panic!("Could not create project dir :{:?}", e);
-        });
-
-        Ok(())
-    }
 }
 
 fn init_fs(path_resolver: &tauri::PathResolver) -> PathBuf {

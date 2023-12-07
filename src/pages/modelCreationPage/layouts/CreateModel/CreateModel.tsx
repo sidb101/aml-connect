@@ -31,6 +31,13 @@ const CreateModel = () => {
 		}
 	};
 
+	const handleFormClose = () => {
+		setFormOptions((formOptions) => ({
+			...formOptions,
+			showForm: false,
+		}));
+	};
+
 	return (
 		<>
 			<CreateModelView
@@ -42,7 +49,7 @@ const CreateModel = () => {
 					/>
 				}
 				showSideForm={formOptions.showForm}
-				form={<ParameterForm node={formOptions.selectedNode} />}
+				form={<ParameterForm node={formOptions.selectedNode} onClose={handleFormClose} />}
 			/>
 		</>
 	);

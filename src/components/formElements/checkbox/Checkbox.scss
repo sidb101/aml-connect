@@ -1,0 +1,32 @@
+@use "../../../global";
+
+/* Hide the default checkbox */
+.Checkbox_label input {
+	display: none;
+}
+
+/* Create a custom square for the checkbox */
+.Checkbox_label span {
+	height: 20px;
+	width: 20px;
+	display: inline-block;
+	position: relative;
+}
+
+/* Style for when the checkbox is checked */
+.Checkbox_label input:checked + span {
+	background-color: global.$color-light-green;
+}
+
+/* Add a custom tick mark */
+.Checkbox_label input:checked + span:after {
+	content: "";
+	position: absolute;
+	left: 6px;
+	top: 2px;
+	width: 5px;
+	height: 10px;
+	border: solid global.$color-white;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
+}
