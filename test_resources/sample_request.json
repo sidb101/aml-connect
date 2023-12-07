@@ -357,6 +357,41 @@
                 }
             },
             {
+                "id": "96",
+                "name": "NeuralNet",
+                "parent_network_id": 5000,
+                "type_name": "NeuralNet",
+                "element_type_params": {
+                    "NeuralNet": {
+                        "weights": "[1.0,2.0]",
+                        "biases": "[1.0,2.0]",
+                        "activation_function": "[Tanh,Sigmoid,ReLU,Linear]",
+                        "activation_scale": "1.0",
+                        "input_compress_scale": "1.0",
+                        "input_compression_type": "Tanh"
+
+                    }
+                },
+                "terminals": [
+                    {
+                        "id": "6|reactflow__edge-5-6",
+                        "parent_element_id": "6",
+                        "type_name": "",
+                        "node_name": "reactflow__edge-5-6"
+                    },
+                    {
+                        "id": "6|reactflow__edge-6-7",
+                        "parent_element_id": "6",
+                        "type_name": "",
+                        "node_name": "reactflow__edge-6-7"
+                    }
+                ],
+                "position": {
+                    "x": 246.33903522138633,
+                    "y": 328.99549487305217
+                }
+            },
+            {
                 "id": "13",
                 "name": "Mux2",
                 "parent_network_id": 5000,
@@ -411,6 +446,35 @@
                 "position": {
                     "x": 542.7125867189683,
                     "y": -57.88225680359977
+                }
+            },
+            {
+                "id": "96",
+                "name": "SynthesizedFilter",
+                "parent_network_id": 5000,
+                "type_name": "SynthesizedFilter",
+                "element_type_params": {
+                    "SynthesizedFilter": {
+                        "coefficients": "[[1.0,2.0],[3.0,4.0]]"
+                    }
+                },
+                "terminals": [
+                    {
+                        "id": "6|reactflow__edge-5-6",
+                        "parent_element_id": "6",
+                        "type_name": "",
+                        "node_name": "reactflow__edge-5-6"
+                    },
+                    {
+                        "id": "6|reactflow__edge-6-7",
+                        "parent_element_id": "6",
+                        "type_name": "",
+                        "node_name": "reactflow__edge-6-7"
+                    }
+                ],
+                "position": {
+                    "x": 246.33903522138633,
+                    "y": 328.99549487305217
                 }
             },
             {
