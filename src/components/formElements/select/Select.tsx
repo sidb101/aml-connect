@@ -8,11 +8,7 @@ type SelectProps = {
 
 function Select({ onChange, value, className = "", children }: PropsWithChildren<SelectProps>) {
 	return (
-		<select
-			onChange={onChange}
-			value={value}
-			className={`regular-text light-grey-text light-grey-panel ${className}`}
-		>
+		<select onChange={onChange} value={value} className={`regular-text light-grey-panel ${className}`}>
 			{children}
 		</select>
 	);
