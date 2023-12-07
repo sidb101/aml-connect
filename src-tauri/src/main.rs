@@ -12,7 +12,7 @@ use aml_connect::aml_core::file_data_manager;
 use aml_connect::uicontroller;
 
 
-
+#[cfg(not(tarpaulin_include))]
 fn main() {
     info!("Starting AML Connect...");
 
@@ -40,7 +40,8 @@ fn main() {
         .expect("error while running tauri application");
 }
 
-fn init_db(app_dir: PathBuf) -> Pool<ConnectionManager<SqliteConnection>> {
+#[cfg(not(tarpaulin_include))]
+fn init_db(_: PathBuf) -> Pool<ConnectionManager<SqliteConnection>> {
     let db_conn_pool = db_adapter::establish_connection(&app_dir).unwrap_or_else(|e| {
         panic!("Could not establish connection to database :{:?}", e);
     });
@@ -54,6 +55,7 @@ fn init_db(app_dir: PathBuf) -> Pool<ConnectionManager<SqliteConnection>> {
     db_conn_pool
 }
 
+#[cfg(not(tarpaulin_include))]
 fn init_fs(path_resolver: &tauri::PathResolver) -> PathBuf {
     // TODO: Fix
     file_data_manager::create_app_dir_if_not_exists(path_resolver).unwrap_or_else(|e| {
@@ -61,6 +63,7 @@ fn init_fs(path_resolver: &tauri::PathResolver) -> PathBuf {
     })
 }
 
+#[cfg(not(tarpaulin_include))]
 fn init_logger() {
     SimpleLogger::new().init().unwrap_or_else(|e| {
         panic!("Failed to initialize logger :{:?}", e.to_string());

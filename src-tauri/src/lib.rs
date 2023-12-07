@@ -10,6 +10,7 @@ pub mod uicontroller {
     use tauri::State;
 
     #[tauri::command]
+    #[cfg(not(tarpaulin_include))]
     pub fn get_elements(handle: tauri::AppHandle) -> element_repository::GetElementsResponseResult {
         let resource_path = handle.path_resolver()
             .resolve_resource("resources/elements.json")
@@ -20,6 +21,7 @@ pub mod uicontroller {
     }
 
     #[tauri::command]
+    #[cfg(not(tarpaulin_include))]
     pub fn put_files(
         input: file_data_manager::FilesUploadRequest,
         app_dir: State<std::path::PathBuf>,
@@ -30,6 +32,7 @@ pub mod uicontroller {
     }
 
     #[tauri::command]
+    #[cfg(not(tarpaulin_include))]
     pub fn get_files(
         req: file_data_manager::GetFilesRequest,
         db_conn: State<Pool<ConnectionManager<SqliteConnection>>>,
@@ -39,6 +42,7 @@ pub mod uicontroller {
     }
 
     #[tauri::command]
+    #[cfg(not(tarpaulin_include))]
     pub fn get_projects(
         db_conn: State<Pool<ConnectionManager<SqliteConnection>>>,
     ) -> project_manager::GetProjectsResponseResult {
@@ -47,6 +51,7 @@ pub mod uicontroller {
     }
 
     #[tauri::command]
+    #[cfg(not(tarpaulin_include))]
     pub fn simulate_network(
         req: network_manager::SimulateNetworkRequest,
         app_dir: State<std::path::PathBuf>,
@@ -77,6 +82,7 @@ pub mod uicontroller {
     }
 
     #[tauri::command]
+    #[cfg(not(tarpaulin_include))]
     pub fn create_project(
         req: project_manager::CreateProjectRequest,
         app_dir: State<std::path::PathBuf>,
@@ -87,6 +93,7 @@ pub mod uicontroller {
     }
 
     #[tauri::command]
+    #[cfg(not(tarpaulin_include))]
     pub fn delete_project(
         req: project_manager::DeleteProjectRequest,
         app_dir: State<std::path::PathBuf>,
@@ -97,6 +104,7 @@ pub mod uicontroller {
     }
 
     #[tauri::command]
+    #[cfg(not(tarpaulin_include))]
     pub fn update_project(
         req: project_manager::UpdateProjectRequest,
         app_dir: State<std::path::PathBuf>,

@@ -21,6 +21,7 @@ use diesel::{
 use directories::BaseDirs;
 use log::info;
 use std::fs;
+use std::path::MAIN_SEPARATOR;
 use std::{
     env,
     path::{Path, PathBuf},
@@ -66,7 +67,7 @@ fn save_on_db() {
 #[test]
 fn test_list_elements_from_simulator() {
     let mut sc = network_manager::AmlSimulatorSidecar::new();
-    sc.sidecar_name = String::from("../aspinity_wrapper");
+    sc.sidecar_name = String::from(format!("..{}aspinity_wrapper", MAIN_SEPARATOR));
     let elements_json_str = network_manager::AmlSimulator::list_elements(&sc).unwrap();
     let elements_json: Value = serde_json::from_str(elements_json_str.as_str())
         .map_err(|e| SimulatorError::JsonParseError(e.to_string()))

@@ -105,6 +105,7 @@ fn test_crud_project() {
     fs::remove_dir_all(app_dir).unwrap();
 }
 
+#[cfg(not(tarpaulin_include))]
 fn create_app_dir_if_not_exists() -> anyhow::Result<PathBuf> {
     let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir()).join("aml_connect");
     if !app_dir.exists() {
@@ -113,6 +114,7 @@ fn create_app_dir_if_not_exists() -> anyhow::Result<PathBuf> {
     Ok(app_dir)
 }
 
+#[cfg(not(tarpaulin_include))]
 fn add_dummy_projects(db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>) {
     add_dummy_project("test_project", db_conn_pool).unwrap_or_else(|e| {
         warn!(
@@ -152,6 +154,7 @@ fn add_dummy_projects(db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>) 
     });
 }
 
+#[cfg(not(tarpaulin_include))]
 fn add_dummy_project(
     project_slug: &str,
     db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>,

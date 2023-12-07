@@ -1340,6 +1340,36 @@ mod tests {
 
     #[allow(non_snake_case)]
     #[test]
+    fn test_AcDiffParams_from_hashmap_neg1() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("gain".to_string(), "not_float".to_string());
+        params.insert("bias".to_string(), "2.0".to_string());
+
+        // act
+        let result = AcDiffParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_AcDiffParams_from_hashmap_neg2() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("gain".to_string(), "1.0".to_string());
+        params.insert("bias".to_string(), "not_float".to_string());
+
+        // act
+        let result = AcDiffParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
     fn test_AsymmetricIntegratorParams_from_hashmap() {
         // arrange
         let mut params: HashMap<String, String> = HashMap::new();
@@ -1357,6 +1387,95 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().down, 2.0);
         assert!(result.as_ref().unwrap().up_down_type == UpDownType::Rate);
         assert_eq!(result.as_ref().unwrap().comparator_enable, true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_AsymmetricIntegratorParams_from_hashmap_2() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("up".to_string(), "1.0".to_string());
+        params.insert("down".to_string(), "2.0".to_string());
+        params.insert("up_down_type".to_string(), "Hang".to_string());
+        params.insert("comparator_enable".to_string(), "true".to_string());
+
+        // act
+        let result = AsymmetricIntegratorParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_ok(), true);
+        assert_eq!(result.as_ref().unwrap().up, 1.0);
+        assert_eq!(result.as_ref().unwrap().down, 2.0);
+        assert!(result.as_ref().unwrap().up_down_type == UpDownType::Hang);
+        assert_eq!(result.as_ref().unwrap().comparator_enable, true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_AsymmetricIntegratorParams_from_hashmap_neg1() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("up".to_string(), "1.0".to_string());
+        params.insert("down".to_string(), "2.0".to_string());
+        params.insert("up_down_type".to_string(), "InvalidEnum".to_string());
+        params.insert("comparator_enable".to_string(), "true".to_string());
+
+        // act
+        let result = AsymmetricIntegratorParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_AsymmetricIntegratorParams_from_hashmap_neg2() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("up".to_string(), "not_float".to_string());
+        params.insert("down".to_string(), "2.0".to_string());
+        params.insert("up_down_type".to_string(), "Rate".to_string());
+        params.insert("comparator_enable".to_string(), "true".to_string());
+
+        // act
+        let result = AsymmetricIntegratorParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_AsymmetricIntegratorParams_from_hashmap_neg3() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("up".to_string(), "1.0".to_string());
+        params.insert("down".to_string(), "not_float".to_string());
+        params.insert("up_down_type".to_string(), "Rate".to_string());
+        params.insert("comparator_enable".to_string(), "true".to_string());
+
+        // act
+        let result = AsymmetricIntegratorParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_AsymmetricIntegratorParams_from_hashmap_neg4() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("up".to_string(), "1.0".to_string());
+        params.insert("down".to_string(), "2.0".to_string());
+        params.insert("up_down_type".to_string(), "Rate".to_string());
+        params.insert("comparator_enable".to_string(), "not_bool".to_string());
+
+        // act
+        let result = AsymmetricIntegratorParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
     }
 
     #[allow(non_snake_case)]
@@ -1394,6 +1513,36 @@ mod tests {
 
     #[allow(non_snake_case)]
     #[test]
+    fn test_ComparatorParams_from_hashmap_neg1() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("threshold".to_string(), "not_float".to_string());
+        params.insert("hysteresis_voltage".to_string(), "2.0".to_string());
+
+        // act
+        let result = ComparatorParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_ComparatorParams_from_hashmap_neg2() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("threshold".to_string(), "1.0".to_string());
+        params.insert("hysteresis_voltage".to_string(), "not_float".to_string());
+
+        // act
+        let result = ComparatorParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
     fn test_FilterParams_from_hashmap() {
         // arrange
         let mut params: HashMap<String, String> = HashMap::new();
@@ -1409,6 +1558,54 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().characteristic_frequency, 1.0);
         assert_eq!(result.as_ref().unwrap().quality_factor, 2.0);
         assert!(result.as_ref().unwrap().filter_type == FilterType::lpf1);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_FilterParams_from_hashmap_neg1() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("characteristic_frequency".to_string(), "not_float".to_string());
+        params.insert("quality_factor".to_string(), "2.0".to_string());
+        params.insert("filter_type".to_string(), "lpf1".to_string());
+
+        // act
+        let result = FilterParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_FilterParams_from_hashmap_neg2() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("characteristic_frequency".to_string(), "1.0".to_string());
+        params.insert("quality_factor".to_string(), "not_float".to_string());
+        params.insert("filter_type".to_string(), "lpf1".to_string());
+
+        // act
+        let result = FilterParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_FilterParams_from_hashmap_neg3() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("characteristic_frequency".to_string(), "1.0".to_string());
+        params.insert("quality_factor".to_string(), "2.0".to_string());
+        params.insert("filter_type".to_string(), "invalid_enum".to_string());
+
+        // act
+        let result = FilterParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
     }
 
     #[allow(non_snake_case)]
@@ -1451,6 +1648,53 @@ mod tests {
 
     #[allow(non_snake_case)]
     #[test]
+    fn test_GainOpampParams_from_hashmap_neg1() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("gain_mode".to_string(), "Noninverting200x".to_string());
+        params.insert("feedback_cap_count".to_string(), "2.0".to_string());
+
+        // act
+        let result = GainOpampParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_GainOpampParams_from_hashmap_neg2() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("gain_mode".to_string(), "Noninverting200x".to_string());
+        params.insert("feedback_cap_count".to_string(), "not_float".to_string());
+
+        // act
+        let result = GainOpampParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_GainOpampParams_from_hashmap2() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("gain_mode".to_string(), "Inverting20x".to_string());
+        params.insert("feedback_cap_count".to_string(), "2.0".to_string());
+
+        // act
+        let result = GainOpampParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_ok(), true);
+        assert!(result.as_ref().unwrap().gain_mode == GainOpampMode::Inverting20x);
+        assert_eq!(result.as_ref().unwrap().feedback_cap_count, 2.0);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
     fn test_LookupTableParams_from_hashmap() {
         // arrange
         let mut params: HashMap<String, String> = HashMap::new();
@@ -1477,6 +1721,20 @@ mod tests {
         // assert
         assert_eq!(result.as_ref().is_ok(), true);
         assert_eq!(result.as_ref().unwrap().slope, 1.0);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_MultiplierParams_from_hashmap_neg1() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("slope".to_string(), "not_float".to_string());
+
+        // act
+        let result = MultiplierParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
     }
 
     #[allow(non_snake_case)]
@@ -1515,6 +1773,72 @@ mod tests {
 
     #[allow(non_snake_case)]
     #[test]
+    fn test_NeuralNetParams_from_hashmap_neg1() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("weights".to_string(), "[1.0,2.0]".to_string());
+        params.insert("biases".to_string(), "[1.0,2.0]".to_string());
+        params.insert(
+            "activation_function".to_string(),
+            "[Tanh,Sigmoid]".to_string(),
+        );
+        params.insert("activation_scale".to_string(), "not_float".to_string());
+        params.insert("input_compress_scale".to_string(), "1.0".to_string());
+        params.insert("input_compression_type".to_string(), "Tanh".to_string());
+
+        // act
+        let result = NeuralNetParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_NeuralNetParams_from_hashmap_neg2() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("weights".to_string(), "[1.0,2.0]".to_string());
+        params.insert("biases".to_string(), "[1.0,2.0]".to_string());
+        params.insert(
+            "activation_function".to_string(),
+            "[Tanh,Sigmoid]".to_string(),
+        );
+        params.insert("activation_scale".to_string(), "1.0".to_string());
+        params.insert("input_compress_scale".to_string(), "not_float".to_string());
+        params.insert("input_compression_type".to_string(), "Tanh".to_string());
+
+        // act
+        let result = NeuralNetParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_NeuralNetParams_from_hashmap_neg3() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("weights".to_string(), "[1.0,2.0]".to_string());
+        params.insert("biases".to_string(), "[1.0,2.0]".to_string());
+        params.insert(
+            "activation_function".to_string(),
+            "[Tanh,Sigmoid]".to_string(),
+        );
+        params.insert("activation_scale".to_string(), "1.0".to_string());
+        params.insert("input_compress_scale".to_string(), "2.0".to_string());
+        params.insert("input_compression_type".to_string(), "invalid_enum".to_string());
+
+        // act
+        let result = NeuralNetParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
     fn test_PeakDetectorParams_from_hashmap() {
         // arrange
         let mut params: HashMap<String, String> = HashMap::new();
@@ -1538,6 +1862,96 @@ mod tests {
 
     #[allow(non_snake_case)]
     #[test]
+    fn test_PeakDetectorParams_from_hashmap_neg1() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("atk".to_string(), "not_float".to_string());
+        params.insert("dec".to_string(), "2.0".to_string());
+        params.insert("model_version".to_string(), "FirstOrder".to_string());
+        params.insert("buff".to_string(), "1.0".to_string());
+        params.insert("parasitic_ratio".to_string(), "1.0".to_string());
+
+        // act
+        let result = PeakDetectorParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_PeakDetectorParams_from_hashmap_neg2() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("atk".to_string(), "1.0".to_string());
+        params.insert("dec".to_string(), "not_float".to_string());
+        params.insert("model_version".to_string(), "FirstOrder".to_string());
+        params.insert("buff".to_string(), "1.0".to_string());
+        params.insert("parasitic_ratio".to_string(), "1.0".to_string());
+
+        // act
+        let result = PeakDetectorParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_PeakDetectorParams_from_hashmap_neg3() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("atk".to_string(), "1.0".to_string());
+        params.insert("dec".to_string(), "2.0".to_string());
+        params.insert("model_version".to_string(), "invalid_enum".to_string());
+        params.insert("buff".to_string(), "1.0".to_string());
+        params.insert("parasitic_ratio".to_string(), "1.0".to_string());
+
+        // act
+        let result = PeakDetectorParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_PeakDetectorParams_from_hashmap_neg4() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("atk".to_string(), "1.0".to_string());
+        params.insert("dec".to_string(), "2.0".to_string());
+        params.insert("model_version".to_string(), "FirstOrder".to_string());
+        params.insert("buff".to_string(), "not_float".to_string());
+        params.insert("parasitic_ratio".to_string(), "1.0".to_string());
+
+        // act
+        let result = PeakDetectorParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_PeakDetectorParams_from_hashmap_neg5() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("atk".to_string(), "1.0".to_string());
+        params.insert("dec".to_string(), "2.0".to_string());
+        params.insert("model_version".to_string(), "FirstOrder".to_string());
+        params.insert("buff".to_string(), "1.0".to_string());
+        params.insert("parasitic_ratio".to_string(), "not_float".to_string());
+
+        // act
+        let result = PeakDetectorParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
     fn test_PGAParams_from_hashmap() {
         // arrange
         let mut params: HashMap<String, String> = HashMap::new();
@@ -1553,6 +1967,54 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().Av1, 1.0);
         assert_eq!(result.as_ref().unwrap().Av2, 2.0);
         assert_eq!(result.as_ref().unwrap().den, Some(1.0));
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_PGAParams_from_hashmap_neg1() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("Av1".to_string(), "not float".to_string());
+        params.insert("Av2".to_string(), "2.0".to_string());
+        params.insert("den".to_string(), "1.0".to_string());
+
+        // act
+        let result = PGAParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_PGAParams_from_hashmap_neg2() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("Av1".to_string(), "1.0".to_string());
+        params.insert("Av2".to_string(), "not float".to_string());
+        params.insert("den".to_string(), "1.0".to_string());
+
+        // act
+        let result = PGAParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_PGAParams_from_hashmap_neg3() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("Av1".to_string(), "1.0".to_string());
+        params.insert("Av2".to_string(), "2.0".to_string());
+        params.insert("den".to_string(), "not float".to_string());
+
+        // act
+        let result = PGAParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
     }
 
     #[allow(non_snake_case)]
@@ -1601,6 +2063,79 @@ mod tests {
         assert_eq!(result.as_ref().unwrap().is_ac_coupled, Some(true));
         assert_eq!(result.as_ref().unwrap().is_extern, Some(true));
     }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_TerminalParams_from_hashmap_neg1() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("hardware_pin".to_string(), "1.0".to_string());
+        params.insert("is_input".to_string(), "not_boolean".to_string());
+        params.insert("is_output".to_string(), "true".to_string());
+        params.insert("is_ac_coupled".to_string(), "true".to_string());
+        params.insert("is_extern".to_string(), "true".to_string());
+
+        // act
+        let result = TerminalParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_TerminalParams_from_hashmap_neg2() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("hardware_pin".to_string(), "1.0".to_string());
+        params.insert("is_input".to_string(), "true".to_string());
+        params.insert("is_output".to_string(), "not_boolean".to_string());
+        params.insert("is_ac_coupled".to_string(), "true".to_string());
+        params.insert("is_extern".to_string(), "true".to_string());
+
+        // act
+        let result = TerminalParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_TerminalParams_from_hashmap_neg3() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("hardware_pin".to_string(), "1.0".to_string());
+        params.insert("is_input".to_string(), "true".to_string());
+        params.insert("is_output".to_string(), "true".to_string());
+        params.insert("is_ac_coupled".to_string(), "not_boolean".to_string());
+        params.insert("is_extern".to_string(), "true".to_string());
+
+        // act
+        let result = TerminalParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
+    #[allow(non_snake_case)]
+    #[test]
+    fn test_TerminalParams_from_hashmap_neg4() {
+        // arrange
+        let mut params: HashMap<String, String> = HashMap::new();
+        params.insert("hardware_pin".to_string(), "1.0".to_string());
+        params.insert("is_input".to_string(), "true".to_string());
+        params.insert("is_output".to_string(), "true".to_string());
+        params.insert("is_ac_coupled".to_string(), "true".to_string());
+        params.insert("is_extern".to_string(), "not_boolean".to_string());
+
+        // act
+        let result = TerminalParams::from_hashmap(&params);
+
+        // assert
+        assert_eq!(result.as_ref().is_err(), true);
+    }
+
 
     #[allow(non_snake_case)]
     #[test]
