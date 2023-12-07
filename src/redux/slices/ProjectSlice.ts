@@ -115,12 +115,12 @@ export const projectSlice = createSlice({
 			state.projectName = action.payload.name;
 			state.projectDescription = action.payload.description;
 			state.allProjects = state.allProjects.map((project) => {
-				return project.slug === action.payload.slug ? action.payload : project;
+				return project.id === action.payload.id ? action.payload : project;
 			});
 		},
 
-		deleteProject: (state, action: PayloadAction<string>) => {
-			state.allProjects = state.allProjects.filter((project) => project.slug !== action.payload);
+		deleteProject: (state, action: PayloadAction<number>) => {
+			state.allProjects = state.allProjects.filter((project) => project.id !== action.payload);
 		},
 	},
 });

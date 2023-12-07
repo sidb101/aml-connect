@@ -38,9 +38,11 @@ export async function landingPageAction({ request }: { request: Request }) {
 		const formData = await request.formData();
 		const data = Object.fromEntries(formData) as DisplayCardFormT;
 
-		await remoteService.deleteProject(parseInt(data.projectId));
+		const projectToDeleteId = parseInt(data.projectId, 10);
 
-		appStore.dispatch(projectActions.deleteProject(data.projectId));
+		await remoteService.deleteProject(projectToDeleteId);
+
+		appStore.dispatch(projectActions.deleteProject(projectToDeleteId));
 	}
 
 	return redirect(BASE_ROUTE);

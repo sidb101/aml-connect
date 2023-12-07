@@ -74,7 +74,7 @@ export async function overviewPageAction({ request, params }: { request: Request
 	const data = Object.fromEntries(formData) as ProjectFormT;
 
 	const projectSlug = params.projectSlug!;
-	const projectId = appStore.getState().project.projectId;
+	const { projectId } = appStore.getState().project;
 
 	const updatedProject = await remoteService.updateProject(projectId, data.projectName, data.projectDescription);
 
