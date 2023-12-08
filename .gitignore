@@ -45,6 +45,7 @@ src-tauri/binaries/aspinity_wrapper-x86_64-pc-windows-msvc.exe
 #Rust
 src-tauri/src/*.db
 *.db
-
+src/tests/debug/*
+tests/*
 # Test resources - images
 test_resources/*.png
