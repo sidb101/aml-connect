@@ -41,8 +41,8 @@ fn main() {
 }
 
 #[cfg(not(tarpaulin_include))]
-fn init_db(_: PathBuf) -> Pool<ConnectionManager<SqliteConnection>> {
-    let db_conn_pool = db_adapter::establish_connection().unwrap_or_else(|e| {
+fn init_db(app_dir: PathBuf) -> Pool<ConnectionManager<SqliteConnection>> {
+    let db_conn_pool = db_adapter::establish_connection(&app_dir).unwrap_or_else(|e| {
         panic!("Could not establish connection to database :{:?}", e);
     });
 

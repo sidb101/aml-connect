@@ -58,7 +58,7 @@ fn integration_test_setup(app_dir: PathBuf) {
 #[test]
 fn save_on_db() {
     env::set_var("DATABASE_PATH", "./tests");
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     let mut conn = conn_pool.get().unwrap();
     conn.begin_test_transaction().unwrap();
@@ -91,7 +91,7 @@ fn save_file_metadata() {
         std::fs::remove_file(&db_path).unwrap();
     }
 
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
     let conn = &mut conn_pool.get().unwrap();
@@ -171,7 +171,7 @@ fn validate_file_and_save_metadata() {
     let app_dir = create_app_dir_if_not_exists().unwrap();
     integration_test_setup(app_dir.clone());
 
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
     let conn = &mut conn_pool.get().unwrap();
@@ -254,7 +254,7 @@ fn validate_file_and_save_metadata_check_exists() {
         std::fs::remove_file(&db_path).unwrap();
     }
 
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
     let conn = &mut conn_pool.get().unwrap();
@@ -318,7 +318,7 @@ fn get_audio_files_invalid_request() {
         std::fs::remove_file(&db_path).unwrap();
     }
 
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
 
@@ -355,7 +355,7 @@ fn get_non_existent_files() {
         std::fs::remove_file(&db_path).unwrap();
     }
 
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
     let conn = &mut conn_pool.get().unwrap();
@@ -422,7 +422,7 @@ fn put_files_then_check_get_files() {
         std::fs::remove_file(&db_path).unwrap();
     }
 
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
     let conn = &mut conn_pool.get().unwrap();
@@ -486,7 +486,7 @@ fn validate_file_and_save_metadata_check_extension() {
         std::fs::remove_file(&db_path).unwrap();
     }
 
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     db_adapter::run_db_migrations(&conn_pool).unwrap();
     let conn = &mut conn_pool.get().unwrap();
