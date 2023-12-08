@@ -111,13 +111,13 @@ jobs:
         run: cd src-tauri && cargo test --lib && cd ..
 
       # Runs a single command using the runners shell
-#      - name: Run Rust backend integration tests
-#        run: |
-#          cd src-tauri &&
-#          cargo test --test integration_test -- --test-threads 1 &&
-#          cargo test --test projects_integration_tests -- --test-threads 1 &&
-#          cargo test --test network_integration_tests -- --test-threads 1 &&
-#          cd ..
+      - name: Run Rust backend integration tests
+        run: |
+          cd src-tauri && 
+          cargo test --test integration_test -- --test-threads 1 && 
+          cargo test --test projects_integration_tests -- --test-threads 1 &&
+          cargo test --test network_integration_tests -- --test-threads 1 &&
+          cd ..
 
       # Run tauri-action build
       - name: Build the app using Tauri Action
