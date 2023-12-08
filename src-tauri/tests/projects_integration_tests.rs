@@ -43,7 +43,7 @@ fn test_get_all_projects() {
 #[test]
 fn test_crud_project() {
     env::set_var("DATABASE_PATH", "./tests");
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     let mut conn = conn_pool.get().unwrap();
     conn.begin_test_transaction().unwrap();
