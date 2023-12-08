@@ -9,7 +9,7 @@ import TwoOptionForm from "../../pages/landingHubPage/layouts/LandingPage/layout
 import Backdrop from "../backdrop/Backdrop";
 
 export type DisplayCardFormT = {
-	projectSlug: string;
+	projectId: string;
 };
 
 export type DisplayCardT = {
@@ -20,7 +20,7 @@ export type DisplayCardT = {
 	route: string;
 	deletable?: {
 		showCross: boolean;
-		projectSlug: string;
+		projectId: number;
 	};
 };
 
@@ -39,13 +39,15 @@ export default function DisplayCard({ displayCard }: DisplayCardProps) {
 						setShowConfirmation(false);
 					}}
 				>
-					<TwoOptionForm
-						title="Are you sure you want to delete this project?"
-						onNoClick={() => {
-							setShowConfirmation(false);
-						}}
-						projectSlug={displayCard.deletable?.projectSlug || ""}
-					/>
+					{displayCard.deletable && (
+						<TwoOptionForm
+							title="Are you sure you want to delete this project?"
+							onNoClick={() => {
+								setShowConfirmation(false);
+							}}
+							projectId={displayCard.deletable.projectId}
+						/>
+					)}
 				</Backdrop>
 			)}
 			<DisplayPanel>

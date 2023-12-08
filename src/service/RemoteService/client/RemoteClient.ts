@@ -13,7 +13,13 @@ import type { GetFilesResponse } from "./bindings/GetFilesResponse";
 import type { SimulateNetworkRequest } from "./bindings/SimulateNetworkRequest";
 import type { SimulateNetworkResponse } from "./bindings/SimulateNetworkResponse";
 import type { ElementMetadata } from "./bindings/ElementMetadata";
+import type { CreateProjectRequest } from "./bindings/CreateProjectRequest";
+import type { CreateProjectResponse } from "./bindings/CreateProjectResponse";
 import type { GetProjectsResponse } from "./bindings/GetProjectsResponse";
+import type { UpdateProjectRequest } from "./bindings/UpdateProjectRequest";
+import type { UpdateProjectResponse } from "./bindings/UpdateProjectResponse";
+import type { DeleteProjectRequest } from "./bindings/DeleteProjectRequest";
+import type { DeleteProjectResponse } from "./bindings/DeleteProjectResponse";
 
 export interface RemoteClient {
 	/**
@@ -41,7 +47,22 @@ export interface RemoteClient {
 	simulateNetwork(simulateNetworkRequest: SimulateNetworkRequest): Promise<SimulateNetworkResponse>;
 
 	/**
+	 * This method will create a given project
+	 */
+	createProject(createProjectRequest: CreateProjectRequest): Promise<CreateProjectResponse>;
+
+	/**
 	 * This method returns all projects that the user has access to
 	 */
 	getAllProjects(): Promise<GetProjectsResponse>;
+
+	/**
+	 * This method will update a given project
+	 */
+	updateProject(updateProjectRequest: UpdateProjectRequest): Promise<UpdateProjectResponse>;
+
+	/**
+	 * This method will delete a given project
+	 */
+	deleteProject(deleteProjectRequest: DeleteProjectRequest): Promise<DeleteProjectResponse>;
 }

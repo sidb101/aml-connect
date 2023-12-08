@@ -5,10 +5,10 @@ import React, { useEffect, useRef } from "react";
 type TwoOptionFormProps = {
 	title: string;
 	onNoClick: () => void;
-	projectSlug: string;
+	projectId: number;
 };
 
-function TwoOptionForm({ title, onNoClick, projectSlug }: TwoOptionFormProps) {
+function TwoOptionForm({ title, onNoClick, projectId }: TwoOptionFormProps) {
 	const noButtonRef = useRef<HTMLButtonElement>(null);
 
 	// Set focus on the No button when the component mounts
@@ -29,7 +29,7 @@ function TwoOptionForm({ title, onNoClick, projectSlug }: TwoOptionFormProps) {
 						No
 					</button>{" "}
 					<Form method="DELETE">
-						<input type="hidden" name="projectSlug" value={projectSlug} />
+						<input type="hidden" name="projectId" value={projectId} />
 						<button className="btn btn-outline">Yes</button>
 					</Form>
 				</div>

@@ -96,9 +96,10 @@ mod tests {
         let db_url = get_url(&PathBuf::new()).unwrap();
         env::remove_var("DATABASE_PATH");
 
+        let expected_path = Path::new(db_path).join("aml_connect.db");
         assert_eq!(
             db_url,
-            "/home/test_user/.local/share/aml_connect/aml_connect.db"
+            expected_path.to_str().unwrap()
         );
     }
 }

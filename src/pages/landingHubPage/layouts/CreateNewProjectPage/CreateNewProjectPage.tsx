@@ -29,11 +29,7 @@ export async function createNewProjectPageAction({ request }: { request: Request
 		const formData = await request.formData();
 		const data = Object.fromEntries(formData) as ProjectFormT;
 
-		const newProject = await remoteService.createProject(
-			mockProjects.length, // TODO: Not required when the backend is implemented
-			data.projectName,
-			data.projectDescription
-		);
+		const newProject = await remoteService.createProject(data.projectName, data.projectDescription);
 
 		appStore.dispatch(projectActions.addNewProject(newProject));
 	}
