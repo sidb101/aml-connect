@@ -2,13 +2,13 @@ workspace {
     !adrs decisions
     model {
         customer = person "Chip Programmer" "Aspinity's customer"
-        engineer = person "Aspinity Engineer" "usually Nick"
+        engineer = person "Aspinity Engineer"
         developer = person "System Developer" "Team ChipMonks"
         
-        filemanager = softwareSystem "File System" "The user's local file system"
-        # aspinitySimulator = softwareSystem "AML 100 Simulator"
-        
-        astrl = softwareSystem "Aspinity Development Platform" {
+        aspinitySimulator = softwareSystem "AML 100 Simulator" "A Python package"
+        fileSystem = softwareSystem "File System" "The user's local file system"
+        AML100 = element "AML100 - Aspinity's analog machine learning chip"
+        analogMLConnect = softwareSystem "AnalogML Connect" "Aspinity's Development Platform" {
             
             group Clients {
             
@@ -24,11 +24,13 @@ workspace {
 
                     reduxStore = component "Redux store" "Storing all the state information"
 
-                    remoteService = component "Remote Service" "Responsible for transforming UI data to DTO and exchanging data with backend server"
+                    remoteService = component "Remote Service" "Responsible for exchanging data with backend server"
+                    remoteTransformer = component "Remote Transformer" "Responsible for transforming UI data to DTO and vice-versa"
                     remoteClient = component "Remote Client" "Interface for the Server API Calls happening to backend"
                     tauriApiClient = component "Tauri API Client" "Concrete Client having logic to call the backend server"
                     
-                    storageService = component "Storage Service" "Responsible for transforming UI data to DTO and exchanging data with storage server"  
+                    storageService = component "Storage Service" "Responsible for exchanging data with storage"  
+                    storageTransformer = component "Storage Transformer" "Responsible for transforming UI data to DTO and vice-versa"
                     storageClient = component "Storage Client" "Interface for the Storage API Calls happening to backend"
                     tauriFsClient = component "Tauri FS Client" "Concrete Client having logic to call the Local File System"
 
@@ -38,7 +40,9 @@ workspace {
                     reactComponent -> storageService "uses"
 
                     remoteService -> tauriApiClient "has"
+                    remoteService -> remoteTransformer "has"
                     storageService -> tauriFsClient "has"
+                    storageService -> storageTransformer "has"
 
                     tauriApiClient -> remoteClient "implements"
                     tauriFsClient -> storageClient "implements"
@@ -48,6 +52,8 @@ workspace {
                     customer -> reactComponent "Design customized networks"
                     reactComponent -> engineer "Receives customized network"
                     developer -> reactComponent "Maintains" 
+
+                    tauriFsClient -> fileSystem "Writes/Reads Project Files"
                 }
 
                 cliapp = container "Command Line Application" {
@@ -58,77 +64,88 @@ workspace {
 
             }
 
-            # Can we have some other name for this, confusing with Aspinity AML 100 Simulator
+            aspinity_wrapper = container "Aspinity Simulator Wrapper" "Compiled Python Executable" {
+                
+                wrapper_interface = component "Simulator Wrapper Interface" "Interface to be followed by Chip Pywrappers"
+                python_wrapper = component "Simulator PyWrapper" "Python Module" 
 
-            appserver = container "Application Layer" {
-                datasetup = component "DataManager"
-                projectmanager = component "ProjectManager"
-                resultgenerator = component "ResultGenerator"
-                filtermanager = component "FilterManager" "TBD - Does the simulator return a list of filters and their properties?"
-                featurengineer = component "FeatureEngineer" "TBD - Are we managing neural network features seperately? Do they need to be stored?"
-                UIController = component "UI Controller"
-                CLIController = component "CLI Controller"
-                amlConnectCore = component "AML Connect Core"
-                chipsimulator = component "AML 100 Simulator" 
-                dbmanager = component "DBManager"
-                audiomanager = component "AudioManager"
-                mlinterpretormod = component "MLInterpretor"
-                networkmanager = component "NetworkManager"
-                simulatorInterface = component "Network Simulator"
+                python_wrapper -> wrapper_interface "implements"
+
                 
-                amlConnectCore -> networkmanager
-                amlConnectCore -> datasetup
-                amlConnectCore -> projectmanager
-                amlConnectCore -> audiomanager
-                networkmanager -> resultgenerator
-                networkmanager -> filtermanager
-                networkmanager -> chipsimulator
-                networkmanager -> dbmanager
-                networkmanager -> featurengineer
-                networkmanager -> mlinterpretormod
-                chipsimulator -> simulatorInterface "implements"
-                
-                datasetup -> filemanager "retrieve files" "Upload from local PC"
+                //Container -> SoftwareSystem
+                python_wrapper -> fileSystem "writes simulation result"
+                python_wrapper -> aspinitySimulator "wraps"
+
+                //SoftwareSystem -> Container
+                aspinitySimulator -> python_wrapper "replies"
             }
-
             app_db = container "Application Database" {
                 description "Responsible for storing application data"
                 tags "DB"
             }
-
             ml_interepretor = container "Machine Learning Interpretor" {
                 component "Training Manager"
                 component "Data Visualizer"
             }
-            mlinterpretormod -> ml_interepretor "calls" "IPC*"
             
-            ml_interepretor -> mlinterpretormod "training logs"
+            appserver = container "Application Server" {
+                datasetup = component "DataManager"
+                elementmanager = component "ElementManager"
+                projectmanager = component "ProjectManager"
+                resultgenerator = component "ResultGenerator"
+                filtermanager = component "FilterManager" "TBD - Does the simulator return a list of filters and their properties?"
+                featurengineer = component "FeatureEngineer" "TBD - Are we managing neural network features seperately? Do they need to be stored?"
+                uiController = component "UI Controller"
+                cliController = component "CLI Controller"
+                amlConnectCore = component "AML Connect Core"
+                dbmanager = component "DBManager"
+                audiomanager = component "AudioManager"
+                mlinterpretor = component "MLInterpretor"
+                networkmanager = component "NetworkManager"
+                simulatorInterface = component "Network Simulator"
 
-            cliapp -> CLIController "calls" "bash commands"
-            tauriApiClient -> UIController "makes calls to" "IPC-JSON"
-            tauriFsClient -> filemanager "makes calls to" "IPC-JSON"
 
-            UIController -> amlConnectCore 
-            CLIController -> amlConnectCore
+                //Internal Relations (Component -> Component)
+                amlConnectCore -> networkmanager "has"
+                amlConnectCore -> datasetup "has"
+                amlConnectCore -> projectmanager "has"
+                amlConnectCore -> audiomanager "has"
+                amlConnectCore -> elementmanager "has"
+                uiController -> amlConnectCore 
+                cliController -> amlConnectCore
+                networkmanager -> resultgenerator "uses"
+                networkmanager -> filtermanager "uses"
+                networkmanager -> dbmanager "uses"
+                networkmanager -> featurengineer "uses"
+                networkmanager -> mlinterpretor "uses"
 
-            dbmanager -> app_db "saves and retreives data"
+
+                //Relations with external entitites
+
+                //Component -> Component
+                networkmanager -> python_wrapper "simulate network" "through sidecar"
+                python_wrapper -> networkmanager "simulation results" "through file path"
+                tauriApiClient -> uiController "makes calls to" "IPC-JSON"
+                
+
+                //Component -> Container
+                dbmanager -> app_db "saves and retreives data"
+            
+                //Container -> Component
+                cliapp -> cliController "calls" "bash commands"
+                
+
+                //Component -> Software System
+                networkmanager -> aspinity_wrapper "Spawns new sidecar"
+                elementmanager -> fileSystem "Retrieves Elements JSON"
+                mlinterpretor -> ml_interepretor "calls" "IPC-JSON"
+
+                //Software System -> Component
+                ml_interepretor -> mlinterpretor "training logs"
+
+            }
+    
         }
-
-
-        ## Why are we calling this crate, isn't it a python component??
-        ## We need to separate out the aspinity_simulator from here, so that it can be added in the context diagram, without other things
-        simulator_crate = softwareSystem "Simulator Crate" {
-            python_binary = container "Compiled Python Interpretor"
-            aspinity_simulator = container "Aspinity AML100 Simulator"
-            python_app = container "Python CLI Application"
-            python_app -> aspinity_simulator "Uses"
-            python_app -> python_binary "Runs using"
-            aspinity_simulator -> python_binary "Runs using"
-        }
-        
-        chipSimulator -> simulator_crate "Spawns new sidecar"
-        chipsimulator -> python_app "async call" "bash commands"
-        python_app -> chipsimulator "results" 
 
 
         simulator = deploymentEnvironment "Simulator" {
@@ -137,32 +154,29 @@ workspace {
                 deploymentNode "Tauri backend" {
                     containerInstance appserver
                     deploymentNode "Embedded Sidecar" {
-                        containerInstance python_app
-                        containerInstance python_binary
-                        containerInstance aspinity_simulator
+                        containerInstance aspinity_wrapper
                     }
                 }
             }
         }
 
-        AML100 = element "AML100 - Aspinity's analog machine learning chip"
         engineer -> AML100 "Deploy network"
+        engineer -> analogMLConnect "Upload Network Templates"
 
-        appserver -> simulator_crate
 
     }
     views {
         systemLandscape landscape {
             include *
-            autolayout lr
+            autolayout
         }
 
-        systemContext astrl {
+        systemContext analogMLConnect {
             include *
-            autolayout 
+            autolayout lr
         }
         
-        container astrl {
+        container analogMLConnect {
             include *
             autoLayout
         }
@@ -172,30 +186,23 @@ workspace {
             autolayout lr
         }
 
+        component aspinity_wrapper {
+            include *
+            autoLayout
+        }
+
+        component ml_interepretor {
+            include *
+            autoLayout lr
+        }
+
         component uiLayer {
             include *
             autoLayout
         }
 
-        container simulator_crate {
-            include *
-            autoLayout lr
-        }
-
         deployment * simulator {
             include *
-            autoLayout lr
-        }
-
-        dynamic appserver {
-            title "[Extensibility] Rust Simulator Swap"
-
-            networkmanager -> chipSimulator "passes user-defined network & audio data"
-            networkmanager -> chipSimulator "calls simulate_network()"
-            chipsimulator -> simulatorInterface "implements"
-            chipsimulator -> simulator_crate "translates data to simulator input data"
-            simulator_crate -> chipsimulator "sends back audio result"
-
             autoLayout lr
         }
 
@@ -217,11 +224,14 @@ workspace {
 
             reactComponent -> remoteService "Network JSON generated at UI"
             remoteService -> tauriApiClient "Transformed JSON that backend needs"
-            tauriApiClient -> UIController "Network JSON"
-            UIController -> amlConnectCore "Network JSON"
+            tauriApiClient -> uiController "Network JSON"
+            uiController -> amlConnectCore "Network JSON"
             amlConnectCore -> networkmanager "Network JSON for validation"
-            networkmanager -> chipSimulator "Valid Network JSON"
-            chipSimulator -> simulator_crate "Translated Data for Simulator"
+            networkmanager -> python_wrapper "Valid Network JSON"
+            python_wrapper -> aspinitySimulator "Python Network Object"
+            aspinitySimulator -> python_wrapper "Simulation Result"
+            python_wrapper -> fileSystem "Persist Simulation Results"
+            python_wrapper -> networkmanager "Simulation Results Path"
 
             autoLayout lr
         }
