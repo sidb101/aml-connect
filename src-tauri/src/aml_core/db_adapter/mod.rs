@@ -90,16 +90,16 @@ mod tests {
     use super::*;
 
     #[test]
-    #[ignore]
     fn test_get_url_from_env() {
         let db_path = "/home/test_user/.local/share/aml_connect";
         env::set_var("DATABASE_PATH", db_path);
         let db_url = get_url(&PathBuf::new()).unwrap();
         env::remove_var("DATABASE_PATH");
 
+        let expected_path = Path::new(db_path).join("aml_connect.db");
         assert_eq!(
             db_url,
-            "/home/test_user/.local/share/aml_connect/aml_connect.db"
+            expected_path.to_str().unwrap()
         );
     }
 }
