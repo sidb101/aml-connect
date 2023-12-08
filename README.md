@@ -9,11 +9,11 @@
 
 ## Backend Setup
 
-Rust source code is in the src directory. The application has been tested with rust version 1.72.1.
+Rust source code is in the src-tauri directory. The application has been tested with rust version 1.72.1.
 The application has been packaged using Tauri, and rust packages are managed using Tauri.
 
 To run the integration tests, use a single thread since integration tests may use the same database (This should be considered technical debt, and fixed before the project becomes larger).
-Integration tests are located in the ```src/tests``` folder and the external resources required for the test are in ```src/test_resources```. As per rust conventions unit tests are located with the code, in the same file.
+Integration tests are located in the ```src-tauri/tests``` folder and the external resources required for the test are in ```src/test_resources```. As per rust conventions unit tests are located with the code, in the same file.
 Tarpaulin is used to generate coverage reports with command ```cargo test --test integration_test -- --test-threads 1```
 
 ```bash
