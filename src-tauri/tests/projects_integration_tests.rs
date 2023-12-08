@@ -23,7 +23,7 @@ use log::{info, warn};
 #[test]
 fn test_get_all_projects() {
     env::set_var("DATABASE_PATH", "./tests");
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     let mut conn = conn_pool.get().unwrap();
     conn.begin_test_transaction().unwrap();
@@ -46,7 +46,7 @@ fn test_get_all_projects() {
 #[test]
 fn test_crud_project() {
     env::set_var("DATABASE_PATH", "./tests");
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     let mut conn = conn_pool.get().unwrap();
     conn.begin_test_transaction().unwrap();
@@ -108,10 +108,19 @@ fn test_crud_project() {
     fs::remove_dir_all(app_dir).unwrap();
 }
 
+#[cfg(not(tarpaulin_include))]
+fn create_app_dir_if_not_exists() -> anyhow::Result<PathBuf> {
+    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir()).join("aml_connect");
+    if !app_dir.exists() {
+        fs::create_dir_all(app_dir.clone())?;
+    }
+    Ok(app_dir)
+}
+
 #[test]
 fn test_delete_project_with_files() {
     env::set_var("DATABASE_PATH", "./tests");
-    let conn_pool = db_adapter::establish_connection().unwrap();
+    let conn_pool = db_adapter::establish_connection(&PathBuf::new()).unwrap();
     env::remove_var("DATABASE_PATH");
     let mut conn = conn_pool.get().unwrap();
     conn.begin_test_transaction().unwrap();
@@ -174,6 +183,7 @@ fn test_delete_project_with_files() {
     fs::remove_dir_all(app_dir).unwrap();
 }
 
+#[cfg(not(tarpaulin_include))]
 fn add_dummy_projects(db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>) {
     add_dummy_project("test_project", db_conn_pool).unwrap_or_else(|e| {
         warn!(
@@ -213,6 +223,7 @@ fn add_dummy_projects(db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>) 
     });
 }
 
+#[cfg(not(tarpaulin_include))]
 fn add_dummy_project(
     project_slug: &str,
     db_conn_pool: &Pool<ConnectionManager<SqliteConnection>>,
@@ -243,14 +254,6 @@ fn add_dummy_project(
             .with_context(|| format!("failed to insert dummy project : {project_slug}"))?;
         Ok(())
     }
-}
-
-fn create_app_dir_if_not_exists() -> anyhow::Result<PathBuf> {
-    let app_dir = PathBuf::from(BaseDirs::new().unwrap().data_local_dir()).join("com.aml-connect.aspinity");
-    if !app_dir.exists() {
-        fs::create_dir_all(app_dir.clone())?;
-    }
-    Ok(app_dir)
 }
 
 fn copy_audio_files(app_dir: &PathBuf, project_slug: &str) {
