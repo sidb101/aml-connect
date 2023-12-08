@@ -6,6 +6,8 @@ Date: 2023-07-10
 
 Proposed
 
+Superceded by [7. Use Sqlite as primary database](0007-use-sqlite-as-primary-database.md)
+
 ## Context
 
 We need to chose a database technology to store data on the backend. The important data entities are *networks* and *projects*.
