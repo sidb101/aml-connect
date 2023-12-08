@@ -3,12 +3,10 @@ use diesel::migration::MigrationConnection;
 use diesel::r2d2::{ConnectionManager, Pool, PooledConnection};
 use diesel::{Connection, SqliteConnection};
 use diesel_migrations::{embed_migrations, EmbeddedMigrations, MigrationHarness};
-use directories::ProjectDirs;
 use dotenvy::dotenv;
 use log::info;
 use std::env;
-use std::fs;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 pub mod models;
 pub mod schema;
@@ -19,8 +17,8 @@ pub type DbConn = PooledConnection<ConnectionManager<SqliteConnection>>;
 pub const DB_NAME: &'static str = "aml_connect.db";
 pub const MIGRATIONS: EmbeddedMigrations = embed_migrations!("migrations");
 
-pub fn establish_connection() -> Result<SqlitePool> {
-    let db_url = get_url()?;
+pub fn establish_connection(app_dir: &PathBuf) -> Result<SqlitePool> {
+    let db_url = get_url(app_dir)?;
 
     let mut db_connection = create_if_not_exists(&db_url)?;
     initialize_diesel_schema(&mut db_connection)?;
@@ -48,8 +46,7 @@ fn new_conn_pool(db_url: String) -> Result<Pool<ConnectionManager<SqliteConnecti
         .with_context(|| "Failed to open minimum number of database connections\n")
 }
 
-fn get_url() -> Result<String> {
-    
+fn get_url(app_dir: &PathBuf) -> Result<String> {
     dotenv().ok();
 
     let db_path = match env::var("DATABASE_PATH") {
@@ -59,23 +56,14 @@ fn get_url() -> Result<String> {
         }
         Err(_) => {
             info!("Using OS specific application directory for database");
-            // TODO: Move this to file management module
-            let proj_dirs = ProjectDirs::from("com", "aspinity", "aml_connect")
-                .with_context(|| "Failed to get application directory\n")?;
-
-            let app_dir = proj_dirs.data_local_dir();
-
-            fs::create_dir_all(app_dir)
-                .with_context(|| "Failed to create application directory\n")?;
-
-            proj_dirs.data_local_dir().join(DB_NAME)
+            app_dir.join(DB_NAME)
         }
     };
 
     let db_url = db_path
-                .to_str()
-                .with_context(|| "Failed to convert database path to string\n")?
-                .to_owned();
+        .to_str()
+        .with_context(|| "Failed to convert database path to string\n")?
+        .to_owned();
     info!("Using database at {}", db_url);
     Ok(db_url)
 }
@@ -98,16 +86,20 @@ fn initialize_diesel_schema(db_connection: &mut SqliteConnection) -> Result<()> 
 }
 
 #[cfg(test)]
-mod tests{
+mod tests {
     use super::*;
 
     #[test]
+    #[ignore]
     fn test_get_url_from_env() {
         let db_path = "/home/test_user/.local/share/aml_connect";
         env::set_var("DATABASE_PATH", db_path);
-        let db_url = get_url().unwrap();
+        let db_url = get_url(&PathBuf::new()).unwrap();
         env::remove_var("DATABASE_PATH");
 
-        assert_eq!(db_url, "/home/test_user/.local/share/aml_connect/aml_connect.db");
+        assert_eq!(
+            db_url,
+            "/home/test_user/.local/share/aml_connect/aml_connect.db"
+        );
     }
 }

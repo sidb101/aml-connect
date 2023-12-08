@@ -1,22 +1,46 @@
 import "./ElementMenuItem.scss";
 import React, { useState } from "react";
 import type { ElementT } from "../../../../../redux/slices/ModelCreationSlice";
+import { usePopper } from "react-popper";
 
 type ElementMenuItemProps = {
 	element: ElementT;
 	onItemClick: (element: ElementT) => void;
 };
 
+const hoverClass = "ElementMenuItem_item__hovered";
+
 function ElementMenuItem({ element, onItemClick }: ElementMenuItemProps) {
 	const [isHovering, setIsHovering] = useState<boolean>(false);
 
+	/* eslint-disable-next-line @typescript-eslint/ban-types */
+	const [parentElement, setParentElement] = useState<HTMLElement | null>(null);
+	/* eslint-disable-next-line @typescript-eslint/ban-types */
+	const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
+	/* eslint-disable-next-line @typescript-eslint/ban-types */
+	const [arrowElement, setArrowElement] = useState<HTMLElement | null>(null);
+
+	const { styles, attributes } = usePopper(parentElement, popperElement, {
+		placement: "right",
+		modifiers: [
+			{
+				name: "arrow",
+				options: {
+					element: arrowElement,
+				},
+			},
+			{
+				name: "offset",
+				options: {
+					offset: [0, 30],
+				},
+			},
+		],
+	});
+
 	return (
 		<div
-			className={`regular-text ElementMenuItem_item`}
-			key={element.typeName}
-			onClick={() => {
-				onItemClick(element);
-			}}
+			className="ElementMenuItem_container"
 			onMouseEnter={() => {
 				setIsHovering(true);
 			}}
@@ -24,12 +48,25 @@ function ElementMenuItem({ element, onItemClick }: ElementMenuItemProps) {
 				setIsHovering(false);
 			}}
 		>
-			{element.typeName}
+			<div
+				className={`regular-text ElementMenuItem_item ${isHovering ? hoverClass : ""}`}
+				key={element.typeName}
+				onClick={() => {
+					onItemClick(element);
+				}}
+				ref={setParentElement}
+			>
+				{element.typeName}
+			</div>
 			{isHovering && (
-				<>
-					<div className={`ElementMenuItem_hoverDescriptionTriangle`}></div>
+				<div ref={setPopperElement} style={styles.popper} {...attributes.popper}>
 					<div className={`small-text ElementMenuItem_hoverDescription`}>{element.longDescription}</div>
-				</>
+					<div
+						className={`ElementMenuItem_hoverDescriptionTriangle`}
+						ref={setArrowElement}
+						style={styles.arrow}
+					></div>
+				</div>
 			)}
 		</div>
 	);

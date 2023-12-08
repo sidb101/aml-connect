@@ -1,6 +1,6 @@
 import "./ParameterFormView.scss";
 import React, { type ReactNode, useEffect, useState } from "react";
-import { type ParameterT, ParamTypeT, UIComponentT } from "../../../../../redux/slices/ModelCreationSlice";
+import { type ParameterT, ParamTypeT, UIComponentT, RangeT } from "../../../../../redux/slices/ModelCreationSlice";
 import Checkbox from "../../../../../components/formElements/checkbox/Checkbox";
 import Select from "../../../../../components/formElements/select/Select";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -76,6 +76,24 @@ function ParameterFormView({
 							onTextBoxInputChange(e, paramName);
 						}}
 						className={`general-padding`}
+						min={`${
+							param.parameterType === ParamTypeT.NUMBER &&
+							param.rangeType === RangeT.INTERVAL &&
+							param.range?.length === 2 &&
+							param.range[0] !== null
+								? param.range[0]
+								: ""
+						}`}
+						max={`${
+							param.parameterType === ParamTypeT.NUMBER &&
+							param.rangeType === RangeT.INTERVAL &&
+							param.range?.length === 2 &&
+							param.range[1] !== null
+								? param.range[1]
+								: ""
+						}`}
+						//TODO: Figure out the required step size dynamically from the corresponding component
+						step="0.0001"
 					/>
 				);
 
@@ -125,45 +143,36 @@ function ParameterFormView({
 						<FontAwesomeIcon
 							icon={faTimes}
 							onClick={() => {
-								if (onClose) {
-									onClose();
-								}
+								onClose?.();
+								// if (onClose) {
+								// 	onClose();
+								// }
 							}}
 						/>
 					</div>
 					<br />
-					{Object.entries(paramData.parameterInfo).map(([parameterName, val], key) => (
-						<div key={key} className={`ParameterForm_paramContainer`}>
-							<label title={val.description}>
-								{parameterName} {val.unit ? `(${val.unit})` : ""}:
-							</label>{" "}
-							{getInput(parameterName, val)}
-						</div>
-					))}
-					<button
-						className={`btn btn-outline`}
-						onClick={() => {
+					<form
+						onSubmit={() => {
 							onParameterSave?.(paramData.params);
-							if (onClose) {
-								onClose();
-							}
+							onClose?.();
+							// if (onClose) {
+							// 	onClose();
+							// }
 						}}
 					>
-						{" "}
-						Submit{" "}
-					</button>
-					&nbsp;
-					{onSimulate ? (
-						<button
-							onClick={() => {
-								onSimulate();
-							}}
-						>
-							Simulate
+						{Object.entries(paramData.parameterInfo).map(([parameterName, val], key) => (
+							<div key={key} className={`ParameterForm_paramContainer`}>
+								<label title={val.description}>
+									{parameterName} {val.unit ? `(${val.unit})` : ""}:
+								</label>{" "}
+								{getInput(parameterName, val)}
+							</div>
+						))}
+						<button className={`btn btn-outline`} type="submit">
+							{" "}
+							Submit{" "}
 						</button>
-					) : (
-						<></>
-					)}
+					</form>
 				</div>
 			) : (
 				<></>

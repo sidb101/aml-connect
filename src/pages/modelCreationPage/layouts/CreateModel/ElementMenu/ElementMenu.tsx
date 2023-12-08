@@ -4,19 +4,15 @@ import type { ElementT } from "../../../../../redux/slices/ModelCreationSlice";
 import ElementMenuItem from "./ElementMenuItem";
 
 type ElementMenuProps = {
+	childRef: React.RefObject<HTMLDivElement>;
 	elements: ElementT[];
 	onMenuItemClick: (element: ElementT) => void;
 	onClose: () => void;
 };
 
-const ElementMenu: React.FC<ElementMenuProps> = ({ elements, onMenuItemClick, onClose }) => {
+const ElementMenu: React.FC<ElementMenuProps> = ({ elements, onMenuItemClick, childRef, onClose }) => {
 	return (
-		<div
-			className={`ElementMenu_container`}
-			onBlur={onClose} // close menu when it loses focus
-			tabIndex={0}
-			role="listbox"
-		>
+		<div ref={childRef} className={`ElementMenu_container`}>
 			{elements.map((element, index) => (
 				<ElementMenuItem key={index} element={element} onItemClick={onMenuItemClick} />
 			))}
