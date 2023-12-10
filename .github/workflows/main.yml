@@ -2,7 +2,7 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
+  # Triggers the workflow on push or pull request events but only for the "develop" & "release" branch
   push:
     branches: [ "develop", "release"]
   pull_request:
@@ -33,10 +33,12 @@ jobs:
           python3 -m venv .venv
           source .venv/bin/activate
       
+      # This whl package installs the aspinity python package in the venv
       - name: Install aspinity .whl
         run: |
           pip install ./aml_simulator_pywrapper/aspinity-0.7.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
       
+      # Install requirements.txt in the venv
       - name: Install requirements.txt
         run: |
           pip install -r ./aml_simulator_pywrapper/requirements.txt
@@ -45,6 +47,7 @@ jobs:
         run: |
           export PYTHONPATH="${PYTHONPATH}:${pwd}/aml_simulator_pywrapper"
 
+      # These dependencies are needed for Ubuntu/Unix OS, for Win, check Tauri docs
       - name: install OS dependencies (ubuntu only)
         run: |
           sudo apt update
@@ -58,6 +61,7 @@ jobs:
           librsvg2-dev \
           python-pip
         
+      # Breaks here if score is less < 10.0/10.0
       - name: Run Pylint
         run: |
           cd aml_simulator_pywrapper && 
@@ -70,6 +74,7 @@ jobs:
           pytest . && 
           cd ..
 
+      # Refer to .spec files in aml_simulator_pywrapper for more details
       - name: Create Aspinity Wrapper Binary
         run: |
           cd aml_simulator_pywrapper && 
