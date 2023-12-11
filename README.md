@@ -61,6 +61,12 @@ user's application.
           leaner development experience compared to older tools like Webpack.
 
 ## Backend Setup
+### Pre-requisites (in Windows)
+
+- [Microsoft Visual Studio C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+- [Rust](https://www.rust-lang.org/tools/install) (recommended version 1.72.1, using rustup as the installer)
+- Cargo (recommended version 1.72.1, would be installed along with Rust if using rustup)
+- [Tauri CLI](https://tauri.app/v1/guides/getting-started/setup/html-css-js) (use `cargo install tauri-cli`)
 
 Rust source code is located in the src-tauri directory. The application has been tested with rust version 1.72.1.
 The application has been packaged using Tauri, and rust packages are managed using Tauri.
@@ -96,7 +102,7 @@ cargo install diesel_cli --no-default-features --features "sqlite"
 |------------------|----------------------------------------------------------------------------|-------------------------------------------------------------------|---|---|
 | Linux            | `$XDG_DATA_HOME`/`_project_path_` or `$HOME`/.local/share/`_project_path_` | /home/gaurav/.local/share/aml_connect                             |   |   |
 | macOS            | `$HOME`/Library/Application Support/`_project_path_`                       | Users/Gaurav/Library/Application Support/com.aspinity.aml_connect |   |   |
-| Windows          | `{FOLDERID_LocalAppData}`\\`_project_path_`\\data                          | C:\Users\Gaurav\AppData\Local\Aspinity\Aml_Connect\data           |   |   |
+| Windows          | `{FOLDERID_LocalAppData}`\\`_project_path_`                         | C:\Users\Gaurav\AppData\Local\com.aml-connect.aspinity          |   |   |
 
 - **All the below commands should be run inside the src-tauri folder**
 
@@ -120,20 +126,33 @@ sqlite3 test.db
 
 ## Frontend Setup
 
-Frontend source code (React with typescript) is located in the src directory. The application has been tested with
-typescript version 5.2.2, npm version 10.2.3 and node.js version 20.8.0. The application uses Vite as the frontend build
-tool (see Tech Stack discussion above).
+Frontend source code (React with typescript) is located in the `src` directory. The application has been tested with typescript version 5.2.2, npm version 10.2.3 and node.js version 20.8.0. The application uses Vite as the frontend build tool (see Tech Stack discussion above).
 
-### Pre-requisites
+### Node Installation
 
-- Node.js (recommended version 20.8.0)
-- npm (recommended version 10.2.3)
-- Typescript (recommended version 5.2.2)
+The best way to install a specific version of Node in is through a tool called `nvm`. 
 
-### Installation
+#### Steps:
 
-1. **Install Dependencies:** Navigate to the root directory of the project and run the following command to install all
-   required npm packages
+
+1. Windows : Install the latest `nvm` installer from [here](https://github.com/coreybutler/nvm-windows).
+
+2. Ubuntu: Install the latest `nvm` using below command:
+```bash
+  sudo apt install curl 
+  curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash 
+```
+
+3. Install the required node version using command
+```bash
+  nvm install v20.8.0
+  nvm use v20.8.0
+```
+4. `npm` would be installed automatically along with node
+
+### Dependencies Installation
+
+1. **Install Dependencies:** Navigate to the root directory of the project and run the following command to install all required npm packages (including TypeScript)
 
 ```bash
 npm install
@@ -141,8 +160,9 @@ npm install
 
 ### Running the Development Server
 
-1. To start the development server, use the following command. This will start the Vite development server with hot
-   module replacement enabled and the required backend:
+1. To start the development server, use the following command. This will start the Vite development server with hot module replacement enabled and the required backend:
+
+> Important:  Make sure to have setup backend dev environment before running below command
 
 ```bash
 cargo tauri dev

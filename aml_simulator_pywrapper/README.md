@@ -23,14 +23,62 @@ network, as well as generating the simulation result as visualization.
 - activate env
     > `conda activate py38`
 
+### Create the Aspinity PyWrapper
+
+We would have to creat binary of our Python code, which wraps around the Aspinity's simulator package. To create this wrapper, Aspinity's `.whl` file is required. This file is different for different operating systems. So make sure to get the right file as per your OS.
+
+- Get the `.whl` file
+- Extract the zip and place the extracted folder as the sibling to the current repository.
+- Move to the current repos's `aml_simulator_pywrapper` directory
+
+Now, we would essentially create the binary of the wrapper (`aml_simulator_pywrapper`).
+
+#### Ubuntu
+
 - install aspinity .whl (This .whl is made available by aspinity)
-    > `pip install aspinity-0.7.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl`
-
+    
+    > NOTE: Make sure to write the proper directory name and file name as per the version you want to install  
+    
+    
+    ```bash
+    pip install ../../aspinity-dev-env-0.7.2/aspinity-0.7.2-cp38-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+    ```
+    
 - install requirements
-    > `pip install -r requirements.txt`
+    ```bash
+    pip install -r requirements.txt
+    ```
+- Create the PyInstaller Binary of the wrapper: This python package could be turned into an single-file executable with all its
+dependencies, that is how it is turned into a sidecar and bundled with Tauri app
+
+    ```
+    pyinstaller --clean -F wrapper.py --hidden-import='PIL._tkinter_finder' --add-data "templates/network_template.py.j2:templates" --distpath ../src-tauri/binaries/ -n aspinity_wrapper-x86_64-unknown-linux-gnu
+
+    ```
+- The binary is ready to be excecuted on the command line. The location of binary would be: `${projectDir}/src-tauri/binaries`
+
+#### Windows
+
+- Open Poweshell
+- Navigate to the `${project directory}\aml_simulator_pywrapper`
+- Enter command:
+    ```
+    Set-ExecutionPolicy Unrestricted
+    ```
+- Run the following script:
+    ```
+    ./setup-wrapper.ps1
+    ```
+    Details of the script can be found by opening the file.
+    > NOTE:  
+    This `setup-wrapper` is only required for the first time. For the subsequent updates to `wrapper.py`, excecute `./build-wrapper.py` to directly build the wrapper from the given `.whl` package.
+
+- The binary is ready to be excecuted on the command line. The location of binary would be: `${projectDir}\src-tauri\binaries`
 
 
-## Usage
+### Usage of Wrapper Binary
+
+When the application is started using `cargo tauri dev`, it automatically takes into account this binary, however if one wants to run this binary alone for testing purposes, here is its usage.
 
 ```
 usage: wrapper.py [-h] [--get_elements] [--simulate_network] [-network NETWORK] [-wavfile WAVFILE]
@@ -49,11 +97,7 @@ Network Simulation Options:
   -tmp_dir TMP_DIR    Project tmp path to store output
 ```
 
-## Creating pyinstaller binary 
-This python package could be turned into an single-file executable with all its
-dependencies, that is how it is turned into a sidecar and bundled with Tauri app
 
-> `pyinstaller --clean -F wrapper.py --hidden-import='PIL._tkinter_finder' --add-data "templates/network_template.py.j2:templates" --distpath ../src-tauri/binaries/ -n aspinity_wrapper-x86_64-unknown-linux-gnu`
 
 
 ## Run tests
