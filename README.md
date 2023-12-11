@@ -61,6 +61,12 @@ user's application.
           leaner development experience compared to older tools like Webpack.
 
 ## Backend Setup
+### Pre-requisites (in Windows)
+
+- [Microsoft Visual Studio C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+- [Rust](https://www.rust-lang.org/tools/install) (recommended version 1.72.1, using rustup as the installer)
+- Cargo (recommended version 1.72.1, would be installed along with Rust if using rustup)
+- [Tauri CLI](https://tauri.app/v1/guides/getting-started/setup/html-css-js) (use `cargo install tauri-cli`)
 
 Rust source code is located in the src-tauri directory. The application has been tested with rust version 1.72.1.
 The application has been packaged using Tauri, and rust packages are managed using Tauri.
