@@ -31,7 +31,7 @@ We would have to creat binary of our Python code, which wraps around the Aspinit
 - Extract the zip and place the extracted folder as the sibling to the current repository.
 - Move to the current repos's `aml_simulator_pywrapper` directory
 
-Now, we would essentially create the binary of the wrapper (`wrapper.py`).
+Now, we would essentially create the binary of the wrapper (`aml_simulator_pywrapper`).
 
 #### Ubuntu
 
