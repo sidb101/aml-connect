@@ -1,0 +1,16 @@
+@use "../global";
+
+.Root_sidebarContainer {
+	position: fixed; /* Fixed position will make the sidebar stick to the left */
+	top: 0;
+	left: 0;
+	height: 100%; /* Full height */
+	width: global.$sidebar-width + 2 * global.$nav-padding;
+	overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+.Root_container {
+	font-family: global.$font-primary;
+	color: global.$color-dark-blue;
+	background: global.$color-grey-1;
+}

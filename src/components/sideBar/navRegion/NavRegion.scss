@@ -1,0 +1,24 @@
+@use "../../../global";
+
+.NavRegion_container {
+	$general-padding: 15px;
+
+	.NavRegion_content {
+		width: global.$sidebar-width + global.$nav-padding;
+		font-family: global.$font-primary;
+		border-radius: global.$border-radius 0 0 global.$border-radius;
+
+		.NavRegion_heading {
+			background-color: global.$color-dark-green;
+			padding: $general-padding;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			border-top-left-radius: global.$border-radius;
+		}
+
+		.NavRegion_navLinks {
+			padding-left: $general-padding;
+		}
+	}
+}

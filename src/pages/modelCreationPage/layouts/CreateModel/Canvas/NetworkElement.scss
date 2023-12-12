@@ -1,0 +1,27 @@
+@use "../../../../../global";
+
+.NetworkElement_node {
+	background: global.$color-grey-3;
+	border: 1px solid black;
+	border-radius: global.$border-radius;
+	width: fit-content;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.NetworkElement_nodeLabel {
+		padding: 50px; //Would change if the font-size of handle changes from 10px
+		font-size: global.$text-small;
+	}
+
+	.NetworkElement_handle {
+		font-size: 10px;
+		height: fit-content;
+		color: white;
+		width: fit-content;
+		border-radius: 2px;
+		background-color: #222831;
+		border: none;
+		padding: 2px;
+	}
+}

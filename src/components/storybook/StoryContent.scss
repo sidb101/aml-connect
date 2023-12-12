@@ -1,0 +1,15 @@
+.StoryContent_container {
+	padding: 40px;
+
+	.StoryContent_projectPanel {
+		width: 40%;
+		height: 30%;
+	}
+
+	.StoryContent_buttonContainer {
+		width: 40%;
+		display: flex;
+		padding: 20px;
+		justify-content: space-around;
+	}
+}

@@ -1,0 +1,39 @@
+@use "../../../../global";
+
+.AudioFileTable_container {
+	width: 100%;
+	table-layout: fixed; // This makes the table respect the set widths
+	font-size: x-large;
+
+	img {
+		width: 50px;
+		height: 25px;
+	}
+
+	th,
+	td {
+		text-align: center;
+		white-space: nowrap;
+	}
+
+	.AudioFileTable_nameColumn {
+		width: 70%;
+		text-align: left;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.AudioFileTable_smallColumn {
+		width: 10%;
+	}
+
+	.AudioFileTable_internalColumn {
+		padding-left: global.$general-padding;
+		padding-right: global.$general-padding;
+	}
+
+	.AudioFileTable_icon {
+		padding-right: 0.5 * global.$general-padding;
+	}
+}

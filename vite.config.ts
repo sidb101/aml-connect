@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import {defineConfig} from "vite";
 import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
@@ -12,6 +12,9 @@ export default defineConfig(async () => ({
   server: {
     port: 1420,
     strictPort: true,
+    watch: {
+      ignored: ["**/aml_simulator_pywrapper/**", "**/.venv/**"],
+    },
   },
   // to make use of `TAURI_DEBUG` and other env variables
   // https://tauri.studio/v1/api/config#buildconfig.beforedevcommand

@@ -1,0 +1,16 @@
+@use "../../global";
+
+.DataHub_bodyContainer {
+	height: 100%;
+	display: grid;
+	grid-template-rows: global.$panel-header-height;
+	gap: global.$general-padding;
+}
+
+.DataHub_bodyRow1 {
+	grid-row: 1;
+}
+
+.DataHub_bodyRow2 {
+	grid-row: 2;
+}

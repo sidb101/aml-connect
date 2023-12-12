@@ -1,0 +1,12 @@
+@use "global";
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	/*To disable the default link look & feel behaviour of the browser, because its desktop app */
+	text-decoration: none !important;
+	color: inherit !important;
+}

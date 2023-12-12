@@ -1,0 +1,22 @@
+@use "../../../../../global";
+
+.Canvas_container {
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	border: 2px solid black;
+}
+
+.Canvas_controls {
+	button {
+		background-color: global.$color-dark-blue;
+
+		&:hover {
+			background-color: global.$color-dark-green;
+		}
+
+		svg {
+			fill: global.$color-white;
+		}
+	}
+}

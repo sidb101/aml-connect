@@ -1,0 +1,10 @@
+[workspace]
+
+members = [
+    "src-tauri",
+]
+
+[workspace.package]
+authors = ["ChipMonks", "DisguisedFlyer", "gauravagerwala", "JAshMe", "haihsiah", "sidb101"]
+repository = "https://github.com/sidb101/aml-connect"
+edition = "2021"

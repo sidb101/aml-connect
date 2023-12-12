@@ -1,0 +1,30 @@
+@use "../../global";
+
+.Footer_contentContainer {
+	display: flex;
+}
+
+.Footer___both {
+	justify-content: space-between;
+}
+
+.Footer___prevOnly {
+	justify-content: flex-start;
+}
+
+.Footer___nextOnly {
+	justify-content: flex-end;
+}
+
+.Footer_btn {
+	width: 200px;
+	height: 48px;
+
+	.Footer_iconLeft {
+		padding-right: 10px;
+	}
+
+	.Footer_iconRight {
+		padding-left: 10px;
+	}
+}

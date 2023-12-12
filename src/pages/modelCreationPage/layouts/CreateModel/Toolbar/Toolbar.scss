@@ -1,0 +1,47 @@
+@use "../../../../../global";
+
+.Toolbar_container {
+	height: 100%;
+	width: fit-content;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5px;
+}
+
+.Toolbar_sideBtnContainer {
+	z-index: 6; // 1 more than the canvas controls
+	display: flex;
+	flex-direction: column;
+
+	button {
+		user-select: none;
+		height: 50px;
+		width: 50px;
+		background-color: global.$color-dark-blue;
+		color: global.$color-white;
+		border: none;
+
+		&:hover {
+			background-color: global.$color-dark-green;
+		}
+
+		&:first-child {
+			border-top-left-radius: global.$border-radius;
+			border-top-right-radius: global.$border-radius;
+		}
+
+		&:last-child {
+			border-bottom-left-radius: global.$border-radius;
+			border-bottom-right-radius: global.$border-radius;
+		}
+	}
+}
+
+.Toolbar_sideNodeMenuContainer {
+	height: 100%;
+	z-index: 6; // 1 more than the canvas controls
+	display: flex;
+	align-items: center;
+}
